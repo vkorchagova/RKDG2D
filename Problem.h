@@ -1,63 +1,81 @@
 #pragma once
 
 #include "Mesh2D.h"
+#include "gaussintegrator.h"
 
 #include <math.h>
-#include<functional>
+#include <functional>
 
-const int nShapes = 3;
-
-
-const double gamma = 1.4;
+namespace std
+{
 
 class Problem
 {
 
 private:
 
-	double phi0(numvector<double,2> r) { return 0.25; }
-	double phi1(numvector<double, 2> r) { return 0.5*sqrt(3)*r[0]; }
-	double phi2(numvector<double, 2> r) { return 0.5*sqrt(3)*r[1]; }
 
-	Mesh2D mesh;
+    //- Heat capacity ratio
+    const double cpcv = 1.4;
+
+    //- Mesh
+    Mesh2D mesh;
+
+    //- Number of basis functions
+    static const int nShapes = 3;
 
 private:
 
-	double getPressure(numvector<double,5> sol);
+    //- Calculate pressure using conservative variables
+    double getPressure(numvector<double,5> sol);
 	
-	numvector<double, 5> reconstructSolution(numvector<double, \
+    //- Reconstruct solution by coeffs and basis functions
+    numvector<double, 5> reconstructSolution(numvector<double, \
 											nShapes + 5>& alpha, \
-											numvector<double, 2>& coord);
+											numvector<double, 2>& coord, \
+											int iCell);
 
 
-	numvector<double, 5> fluxF(numvector<double, 5> sol);
+    //- Calculate fluxes in x direction
+    numvector<double, 5> fluxF(numvector<double, 5> sol);
+
+    //- Calculate fluxes in y direction
 	numvector<double, 5> fluxG(numvector<double, 5> sol);
+
+    
 
 public:
 
-	//array of basis functions - ?
+    //- List of basis functions
+    function <double(const numvector<double, 2>&, int)> phi[nShapes];
+
+    //- Gradient of basis functions
+    function <numvector<double, 2>(const numvector<double, 2>&, int)> gradPhi[3];
 
 	//- Solution coeffs on cells on previous time step
 	//  2D array: ncells x (nshapes*5)
-	vector<numvector<double, 5*nShapes>> alphaPrev;
+	vector<numvector<double, 5 * nShapes>> alphaPrev;
 
 	//- Solution coeffs on cells on next time step
 	//  2D array: ncells x (nshapes*5)
-	vector<numvector<double, 5 * nShapes>> alphaNext;
+    vector<numvector<double, 5 * nShapes>> alphaNext;
 
-	//- Array of basis functions
-    vector<function <double(*)(numvector<double, 2>)>> phi;
+	//- Set initial conditions
+	void setInitialConditions();
 
 
 public:
-	Problem();
-	Problem(Mesh2D& mesh);
+    Problem() {};
+
+    Problem(const Mesh2D &mesh);
+
+    ~Problem() {};
 
 
-	~Problem();
 
 
 
+};// end Problem
 
-};
+} // end namespace std;
 

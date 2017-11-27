@@ -1,14 +1,22 @@
 #include "Mesh2D.h"
 #include <iostream>
 
-
 using namespace std;
 
+// ------------------ Constructors & Destructors ----------------
 
-
-
-Mesh2D::Mesh2D()
-{}
+Mesh2D::Mesh2D(const Mesh2D &mesh)
+{
+    hx = mesh.hx;
+    hy = mesh.hy;
+    nodes = mesh.nodes;
+    edgesHor = mesh.edgesHor;
+    edgesVer = mesh.edgesVer;
+    cells = mesh.cells;
+    cellCenters = mesh.cellCenters;
+    neighbCellsHorEdges = mesh.neighbCellsHorEdges;
+    neighbCellsVerEdges = mesh.neighbCellsVerEdges;
+}
 
 // nx --- number of cells along x axis
 // ny --- number of cells along y axis
@@ -17,8 +25,8 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
 	int nNodes = (nx + 1)*(ny + 1);
 	int nEdgesHor = nx*(ny + 1);
 	int nEdgesVer = ny*(nx + 1);
-	int nCells = nx*ny;
-	int nGhostCells = 2 * nx + 2 * ny;
+    nInternalCells = nx*ny;
+    nGhostCells = 2 * nx + 2 * ny;
 
 	hx = Lx / nx;
 	hy = Ly / ny;
@@ -26,8 +34,10 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
 	nodes.reserve(nNodes);
 	edgesHor.reserve(nEdgesHor);
 	edgesVer.reserve(nEdgesVer);
-	cells.reserve(nCells+nGhostCells);
-	cellCenters.reserve(nCells + nGhostCells);
+    internalCells.reserve(nInternalCells);
+    ghostCells.reserve(nGhostCells);
+    cells.reserve(nInternalCells+nGhostCells);
+    cellCenters.reserve(nInternalCells+nGhostCells);
 
 	// fill nodes
 	for (int i = 0; i < ny + 1; ++i)
@@ -46,33 +56,36 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
 			edgesVer.push_back({ i*(nx + 1) + j, i*(nx + 1) + j + nx + 1 });
 
 	// get cells as edges
-	for (int i = 0; i < ny; ++i)
-		for (int j = 0; j < nx; ++j)
-			cells.push_back({i*(nx)+j, (i + 1)*(nx)+j, (i)*(nx + 1) + j, (i)*(nx + 1) + j + 1 });
+    for (int i = 0; i < ny; ++i)
+        for (int j = 0; j < nx; ++j)
+            internalCells.push_back({i*(nx)+j, (i + 1)*(nx)+j, (i)*(nx + 1) + j, (i)*(nx + 1) + j + 1 });
 
 	// get ghost cells
 
 	//down
 	for (int i = 0; i < nx; ++i)
-		cells.push_back({ -1, i, -1, -1 });
+        ghostCells.push_back({ -1, i, -1, -1 });
 
 	//up
 	for (int i = 0; i < nx; ++i)
-		cells.push_back({ nx*ny + i, -1, -1, -1 });
+        ghostCells.push_back({ nx*ny + i, -1, -1, -1 });
 
 	//left
 	for (int j = 0; j <  ny; ++j)
-		cells.push_back({ -1, -1, -1, (j)*(nx + 1) });
+        ghostCells.push_back({ -1, -1, -1, (j)*(nx + 1) });
 	 
 	//right
 	for (int j = 0 ; j < ny; ++j)
-		cells.push_back({ -1, -1, (j)*(nx + 1) + nx, -1 });
+        ghostCells.push_back({ -1, -1, (j)*(nx + 1) + nx, -1 });
+
+    cells.insert(cells.end(),internalCells.begin(),internalCells.end());
+    cells.insert(cells.end(),ghostCells.begin(),ghostCells.end());
 
 	//get cell centers
 	numvector<double, 2> offset = {0.5*hx, 0.5*hy};
 
 	//for internal cells
-	for (int i = 0; i < nCells; ++i)
+    for (int i = 0; i < nInternalCells; ++i)
 	{
 		numvector<double,2> lowerLeftNode = getCellCoordinates(i)[0];
 		cellCenters.push_back(lowerLeftNode + offset);
@@ -106,11 +119,12 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
 	// get neighbour cells for horizontal edges
 	for (int i = 0; i < nEdgesHor; ++i)
 	{
-		numvector<int, 2> neighbours = {-1,-1};
+        numvector<int, 2> neighbours = {-1,-1};
 
-		for (int j = 0; j < nCells + nGhostCells; ++j)
+        for (int j = 0; j < nInternalCells + nGhostCells; ++j)
 		{
-			if (i == cells[j][0])
+
+            if (i == cells[j][0])
 				neighbours[1] = j;
 			if (i == cells[j][1])
 				neighbours[0] = j;
@@ -126,7 +140,8 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
 	{
 		numvector<int, 2> neighbours = { -1, -1 };
 
-		for (int j = 0; j < nCells + nGhostCells; ++j)
+        // more optimal search?..
+        for (int j = 0; j < nInternalCells + nGhostCells; ++j)
 		{
 			if (i == cells[j][2])
 				neighbours[1] = j;
@@ -140,9 +155,9 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
 	}
 }
 
-Mesh2D::~Mesh2D()
-{
-}
+// ------------------ Private class methods --------------------
+
+// ------------------ Public class methods ---------------------
 
 numvector<numvector<double, 2>, 4> Mesh2D::getCellCoordinates(int iCell)
 {

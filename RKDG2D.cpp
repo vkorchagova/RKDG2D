@@ -1,10 +1,11 @@
-// RKDG 2D v.0.1
-// Structured rectangular mesh
+//- RKDG 2D v.0.1
+//  Structured rectangular mesh
 
 
 #include <stdio.h>
 #include <iostream>
 #include "Mesh2D.h"
+#include "Problem.h"
 
 using namespace std;
 
@@ -17,16 +18,19 @@ int main(int argc, char** argv)
     double Lx = 4;
     double Ly = 4;
 
+    // Get mesh
     Mesh2D mesh(nx, ny, Lx, Ly);
 
-	//for (int i = 0; i < mesh.neighbCellsVerEdges.size(); ++i)
-	//	cout << mesh.neighbCellsVerEdges[i] << endl;
+    // Get solver
+    Problem problem(mesh);
 
-	cout << mesh.globalToLocal(0, {1,0.8});
-	cout << mesh.localToGlobal(0, {1,1});
+	problem.setInitialConditions();
 
-	int hz;
-	cin >> hz;
+	for (int i = 0; i < mesh.cells.size(); ++i)
+		cout << problem.alphaPrev[i] << endl;
+
+	int aaa;
+	cin >> aaa;
 
 
 	return 0;
