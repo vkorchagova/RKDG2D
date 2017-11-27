@@ -35,10 +35,10 @@ public:
     ~GaussIntegrator(){}
 
     //- 1D Gauss integration
-    double integrate(function<double(double)>& f, double a, double b);
+    double integrate( const function<double(double)>& f, double a, double b);
 
-    //- 2D Gauss integration
-    double integrate(function<double(const numvector<double, 2>&)>& f, const numvector<numvector<double,2>,4>& nodes);
+    //- 2D Gauss integration (only for rectangles defined by nodes)
+    double integrate( const function<double(const numvector<double, 2>&)>& f, const numvector<numvector<double,2>,4>& nodes);
 
 };// End GaussIntegrator
 

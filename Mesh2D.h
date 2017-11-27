@@ -2,6 +2,7 @@
 
 #include "numvector.h"
 #include <vector>
+#include <fstream>
 
 namespace std
 {
@@ -9,6 +10,8 @@ namespace std
 class Mesh2D
 {
 private:
+
+    ofstream writer;
 
     
 
@@ -62,10 +65,13 @@ public:
     //- Copy constructor
     Mesh2D(const Mesh2D &mesh);
 
+    //- operator =
+    Mesh2D& operator=(const Mesh2D&);
+
     //- construct mesh by number of cells and size of flow domain
 	Mesh2D(int nx, int ny, double Lx, double Ly);
 
-    ~Mesh2D() {}
+    ~Mesh2D();
 
 	//- get coordinates of nodes of given mesh cell
 	numvector<numvector<double,2>,4> getCellCoordinates(int iCell);
@@ -75,6 +81,9 @@ public:
 
     //- transform global coordinate system for give cell to local CS
     numvector<double, 2> localToGlobal(int iCell, numvector<double, 2> coord);
+
+    //- export mesh
+    void exportMesh();
 
 };// end Mesh 2D
 

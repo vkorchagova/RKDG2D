@@ -5,8 +5,11 @@ using namespace std;
 
 // ------------------ Constructors & Destructors ----------------
 
+
 Mesh2D::Mesh2D(const Mesh2D &mesh)
 {
+    nInternalCells = mesh.nInternalCells;
+    nGhostCells = mesh.nGhostCells;
     hx = mesh.hx;
     hy = mesh.hy;
     nodes = mesh.nodes;
@@ -17,6 +20,7 @@ Mesh2D::Mesh2D(const Mesh2D &mesh)
     neighbCellsHorEdges = mesh.neighbCellsHorEdges;
     neighbCellsVerEdges = mesh.neighbCellsVerEdges;
 }
+
 
 // nx --- number of cells along x axis
 // ny --- number of cells along y axis
@@ -153,11 +157,33 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
 
 		neighbCellsVerEdges.push_back(neighbours);
 	}
+
+    writer.open("mesh2D");
+}
+
+Mesh2D::~Mesh2D()
+{
+    writer.close();
 }
 
 // ------------------ Private class methods --------------------
 
 // ------------------ Public class methods ---------------------
+
+Mesh2D& Mesh2D::operator=(const Mesh2D& mesh)
+{
+    nInternalCells = mesh.nInternalCells;
+    nGhostCells = mesh.nGhostCells;
+    hx = mesh.hx;
+    hy = mesh.hy;
+    nodes = mesh.nodes;
+    edgesHor = mesh.edgesHor;
+    edgesVer = mesh.edgesVer;
+    cells = mesh.cells;
+    cellCenters = mesh.cellCenters;
+    neighbCellsHorEdges = mesh.neighbCellsHorEdges;
+    neighbCellsVerEdges = mesh.neighbCellsVerEdges;
+}
 
 numvector<numvector<double, 2>, 4> Mesh2D::getCellCoordinates(int iCell)
 {
@@ -191,4 +217,13 @@ numvector<double, 2> Mesh2D::localToGlobal(int iCell, numvector<double, 2> coord
 {
 	numvector<double, 2> steps = { 0.5*coord[0] * hx, 0.5*coord[1] * hy };
 	return cellCenters[iCell] + steps;
+}
+
+void Mesh2D::exportMesh()
+{
+    writer << "hx = " << hx << endl;
+    writer << "hy = " << hy << endl;
+
+    for (int i = 0; i < nInternalCells+nGhostCells; ++i)
+        writer << cellCenters[i][0] << ' ' << cellCenters[i][1] << endl;
 }

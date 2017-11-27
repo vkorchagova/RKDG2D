@@ -5,6 +5,7 @@
 
 #include <math.h>
 #include <functional>
+#include <fstream>
 
 namespace std
 {
@@ -24,7 +25,13 @@ private:
     //- Number of basis functions
     static const int nShapes = 3;
 
+    //- File for ofstream
+    ofstream writer;
+
 private:
+
+    //- Output for coeffs
+    void write(ostream& writer, const numvector<double,5*nShapes>& coeffs);
 
     //- Calculate pressure using conservative variables
     double getPressure(numvector<double,5> sol);
@@ -67,9 +74,9 @@ public:
 public:
     Problem() {};
 
-    Problem(const Mesh2D &mesh);
+    Problem(const Mesh2D& mesh);
 
-    ~Problem() {};
+    ~Problem();
 
 
 

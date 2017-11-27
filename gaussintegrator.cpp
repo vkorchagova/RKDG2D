@@ -32,7 +32,7 @@ numvector<double, 2> GaussIntegrator::localToGlobal(numvector<double, 2> coord, 
 
 // public
 
-double GaussIntegrator::integrate(function<double(double)>& f, double a, double b)
+double GaussIntegrator::integrate(const function<double(double)>& f, double a, double b)
 {
     int nGP = 2;
 
@@ -48,7 +48,7 @@ double GaussIntegrator::integrate(function<double(double)>& f, double a, double 
 }
 
 
-double GaussIntegrator::integrate(function<double(const numvector<double, 2>&)>& f, const numvector<numvector<double,2>,4>& nodes)
+double GaussIntegrator::integrate(const function<double(const numvector<double, 2>&)>& f, const numvector<numvector<double,2>,4>& nodes)
 {
     int nGP = 4;
 
