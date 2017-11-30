@@ -193,7 +193,7 @@ numvector<numvector<double, 2>, 4> Mesh2D::getCellCoordinates(int iCell)
 	numvector<int, 2> iNodesDown = edgesHor[iEdgeDown];
 	numvector<int, 2> iNodesUp = edgesHor[iEdgeUp];
 
-	numvector<numvector<double, 2>, 4> nodeCoordinates;
+    numvector<numvector<double, 2>, 4> nodeCoordinates;
 
 	nodeCoordinates[0] = nodes[iNodesDown[0]];
 	nodeCoordinates[1] = nodes[iNodesDown[1]];

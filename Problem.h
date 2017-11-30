@@ -2,33 +2,39 @@
 
 #include "Mesh2D.h"
 #include "gaussintegrator.h"
+//#include "fluxllf.h"
 
 #include <math.h>
 #include <functional>
 #include <fstream>
 
+
+
+
 namespace std
 {
+
+//- Number of basis functions
+const int nShapes = 3;
 
 class Problem
 {
 
-private:
+public:
 
 
     //- Heat capacity ratio
     const double cpcv = 1.4;
 
     //- Mesh
-    Mesh2D mesh;
+    Mesh2D *mesh;
 
-    //- Number of basis functions
-    static const int nShapes = 3;
+
 
     //- File for ofstream
     ofstream writer;
 
-private:
+public:
 
     //- Output for coeffs
     void write(ostream& writer, const numvector<double,5*nShapes>& coeffs);
@@ -38,7 +44,7 @@ private:
 	
     //- Reconstruct solution by coeffs and basis functions
     numvector<double, 5> reconstructSolution(numvector<double, \
-											nShapes + 5>& alpha, \
+                                            nShapes * 5>& alpha, \
 											numvector<double, 2>& coord, \
 											int iCell);
 
@@ -72,9 +78,9 @@ public:
 
 
 public:
-    Problem() {};
+    Problem() {}
 
-    Problem(const Mesh2D& mesh);
+    Problem(Mesh2D &mesh);
 
     ~Problem();
 

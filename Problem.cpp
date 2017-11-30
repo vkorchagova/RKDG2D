@@ -5,9 +5,9 @@ using namespace std;
 
 // ------------------ Constructors & Destructors ----------------
 
-Problem::Problem(const Mesh2D& mesh2D)
+Problem::Problem(Mesh2D &mesh2D)
 {
-    mesh = mesh2D;
+    mesh = &mesh2D;
 
     //phi[0] = [](numvector<double,2> r){ return 0.5; };
     //phi[1] = [](numvector<double,2> r){ return 0.5*sqrt(3)*r[0]; };
@@ -17,12 +17,12 @@ Problem::Problem(const Mesh2D& mesh2D)
     //gradPhi[1] = [](numvector<double,2> r){ return numvector<double,2>{ 0.5*sqrt(3), 0.0 }; };
     //gradPhi[2] = [](numvector<double,2> r){ return numvector<double,2>{ 0.0, 0.5*sqrt(3) }; };
 	
-	double hx = mesh.hx;
-	double hy = mesh.hy;
+    double hx = mesh->hx;
+    double hy = mesh->hy;
 	
     phi[0] = [=](numvector<double, 2> r, int iCell){ return 1.0 / sqrt(hx*hy); };
-    phi[1] = [=](numvector<double, 2> r, int iCell){ return sqrt(12.0 / hy / pow(hx, 3)) * (r[0] - mesh.cellCenters[iCell][0]); };
-    phi[2] = [=](numvector<double, 2> r, int iCell){ return sqrt(12.0 / hx / pow(hy, 3)) * (r[1] - mesh.cellCenters[iCell][1]); };
+    phi[1] = [=](numvector<double, 2> r, int iCell){ return sqrt(12.0 / hy / pow(hx, 3)) * (r[0] - mesh->cellCenters[iCell][0]); };
+    phi[2] = [=](numvector<double, 2> r, int iCell){ return sqrt(12.0 / hx / pow(hy, 3)) * (r[1] - mesh->cellCenters[iCell][1]); };
 
 	gradPhi[0] = [=](numvector<double, 2> r, int iCell){ return numvector<double, 2>{ 0.0, 0.0 }; };
 	gradPhi[1] = [=](numvector<double, 2> r, int iCell){ return numvector<double, 2>{ sqrt(12.0 / hy / pow(hx, 3)), 0.0 }; };
@@ -38,7 +38,7 @@ Problem::~Problem()
 }
 
 numvector<double, 5> Problem::reconstructSolution(numvector<double, \
-												nShapes + 5>& alpha, \
+                                                nShapes * 5>& alpha, \
 												numvector<double, 2>& point, \
 												int iCell)
 {
@@ -106,16 +106,16 @@ void Problem::setInitialConditions()
     init[4] = [&](const numvector<double,2> r) { return (rho0 + initRho(r)) / cpcv / (cpcv - 1.0); };
 
 
-	int nCells = mesh.cells.size();
+    int nCells = mesh->cells.size();
 
 	alphaPrev.reserve(nCells);
 
     GaussIntegrator GP;
 
     // for internal cells
-    for (int k = 0; k < mesh.nInternalCells; ++k)
+    for (int k = 0; k < mesh->nInternalCells; ++k)
 	{
-        numvector<numvector<double,2>,4> nodes = mesh.getCellCoordinates(k);
+        numvector<numvector<double,2>,4> nodes = mesh->getCellCoordinates(k);
 
         for (int p = 0; p < 5; ++p)
 		{
@@ -149,3 +149,5 @@ void Problem::setInitialConditions()
 
 
 // ------------------ Public class methods --------------------
+
+
