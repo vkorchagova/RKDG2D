@@ -41,9 +41,21 @@ public:
 
     //- Calculate pressure using conservative variables
     double getPressure(numvector<double,5> sol);
+
+    //- Compute sound speed inside cell
+    double c(numvector<double, 5> sol);
+
+    //- Compute averaged sound speed on edge
+    double c_av(numvector<double, 5> solOne, numvector<double, 5> solTwo);
+
+    //- Eigenvalues for X direction ( estimation!!! )
+    numvector<double, 5> lambdaF(numvector<double, 5> solOne, numvector<double, 5> solTwo);
+
+    //- Eigenvalues for Y direction ( estimation!!! )
+    numvector<double, 5> lambdaG(numvector<double, 5> solOne, numvector<double, 5> solTwo);
 	
     //- Reconstruct solution by coeffs and basis functions
-    numvector<double, 5> reconstructSolution(numvector<double, \
+    numvector<double, 5> reconstructSolution(const numvector<double, \
                                             nShapes * 5>& alpha, \
 											numvector<double, 2>& coord, \
 											int iCell);

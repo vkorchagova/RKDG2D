@@ -10,10 +10,14 @@ class FluxLLF : public Flux
 {
 public:
     FluxLLF();
+    FluxLLF(Problem &prb);
     ~FluxLLF();
 
-    vector<double> evaluateHor(numvector<double,2> point, vector<numvector<double,5*nShapes>>& alpha, int iCellUp, int iCellDown);
-    vector<double> evaluateVer(numvector<double,2> point, vector<numvector<double,5*nShapes>>& alpha, int iCellLeft, int iCellRight);
+    numvector<double,5> evaluateHor(numvector<double,2> point, const vector<numvector<double,5*nShapes>>& alpha, int iCellUp, int iCellDown);
+    numvector<double,5> evaluateVer(numvector<double,2> point, const vector<numvector<double,5*nShapes>>& alpha, int iCellLeft, int iCellRight);
+
+    //- Get right-hand side
+    vector<numvector<double,5*nShapes>> getRHS(const vector<numvector<double,5*nShapes>>& alpha);
 };
 
 }

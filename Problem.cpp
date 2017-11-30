@@ -37,7 +37,7 @@ Problem::~Problem()
     writer.close();
 }
 
-numvector<double, 5> Problem::reconstructSolution(numvector<double, \
+numvector<double, 5> Problem::reconstructSolution(const numvector<double, \
                                                 nShapes * 5>& alpha, \
 												numvector<double, 2>& point, \
 												int iCell)
@@ -71,6 +71,36 @@ double Problem::getPressure(numvector<double, 5> sol)
 	return (cpcv - 1)*(sol[4] - 0.5*magU / sol[0]);  
 } // end getPressure
 
+double Problem::c(numvector<double, 5> sol)
+{
+    return sqrt( cpcv * getPressure(sol) / sol[0]);
+} // end c for cell
+
+double Problem::c_av(numvector<double, 5> solOne, numvector<double, 5> solTwo)
+{
+    double semiRho = 0.5*(solOne[0] + solTwo[0]);
+    double semiP =   0.5*(getPressure(solOne) + getPressure(solTwo));
+
+    return sqrt( cpcv * semiP / semiRho);
+} // end c for edge
+
+numvector<double, 5> Problem::lambdaF(numvector<double, 5> solOne, numvector<double, 5> solTwo)
+{
+    double u = fabs(0.5*(solOne[1] / solOne[0] + solTwo[1] / solTwo[0])); //estimation!!!
+    double soundSpeed = c_av(solOne, solTwo);
+
+    return {u - soundSpeed, u, u, u, u + soundSpeed};
+} // end lambdaF
+
+numvector<double, 5> Problem::lambdaG(numvector<double, 5> solOne, numvector<double, 5> solTwo)
+{
+    double v = fabs(0.5*(solOne[2] / solOne[0] + solTwo[2] / solTwo[0])); //estimation!!!
+    double soundSpeed = c_av(solOne, solTwo);
+
+    return {v - soundSpeed, v, v, v, v + soundSpeed};
+} // end lambdaG
+
+
 numvector<double, 5> Problem::fluxF(numvector<double, 5> sol)
 {
 	double u = sol[1] / sol[0];
@@ -95,7 +125,7 @@ void Problem::setInitialConditions()
 
     function<double(const numvector<double,2> r)> initRho = \
         [](const numvector<double,2> r) \
-            { return 0.001 * exp(-2*pow(r[0]-2,2) - 2*pow(r[1]-2.5,2)); };
+            { return 0.001 * exp( -2.0 * pow(r[0] - 2.0, 2) - 2.0 * pow(r[1] - 2.0, 2)); };
 
     function<double(const numvector<double,2>& r)> init[5];
 
@@ -132,20 +162,22 @@ void Problem::setInitialConditions()
 	}
 
     // for ghost cells
-/*
+
     numvector<double, 5*nShapes> infCondition = {rho0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, (rho0) / cpcv / (cpcv - 1.0), 0.0, 0.0};
 
-    for (int k = mesh.nInternalCells; k < nCells; ++k)
+    for (int k = mesh->nInternalCells; k < nCells; ++k)
     {
-        double sqrtJ = sqrt(mesh.hx * mesh.hy);
+        double sqrtJ = sqrt(mesh->hx * mesh->hy);
 
         alphaPrev[k] = sqrtJ * infCondition;
 
-        write(writer,alphaPrev[k]);
+        //write(writer,alphaPrev[k]);
 
     }
-*/
+
 } // end setInitialConditions
+
+
 
 
 // ------------------ Public class methods --------------------

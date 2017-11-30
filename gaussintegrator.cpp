@@ -30,7 +30,7 @@ numvector<double, 2> GaussIntegrator::localToGlobal(numvector<double, 2> coord, 
     return { 0.5*(bx - ax)*coord[0] + 0.5*(bx + ax), 0.5*(by - ay)*coord[1] + 0.5*(by + ay) };
 }
 
-// public
+// ------------------------------------------ public
 
 double GaussIntegrator::integrate(const function<double(double)>& f, double a, double b)
 {
@@ -45,7 +45,27 @@ double GaussIntegrator::integrate(const function<double(double)>& f, double a, d
     }
 
     return res*J;
-}
+} // for integrate 1D scalar
+
+numvector<double,5> GaussIntegrator::integrate( const function<numvector<double,5>(double)>& f, double a, double b)
+{
+    int nGP = 2;
+
+    numvector<double, 5> res (0.0);
+    double J = 0.5*(b-a);
+
+    for (int i = 0; i < nGP; ++i)
+    {
+        numvector<double, 5> resF = f( localToGlobal(gPoints1D[i],a,b) );
+
+        for (int k = 0; k < 5; ++k)
+        {
+            res[k] += gWeights1D[i] * resF[k];
+        }
+    }
+
+    return res * J;
+} // for integrate 1D vector
 
 
 double GaussIntegrator::integrate(const function<double(const numvector<double, 2>&)>& f, const numvector<numvector<double,2>,4>& nodes)
@@ -61,4 +81,24 @@ double GaussIntegrator::integrate(const function<double(const numvector<double, 
     }
 
     return res*J;
-}
+} // for integrate 2D of scalar function
+
+numvector<double,5> GaussIntegrator::integrate( const function<numvector<double,5>(const numvector<double, 2>&)>& f, const numvector<numvector<double,2>,4>& nodes)
+{
+    int nGP = 4;
+
+    numvector<double,5> res = 0.0;
+    double J = getArea(nodes)*0.25;
+
+    for (int i = 0; i < nGP; ++i)
+    {
+        numvector<double,5> resF = f(localToGlobal(gPoints2D[i],nodes));
+        for(int k=0;k<5;++k)
+        {
+            res[k] += gWeights2D[i] * resF[k];
+        }
+    }
+
+    return res*J;
+} // for integrate 2D of vector function
+
