@@ -32,6 +32,7 @@ numvector<double, 2> GaussIntegrator::localToGlobal(numvector<double, 2> coord, 
 
 // ------------------------------------------ public
 
+/*
 double GaussIntegrator::integrate(const function<double(double)>& f, double a, double b)
 {
     int nGP = 2;
@@ -46,6 +47,7 @@ double GaussIntegrator::integrate(const function<double(double)>& f, double a, d
 
     return res*J;
 } // for integrate 1D scalar
+*/
 
 numvector<double,5> GaussIntegrator::integrate( const function<numvector<double,5>(double)>& f, double a, double b)
 {
@@ -67,7 +69,7 @@ numvector<double,5> GaussIntegrator::integrate( const function<numvector<double,
     return res * J;
 } // for integrate 1D vector
 
-
+/*
 double GaussIntegrator::integrate(const function<double(const numvector<double, 2>&)>& f, const numvector<numvector<double,2>,4>& nodes)
 {
     int nGP = 4;
@@ -82,6 +84,8 @@ double GaussIntegrator::integrate(const function<double(const numvector<double, 
 
     return res*J;
 } // for integrate 2D of scalar function
+*/
+
 
 numvector<double,5> GaussIntegrator::integrate( const function<numvector<double,5>(const numvector<double, 2>&)>& f, const numvector<numvector<double,2>,4>& nodes)
 {

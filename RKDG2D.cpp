@@ -58,8 +58,8 @@ int main(int argc, char** argv)
 
     cout << "END \n";
 
-    //int aaa;
-    //cin >> aaa;
+    int aaa;
+    cin >> aaa;
 
 
 	return 0;

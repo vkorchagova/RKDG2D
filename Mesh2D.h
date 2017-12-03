@@ -23,10 +23,10 @@ public:
 	double hy;
 
     //- Number of internal cells
-    double nInternalCells;
+    int nInternalCells;
 
     //- Number of ghost cells
-    double nGhostCells;
+    int nGhostCells;
 
 
 

@@ -128,13 +128,13 @@ vector<numvector<double,5*nShapes>> FluxLLF::getRHS(const vector<numvector<doubl
 
             // Get fluxes through cell
             cellNodes = mesh->getCellCoordinates(i);
-            function<numvector<double,5>(numvector<double,2>)> f5 = [&](numvector<double,2> point)
+            function<numvector<double, 5>(numvector<double, 2>)> f5 = [&](numvector<double,2> point)
             {
                 return problem->fluxF( problem->reconstructSolution(alpha[i],point,i) )  * problem->gradPhi[j](point,i)[0] + \
                        problem->fluxG( problem->reconstructSolution(alpha[i],point,i) )  * problem->gradPhi[j](point,i)[1] ;
             };
 
-            buffer=GP.integrate(f5,cellNodes);
+            buffer = GP.integrate(f5,cellNodes);
 
             for(int p=0;p<5;++p)
             {

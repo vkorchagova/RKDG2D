@@ -127,13 +127,8 @@ void Problem::setInitialConditions()
         [](const numvector<double,2> r) \
             { return 0.001 * exp( -2.0 * pow(r[0] - 2.0, 2) - 2.0 * pow(r[1] - 2.0, 2)); };
 
-    function<double(const numvector<double,2>& r)> init[5];
-
-    init[0] = [&](const numvector<double,2> r) { return rho0 + initRho(r); } ;
-    init[1] = [](const numvector<double,2> r) { return 0.0; };
-    init[2] = [](const numvector<double,2> r) { return 0.0; };
-    init[3] = [](const numvector<double,2> r) { return 0.0; };
-    init[4] = [&](const numvector<double,2> r) { return (rho0 + initRho(r)) / cpcv / (cpcv - 1.0); };
+	function<numvector<double, 5>(const numvector<double, 2>& r)> init = \
+		[&](const numvector<double, 2> r) { return numvector<double, 5> { rho0 + initRho(r), 0.0, 0.0, 0.0, (rho0 + initRho(r)) / cpcv / (cpcv - 1.0) }; };
 
 
     int nCells = mesh->cells.size();
@@ -141,22 +136,28 @@ void Problem::setInitialConditions()
 	alphaPrev.reserve(nCells);
 
     GaussIntegrator GP;
+	numvector<double, 5> buffer;
 
     // for internal cells
     for (int k = 0; k < mesh->nInternalCells; ++k)
 	{
         numvector<numvector<double,2>,4> nodes = mesh->getCellCoordinates(k);
 
-        for (int p = 0; p < 5; ++p)
+        for (int q = 0; q < nShapes; ++q)
 		{
-			for (int q = 0; q < nShapes; ++q)
-			{
-                function<double(const numvector<double,2>& x)> f = \
-                        [=](const numvector<double,2>& x){return phi[q](x,k)*init[p](x);};
+			function<numvector<double, 5>(numvector<double, 2>)> f = \
+                    [&](const numvector<double,2>& x){return phi[q](x,k) * init(x);};
 
-                alphaPrev[k][p * 3 + q] = GP.integrate(f, nodes);
-			}
+			buffer = GP.integrate(f, nodes);
+
+			for (int p = 0; p < 5; ++p)
+			{
+				alphaPrev[k][p*nShapes + q] = buffer[p];
+				//cout << buffer[p] << ' ' ;
+
+			}// for p
 		}
+
 
        write(writer,alphaPrev[k]);
 	}

@@ -81,12 +81,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Flux.cpp" />
+    <ClCompile Include="fluxllf.cpp" />
+    <ClCompile Include="gaussintegrator.cpp" />
     <ClCompile Include="Mesh2D.cpp" />
     <ClCompile Include="Problem.cpp" />
     <ClCompile Include="RKDG2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Flux.h" />
+    <ClInclude Include="fluxllf.h" />
+    <ClInclude Include="gaussintegrator.h" />
     <ClInclude Include="Mesh2D.h" />
     <ClInclude Include="numvector.h" />
     <ClInclude Include="Problem.h" />
