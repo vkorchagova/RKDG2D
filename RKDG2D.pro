@@ -3,21 +3,27 @@ CONFIG += console c++11
 CONFIG -= app_bundle
 CONFIG -= qt
 
-SOURCES += RKDG2D.cpp \
-    Mesh2D.cpp \
-    Flux.cpp \
-    Problem.cpp \
-    gaussintegrator.cpp \
-    fluxllf.cpp \
-    Edge.cpp \
-    RKDGCell.cpp
+INCLUDEPATH += $$PWD \
+    $$PWD/src/ \
+    $$PWD/src/Flux/ \
+    $$PWD/src/Problem/ \
+    $$PWD/src/Integrator/ \
+    $$PWD/src/Mesh/
 
-HEADERS += \
-    Mesh2D.h \
-    numvector.h \
-    Flux.h \
-    Problem.h \
-    gaussintegrator.h \
-    fluxllf.h \
-    Edge.h \
-    RKDGCell.h
+SOURCES += RKDG2D.cpp \
+    #src/Flux/Flux.cpp \
+    #src/Flux/FluxLLF.cpp \
+    #src/Integrator/gaussintegrator.cpp \
+    src/Mesh/Edge.cpp \
+    src/Mesh/Mesh2D.cpp \
+    src/Mesh/Cell.cpp
+
+HEADERS += src/numvector.h \
+    #src/Flux/Flux.h \
+    #src/Flux/FluxLLF.h \
+    #src/Integrator/gaussintegrator.h \
+    src/Mesh/Edge.h \
+    src/Mesh/Mesh2D.h \
+    src/numvector.h \
+    src/Mesh/Cell.h \
+    src/Mesh/Point.h

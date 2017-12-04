@@ -14,15 +14,16 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-    int nx = 40;
-    int ny = 50;
-    double Lx = 4;
-    double Ly = 4;
+    double Lx = 4.0;
+    double Ly = 4.0;
+
+    int nx = 4;
+    int ny = 5;
 
     // Get mesh
     Mesh2D mesh(nx, ny, Lx, Ly);
 
-  //  mesh.exportMesh();
+    mesh.exportMesh();
 
     // Get solver
     //Problem problem(mesh);
