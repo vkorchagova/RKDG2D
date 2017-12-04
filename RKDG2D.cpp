@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <iostream>
 #include "Mesh2D.h"
-#include "Problem.h"
-#include "fluxllf.h"
+//#include "Problem.h"
+//#include "fluxllf.h"
 
 using namespace std;
 
@@ -22,20 +22,20 @@ int main(int argc, char** argv)
     // Get mesh
     Mesh2D mesh(nx, ny, Lx, Ly);
 
-    mesh.exportMesh();
+  //  mesh.exportMesh();
 
     // Get solver
-    Problem problem(mesh);
+    //Problem problem(mesh);
 
 
 
-	problem.setInitialConditions();
+    //problem.setInitialConditions();
 
     //for (int i = 0; i < mesh.cells.size(); ++i)
       //  cout << i << ' ' << problem.alphaPrev[i] << endl;
 
     //Get flux
-    FluxLLF numFlux (problem);
+    //FluxLLF numFlux (problem);
 
     //numvector<double,2> pt = {1.0,0.4};
     //numvector<double,5> res,s1,s2;
@@ -52,9 +52,9 @@ int main(int argc, char** argv)
     //cout << numFlux.problem->mesh->cellCenters.size() << endl;
     //problem.write(cout,problem.alphaPrev[9]);
 
-    vector<numvector<double, 5*nShapes>> rhs = numFlux.getRHS(problem.alphaPrev);
+    //vector<numvector<double, 5*nShapes>> rhs = numFlux.getRHS(problem.alphaPrev);
 
-    problem.write(cout,rhs[9]);
+    //problem.write(cout,rhs[9]);
 
     cout << "END \n";
 

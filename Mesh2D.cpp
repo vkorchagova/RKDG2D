@@ -6,22 +6,6 @@ using namespace std;
 // ------------------ Constructors & Destructors ----------------
 
 
-Mesh2D::Mesh2D(const Mesh2D &mesh)
-{
-    nInternalCells = mesh.nInternalCells;
-    nGhostCells = mesh.nGhostCells;
-    hx = mesh.hx;
-    hy = mesh.hy;
-    nodes = mesh.nodes;
-    edgesHor = mesh.edgesHor;
-    edgesVer = mesh.edgesVer;
-    cells = mesh.cells;
-    cellCenters = mesh.cellCenters;
-    neighbCellsHorEdges = mesh.neighbCellsHorEdges;
-    neighbCellsVerEdges = mesh.neighbCellsVerEdges;
-}
-
-
 // nx --- number of cells along x axis
 // ny --- number of cells along y axis
 Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
@@ -29,6 +13,7 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
 	int nNodes = (nx + 1)*(ny + 1);
 	int nEdgesHor = nx*(ny + 1);
 	int nEdgesVer = ny*(nx + 1);
+
     nInternalCells = nx*ny;
     nGhostCells = 2 * nx + 2 * ny;
 
@@ -41,7 +26,6 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
     internalCells.reserve(nInternalCells);
     ghostCells.reserve(nGhostCells);
     cells.reserve(nInternalCells+nGhostCells);
-    cellCenters.reserve(nInternalCells+nGhostCells);
 
 	// fill nodes
 	for (int i = 0; i < ny + 1; ++i)
@@ -51,20 +35,41 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
 
 	//get edges
 	for (int i = 0; i < ny + 1; ++i)
+    {
 		for (int j = 0; j < nx; ++j)
-			edgesHor.push_back({ i*(nx + 1) + j, i*(nx + 1) + j + 1 });
-
+        {
+            Edge* currentEdge;
+            currentEdge->nodes[0] = i*(nx + 1) + j;
+            currentEdge->nodes[1] = i*(nx + 1) + j;
+            edgesHor.push_back(currentEdge);
+        }
+    }
 
 	for (int i = 0; i < ny; ++i)
+    {
 		for (int j = 0; j < nx + 1; ++j)
-			edgesVer.push_back({ i*(nx + 1) + j, i*(nx + 1) + j + nx + 1 });
+        {
+            Edge* currentEdge;
+            currentEdge->nodes[0] = i*(nx + 1) + j;
+            currentEdge->nodes[1] = i*(nx + 1) + j + nx + 1;
+            edgesVer.push_back(currentEdge);
+        }
+    }
 
 	// get cells as edges
     for (int i = 0; i < ny; ++i)
+    {
         for (int j = 0; j < nx; ++j)
-            internalCells.push_back({i*(nx)+j, (i + 1)*(nx)+j, (i)*(nx + 1) + j, (i)*(nx + 1) + j + 1 });
+        {
+            RKDGCell* currentCell;
+            currentCell->edges = {edgesHor[i*(nx)+j], edgesHor[(i + 1)*(nx)+j], edgesVer[(i)*(nx + 1) + j], edgesVer[(i)*(nx + 1) + j + 1] };
 
-	// get ghost cells
+            internalCells.push_back(currentCell);
+        }
+    }
+
+    // get ghost cells
+    // not needed! Boudary conditions will be used
 
 	//down
 	for (int i = 0; i < nx; ++i)
