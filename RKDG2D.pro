@@ -13,10 +13,10 @@ INCLUDEPATH += $$PWD \
 SOURCES += RKDG2D.cpp \
     #src/Flux/Flux.cpp \
     #src/Flux/FluxLLF.cpp \
-    #src/Integrator/gaussintegrator.cpp \
     src/Mesh/Edge.cpp \
     src/Mesh/Mesh2D.cpp \
-    src/Mesh/Cell.cpp
+    src/Mesh/Cell.cpp \
+    src/Problem/Problem.cpp
 
 HEADERS += src/numvector.h \
     #src/Flux/Flux.h \
@@ -26,4 +26,5 @@ HEADERS += src/numvector.h \
     src/Mesh/Mesh2D.h \
     src/numvector.h \
     src/Mesh/Cell.h \
-    src/Mesh/Point.h
+    src/Mesh/Point.h \
+    src/Problem/Problem.h

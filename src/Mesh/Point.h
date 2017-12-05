@@ -27,10 +27,10 @@ public:
     ~Point() {}
 
     //- Get x coordinate
-    double x() { return coord[0]; }
+    double x() const { return coord[0]; }
 
     //- Get y coordinate
-    double y() { return coord[1]; }
+    double y() const { return coord[1]; }
 
     //- Set x, y values
     void set(double x, double y) { coord[0] = x; coord[1] = y; }

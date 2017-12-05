@@ -13,22 +13,35 @@
 #include "numvector.h"
 #include "Problem.h"
 #include "Point.h"
+#include <functional>
 
 class Edge;
 class Problem;
+
+
+
+
 
 class Cell
 {
 
 private:
 
-    //- Space step in x direction
-    double hx;
+    //- Gauss points
+    numvector<Point,4> gPoints2D;
 
-    //- Space step in y direction
-    double hy;
+    //- Gauss weights
+    numvector<double,4> gWeights2D;
+
+    //- Number of Gauss points
+    int nGP;
+
+
 
 private:
+
+    //- Number of basis functions
+    static const int nShapes = 3;
 
     //- Compute hx, hy
     void getSteps();
@@ -39,9 +52,26 @@ private:
     //- Calculate center of cell
     void getCellCenter();
 
+    //- Check if point belongs cell
+    bool insideCell(Point& point);
+
+    //- local [-1,1]x[-1,1] to global rectangular cell
+    Point localToGlobal(Point& point);
+
+    //- Set Gauss points
+    void setGaussPoints();
+
+
 public:
 
     /// geometric variables
+
+
+    //- Space step in x direction
+    double hx;
+
+    //- Space step in y direction
+    double hy;
 
     //- Number of cell
     int number;
@@ -65,7 +95,20 @@ public:
     Problem* problem;
 
     //- Number of 2D Gauss points for cell
-    static const int nGP = 4;
+    //static const int nGP = 4;
+
+    //- List of basis functions
+    //std::function<double(const Point&)> phi[nShapes];
+    std::vector<std::function<double(const Point&)>> phi;
+
+    //- Gradient of basis functions
+    std::function<Point&(Point&)> gradPhi[nShapes];
+
+    //- Solution coeffs on cells on previous time step
+    numvector<double, 5 * nShapes> alphaPrev;
+
+    //- Solution coeffs on cells on next time step
+    numvector<double, 5 * nShapes> alphaNext;
 
 public:
 
@@ -89,8 +132,22 @@ public:
 
     /// RKDG methods
 
+    //- Set problem
+    void setProblem(Problem& prb);
+
+
+    //- Reconstruct solution
+    numvector<double, 5> reconstructSolution(const numvector<double, nShapes * 5>& alpha, Point& point);
+
+    //- Set initial conditions
+    void setLocalInitialConditions(std::function<numvector<double,5>(const Point& point)>& init);
+
+
     //- Calculate local RHS
     double getLocalRHS();
+
+    //- 2D Gauss integration of vector function
+    numvector<double,5> integrate( const std::function<numvector<double,5>( Point&)>& f);
 
 
 };

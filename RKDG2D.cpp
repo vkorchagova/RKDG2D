@@ -26,11 +26,11 @@ int main(int argc, char** argv)
     mesh.exportMesh();
 
     // Get solver
-    //Problem problem(mesh);
+    Problem problem(mesh);
 
 
 
-    //problem.setInitialConditions();
+    problem.setInitialConditions();
 
     //for (int i = 0; i < mesh.cells.size(); ++i)
       //  cout << i << ' ' << problem.alphaPrev[i] << endl;

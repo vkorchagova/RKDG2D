@@ -251,7 +251,6 @@ void Mesh2D::exportMesh()
 
     for (int i = 0; i < nInternalCells; ++i)
     {
-        cout << cells[i].center.x() << ' ' << cells[i].center.y() << endl;
         writer << cells[i].center.x() << ' ' << cells[i].center.y() << endl;
     }
 
