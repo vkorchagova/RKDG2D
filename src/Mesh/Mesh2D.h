@@ -28,10 +28,6 @@ public:
     //- Number of internal cells
     int nInternalCells;
 
-    //- Number of ghost cells
-    //int nGhostCells;
-
-
 
     //- Coordinates of nodes (x,y)
     std::vector<Point> nodes;

@@ -23,6 +23,12 @@ public:
     //- Construct with defined values
     Point(double x, double y) { set(x,y); }
 
+    //- Copy constructor
+    Point(const Point& p) { coord[0] = p.x(); coord[1] = p.y(); }
+
+    //- Overload "=" operator
+    Point& operator=(const Point& p) { coord[0] = p.x(); coord[1] = p.y(); return *this; }
+
     //- Destructor
     ~Point() {}
 

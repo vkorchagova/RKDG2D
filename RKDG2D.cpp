@@ -17,8 +17,8 @@ int main(int argc, char** argv)
     double Lx = 4.0;
     double Ly = 4.0;
 
-    int nx = 4;
-    int ny = 5;
+    int nx = 2;
+    int ny = 3;
 
     // Get mesh
     Mesh2D mesh(nx, ny, Lx, Ly);

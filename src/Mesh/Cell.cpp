@@ -15,28 +15,41 @@ Cell::Cell(numvector<Edge*, 4>& defEdges)
     getSteps();
     getArea();
     getCellCenter();
-
-    phi.resize(3);
-
-    phi[0] = [&](const Point& r){ std::cout << "blah" << 1.0 << hx << '\n'; return 1.0 / sqrt(hx*hy); };
-    phi[1] = [&](const Point& r){ return sqrt(12.0 / hy / pow(hx, 3)) * (r.x() - center.x()); };
-    phi[2] = [&](const Point& r){ return sqrt(12.0 / hx / pow(hy, 3)) * (r.y() - center.y()); };
-
-    //gradPhi[0] = [&](Point& r){ Point p (0.0, 0.0);                          return &p; };
-    //gradPhi[1] = [&](Point& r){ Point p (sqrt(12.0 / hy / pow(hx, 3)), 0.0); return &p; };
-    //gradPhi[2] = [&](Point& r){ Point p (0.0, sqrt(12.0 / hx / pow(hy, 3))); return &p; };
-
-
-
+    setBasisFunctions();
     setGaussPoints();
-
-    //std::cout << phi[1](localToGlobal(gPoints2D[1])) << "\n";
-
 }
 
 Cell::~Cell()
 {
 
+}
+
+Cell::Cell(const Cell& c)
+{
+    edges = c.edges;
+    area = c.area;
+    center = c.center;
+    hx = c.hx;
+    hy = c.hy;
+    number = c.number;
+
+    setBasisFunctions();
+    setGaussPoints();
+}
+
+Cell& Cell::operator=(const Cell& c)
+{
+    edges = c.edges;
+    area = c.area;
+    center = c.center;
+    hx = c.hx;
+    hy = c.hy;
+    number = c.number;
+
+    setBasisFunctions();
+    setGaussPoints();
+
+    return *this;
 }
 
 // ------------------ Private class methods --------------------
@@ -80,7 +93,6 @@ Point Cell::localToGlobal(Point &point)
 void Cell::setGaussPoints()
 {
 
-
     nGP = 4;
 
     double sqrt3 = 1.0/1.732050807568877;
@@ -91,6 +103,19 @@ void Cell::setGaussPoints()
     gPoints2D[3].set( sqrt3,  sqrt3);
 
     gWeights2D = { 1.0, 1.0, 1.0, 1.0 };
+}
+
+void Cell::setBasisFunctions()
+{
+    phi.resize(3);
+
+    phi[0] = [=](const Point& r){ return 1.0 / sqrt(hx*hy); };
+    phi[1] = [=](const Point& r){ return sqrt(12.0 / hy / pow(hx, 3)) * (r.x() - center.x()); };
+    phi[2] = [=](const Point& r){ return sqrt(12.0 / hx / pow(hy, 3)) * (r.y() - center.y()); };
+
+    gradPhi[0] = [=](const Point& r){ Point p (0.0, 0.0);                          return p; };
+    gradPhi[1] = [=](const Point& r){ Point p (sqrt(12.0 / hy / pow(hx, 3)), 0.0); return p; };
+    gradPhi[2] = [=](const Point& r){ Point p (0.0, sqrt(12.0 / hx / pow(hy, 3))); return p; };
 }
 
 // ------------------ Public class methods ---------------------
@@ -142,23 +167,16 @@ numvector<double, 5> Cell::reconstructSolution(const numvector<double, nShapes *
 
 void Cell::setLocalInitialConditions(std::function<numvector<double,5>(const Point& point)>& init)
 {
-    std::cout << phi[0](gPoints2D[0]) << "\n";
-
-    numvector<Point*,4> nodes = getCellCoordinates();
-
     for (int q = 0; q < nShapes; ++q)
     {
-
-
         std::function<numvector<double, 5>(const Point&)> f = \
-                [&](const Point& p) {  return phi[q](p) * init(p); };
+                [=](const Point& p) {  return phi[q](p) * init(p); };
 
         numvector<double, 5> buffer = integrate(f);
 
         for (int p = 0; p < 5; ++p)
         {
-           // alphaPrev[p*nShapes + q] = buffer[p];
-            //std::cout << buffer[p] << ' ' ;
+            alphaPrev[p*nShapes + q] = buffer[p];
         }// for p
     }
 
@@ -166,8 +184,6 @@ void Cell::setLocalInitialConditions(std::function<numvector<double,5>(const Poi
 
 numvector<double,5> Cell::integrate( const std::function<numvector<double, 5>(Point &)> &f)
 {
-
-
     numvector<double,5> res = 0.0;
 
     double J = area*0.25;
@@ -176,10 +192,7 @@ numvector<double,5> Cell::integrate( const std::function<numvector<double, 5>(Po
     {
         Point glob = localToGlobal(gPoints2D[i]);
 
-
         numvector<double,5> resF = f(glob);
-
-        //std::cout << resF[0] << "\n";
 
         for (int k = 0; k < 5; ++k)
         {

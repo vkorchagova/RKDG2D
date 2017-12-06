@@ -100,10 +100,6 @@ void Problem::setInitialConditions()
 
     int nCells = mesh->nInternalCells;
 
-    //alphaPrev.reserve(nCells);
-
-    //GaussIntegrator GP;
-    //numvector<double, 5> buffer;
 
     // for internal cells
     for (int k = 0; k < nCells; ++k)
@@ -111,22 +107,8 @@ void Problem::setInitialConditions()
         mesh->cells[k].setProblem(*this);
         mesh->cells[k].setLocalInitialConditions(init);
 
-        //write(writer,mesh->cells[k].alphaPrev);
+        write(writer,mesh->cells[k].alphaPrev);
 	}
-    // for ghost cells
-/*
-    numvector<double, 5*nShapes> infCondition = {rho0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, (rho0) / cpcv / (cpcv - 1.0), 0.0, 0.0};
-
-    for (int k = mesh->nInternalCells; k < nCells; ++k)
-    {
-        double sqrtJ = sqrt(mesh->hx * mesh->hy);
-
-        alphaPrev[k] = sqrtJ * infCondition;
-
-        //write(writer,alphaPrev[k]);
-
-    }
-*/
 
 } // end setInitialConditions
 

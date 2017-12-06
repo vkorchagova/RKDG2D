@@ -20,8 +20,6 @@ class Problem;
 
 
 
-
-
 class Cell
 {
 
@@ -60,6 +58,9 @@ private:
 
     //- Set Gauss points
     void setGaussPoints();
+
+    //- Set basis functions
+    void setBasisFunctions();
 
 
 public:
@@ -102,7 +103,7 @@ public:
     std::vector<std::function<double(const Point&)>> phi;
 
     //- Gradient of basis functions
-    std::function<Point&(Point&)> gradPhi[nShapes];
+    std::function<Point(const Point&)> gradPhi[nShapes];
 
     //- Solution coeffs on cells on previous time step
     numvector<double, 5 * nShapes> alphaPrev;
@@ -121,13 +122,17 @@ public:
     //- Destructor
     ~Cell();
 
+    //- Copy constructor
+    Cell(const Cell& c);
+
+    //- Overload of "=" operator
+    Cell& operator=(const Cell& c);
+
 
     /// geometric methods
 
     //- Calculate coordinates of cell nodes
     numvector<Point*, nEdges> getCellCoordinates();
-
-
 
 
     /// RKDG methods

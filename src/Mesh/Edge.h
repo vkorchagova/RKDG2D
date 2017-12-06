@@ -33,7 +33,7 @@ public:
     /// RKDG variables
 
     //- Number of gauss points for edge
-    int nGP = 2;
+    static const int nGP = 2;
 
     //- Local numerical fluxes for edge
     numvector<double,2> localFluxes;
@@ -42,6 +42,12 @@ public:
 
     //- Default constructor
     Edge();
+
+    //- Copy constructor
+    Edge(const Edge&);
+
+    //- Overloaded "=" operator
+    Edge& operator=(const Edge&);
 
     //- Destructor
     ~Edge();
