@@ -9,14 +9,6 @@ Problem::Problem(Mesh2D &mesh2D)
 {
     mesh = &mesh2D;
 
-    //phi[0] = [](numvector<double,2> r){ return 0.5; };
-    //phi[1] = [](numvector<double,2> r){ return 0.5*sqrt(3)*r[0]; };
-    //phi[2] = [](numvector<double,2> r){ return 0.5*sqrt(3)*r[1]; };
-
-    //gradPhi[0] = [](numvector<double,2> r){ return numvector<double,2>{ 0.0, 0.0 }; };
-    //gradPhi[1] = [](numvector<double,2> r){ return numvector<double,2>{ 0.5*sqrt(3), 0.0 }; };
-    //gradPhi[2] = [](numvector<double,2> r){ return numvector<double,2>{ 0.0, 0.5*sqrt(3) }; };
-	
     double hx = mesh->hx;
     double hy = mesh->hy;
 	
@@ -175,7 +167,7 @@ void Problem::setInitialConditions()
        write(writer,alphaPrev[k]);
 	}
 
-    // for ghost cells --- into the main.
+    // for ghost cells --- see Apply Boundary.
 
 
 
