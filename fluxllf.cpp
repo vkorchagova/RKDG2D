@@ -35,7 +35,7 @@ numvector<double,5> FluxLLF::evaluateHor(numvector<double,2> point, const vector
 
     double lambda = problem->lambdaG(solUp,solDown)[4];
 
-    return 0.5 * (fluxUpDown + fluxDownUp) - 0.5 * lambda * (solDown - solUp);
+    return 0.5 * (fluxUpDown + fluxDownUp) + 0.5 * lambda * (solDown - solUp);
 }
 
 numvector<double,5> FluxLLF::evaluateVer(numvector<double,2> point, const vector<numvector<double,5*nShapes>>& alpha, int iCellLeft, int iCellRight)
@@ -69,49 +69,6 @@ vector<numvector<double,5*nShapes>> FluxLLF::getRHS(const vector<numvector<doubl
     vector<function<numvector<double, 5>(numvector<double, 2>)>> integrateFluxesVer(nEdgesVer);
 
     GaussIntegrator GP;
-
-
-
-/*    for (int i = 0; i < nEdgesHor; ++i)
-    {
-        double a = mesh->nodes[mesh->edgesHor[i][0]][0];
-        double b = mesh->nodes[mesh->edgesHor[i][1]][0];
-        double y = mesh->nodes[mesh->edgesHor[i][0]][1];
-
-        int iCellUp = mesh->neighbCellsHorEdges[i][1];
-        int iCellDown = mesh->neighbCellsHorEdges[i][0];
-
-        function<numvector<double,5>(numvector<double,2>)> f = [=](numvector<double,2> point)
-        {
-            return evaluateHor(point,alpha,iCellUp,iCellDown);
-        };
-
-        integrateFluxesHor[i] = f;
-    }
-*/
-
-/*
-    for (int i = 0; i < nCells; ++i)
-    {
-        // for hor edges
-        double a = mesh->nodes[mesh->edgesHor[mesh->cells[i][0]][0]][0];
-        double b = mesh->nodes[mesh->edgesHor[mesh->cells[i][0]][1]][0];
-        double y = mesh->nodes[mesh->edgesHor[mesh->cells[i][0]][0]][1];
-
-        // for down edge
-        int iCellUp = i; //mesh->neighbCellsHorEdges[mesh->cells[i][0]][1];
-        int iCellDownCell = mesh->neighbCellsHorEdges[mesh->cells[i][0]][0];
-
-        for (int q = 0; q < nShapes; ++q)
-        {
-            function<numvector<double,5>(double)> f = [=](double x)
-            {
-                numvector<double, 2> point = {x, y};
-                return ;
-            };
-        }
-    }
-*/
 
 
     double a,b,z;
