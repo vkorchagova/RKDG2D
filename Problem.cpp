@@ -64,6 +64,18 @@ void Problem::write(ostream& writer, const numvector<double,5*nShapes>& coeffs)
     writer << endl;
 }
 
+void Problem::write(ostream& writer, const vector<numvector<double,5*nShapes>>& coeffs)
+{
+
+    for (int j = 0; j < mesh->nInternalCells; ++j)
+    {
+        for (int i = 0; i < 5*nShapes; ++i)
+            writer << coeffs[j][i] << ' ';
+
+        writer << endl;
+    }
+}
+
 double Problem::getPressure(numvector<double, 5> sol)
 {
 	double magU = pow(sol[2], 2) + pow(sol[3], 2) + pow(sol[1], 2);
@@ -121,19 +133,20 @@ void Problem::setInitialConditions()
 {
     // define functions for initial conditions
 
-    double rho0 = 1;
+    double rho0 = 1.0;
 
     function<double(const numvector<double,2> r)> initRho = \
         [](const numvector<double,2> r) \
-            { return 0.001 * exp( -2.0 * pow(r[0] - 2.0, 2) - 2.0 * pow(r[1] - 2.0, 2)); };
+    { return 0.001 * exp( -2.0 * pow(r[0] - 2.0, 2) - 2.0 * pow(r[1] - 2.0, 2)); };
 
 	function<numvector<double, 5>(const numvector<double, 2>& r)> init = \
 		[&](const numvector<double, 2> r) { return numvector<double, 5> { rho0 + initRho(r), 0.0, 0.0, 0.0, (rho0 + initRho(r)) / cpcv / (cpcv - 1.0) }; };
 
 
-    int nCells = mesh->cells.size();
+    int nCells = mesh->nInternalCells + mesh->nGhostCells;
 
-	alphaPrev.reserve(nCells);
+    alphaPrev.resize(nCells);
+    alphaNext.resize(nCells);
 
     GaussIntegrator GP;
 	numvector<double, 5> buffer;
@@ -162,7 +175,17 @@ void Problem::setInitialConditions()
        write(writer,alphaPrev[k]);
 	}
 
-    // for ghost cells
+    // for ghost cells --- into the main.
+
+
+
+} // end setInitialConditions
+
+void Problem::applyBoundary(vector<numvector<double,5*nShapes>>& alpha)
+{
+    double rho0 = 1.0;
+
+    int nCells = mesh->nInternalCells + mesh->nGhostCells;
 
     numvector<double, 5*nShapes> infCondition = {rho0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, (rho0) / cpcv / (cpcv - 1.0), 0.0, 0.0};
 
@@ -170,14 +193,12 @@ void Problem::setInitialConditions()
     {
         double sqrtJ = sqrt(mesh->hx * mesh->hy);
 
-        alphaPrev[k] = sqrtJ * infCondition;
+        alpha[k] = sqrtJ * infCondition;
 
         //write(writer,alphaPrev[k]);
 
     }
-
-} // end setInitialConditions
-
+}
 
 
 

@@ -8,7 +8,8 @@ SOURCES += RKDG2D.cpp \
     Flux.cpp \
     Problem.cpp \
     gaussintegrator.cpp \
-    fluxllf.cpp
+    fluxllf.cpp \
+    defs.cpp
 
 HEADERS += \
     Mesh2D.h \
@@ -16,4 +17,5 @@ HEADERS += \
     Flux.h \
     Problem.h \
     gaussintegrator.h \
-    fluxllf.h
+    fluxllf.h \
+    defs.h

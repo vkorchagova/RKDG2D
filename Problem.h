@@ -29,15 +29,16 @@ public:
     //- Mesh
     Mesh2D *mesh;
 
-
-
     //- File for ofstream
     ofstream writer;
 
 public:
 
-    //- Output for coeffs
+    //- Output for coeffs in one cell
     void write(ostream& writer, const numvector<double,5*nShapes>& coeffs);
+
+    //- Output for coeffs in all cells
+    void write(ostream& writer, const vector<numvector<double,5*nShapes>>& coeffs);
 
     //- Calculate pressure using conservative variables
     double getPressure(numvector<double,5> sol);
@@ -87,6 +88,9 @@ public:
 
 	//- Set initial conditions
 	void setInitialConditions();
+
+    //- Set coeffs for ghost cells
+    void applyBoundary(vector<numvector<double, 5*nShapes> > &alpha);
 
 
 public:

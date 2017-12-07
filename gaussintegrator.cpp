@@ -1,4 +1,5 @@
 #include "gaussintegrator.h"
+#include <iostream>
 
 using namespace std;
 
@@ -17,7 +18,7 @@ GaussIntegrator::GaussIntegrator()
 
 double GaussIntegrator::localToGlobal(double x, double a, double b)
 {
-    return 0.5*(b-a)*x + 0.5*(a+b);
+    return 0.5*fabs(b-a)*x + 0.5*fabs(a+b);
 }
 
 numvector<double, 2> GaussIntegrator::localToGlobal(numvector<double, 2> coord, numvector<numvector<double,2>,4> nodes)
@@ -27,7 +28,7 @@ numvector<double, 2> GaussIntegrator::localToGlobal(numvector<double, 2> coord, 
     double bx = nodes[1][0];
     double by = nodes[2][1];
 
-    return { 0.5*(bx - ax)*coord[0] + 0.5*(bx + ax), 0.5*(by - ay)*coord[1] + 0.5*(by + ay) };
+    return { 0.5*fabs(bx - ax)*coord[0] + 0.5*(bx + ax), 0.5*fabs(by - ay)*coord[1] + 0.5*(by + ay) };
 }
 
 // ------------------------------------------ public
@@ -54,7 +55,7 @@ numvector<double,5> GaussIntegrator::integrate( const function<numvector<double,
     int nGP = 2;
 
     numvector<double, 5> res (0.0);
-    double J = 0.5*(b-a);
+    double J = 0.5*fabs(b-a);
 
     for (int i = 0; i < nGP; ++i)
     {
