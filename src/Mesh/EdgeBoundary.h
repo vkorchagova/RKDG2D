@@ -39,7 +39,9 @@ public:
     ~EdgeBoundary() {}
 
     //- Apply boundary conditions
-    virtual numvector<double, 5> applyBoundary(numvector<double, 5>& sol);
+    virtual numvector<double, 5> applyBoundary(numvector<double, 5>& sol) {}
+
+    virtual void getLocalFluxes() {std::cout << "i'm in simple BE \n";}
 };
 
 #endif // EDGEBOUNDARY_H

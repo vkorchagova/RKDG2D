@@ -12,8 +12,6 @@ INCLUDEPATH += $$PWD \
     $$PWD/src/Solver/
 
 SOURCES += RKDG2D.cpp \
-    #src/Flux/Flux.cpp \
-    #src/Flux/FluxLLF.cpp \
     src/Mesh/Cell.cpp \
     src/Mesh/Edge.cpp \
     src/Mesh/EdgeInternal.cpp \
@@ -21,12 +19,11 @@ SOURCES += RKDG2D.cpp \
     src/Mesh/EdgeBoundary.cpp \
     src/Mesh/EdgeBoundaryInfty.cpp \
     src/Problem/Problem.cpp \
-    src/Solver/Solver.cpp
+    src/Solver/Solver.cpp \
+    src/Flux/Flux.cpp \
+    src/Flux/FluxLLF.cpp
 
 HEADERS += src/numvector.h \
-    #src/Flux/Flux.h \
-    #src/Flux/FluxLLF.h \
-    #src/Integrator/gaussintegrator.h \
     src/Mesh/Mesh2D.h \
     src/Mesh/Point.h \
     src/Mesh/Edge.h \
@@ -35,4 +32,6 @@ HEADERS += src/numvector.h \
     src/Mesh/EdgeBoundary.h \
     src/Mesh/EdgeBoundaryInfty.h \
     src/Problem/Problem.h \
-    src/Solver/Solver.h
+    src/Solver/Solver.h \
+    src/Flux/Flux.h \
+    src/Flux/FluxLLF.h

@@ -55,6 +55,7 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
     {
         EdgeBoundaryInfty currentEdgeLeft (&nodes[i*(nx + 1)], &nodes[i*(nx + 1) + 1]);
         edgesHor.push_back(currentEdgeLeft);
+        edgesBound.push_back(currentEdgeLeft);
 
         for (int j = 1; j < nx - 1; ++j)
         {
@@ -64,6 +65,7 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
 
         EdgeBoundaryInfty currentEdgeRight (&nodes[i*(nx + 1) + nx - 1], &nodes[i*(nx + 1) + nx]);
         edgesHor.push_back(currentEdgeRight);
+        edgesBound.push_back(currentEdgeRight);
     }
 
     // get vertical edges
@@ -72,6 +74,7 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
     {
         EdgeBoundaryInfty currentEdgeLeft (&nodes[i*(nx + 1)], &nodes[i*(nx + 1) + nx + 1]);
         edgesVer.push_back(currentEdgeLeft);
+        edgesBound.push_back(currentEdgeLeft);
 
         for (int j = 0; j < nx + 1; ++j)
         {
@@ -81,6 +84,7 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
 
         EdgeBoundaryInfty currentEdgeRight (&nodes[i*(nx + 1) + nx - 1], &nodes[i*(nx + 1) + nx + nx]);
         edgesVer.push_back(currentEdgeRight);
+        edgesBound.push_back(currentEdgeRight);
     }
 
     // get cells as edges (counter-clockwise: lb -> rb -> ru -> rl)

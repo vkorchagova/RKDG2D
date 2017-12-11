@@ -17,14 +17,21 @@
 
 #include "numvector.h"
 #include "Point.h"
+#include "Cell.h"
+#include "Flux.h"
 #include <functional>
-
-class Cell;
+#include <iostream>
 
 class Edge
 {
 
 private:
+
+
+
+
+
+public:
 
     //- Number of gauss points for edge
     static const int nGP = 2;
@@ -35,8 +42,6 @@ private:
     //- Weights for integration
     numvector<double, nGP> gWeights;
 
-public:
-
 
     /// geometric variables
 
@@ -46,6 +51,8 @@ public:
     //- Neighbour cells for edge: 2 for internal, 1 for boundary
     std::vector<Cell*> neibCells;
 
+    Flux* flux;
+
 
     /// RKDG variables
 
@@ -53,6 +60,7 @@ public:
 
     //- Local numerical fluxes for edge
     numvector<numvector<double, 5>, nGP> localFluxes;
+
 
 public:
 
@@ -74,8 +82,11 @@ public:
 
     /// RKDG methods
 
+    //- Set flux
+    void setFlux(Flux& flx);
+
     //- Calculate local fluxes for edge
-    virtual void getLocalFluxes() {}
+    virtual void getLocalFluxes() { std::cout << "i'm in base Edge \n";}
 
     //- Calculate 1D integral through edge
     numvector<double, 5> boundaryIntegral(std::function<double(const Point&)>& phi);

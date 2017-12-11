@@ -1,4 +1,5 @@
 #include "Cell.h"
+#include "Edge.h"
 #include <iostream>
 
 // ------------------ Constructors & Destructor ----------------
@@ -144,7 +145,7 @@ void Cell::setProblem(Problem& prb)
 
 } // end setProblem
 
-numvector<double, 5> Cell::reconstructSolution(const numvector<double, nShapes * 5>& alpha, Point& point)
+numvector<double, 5> Cell::reconstructSolution(Point& point)
 {
     if (!insideCell(point))
     {
@@ -157,7 +158,7 @@ numvector<double, 5> Cell::reconstructSolution(const numvector<double, nShapes *
     for (int i = 0; i < 5; ++i)
     {
         for (int j = 0; j < nShapes; ++j)
-            sol[i] += phi[j](point)*alpha[i*nShapes + j];
+            sol[i] += phi[j](point) * problem->alpha[number][i * nShapes + j];
     }
 
     return sol;
@@ -165,8 +166,10 @@ numvector<double, 5> Cell::reconstructSolution(const numvector<double, nShapes *
 } // end reconstructSolution
 
 
-void Cell::setLocalInitialConditions(std::function<numvector<double,5>(const Point& point)>& init)
+numvector<double, 5 * nShapes> Cell::setLocalInitialConditions(std::function<numvector<double,5>(const Point& point)>& init)
 {
+    numvector<double, 5 * nShapes> alpha;
+
     for (int q = 0; q < nShapes; ++q)
     {
         std::function<numvector<double, 5>(const Point&)> f = \
@@ -176,9 +179,11 @@ void Cell::setLocalInitialConditions(std::function<numvector<double,5>(const Poi
 
         for (int p = 0; p < 5; ++p)
         {
-            alphaPrev[p*nShapes + q] = buffer[p];
+            alpha[p*nShapes + q] = buffer[p];
         }// for p
     }
+
+    return alpha;
 
 } // end setLocalInitialConditions
 

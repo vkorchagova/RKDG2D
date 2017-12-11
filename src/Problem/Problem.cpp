@@ -36,6 +36,11 @@ Problem::~Problem()
 
 //// RKDG methods
 
+void Problem::getAlpha(std::vector<numvector<double, 5 * nShapes> >& a)
+{
+    alpha = a;
+}
+
 double Problem::getPressure(numvector<double, 5> sol)
 {
 	double magU = pow(sol[2], 2) + pow(sol[3], 2) + pow(sol[1], 2);

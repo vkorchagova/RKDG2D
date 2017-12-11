@@ -8,13 +8,8 @@ using namespace std;
 Flux::Flux(Problem &prb)
 {
     problem = &prb;
-    mesh = problem->mesh;
 }
 
-
-Flux::~Flux()
-{
-}
 
 // ------------------ Private class methods --------------------
 

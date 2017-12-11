@@ -15,8 +15,6 @@
 
 #include "Edge.h"
 
-
-
 class EdgeInternal : public Edge
 {
 
@@ -40,7 +38,7 @@ public:
     ~EdgeInternal() {}
 
 
-    void getLocalFluxes() {}
+    virtual void getLocalFluxes();
 };
 
 #endif // EDGEINTERNAL_H

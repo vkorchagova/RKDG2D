@@ -3,9 +3,10 @@
 
 #include "numvector.h"
 #include "Point.h"
+#include "Cell.h"
 #include "EdgeInternal.h"
 #include "EdgeBoundaryInfty.h"
-#include "Cell.h"
+
 #include <fstream>
 
 
@@ -36,6 +37,9 @@ public:
 
     //- Vertical edges (nodeDown, nodeUp)
     std::vector<Edge> edgesVer;
+
+    //- Boundary edges
+    std::vector<EdgeBoundaryInfty> edgesBound;
 
     //- Mesh cells (edgeDown, edgeUp, edgeLeft, edgeRight)
     std::vector<Cell> cells;

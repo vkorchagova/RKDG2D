@@ -2,13 +2,15 @@
 //  Structured rectangular mesh
 
 
+
 #include <stdio.h>
 #include <iostream>
 #include "Mesh2D.h"
 #include "Solver.h"
-//#include "fluxllf.h"
+#include "FluxLLF.h"
 
 using namespace std;
+
 
 
 
@@ -42,8 +44,15 @@ int main(int argc, char** argv)
     // Set boundary conditions
 
 
-    //Get flux
-    //FluxLLF numFlux (problem);
+    //Set flux
+    FluxLLF numFlux (problem);
+
+    solver.initFluxes(numFlux);
+
+    solver.assembleRHS(problem.alpha);
+
+
+
 
     //numvector<double,2> pt = {1.0,0.4};
     //numvector<double,5> res,s1,s2;

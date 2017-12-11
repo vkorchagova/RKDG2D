@@ -9,14 +9,18 @@
 /// Can evaluate RHS inside cell
 /// ------------------------------
 
-#include "Edge.h"
+#include "Point.h"
+//#include "Edge.h"
 #include "numvector.h"
 #include "Problem.h"
-#include "Point.h"
-#include <functional>
 
-//class Edge;
-class Problem;
+#include <functional>
+#include <math.h>
+
+class Edge;
+//class Problem;
+
+
 
 
 class Cell
@@ -36,9 +40,6 @@ private:
 
 
 private:
-
-    //- Number of basis functions
-    static const int nShapes = 3;
 
     //- Compute hx, hy
     void getSteps();
@@ -140,10 +141,10 @@ public:
     void setProblem(Problem& prb);
 
     //- Reconstruct solution
-    numvector<double, 5> reconstructSolution(const numvector<double, nShapes * 5>& alpha, Point& point);
+    numvector<double, 5> reconstructSolution(Point& point);
 
     //- Set initial conditions
-    void setLocalInitialConditions(std::function<numvector<double,5>(const Point& point)>& init);
+    numvector<double, 5 * nShapes> setLocalInitialConditions(std::function<numvector<double,5>(const Point& point)>& init);
 
     //- Calculate local RHS
     numvector<double, 5 * nShapes> getLocalRHS();

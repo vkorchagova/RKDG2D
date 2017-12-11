@@ -23,6 +23,9 @@
 
 class EdgeBoundaryInfty : public  EdgeBoundary
 {
+
+public:
+
     numvector<double, 5> infty;
 
 public:
@@ -42,7 +45,9 @@ public:
 
     numvector<double, 5> applyBoundary();
 
-    void setCondition(numvector<double, 5>& infValues) { infty = infValues; }
+    //void setCondition(numvector<double, 5>& infValues) { infty = infValues; }
+
+    virtual void getLocalFluxes();
 };
 
 #endif // EDGEBOUNDARYINFTY_H

@@ -1,14 +1,10 @@
 #ifndef PROBLEM_H
 #define PROBLEM_H
 
-#include "Mesh2D.h"
-#include "gaussintegrator.h"
-//#include "fluxllf.h"
-
 #include <math.h>
 #include <functional>
-
-class Mesh2D;
+#include "numvector.h"
+#include "Point.h"
 
 //- Number of basis functions
 const int nShapes = 3;
@@ -28,6 +24,9 @@ public:
     //- Parameters on infinity
     numvector<double,5> infty;
 
+    //- Coeffs
+    std::vector<numvector<double, 5 * nShapes>> alpha;
+
 public:
 
     //- Default constructor
@@ -35,6 +34,9 @@ public:
 
     //- Destructor
     ~Problem();
+
+    //- Get actual coeffs
+    void getAlpha(std::vector<numvector<double, 5 * nShapes> >& a);
 
     //- Calculate pressure using conservative variables
     double getPressure(numvector<double,5> sol);

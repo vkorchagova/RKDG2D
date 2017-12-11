@@ -1,4 +1,5 @@
 #include "Edge.h"
+#include <iostream>
 
 using namespace std;
 
@@ -49,16 +50,29 @@ Edge& Edge::operator=(const Edge& rhs)
 
 //// RKDG methods
 
+void Edge::setFlux(Flux& flx)
+{
+    flux = &flx;
+}
+
 numvector<double, 5> Edge::boundaryIntegral(std::function<double(const Point&)>& phi)
 {
     numvector<double, 5> res (0.0);
+
+//    std::cout << "boundary integral: ";
 
     for (int i = 0; i < nGP; ++i)
     {
         for (int k = 0; k < 5; ++k)
         {
-            res[k] += ( gWeights[i] * phi(gPoints[i]) )* localFluxes[i] ; //???
+            res[k] += ( gWeights[i] * phi(gPoints[i]) ) * localFluxes[i][k] ;
         }
     }
+
+//    for (int k = 0; k < 5; ++k)
+//        std::cout << res[k] << ' ';
+//    std::cout << std::endl;
+
+    return res;
 }
 
