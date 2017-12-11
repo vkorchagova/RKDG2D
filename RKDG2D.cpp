@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "Mesh2D.h"
-//#include "Problem.h"
+#include "Solver.h"
 //#include "fluxllf.h"
 
 using namespace std;
@@ -13,27 +13,34 @@ using namespace std;
 
 
 int main(int argc, char** argv)
-{
+{    
+    // Mesh parameters
+
     double Lx = 4.0;
     double Ly = 4.0;
 
-    int nx = 2;
-    int ny = 3;
+    int nx = 4;
+    int ny = 5;
 
-    // Get mesh
+    // Initialize mesh
     Mesh2D mesh(nx, ny, Lx, Ly);
 
     mesh.exportMesh();
 
-    // Get solver
-    Problem problem(mesh);
+    // Initialize problem
+    Problem problem;
 
+    //Initialize solver
+    Solver solver(mesh, problem);
 
-
-    problem.setInitialConditions();
+    // Set initial conditions
+    solver.setInitialConditions();
 
     //for (int i = 0; i < mesh.cells.size(); ++i)
-      //  cout << i << ' ' << problem.alphaPrev[i] << endl;
+      //  cout << i << ' ' << mesh.cells[i].alphaPrev << endl;
+
+    // Set boundary conditions
+
 
     //Get flux
     //FluxLLF numFlux (problem);
@@ -59,8 +66,8 @@ int main(int argc, char** argv)
 
     cout << "END \n";
 
-    int aaa;
-    cin >> aaa;
+//    int aaa;
+//    cin >> aaa;
 
 
 	return 0;

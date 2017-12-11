@@ -203,3 +203,20 @@ numvector<double,5> Cell::integrate( const std::function<numvector<double, 5>(Po
     return res*J;
 
 } // end integrate 2D of vector function
+
+numvector<double, 5 * nShapes> Cell::getLocalRHS()
+{
+    // get boundary integration
+
+    numvector<double, 5> res;
+
+    for (int i = 0; i < 4; ++i) // for edges in cell
+    {
+        for (int q = 0; q < nShapes; ++q)
+        {
+            res += edges[i]->boundaryIntegral(phi[q]);
+        }
+    }
+
+    // get cell integration
+}

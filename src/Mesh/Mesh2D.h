@@ -1,13 +1,12 @@
-#pragma once
+#ifndef MESH2D_H
+#define MESH2D_H
 
 #include "numvector.h"
-#include "Edge.h"
+#include "Point.h"
+#include "EdgeInternal.h"
+#include "EdgeBoundaryInfty.h"
 #include "Cell.h"
 #include <fstream>
-
-class Point;
-class Cell;
-class Edge;
 
 
 class Mesh2D
@@ -26,7 +25,7 @@ public:
 	double hy;
 
     //- Number of internal cells
-    int nInternalCells;
+    int nCells;
 
 
     //- Coordinates of nodes (x,y)
@@ -41,12 +40,6 @@ public:
     //- Mesh cells (edgeDown, edgeUp, edgeLeft, edgeRight)
     std::vector<Cell> cells;
 
-    //- Internal mesh cells
-    std::vector<Cell> internalCells;
-
-    //- Ghost mesh cells (for boundary)
-    //std::vector<Cell*> ghostCells;
-
 public:
 
     //- Default constructor
@@ -58,13 +51,10 @@ public:
     //- Destructor
     ~Mesh2D();
 
-
-    //- Get coordinates of nodes of given mesh cell
-	numvector<numvector<double,2>,4> getCellCoordinates(int iCell);
-
     //- Export mesh
     void exportMesh();
 
 };// end Mesh 2D
 
+#endif // MESH2D_H
 

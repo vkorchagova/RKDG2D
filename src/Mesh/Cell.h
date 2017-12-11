@@ -15,9 +15,8 @@
 #include "Point.h"
 #include <functional>
 
-class Edge;
+//class Edge;
 class Problem;
-
 
 
 class Cell
@@ -140,16 +139,14 @@ public:
     //- Set problem
     void setProblem(Problem& prb);
 
-
     //- Reconstruct solution
     numvector<double, 5> reconstructSolution(const numvector<double, nShapes * 5>& alpha, Point& point);
 
     //- Set initial conditions
     void setLocalInitialConditions(std::function<numvector<double,5>(const Point& point)>& init);
 
-
     //- Calculate local RHS
-    double getLocalRHS();
+    numvector<double, 5 * nShapes> getLocalRHS();
 
     //- 2D Gauss integration of vector function
     numvector<double,5> integrate( const std::function<numvector<double,5>( Point&)>& f);

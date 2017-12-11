@@ -5,17 +5,26 @@ using namespace std;
 
 // ------------------ Constructors & Destructors ----------------
 
-Problem::Problem(Mesh2D &mesh2D)
+Problem::Problem()
 {
-    mesh = &mesh2D;
+    // Function for initial condition
+    double rho0 = 1.0;
+    double e0 = rho0  / cpcv / (cpcv - 1.0) ;
 
-    writer.open("alphaCoeffs");
+    function<double(const Point& r)> initRho = [](const Point& r) \
+            { return 0.001 * exp( -2.0 * pow(r.x() - 2.0, 2) - 2.0 * pow(r.y() - 2.0, 2)); };
+
+    init = [=](const Point& r) { return numvector<double, 5> { rho0 + initRho(r), 0.0, 0.0, 0.0, (rho0 + initRho(r)) / cpcv / (cpcv - 1.0) }; };
+
+
+    // For boundary conditions
+    infty = {rho0, 0.0, 0.0, 0.0, e0};
 
 } // end constructor by mesh
 
 Problem::~Problem()
 {
-    writer.close();
+
 }
 
 
@@ -23,13 +32,9 @@ Problem::~Problem()
 
 // ------------------ Public class methods --------------------
 
-void Problem::write(ostream& writer, const numvector<double,5*nShapes>& coeffs)
-{
-    for (int i = 0; i < 5*nShapes; ++i)
-        writer << coeffs[i] << ' ';
 
-    writer << endl;
-} //end write
+
+//// RKDG methods
 
 double Problem::getPressure(numvector<double, 5> sol)
 {
@@ -84,33 +89,7 @@ numvector<double, 5> Problem::fluxG(numvector<double, 5> sol)
     return { sol[2], v*sol[1], v*sol[2] + p, v*sol[3], (sol[4] + p)*v };
 } // end fluxG
 
-void Problem::setInitialConditions()
-{
-    // define functions for initial conditions
 
-    double rho0 = 1.0;
-
-    function<double(const Point& r)> initRho = \
-        [](const Point& r) \
-            { return 0.001 * exp( -2.0 * pow(r.x() - 2.0, 2) - 2.0 * pow(r.y() - 2.0, 2)); };
-
-    function<numvector<double, 5>(const Point& r)> init = \
-        [&](const Point& r) { return numvector<double, 5> { rho0 + initRho(r), 0.0, 0.0, 0.0, (rho0 + initRho(r)) / cpcv / (cpcv - 1.0) }; };
-
-
-    int nCells = mesh->nInternalCells;
-
-
-    // for internal cells
-    for (int k = 0; k < nCells; ++k)
-	{
-        mesh->cells[k].setProblem(*this);
-        mesh->cells[k].setLocalInitialConditions(init);
-
-        write(writer,mesh->cells[k].alphaPrev);
-	}
-
-} // end setInitialConditions
 
 
 

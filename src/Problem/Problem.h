@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PROBLEM_H
+#define PROBLEM_H
 
 #include "Mesh2D.h"
 #include "gaussintegrator.h"
@@ -6,14 +7,11 @@
 
 #include <math.h>
 #include <functional>
-#include <fstream>
 
-
+class Mesh2D;
 
 //- Number of basis functions
 const int nShapes = 3;
-
-class Mesh2D;
 
 class Problem
 {
@@ -24,21 +22,16 @@ public:
     //- Heat capacity ratio
     const double cpcv = 1.4;
 
+    //- Function for initial conditions
+    std::function<numvector<double, 5>(const Point& r)> init;
 
-
-    //- Mesh
-    Mesh2D *mesh;
-
-    //- File for ofstream
-    std::ofstream writer;
+    //- Parameters on infinity
+    numvector<double,5> infty;
 
 public:
 
     //- Default constructor
-    Problem() {}
-
-    //- Construct with mesh
-    Problem(Mesh2D &mesh);
+    Problem();
 
     //- Destructor
     ~Problem();
@@ -58,14 +51,11 @@ public:
     //- Eigenvalues for Y direction ( estimation!!! )
     numvector<double, 5> lambdaG(numvector<double, 5> solOne, numvector<double, 5> solTwo);
 	
-    //- Reconstruct solution by coeffs and basis functions
-    numvector<double, 5> reconstructSolution(const numvector<double, \
-                                            nShapes * 5>& alpha, \
-											numvector<double, 2>& coord, \
-											int iCell);
-
-    //- Set initial conditions
-    void setInitialConditions();
+//    //- Reconstruct solution by coeffs and basis functions
+//    numvector<double, 5> reconstructSolution(const numvector<double, \
+//                                            nShapes * 5>& alpha, \
+//											numvector<double, 2>& coord, \
+//											int iCell);
 
 
     //- Calculate fluxes in x direction
@@ -74,9 +64,8 @@ public:
     //- Calculate fluxes in y direction
     numvector<double, 5> fluxG(numvector<double, 5> sol);
 
-    //- Output for coeffs
-    void write(std::ostream& writer, const numvector<double,5*nShapes>& coeffs);
-
 };// end Problem
+
+#endif // PROBLEM_H
 
 
