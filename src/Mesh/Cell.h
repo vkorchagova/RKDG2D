@@ -20,61 +20,54 @@
 class Edge;
 //class Problem;
 
-
-
-
 class Cell
 {
 
 private:
 
+    //- Number of Gauss points
+    static const int nGP = 4;
+
     //- Gauss points
-    numvector<Point,4> gPoints2D;
+    numvector<Point, nGP> gPoints2D;
 
     //- Gauss weights
-    numvector<double,4> gWeights2D;
-
-    //- Number of Gauss points
-    int nGP;
-
-
+    numvector<double, nGP> gWeights2D;
 
 private:
+    //- Area of cell
+    double area;
 
-    //- Compute hx, hy
-    void getSteps();
+    //- Mass center of cell
+    Point center;
 
-    //- Compute area of cell
-    void getArea();
-
-    //- Calculate center of cell
-    void getCellCenter();
+    Point hxhy;
 
     //- Check if point belongs cell
-    bool insideCell(Point& point);
+    bool insideCell(const Point& point) const;
 
     //- local [-1,1]x[-1,1] to global rectangular cell
-    Point localToGlobal(Point& point);
+    Point localToGlobal(const Point& point) const;
 
     //- Set Gauss points
     void setGaussPoints();
 
     //- Set basis functions
     void setBasisFunctions();
+    
+    //- Default constructor
+    Cell() {};
 
 
 public:
 
     /// geometric variables
 
-
-    //- Space step in x direction
-    double hx;
-
-    //- Space step in y direction
-    double hy;
+    //- Compute hx, hy
+    const Point& h() const { return hxhy; };
 
     //- Number of cell
+    //debug
     int number;
 
     //- Number of edges
@@ -83,74 +76,55 @@ public:
     //- Edges define cell
     numvector<Edge*, nEdges> edges;
 
-    //- Area of cell
-    double area;
+    //- Compute area of cell
+    double getArea() const { return area; };
 
-    //- Mass center of cell
-    Point center;
-
+    //- Calculate center of cell
+    const Point& getCellCenter() const { return center; };
 
     /// RKDG variables
 
     //- Pointer to problem
-    Problem* problem;
-
-    //- Number of 2D Gauss points for cell
-    //static const int nGP = 4;
+    const Problem* problem;
 
     //- List of basis functions
     //std::function<double(const Point&)> phi[nShapes];
     std::vector<std::function<double(const Point&)>> phi;
 
     //- Gradient of basis functions
-    std::function<Point(const Point&)> gradPhi[nShapes];
-
-    //- Solution coeffs on cells on previous time step
-    numvector<double, 5 * nShapes> alphaPrev;
-
-    //- Solution coeffs on cells on next time step
-    numvector<double, 5 * nShapes> alphaNext;
+    std::vector<std::function<Point(const Point&)>> gradPhi;
 
 public:
 
-    //- Default constructor
-    Cell();
 
     //- Construct cell using numvector of edges
-    Cell(numvector<Edge *,4> &edges);
+    Cell(const numvector<Edge*, 4>& edges);
 
     //- Destructor
-    ~Cell();
-
-    //- Copy constructor
-    Cell(const Cell& c);
-
-    //- Overload of "=" operator
-    Cell& operator=(const Cell& c);
-
+    ~Cell() {};
 
     /// geometric methods
 
     //- Calculate coordinates of cell nodes
-    numvector<Point*, nEdges> getCellCoordinates();
+    numvector<const Point*, nEdges> getCellCoordinates() const;
 
 
     /// RKDG methods
 
     //- Set problem
-    void setProblem(Problem& prb);
+    void setProblem(const Problem& prb);
 
     //- Reconstruct solution
-    numvector<double, 5> reconstructSolution(Point& point);
+    numvector<double, 5> reconstructSolution(const Point& point) const;
 
-    //- Set initial conditions
-    numvector<double, 5 * nShapes> setLocalInitialConditions(std::function<numvector<double,5>(const Point& point)>& init);
+    //- Get coefficients for initial conditions
+    numvector<double, 5 * nShapes> getLocalInitialConditions(std::function<numvector<double,5>(const Point& point)>& init) const;
 
     //- Calculate local RHS
-    numvector<double, 5 * nShapes> getLocalRHS();
+    //numvector<double, 5 * nShapes> getLocalRHS() const;
 
     //- 2D Gauss integration of vector function
-    numvector<double,5> integrate( const std::function<numvector<double,5>( Point&)>& f);
+    numvector<double,5> integrate( const std::function<numvector<double, 5>(const Point&)>& f) const;
 
 
 };

@@ -36,35 +36,28 @@ public:
     ~Problem();
 
     //- Get actual coeffs
-    void getAlpha(std::vector<numvector<double, 5 * nShapes> >& a);
+    void getAlpha(const std::vector<numvector<double, 5 * nShapes> >& a);
 
     //- Calculate pressure using conservative variables
-    double getPressure(numvector<double,5> sol);
+    double getPressure(const numvector<double,5>& sol) const;
 
     //- Compute sound speed inside cell
-    double c(numvector<double, 5> sol);
+    double c(const numvector<double, 5>& sol) const;
 
     //- Compute averaged sound speed on edge
-    double c_av(numvector<double, 5> solOne, numvector<double, 5> solTwo);
+    double c_av(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const;
 
     //- Eigenvalues for X direction ( estimation!!! )
-    numvector<double, 5> lambdaF(numvector<double, 5> solOne, numvector<double, 5> solTwo);
+    numvector<double, 5> lambdaF(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const;
 
     //- Eigenvalues for Y direction ( estimation!!! )
-    numvector<double, 5> lambdaG(numvector<double, 5> solOne, numvector<double, 5> solTwo);
-	
-//    //- Reconstruct solution by coeffs and basis functions
-//    numvector<double, 5> reconstructSolution(const numvector<double, \
-//                                            nShapes * 5>& alpha, \
-//											numvector<double, 2>& coord, \
-//											int iCell);
-
+    numvector<double, 5> lambdaG(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const;
 
     //- Calculate fluxes in x direction
-    numvector<double, 5> fluxF(numvector<double, 5> sol);
+    numvector<double, 5> fluxF(const numvector<double, 5>& sol) const;
 
     //- Calculate fluxes in y direction
-    numvector<double, 5> fluxG(numvector<double, 5> sol);
+    numvector<double, 5> fluxG(const numvector<double, 5>& sol) const;
 
 };// end Problem
 

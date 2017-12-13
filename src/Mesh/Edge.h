@@ -24,15 +24,9 @@
 
 class Edge
 {
-
 private:
 
-
-
-
-
 public:
-
     //- Number of gauss points for edge
     static const int nGP = 2;
 
@@ -42,21 +36,17 @@ public:
     //- Weights for integration
     numvector<double, nGP> gWeights;
 
-
     /// geometric variables
 
     //- Two nodes define edge
-    numvector<Point*, nGP> nodes;
+    numvector<const Point*, 2> nodes;
 
     //- Neighbour cells for edge: 2 for internal, 1 for boundary
     std::vector<Cell*> neibCells;
 
-    Flux* flux;
-
+    const Flux& flux;
 
     /// RKDG variables
-
-
 
     //- Local numerical fluxes for edge
     numvector<numvector<double, 5>, nGP> localFluxes;
@@ -65,31 +55,24 @@ public:
 public:
 
     //- Default constructor
-    Edge() {}
+    Edge(const Flux& flux_) : flux(flux_) {}
 
     //- Construct using two nodes
-    Edge(Point*, Point*);
-
-    //- Copy constructor
-    Edge(const Edge&);
-
-    //- Overloaded "=" operator
-    Edge& operator=(const Edge&);
+    Edge(const Point& p1, const Point& p2, const Flux& flux_);
 
     //- Destructor
-    ~Edge() {}
-
+    virtual ~Edge() {}
 
     /// RKDG methods
-
-    //- Set flux
-    void setFlux(Flux& flx);
-
+    
     //- Calculate local fluxes for edge
-    virtual void getLocalFluxes() { std::cout << "i'm in base Edge \n";}
+    virtual void getLocalFluxes() const = 0;
+    
+    //- Set flux
+    void setFlux (const Flux& flux_) const { flux = flux_; };
 
     //- Calculate 1D integral through edge
-    numvector<double, 5> boundaryIntegral(std::function<double(const Point&)>& phi);
+    numvector<double, 5> boundaryIntegral(const std::function<double(const Point&)>& phi) const;
 
 }; // for Edge
 

@@ -14,8 +14,10 @@ public:
 
     Flux(Problem &prb);
     ~Flux() {}
+    
+    Flux& operator=(const Flux& flx) { problem = flx.problem; return *this;}
 
-    virtual numvector<double,5> evaluate(numvector<double,5>& , numvector<double,5>& ) {}
+    virtual numvector<double, 5> evaluate(const numvector<double, 5>& solL, const numvector<double, 5>& solR) = 0;
 
 //    virtual numvector<double,5> evaluateHor(numvector<double,2> point, const vector<numvector<double,5*nShapes>>& alpha, int iCellUp, int iCellDown) = 0;
 //    virtual numvector<double,5> evaluateVer(numvector<double,2> point, const vector<numvector<double,5*nShapes>>& alpha, int iCellLeft, int iCellRight) = 0;

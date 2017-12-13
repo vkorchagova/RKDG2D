@@ -4,6 +4,7 @@
 #include "numvector.h"
 #include "Point.h"
 #include "Cell.h"
+#include "FluxLLF.h"
 #include "EdgeInternal.h"
 #include "EdgeBoundaryInfty.h"
 
@@ -12,6 +13,7 @@
 
 class Mesh2D
 {
+
 private:
 
     //- File ofstream for mesh export
@@ -19,13 +21,13 @@ private:
 
 public:
 
-	//- Space step in x direction
-	double hx;
+    //- Space step in x direction
+    //double hx;
 
-	//- Space step in y direction
-	double hy;
+    //- Space step in y direction
+    //double hy;
 
-    //- Number of internal cells
+    //- Number of internal cells  //?
     int nCells;
 
 
@@ -33,16 +35,16 @@ public:
     std::vector<Point> nodes;
 
     //- Horizontal edges (nodeLeft, nodeRight)
-    std::vector<Edge> edgesHor;
+    std::vector<Edge*> edgesHor;
 
     //- Vertical edges (nodeDown, nodeUp)
-    std::vector<Edge> edgesVer;
+    std::vector<Edge*> edgesVer;
 
     //- Boundary edges
-    std::vector<EdgeBoundaryInfty> edgesBound;
+    std::vector<EdgeBoundaryInfty*> edgesBound;
 
     //- Mesh cells (edgeDown, edgeUp, edgeLeft, edgeRight)
-    std::vector<Cell> cells;
+    std::vector<Cell*> cells;
 
 public:
 
@@ -50,7 +52,7 @@ public:
     Mesh2D() {}
 
     //- Construct uniform rectangular mesh by number of cells and size of flow domain
-	Mesh2D(int nx, int ny, double Lx, double Ly);
+    Mesh2D(int nx, int ny, double Lx, double Ly);
 
     //- Destructor
     ~Mesh2D();

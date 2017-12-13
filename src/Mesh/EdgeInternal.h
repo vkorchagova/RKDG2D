@@ -26,19 +26,16 @@ class EdgeInternal : public Edge
 public:
 
     //- Default constructor
-    EdgeInternal() : Edge() {}
+    EdgeInternal(const Flux& flux_) : Edge(flux_) {}
 
     //- Construct using two nodes
-    EdgeInternal(Point* p1, Point* p2) : Edge(p1, p2) { neibCells.reserve(nNeighbourCells); }
-
-    //- Copy constructor
-    EdgeInternal(const EdgeInternal& e) : Edge(e) {}
+    EdgeInternal(const Point& p1, const Point& p2, const Flux& flux_) : Edge(p1, p2, flux_) { neibCells.reserve(nNeighbourCells); }
 
     //- Destructor
     ~EdgeInternal() {}
 
 
-    virtual void getLocalFluxes();
+    virtual void getLocalFluxes() const override;
 };
 
 #endif // EDGEINTERNAL_H

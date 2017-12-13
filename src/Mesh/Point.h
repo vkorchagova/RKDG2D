@@ -8,41 +8,30 @@
 
 #include "numvector.h"
 
-class Point
+
+
+class Point : public numvector<double, 2>
 {
-
-private:
-
-    numvector<double, 2> coord;
-
 public:
-
     //- Default constructor
-    Point() { coord[0] = 0.0; coord[1] = 0.0; }
+    Point(double val = 0.0) : numvector(val) {};
 
     //- Construct with defined values
-    Point(double x, double y) { set(x,y); }
+    Point(const numvector<double, 2>& coord) : numvector(coord) {}; 
 
     //- Copy constructor
-    Point(const Point& p) { coord[0] = p.x(); coord[1] = p.y(); }
-
-    //- Overload "=" operator
-    Point& operator=(const Point& p) { coord[0] = p.x(); coord[1] = p.y(); return *this; }
+    Point(const Point& p) = default; //{ coord[0] = p.x(); coord[1] = p.y(); }
 
     //- Destructor
-    ~Point() {}
+    ~Point() {};
 
-    //- Get x coordinate
-    double x() const { return coord[0]; }
+    //- Get/Set x coordinate
+    const double& x() const { return r[0]; }
+    double& x() { return r[0]; }
 
-    //- Get y coordinate
-    double y() const { return coord[1]; }
-
-    //- Set x, y values
-    void set(double x, double y) { coord[0] = x; coord[1] = y; }
-
-    //- Overloaded "+=" operator
-    Point& operator+=(Point& p) { coord[0] += p.coord[0]; coord[1] += p.coord[1]; return *this; }
+    //- Get/Set y coordinate
+    const double& y() const { return r[1]; }
+    double& y() { return r[1]; }
 };
 
 #endif // POINT_H

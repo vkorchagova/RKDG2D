@@ -30,24 +30,19 @@ public:
 
 public:
     //- Default constructor
-    EdgeBoundaryInfty() : EdgeBoundary() {}
+    EdgeBoundaryInfty(const Flux& flux_) : EdgeBoundary(flux_) {};
 
     //- Construct using two nodes
-    EdgeBoundaryInfty(Point* p1, Point* p2) : EdgeBoundary(p1, p2) {}
-
-    //- Copy constructor
-    EdgeBoundaryInfty(const EdgeBoundaryInfty& e) : EdgeBoundary(e) {}
+    EdgeBoundaryInfty(const Point& p1, const Point& p2, const Flux& flux_) : EdgeBoundary(p1, p2, flux_) {};
 
     //- Destructor
-    ~EdgeBoundaryInfty() {}
+    ~EdgeBoundaryInfty() {};
 
     //// RKDG methods
 
-    numvector<double, 5> applyBoundary();
+    numvector<double, 5> applyBoundary(const numvector<double, 5>& solLeft = {0.0, 0.0, 0.0, 0.0, 0.0}) const override;
 
     //void setCondition(numvector<double, 5>& infValues) { infty = infValues; }
-
-    virtual void getLocalFluxes();
 };
 
 #endif // EDGEBOUNDARYINFTY_H

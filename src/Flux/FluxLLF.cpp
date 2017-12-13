@@ -10,7 +10,8 @@ using namespace std;
 
 // ------------------ Public class methods ---------------------
 
-numvector<double,5> FluxLLF::evaluate( numvector<double, 5>& solUp,  numvector<double, 5>& solDown)
+
+numvector<double,5> FluxLLF::evaluate( const numvector<double, 5>& solUp, const numvector<double, 5>& solDown)
 {
     numvector<double,5> fluxUpDown = problem->fluxG(solUp);
     numvector<double,5> fluxDownUp = problem->fluxG(solDown);

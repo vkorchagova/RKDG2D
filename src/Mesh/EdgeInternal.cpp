@@ -7,9 +7,9 @@ using namespace std;
 
 
 
-void EdgeInternal::getLocalFluxes()
+void EdgeInternal::getLocalFluxes() const
 {
-    std::cout << "in internal \n";
+    //std::cout << "in internal \n";
 
     for (int i = 0; i < nGP; ++i)
     {
@@ -20,7 +20,7 @@ void EdgeInternal::getLocalFluxes()
         std::cout << "solLeft" << solLeft << '\n';
 
 
-        flux->evaluate(solLeft, solRight);
+        //flux.evaluate(solLeft, solRight);
     }
 }
 

@@ -27,21 +27,18 @@ class EdgeBoundary : public Edge
 
 public:
     //- Default constructor
-    EdgeBoundary() : Edge() {}
+    EdgeBoundary(const Flux& flux_) : Edge(flux_) {};
 
-    //- Construct using two nodes
-    EdgeBoundary(Point* p1, Point* p2) : Edge(p1, p2) { neibCells.reserve(nNeighbourCells); }
-
-    //- Copy constructor
-    EdgeBoundary(const EdgeBoundary& e) : Edge(e) {}
+    //- Construct using two nodesD
+    EdgeBoundary(const Point& p1, const Point& p2, const Flux& flux_) : Edge(p1, p2, flux_) { neibCells.reserve(nNeighbourCells); }
 
     //- Destructor
-    ~EdgeBoundary() {}
+    virtual ~EdgeBoundary() {}
 
     //- Apply boundary conditions
-    virtual numvector<double, 5> applyBoundary(numvector<double, 5>& sol) {}
+    virtual numvector<double, 5> applyBoundary(const numvector<double, 5>& sol = {0.0, 0.0, 0.0, 0.0, 0.0}) const = 0;
 
-    virtual void getLocalFluxes() {std::cout << "i'm in simple BE \n";}
+    virtual void getLocalFluxes() const override;
 };
 
 #endif // EDGEBOUNDARY_H

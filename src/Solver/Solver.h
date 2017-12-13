@@ -36,13 +36,7 @@ public:
     Solver() {}
 
     //- Construct using mesh and problem
-    Solver(Mesh2D& msh,Problem &prb) { mesh = &msh; problem = &prb; alphaPrev.resize(mesh->nCells); alphaNext.resize(mesh->nCells); }
-
-    // Copy constructor
-    Solver(const Solver& rhs) { mesh = rhs.mesh; problem = rhs.problem; alphaPrev = rhs.alphaPrev; alphaNext = rhs.alphaNext; }
-
-    //- Overloaded "=" operator
-    Solver& operator=(const Solver& rhs) { mesh = rhs.mesh; problem = rhs.problem; alphaPrev = rhs.alphaPrev; alphaNext = rhs.alphaNext; return *this; }
+    Solver( Mesh2D& msh, Problem &prb) { mesh = &msh; problem = &prb; alphaPrev.resize(mesh->nCells); alphaNext.resize(mesh->nCells); }
 
     //- Destructor
     ~Solver() {}
@@ -50,21 +44,21 @@ public:
     //// RKDG methods
 
     //- Set functions for boundary conditions
-    void initBoundaryConditions();
+    void initBoundaryConditions() const;
 
     //- Calculate coeffs with initial conditions
-    void setInitialConditions();
+    void setInitialConditions() const;
 
     //- Set flux
-    void initFluxes(Flux& flux);
+    void initFluxes(const Flux& flux) const;
 
     //- Assemble right hand side
-    void assembleRHS( std::vector<numvector<double, 5 * nShapes>>& alpha);
+    void assembleRHS( const std::vector<numvector<double, 5 * nShapes>>& alpha) const;
 
     //// Other methods
 
     //- Output for coeffs
-    void write(std::ostream& writer, const numvector<double,5*nShapes>& coeffs);
+    void write(std::ostream& writer, const numvector<double,5*nShapes>& coeffs) const;
 };
 
 #endif // SOLVER_H
