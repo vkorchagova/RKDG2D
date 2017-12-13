@@ -18,11 +18,11 @@ int main(int argc, char** argv)
 {    
     // Mesh parameters
 
-    double Lx = 4.0;
-    double Ly = 4.0;
+    double Lx = 1.0;
+    double Ly = 1.0;
 
-    int nx = 4;
-    int ny = 5;
+    int nx = 1;
+    int ny = 1;
 
     // Initialize mesh
     Mesh2D mesh(nx, ny, Lx, Ly);
@@ -45,6 +45,7 @@ int main(int argc, char** argv)
       //  cout << i << ' ' << mesh.cells[i].alphaPrev << endl;
 
     // Set boundary conditions
+    solver.initBoundaryConditions();
 
     solver.assembleRHS(problem.alpha);
 

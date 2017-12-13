@@ -41,7 +41,7 @@ public:
     virtual numvector<double, 5> applyBoundary(const numvector<double, 5>& sol = {0.0, 0.0, 0.0, 0.0, 0.0}) const = 0;
 
     //- Calculate local fluxes in gauss points
-    virtual void getLocalFluxes(const Flux& flux) const override;
+    virtual void getLocalFluxes(const Flux& flux) override;
 };
 
 #endif // EDGEBOUNDARY_H

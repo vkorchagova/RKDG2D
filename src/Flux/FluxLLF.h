@@ -27,7 +27,8 @@ public:
     FluxLLF& operator= (const Flux& flx)  { problem = flx.problem; return *this; }
 
     //- Evaluate numerical flux through one point
-    virtual numvector<double,5> evaluate(const numvector<double,5>& solLeft, const numvector<double,5>& solRight) override;
+    virtual numvector<double, 5> evaluateHor(const numvector<double, 5>& solUp, const numvector<double, 5>& solDown) const override;
+    virtual numvector<double, 5> evaluateVer(const numvector<double, 5>& solLeft, const numvector<double, 5>& solRight) const override;
 };
 
 

@@ -47,15 +47,19 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
 
     // get horizontal edges
 
-    for (int i = 0; i < ny + 1; ++i)
-    {
-        edgesHor.emplace_back( make_shared<EdgeBoundaryInfty>(nodes[i*(nx + 1)], nodes[i*(nx + 1) + 1]) );
+    for (int j = 0; j < nx; ++j)
+        edgesHor.emplace_back( make_shared<EdgeBoundaryInfty>(nodes[j], nodes[j + 1]) );
 
-        for (int j = 1; j < nx - 1; ++j)
+    for (int i = 1; i < ny; ++i)
+    {
+       for (int j = 0; j < nx; ++j)
             edgesHor.emplace_back( make_shared<EdgeInternal>(nodes[i*(nx + 1) + j], nodes[i*(nx + 1) + j + 1]) );
 
-        edgesHor.emplace_back( make_shared<EdgeBoundaryInfty>(nodes[i*(nx + 1) + nx - 1], nodes[i*(nx + 1) + nx]) );
-    }
+   }
+
+    for (int j = 0; j < nx; ++j)
+        edgesHor.emplace_back( make_shared<EdgeBoundaryInfty>(nodes[ny*(nx + 1) + j], nodes[ny*(nx + 1) + j + 1]) );
+
 
     // get vertical edges
 
@@ -63,7 +67,7 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
     {
         edgesVer.emplace_back( make_shared<EdgeBoundaryInfty>(nodes[i*(nx + 1)], nodes[i*(nx + 1) + nx + 1]) );
 
-        for (int j = 0; j < nx + 1; ++j)
+        for (int j = 1; j < nx; ++j)
             edgesVer.emplace_back( make_shared<EdgeInternal>(nodes[i*(nx + 1) + j], nodes[i*(nx + 1) + j + nx + 1]) );
 
         edgesVer.emplace_back( make_shared<EdgeBoundaryInfty>(nodes[i*(nx + 1) + nx - 1], nodes[i*(nx + 1) + nx + nx]) );

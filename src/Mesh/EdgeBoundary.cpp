@@ -4,7 +4,7 @@ using namespace std;
 
 // ------------------ Constructors & Destructor ----------------
 
-void EdgeBoundary::getLocalFluxes(const Flux &flux) const
+void EdgeBoundary::getLocalFluxes(const Flux &flux)
 {
     cout << "in boundary edge\n";
 
@@ -13,6 +13,6 @@ void EdgeBoundary::getLocalFluxes(const Flux &flux) const
         numvector<double, 5> solLeft = neibCells[0]->reconstructSolution(gPoints[i]); 
         numvector<double, 5> solRight = applyBoundary(solLeft);
                         
-        //flux.evaluate(solLeft, solRight);
+        localFluxes[i] = flux.evaluate(solLeft, solRight);
     }
 }

@@ -11,28 +11,34 @@ using namespace std;
 // ------------------ Public class methods ---------------------
 
 
-numvector<double,5> FluxLLF::evaluate( const numvector<double, 5>& solUp, const numvector<double, 5>& solDown)
+numvector<double,5> FluxLLF::evaluateHor( const numvector<double, 5>& solUp, const numvector<double, 5>& solDown) const
 {
+
     numvector<double,5> fluxUpDown = problem->fluxG(solUp);
     numvector<double,5> fluxDownUp = problem->fluxG(solDown);
+
+    cout << fluxUpDown << endl;
+    cout << fluxDownUp << endl;
 
     double lambda = problem->lambdaG(solUp,solDown)[4];
 
     return 0.5 * (fluxUpDown + fluxDownUp) + 0.5 * lambda * (solDown - solUp);
 }
 
-//numvector<double,5> FluxLLF::evaluateHor(numvector<double,2> point, const vector<numvector<double,5*nShapes>>& alpha, int iCellUp, int iCellDown)
-//{
-//    numvector<double,5> solUp = problem->reconstructSolution(alpha[iCellUp],point,iCellUp);
-//    numvector<double,5> solDown = problem->reconstructSolution(alpha[iCellDown],point,iCellDown);
+numvector<double,5> FluxLLF::evaluateVer( const numvector<double, 5>& solLeft, const numvector<double, 5>& solRight) const
+{
+    numvector<double,5> fluxLeftRight = problem->fluxF(solLeft);
+    numvector<double,5> fluxRightLeft = problem->fluxF(solRight);
 
-//    numvector<double,5> fluxUpDown = problem->fluxG(solUp);
-//    numvector<double,5> fluxDownUp = problem->fluxG(solDown);
 
-//    double lambda = problem->lambdaG(solUp,solDown)[4];
+    cout << fluxLeftRight << endl;
+    cout << fluxRightLeft << endl;
 
-//    return 0.5 * (fluxUpDown + fluxDownUp) + 0.5 * lambda * (solDown - solUp);
-//}
+    double lambda = problem->lambdaF(solLeft,solRight)[4];
+
+    return 0.5 * (fluxLeftRight + fluxRightLeft) + 0.5 * lambda * (solLeft - solRight);
+}
+
 
 //numvector<double,5> FluxLLF::evaluateVer(numvector<double,2> point, const vector<numvector<double,5*nShapes>>& alpha, int iCellLeft, int iCellRight)
 //{

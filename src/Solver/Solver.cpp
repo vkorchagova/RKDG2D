@@ -66,13 +66,16 @@ void Solver::assembleRHS(const std::vector<numvector<double, 5 * nShapes> > &alp
     {
         cout << "edgeHor #" << i << endl;
         mesh.edgesHor[i]->getLocalFluxes(flux);
-        //std::cout << mesh->edgesHor[i].localFluxes[0] << '\n';
-    }
 
+        std::cout << "localF:" << mesh.edgesHor[i]->localFluxes[0][0] << ' '<< mesh.edgesHor[i]->localFluxes[0][1] << '\n';
+    }
+    cout << "--------" << endl;
 
     for (int i = 0; i < nEdgesVer; ++i)
+    {
+        cout << "edgeVer #" << i << endl;
         mesh.edgesVer[i]->getLocalFluxes(flux);
-
+    }
     // compute boundary integrals
 
     numvector<double, 5 * nShapes> res;

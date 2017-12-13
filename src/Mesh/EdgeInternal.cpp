@@ -7,7 +7,7 @@ using namespace std;
 
 
 
-void EdgeInternal::getLocalFluxes(const Flux& flux) const
+void EdgeInternal::getLocalFluxes(const Flux& flux)
 {
     cout << "in internal \n";
 
@@ -22,7 +22,7 @@ void EdgeInternal::getLocalFluxes(const Flux& flux) const
         std::cout << "solLeft" << solLeft << '\n';
 
 
-        //flux.evaluate(solLeft, solRight);
+        localFluxes[i] = flux.evaluate(solLeft, solRight);
     }
 }
 

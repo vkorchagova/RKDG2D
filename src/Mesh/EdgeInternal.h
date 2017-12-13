@@ -37,7 +37,7 @@ public:
     virtual void setBoundaryFunction(const numvector<double, 5>& bc) override {}
 
 
-    virtual void getLocalFluxes(const Flux& flux) const override;
+    virtual void getLocalFluxes(const Flux& flux) override;
 };
 
 #endif // EDGEINTERNAL_H
