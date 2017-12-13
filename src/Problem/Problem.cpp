@@ -8,17 +8,17 @@ using namespace std;
 Problem::Problem()
 {
     // Function for initial condition
-//    double rho0 = 1.0;
-//    double e0 = rho0  / cpcv / (cpcv - 1.0) ;
+    double rho0 = 1.0;
+    double e0 = rho0  / cpcv / (cpcv - 1.0) ;
 
-//    function<double(const Point& r)> initRho = [](const Point& r) \
-//            { return 0.001 * exp( -2.0 * pow(r.x() - 2.0, 2) - 2.0 * pow(r.y() - 2.0, 2)); };
+    function<double(const Point& r)> initRho = [](const Point& r) \
+            { return 0.001 * exp( -2.0 * pow(r.x() - 2.0, 2) - 2.0 * pow(r.y() - 2.0, 2)); };
 
-//    init = [=](const Point& r) { return numvector<double, 5> { rho0 + initRho(r), 0.0, 0.0, 0.0, (rho0 + initRho(r)) / cpcv / (cpcv - 1.0) }; };
+    init = [=](const Point& r) { return numvector<double, 5> { rho0 + initRho(r), 0.0, 0.0, 0.0, (rho0 + initRho(r)) / cpcv / (cpcv - 1.0) }; };
 
 
     // For boundary conditions
-//    infty = {rho0, 0.0, 0.0, 0.0, e0};
+    infty = {rho0, 0.0, 0.0, 0.0, e0};
 
 } // end constructor by mesh
 

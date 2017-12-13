@@ -5,10 +5,10 @@ using namespace std;
 
 // ------------------ Constructors & Destructor ----------------
 
-Edge::Edge(const Point& p1, const Point& p2, const Flux& flux_) : flux(flux_)
+Edge::Edge(const Point& p1, const Point& p2)
 {
-    nodes[0] = &p1;
-    nodes[1] = &p2;
+    nodes[0] = make_shared<Point>(p1);
+    nodes[1] = make_shared<Point>(p2);
 
     const double isqrt3 = 1.0/1.732050807568877;
 

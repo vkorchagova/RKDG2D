@@ -9,6 +9,7 @@
 #include "EdgeBoundaryInfty.h"
 
 #include <fstream>
+#include <memory>
 
 
 class Mesh2D
@@ -21,30 +22,20 @@ private:
 
 public:
 
-    //- Space step in x direction
-    //double hx;
-
-    //- Space step in y direction
-    //double hy;
-
     //- Number of internal cells  //?
     int nCells;
-
 
     //- Coordinates of nodes (x,y)
     std::vector<Point> nodes;
 
     //- Horizontal edges (nodeLeft, nodeRight)
-    std::vector<Edge*> edgesHor;
+    std::vector<std::shared_ptr<Edge>> edgesHor;
 
     //- Vertical edges (nodeDown, nodeUp)
-    std::vector<Edge*> edgesVer;
-
-    //- Boundary edges
-    std::vector<EdgeBoundaryInfty*> edgesBound;
+    std::vector<std::shared_ptr<Edge>> edgesVer;
 
     //- Mesh cells (edgeDown, edgeUp, edgeLeft, edgeRight)
-    std::vector<Cell*> cells;
+    std::vector<std::shared_ptr<Cell>> cells;
 
 public:
 

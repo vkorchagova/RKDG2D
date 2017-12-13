@@ -3,6 +3,13 @@
 
 using namespace std;
 
+Solver::Solver( Mesh2D& msh, Problem &prb, Flux& flx) : mesh(msh),problem(prb),flux(flx)
+{
+    alphaPrev.resize(mesh.nCells);
+    alphaNext.resize(mesh.nCells);
+}
+
+
 void Solver::write(ostream& writer, const numvector<double,5*nShapes>& coeffs) const
 {
     for (int i = 0; i < 5*nShapes; ++i)
@@ -13,19 +20,19 @@ void Solver::write(ostream& writer, const numvector<double,5*nShapes>& coeffs) c
 
 void Solver::setInitialConditions() const
 {
-    int nCells = mesh->nCells;
+    int nCells = mesh.nCells;
 
     ofstream writer;
     writer.open("alphaCoeffs/0.000000");
 
-    problem->alpha.resize(nCells);
+    problem.alpha.resize(nCells);
 
     for (int k = 0; k < nCells; ++k)
     {
-        mesh->cells[k]->setProblem(*problem);
-        problem->alpha[k] = mesh->cells[k]->getLocalInitialConditions(problem->init);
+        mesh.cells[k]->setProblem(problem);
+        problem.alpha[k] = mesh.cells[k]->getLocalInitialConditions(problem.init);
 
-        write(writer,problem->alpha[k]);
+        write(writer, problem.alpha[k]);
     }
 
     writer.close();
@@ -34,44 +41,37 @@ void Solver::setInitialConditions() const
 
 void Solver::initBoundaryConditions() const
 {
-    int nBE = mesh->edgesBound.size();
-
-    for (int i = 0; i < nBE; ++i)
-        mesh->edgesBound[i]->infty = problem->infty;
-}
-
-void Solver::initFluxes(const Flux& flux) const
-{
-    int nEdgesHor = mesh->edgesHor.size();
-    int nEdgesVer = mesh->edgesVer.size();
+    int nEdgesHor = mesh.edgesHor.size();
+    int nEdgesVer = mesh.edgesVer.size();
 
     for (int i = 0; i < nEdgesHor; ++i)
-        mesh->edgesHor[i]->setFlux(flux);
+        mesh.edgesHor[i]->setBoundaryFunction(problem.infty);
 
     for (int i = 0; i < nEdgesVer; ++i)
-        mesh->edgesVer[i]->setFlux(flux);
+        mesh.edgesVer[i]->setBoundaryFunction(problem.infty);
 }
 
 void Solver::assembleRHS(const std::vector<numvector<double, 5 * nShapes> > &alpha) const
 {
-    problem->getAlpha(alpha);
+    problem.getAlpha(alpha);
 
-    int nEdgesHor = mesh->edgesHor.size();
-    int nEdgesVer = mesh->edgesVer.size();
+    int nEdgesHor = mesh.edgesHor.size();
+    int nEdgesVer = mesh.edgesVer.size();
 
-    int nCells = mesh->cells.size();
+    int nCells = mesh.cells.size();
 
     // compute fluxes in gauss points on edges
 
     for (int i = 0; i < nEdgesHor; ++i)
     {
-        mesh->edgesHor[i]->getLocalFluxes();
+        cout << "edgeHor #" << i << endl;
+        mesh.edgesHor[i]->getLocalFluxes(flux);
         //std::cout << mesh->edgesHor[i].localFluxes[0] << '\n';
     }
 
 
     for (int i = 0; i < nEdgesVer; ++i)
-        mesh->edgesVer[i]->getLocalFluxes();
+        mesh.edgesVer[i]->getLocalFluxes(flux);
 
     // compute boundary integrals
 

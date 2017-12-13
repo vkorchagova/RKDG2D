@@ -7,9 +7,11 @@ using namespace std;
 
 
 
-void EdgeInternal::getLocalFluxes() const
+void EdgeInternal::getLocalFluxes(const Flux& flux) const
 {
-    //std::cout << "in internal \n";
+    cout << "in internal \n";
+
+    cout << neibCells[0]->number << ' ' << neibCells[1]->number << endl;
 
     for (int i = 0; i < nGP; ++i)
     {

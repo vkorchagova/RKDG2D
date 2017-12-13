@@ -39,12 +39,10 @@ public:
     /// geometric variables
 
     //- Two nodes define edge
-    numvector<const Point*, 2> nodes;
+    numvector<std::shared_ptr<Point>, 2> nodes;
 
     //- Neighbour cells for edge: 2 for internal, 1 for boundary
-    std::vector<Cell*> neibCells;
-
-    const Flux& flux;
+    std::vector<std::shared_ptr<Cell>> neibCells;
 
     /// RKDG variables
 
@@ -55,21 +53,26 @@ public:
 public:
 
     //- Default constructor
-    Edge(const Flux& flux_) : flux(flux_) {}
+    Edge() {}
 
     //- Construct using two nodes
-    Edge(const Point& p1, const Point& p2, const Flux& flux_);
+    Edge(const Point& p1, const Point& p2);
+
+    //- Copy constructor
+    //Edge (const Edge&) = delete;
+
+    //- Overloaded "=" operator
+    //Edge& operator=(const Edge&) = delete;
 
     //- Destructor
-    virtual ~Edge() {}
+    virtual ~Edge() = default;
 
     /// RKDG methods
     
     //- Calculate local fluxes for edge
-    virtual void getLocalFluxes() const = 0;
-    
-    //- Set flux
-    void setFlux (const Flux& flux_) const { flux = flux_; };
+    virtual void getLocalFluxes(const Flux& flux) const = 0;
+
+    virtual void setBoundaryFunction(const numvector<double, 5>& bc) = 0;
 
     //- Calculate 1D integral through edge
     numvector<double, 5> boundaryIntegral(const std::function<double(const Point&)>& phi) const;

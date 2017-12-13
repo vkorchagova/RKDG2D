@@ -12,17 +12,21 @@
 
 #include "Mesh2D.h"
 #include "Problem.h"
+#include "Flux.h"
 
 class Solver
 {
 
 public:
 
-    //- Pointer to 2D mesh
-    Mesh2D* mesh;
+    //- Reference to 2D mesh
+    Mesh2D& mesh;
 
-    //- Pointer to Gas2D problem
-    Problem* problem;
+    //- Reference to Gas2D problem
+    Problem& problem;
+
+    //- Reference to flux
+    Flux& flux;
 
     //- Coeffs for previous time step
     std::vector<numvector<double, 5 * nShapes>> alphaPrev;
@@ -32,11 +36,8 @@ public:
 
 public:
 
-    //- Default constructor
-    Solver() {}
-
     //- Construct using mesh and problem
-    Solver( Mesh2D& msh, Problem &prb) { mesh = &msh; problem = &prb; alphaPrev.resize(mesh->nCells); alphaNext.resize(mesh->nCells); }
+    Solver( Mesh2D& msh, Problem &prb, Flux& flx);
 
     //- Destructor
     ~Solver() {}

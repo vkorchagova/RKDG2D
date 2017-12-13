@@ -14,16 +14,16 @@ class Point : public numvector<double, 2>
 {
 public:
     //- Default constructor
-    Point(double val = 0.0) : numvector(val) {};
+    Point(double val = 0.0) : numvector(val) {}
 
     //- Construct with defined values
-    Point(const numvector<double, 2>& coord) : numvector(coord) {}; 
+    Point(const numvector<double, 2>& coord) : numvector(coord) {}
 
     //- Copy constructor
-    Point(const Point& p) = default; //{ coord[0] = p.x(); coord[1] = p.y(); }
+    Point(const Point& p) = default;
 
     //- Destructor
-    ~Point() {};
+    ~Point() {}
 
     //- Get/Set x coordinate
     const double& x() const { return r[0]; }

@@ -15,6 +15,7 @@
 #include "Problem.h"
 
 #include <functional>
+#include <memory>
 #include <math.h>
 
 class Edge;
@@ -41,7 +42,8 @@ private:
     //- Mass center of cell
     Point center;
 
-    Point hxhy;
+    //- Space steps (hx, hy)
+    Point step;
 
     //- Check if point belongs cell
     bool insideCell(const Point& point) const;
@@ -56,7 +58,7 @@ private:
     void setBasisFunctions();
     
     //- Default constructor
-    Cell() {};
+    Cell() {}
 
 
 public:
@@ -64,7 +66,7 @@ public:
     /// geometric variables
 
     //- Compute hx, hy
-    const Point& h() const { return hxhy; };
+    const Point& h() const { return step; };
 
     //- Number of cell
     //debug
@@ -74,13 +76,13 @@ public:
     static const int nEdges = 4;
 
     //- Edges define cell
-    numvector<Edge*, nEdges> edges;
+    numvector<std::shared_ptr<Edge>, nEdges> edges;
 
     //- Compute area of cell
-    double getArea() const { return area; };
+    double getArea() const { return area; }
 
     //- Calculate center of cell
-    const Point& getCellCenter() const { return center; };
+    const Point& getCellCenter() const { return center; }
 
     /// RKDG variables
 
@@ -98,7 +100,7 @@ public:
 
 
     //- Construct cell using numvector of edges
-    Cell(const numvector<Edge*, 4>& edges);
+    Cell(const numvector<std::shared_ptr<Edge>, nEdges>& edges);
 
     //- Destructor
     ~Cell() {};
@@ -106,7 +108,7 @@ public:
     /// geometric methods
 
     //- Calculate coordinates of cell nodes
-    numvector<const Point*, nEdges> getCellCoordinates() const;
+    std::vector<std::shared_ptr<Point>> getCellCoordinates() const;
 
 
     /// RKDG methods

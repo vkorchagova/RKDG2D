@@ -38,7 +38,7 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
     // fill nodes
 
     for (int i = 0; i < ny + 1; ++i)
-	for (int j = 0; j < nx + 1; ++j)
+        for (int j = 0; j < nx + 1; ++j)
             nodes.emplace_back( Point({ j * hx, i * hy }) );
 
 //    //for (int i = 0; i < nNodes; ++i)
@@ -49,38 +49,24 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
 
     for (int i = 0; i < ny + 1; ++i)
     {
-        EdgeBoundaryInfty *currentEdgeLeft = new EdgeBoundaryInfty (nodes[i*(nx + 1)], nodes[i*(nx + 1) + 1], FluxLLF());
-        edgesHor.emplace_back(currentEdgeLeft);
-        edgesBound.push_back(currentEdgeLeft);
+        edgesHor.emplace_back( make_shared<EdgeBoundaryInfty>(nodes[i*(nx + 1)], nodes[i*(nx + 1) + 1]) );
 
         for (int j = 1; j < nx - 1; ++j)
-        {
-            EdgeInternal *currentEdge = new EdgeInternal (nodes[i*(nx + 1) + j], nodes[i*(nx + 1) + j + 1], FluxLLF());
-            edgesHor.push_back(currentEdge);
-        }
+            edgesHor.emplace_back( make_shared<EdgeInternal>(nodes[i*(nx + 1) + j], nodes[i*(nx + 1) + j + 1]) );
 
-        EdgeBoundaryInfty *currentEdgeRight = new EdgeBoundaryInfty (nodes[i*(nx + 1) + nx - 1], nodes[i*(nx + 1) + nx], FluxLLF());
-        edgesHor.push_back(currentEdgeRight);
-        edgesBound.push_back(currentEdgeRight);
+        edgesHor.emplace_back( make_shared<EdgeBoundaryInfty>(nodes[i*(nx + 1) + nx - 1], nodes[i*(nx + 1) + nx]) );
     }
 
     // get vertical edges
 
     for (int i = 0; i < ny; ++i)
     {
-        EdgeBoundaryInfty *currentEdgeLeft = new EdgeBoundaryInfty(nodes[i*(nx + 1)], nodes[i*(nx + 1) + nx + 1], FluxLLF() );
-        edgesVer.push_back(currentEdgeLeft);
-        edgesBound.push_back(currentEdgeLeft);
+        edgesVer.emplace_back( make_shared<EdgeBoundaryInfty>(nodes[i*(nx + 1)], nodes[i*(nx + 1) + nx + 1]) );
 
         for (int j = 0; j < nx + 1; ++j)
-        {
-            EdgeInternal *currentEdge = new EdgeInternal (nodes[i*(nx + 1) + j], nodes[i*(nx + 1) + j + nx + 1], FluxLLF());
-            edgesVer.push_back(currentEdge);
-        }
+            edgesVer.emplace_back( make_shared<EdgeInternal>(nodes[i*(nx + 1) + j], nodes[i*(nx + 1) + j + nx + 1]) );
 
-        EdgeBoundaryInfty *currentEdgeRight = new EdgeBoundaryInfty (nodes[i*(nx + 1) + nx - 1], nodes[i*(nx + 1) + nx + nx], FluxLLF());
-        edgesVer.push_back(currentEdgeRight);
-        edgesBound.push_back(currentEdgeRight);
+        edgesVer.emplace_back( make_shared<EdgeBoundaryInfty>(nodes[i*(nx + 1) + nx - 1], nodes[i*(nx + 1) + nx + nx]) );
     }
 
     // get cells as edges (counter-clockwise: lb -> rb -> ru -> rl)
@@ -90,26 +76,22 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
         {
             //define list of edges
 
-            numvector<Edge*,4> edges = {edgesHor[i*(nx)+j], \
-                                        edgesVer[(i)*(nx + 1) + j + 1], \
-                                        edgesHor[(i + 1)*(nx)+j], \
-                                        edgesVer[(i)*(nx + 1) + j] };
+            numvector<shared_ptr<Edge>,4> edges = {edgesHor[i*(nx)+j], \
+                                                    edgesVer[(i)*(nx + 1) + j + 1], \
+                                                    edgesHor[(i + 1)*(nx)+j], \
+                                                    edgesVer[(i)*(nx + 1) + j] };
 
-            Cell* currentCell = new Cell(edges);
-
+            // add cells in list
+            cells.emplace_back( make_shared<Cell>(edges));
 
             // this cell is neighbour for its edges
 
-            edgesHor[i       * nx       + j]->neibCells.push_back(currentCell);
-            edgesVer[i       * (nx + 1) + j + 1]->neibCells.push_back(currentCell);
-            edgesHor[(i + 1) * nx       + j]->neibCells.push_back(currentCell);
-            edgesVer[i       * (nx + 1) + j]->neibCells.push_back(currentCell);
+            edgesHor[ i       *  nx      + j    ]->neibCells.push_back(cells[i*(nx)+j]);
+            edgesVer[ i       * (nx + 1) + j + 1]->neibCells.push_back(cells[i*(nx)+j]);
+            edgesHor[(i + 1)  *  nx      + j    ]->neibCells.push_back(cells[i*(nx)+j]);
+            edgesVer[ i       * (nx + 1) + j    ]->neibCells.push_back(cells[i*(nx)+j]);
 
-            currentCell->number = i;
-
-            // add cells in list
-
-            cells.push_back(currentCell);
+            cells[i*(nx)+j]->number = i*(nx)+j;
         }
     }
 
@@ -118,15 +100,6 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
 
 Mesh2D::~Mesh2D()
 {
-    for (int i = 0; i < edgesHor.size(); ++i)
-	delete[] edgesHor[i];
-    
-    for (int i = 0; i < edgesVer.size(); ++i)
-	delete[] edgesVer[i];
-	
-    for (int i = 0; i < cells.size(); ++i)
-	delete[] cells[i];
-    
     writer.close();
 }
 

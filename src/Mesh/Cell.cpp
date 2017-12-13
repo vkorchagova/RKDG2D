@@ -2,18 +2,20 @@
 #include "Edge.h"
 #include <iostream>
 
+using namespace std;
+
 // ------------------ Constructors & Destructor ----------------
 
-Cell::Cell(const numvector<Edge*, 4>& defEdges)
+Cell::Cell(const numvector<std::shared_ptr<Edge>, nEdges> &defEdges)
 {
     edges = defEdges;
     
-    hxhy.x() = edges[0]->nodes[1]->x() - edges[0]->nodes[0]->x();
-    hxhy.y() = edges[nEdges-1]->nodes[1]->y() - edges[nEdges-1]->nodes[0]->y();
+    step.x() = edges[0]->nodes[1]->x() - edges[0]->nodes[0]->x();
+    step.y() = edges[nEdges-1]->nodes[1]->y() - edges[nEdges-1]->nodes[0]->y();
     
-    area = hxhy.x() * hxhy.y();
+    area = step.x() * step.y();
     
-    center = *(edges[0]->nodes[0]) + 0.5 * hxhy;
+    center = *(edges[0]->nodes[0]) + 0.5 * step;
     
     setBasisFunctions();
     setGaussPoints();
@@ -24,8 +26,10 @@ Cell::Cell(const numvector<Edge*, 4>& defEdges)
 
 bool Cell::insideCell(const Point& point) const
 {
-    bool xCond = (center.x() - 0.5*hxhy.x()) < point.x() && (center.x() + 0.5*hxhy.x()) > point.x();
-    bool yCond = (center.y() - 0.5*hxhy.y()) < point.y() && (center.y() + 0.5*hxhy.y()) > point.y();
+    double epsilon = 1e-16;
+
+    bool xCond = (center.x() - 0.5*step.x() - epsilon) < point.x()  && (center.x() + 0.5*step.x() + epsilon) > point.x();
+    bool yCond = (center.y() - 0.5*step.y() - epsilon) < point.y()  && (center.y() + 0.5*step.y() + epsilon) > point.y();
 
     if (xCond && yCond)
         return true;
@@ -35,17 +39,17 @@ bool Cell::insideCell(const Point& point) const
 
 Point Cell::localToGlobal(const Point& point) const
 {
-    return Point({ 0.5 * hxhy.x() * point.x() + center.x(), 0.5*hxhy.y() * point.y() + center.y() });
+    return Point( { 0.5 * step.x() * point.x() + center.x(), 0.5 * step.y() * point.y() + center.y() } );
 }
 
 void Cell::setGaussPoints()
 {
     double isqrt3 = 1.0/1.732050807568877;
 
-    gPoints2D[0] = Point({-isqrt3, -isqrt3});
-    gPoints2D[1] = Point({ isqrt3, -isqrt3});
-    gPoints2D[2] = Point({-isqrt3,  isqrt3});
-    gPoints2D[3] = Point({ isqrt3,  isqrt3});
+    gPoints2D[0] = localToGlobal(Point({-isqrt3, -isqrt3}));
+    gPoints2D[1] = localToGlobal(Point({ isqrt3, -isqrt3}));
+    gPoints2D[2] = localToGlobal(Point({-isqrt3,  isqrt3}));
+    gPoints2D[3] = localToGlobal(Point({ isqrt3,  isqrt3}));
 
     gWeights2D = { 1.0, 1.0, 1.0, 1.0 };
     //todo to global coords
@@ -53,8 +57,8 @@ void Cell::setGaussPoints()
 
 void Cell::setBasisFunctions()
 {
-    double& hx = hxhy.x();
-    double& hy = hxhy.y();
+    double& hx = step.x();
+    double& hy = step.y();
     
     phi.emplace_back([&](const Point& r){ return 1.0 / sqrt(hx*hy); });
     phi.emplace_back([&](const Point& r){ return sqrt(12.0 / hy / pow(hx, 3)) * (r.x() - center.x()); });
@@ -69,9 +73,9 @@ void Cell::setBasisFunctions()
 
 // ----- geometric -----
 
-numvector<const Point*, 4> Cell::getCellCoordinates() const
+vector<shared_ptr<Point>> Cell::getCellCoordinates() const
 {
-    numvector<const Point*, 4> nodeCoordinates;
+    vector<shared_ptr<Point>> nodeCoordinates(nEdges);
 
     for (int i = 0; i < nEdges; ++i)
     {
@@ -95,7 +99,7 @@ numvector<double, 5> Cell::reconstructSolution(const Point& point) const
 {
     if (!insideCell(point))
     {
-        std::cout << "Error: point (" << point.x() << ", " << point.y() << "not inside cell #" << number << std::endl;
+        std::cout << "Error: point (" << point.x() << ", " << point.y() << ") is not inside cell #" << number << std::endl;
         exit(1);
     }
 
@@ -141,9 +145,7 @@ numvector<double, 5> Cell::integrate( const std::function<numvector<double, 5>(c
 
     for (int i = 0; i < nGP; ++i)
     {
-        Point glob = localToGlobal(gPoints2D[i]);
-
-        numvector<double,5> resF = f(glob);
+        numvector<double,5> resF = f(gPoints2D[0]);
 
         for (int k = 0; k < 5; ++k)
         {

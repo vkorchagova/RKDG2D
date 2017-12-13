@@ -32,8 +32,11 @@ int main(int argc, char** argv)
     // Initialize problem
     Problem problem;
 
+    // Initialize flux
+    FluxLLF numFlux (problem);
+
     //Initialize solver
-    Solver solver(mesh, problem);
+    Solver solver(mesh, problem, numFlux);
 
     // Set initial conditions
     solver.setInitialConditions();
@@ -42,12 +45,6 @@ int main(int argc, char** argv)
       //  cout << i << ' ' << mesh.cells[i].alphaPrev << endl;
 
     // Set boundary conditions
-
-
-    //Set flux
-    FluxLLF numFlux (problem);
-
-    solver.initFluxes(numFlux);
 
     solver.assembleRHS(problem.alpha);
 
