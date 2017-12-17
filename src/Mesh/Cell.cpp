@@ -145,7 +145,7 @@ numvector<double, 5> Cell::integrate( const std::function<numvector<double, 5>(c
 
     for (int i = 0; i < nGP; ++i)
     {
-        numvector<double,5> resF = f(gPoints2D[0]);
+        numvector<double,5> resF = f(gPoints2D[i]);
 
         for (int k = 0; k < 5; ++k)
         {

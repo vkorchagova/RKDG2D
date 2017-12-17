@@ -18,7 +18,7 @@ void Solver::write(ostream& writer, const numvector<double,5*nShapes>& coeffs) c
     writer << endl;
 } //end write
 
-void Solver::setInitialConditions() const
+void Solver::setInitialConditions()
 {
     int nCells = mesh.nCells;
 
@@ -31,6 +31,7 @@ void Solver::setInitialConditions() const
     {
         mesh.cells[k]->setProblem(problem);
         problem.alpha[k] = mesh.cells[k]->getLocalInitialConditions(problem.init);
+        alphaPrev[k] = problem.alpha[k];
 
         write(writer, problem.alpha[k]);
     }
@@ -51,7 +52,7 @@ void Solver::initBoundaryConditions() const
         mesh.edgesVer[i]->setBoundaryFunction(problem.infty);
 }
 
-void Solver::assembleRHS(const std::vector<numvector<double, 5 * nShapes> > &alpha) const
+void Solver::assembleRHS(const std::vector<numvector<double, 5 * nShapes> > &alpha)
 {
     problem.getAlpha(alpha);
 
@@ -63,27 +64,34 @@ void Solver::assembleRHS(const std::vector<numvector<double, 5 * nShapes> > &alp
     // compute fluxes in gauss points on edges
 
     for (int i = 0; i < nEdgesHor; ++i)
-    {
-        cout << "edgeHor #" << i << endl;
-        mesh.edgesHor[i]->getLocalFluxes(flux);
-
-        std::cout << "localF:" << mesh.edgesHor[i]->localFluxes[0][0] << ' '<< mesh.edgesHor[i]->localFluxes[0][1] << '\n';
-    }
-    cout << "--------" << endl;
+        mesh.edgesHor[i]->getLocalFluxesHor(flux);
 
     for (int i = 0; i < nEdgesVer; ++i)
-    {
-        cout << "edgeVer #" << i << endl;
-        mesh.edgesVer[i]->getLocalFluxes(flux);
-    }
+        mesh.edgesVer[i]->getLocalFluxesVer(flux);
+
+    for (int i = 0; i < nEdgesHor; ++i)
+        cout << "fluxes hor: " <<  mesh.edgesHor[i]->localFluxes << endl;
+
+    for (int i = 0; i < nEdgesVer; ++i)
+        cout << "fluxes ver: " <<  mesh.edgesVer[i]->localFluxes << endl;
+
     // compute boundary integrals
 
     numvector<double, 5 * nShapes> res;
 
-//    for (int i = 0; i < nCells; ++i) // for all cells
-//    {
-//        res = mesh->cells[i]->getLocalRHS();
-//    }
+    for (int k = 0; k < nCells; ++k) // for all cells
+    {
+        cout << "Cell #" << k << endl;
+
+        alphaNext =
+
+        for (int i = 0; i < 4; ++i)
+            alphaNext[k] += mesh.cells[k]->edges[i]->boundaryIntegral(mesh.cells[k]);
+
+
+
+        cout << alphaNext[k] << endl;
+    }
 
 
 }

@@ -36,6 +36,9 @@ public:
     //- Weights for integration
     numvector<double, nGP> gWeights;
 
+    //- Jacobian
+    double J;
+
     /// geometric variables
 
     //- Two nodes define edge
@@ -48,7 +51,6 @@ public:
 
     //- Local numerical fluxes for edge
     numvector<numvector<double, 5>, nGP> localFluxes;
-
 
 public:
 
@@ -70,12 +72,13 @@ public:
     /// RKDG methods
     
     //- Calculate local fluxes for edge
-    virtual void getLocalFluxes(const Flux& flux) = 0;
+    virtual void getLocalFluxesHor(const Flux& flux) = 0;
+    virtual void getLocalFluxesVer(const Flux& flux) = 0;
 
     virtual void setBoundaryFunction(const numvector<double, 5>& bc) = 0;
 
     //- Calculate 1D integral through edge
-    numvector<double, 5> boundaryIntegral(const std::function<double(const Point&)>& phi) const;
+    numvector<double, 5 * nShapes> boundaryIntegral(const std::shared_ptr<Cell>& cell) const;
 
 }; // for Edge
 

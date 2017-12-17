@@ -12,7 +12,7 @@ Problem::Problem()
     double e0 = rho0  / cpcv / (cpcv - 1.0) ;
 
     function<double(const Point& r)> initRho = [](const Point& r) \
-    { return 1.0;};// 0.001 * exp( -2.0 * pow(r.x() - 2.0, 2) - 2.0 * pow(r.y() - 2.0, 2)); };
+    { return 2.0;};// 0.001 * exp( -2.0 * pow(r.x() - 2.0, 2) - 2.0 * pow(r.y() - 2.0, 2)); };
 
     init = [=](const Point& r) { return numvector<double, 5> { rho0 + initRho(r), 0.0, 0.0, 0.0, (rho0 + initRho(r)) / cpcv / (cpcv - 1.0) }; };
 
@@ -63,18 +63,18 @@ double Problem::c_av(const numvector<double, 5>& solOne, const numvector<double,
 
 numvector<double, 5> Problem::lambdaF(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const
 {
-    double u = fabs(0.5*(solOne[1] / solOne[0] + solTwo[1] / solTwo[0])); //estimation!!!
+    double u = 0.5*(solOne[1] / solOne[0] + solTwo[1] / solTwo[0]);
     double soundSpeed = c_av(solOne, solTwo);
 
-    return {u - soundSpeed, u, u, u, u + soundSpeed};
+    return { fabs(u - soundSpeed), u, u, u,  fabs(u + soundSpeed)};
 } // end lambdaF
 
 numvector<double, 5> Problem::lambdaG(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const
 {
-    double v = fabs(0.5*(solOne[2] / solOne[0] + solTwo[2] / solTwo[0])); //estimation!!!
+    double v = 0.5*(solOne[2] / solOne[0] + solTwo[2] / solTwo[0]);
     double soundSpeed = c_av(solOne, solTwo);
 
-    return {v - soundSpeed, v, v, v, v + soundSpeed};
+    return { fabs(v - soundSpeed), v, v, v,  fabs(v + soundSpeed)};
 } // end lambdaG
 
 

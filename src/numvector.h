@@ -14,6 +14,7 @@
 #include <vector>
 #include <set>
 #include <ostream>
+#include "math.h"
 
 /*!
 \brief Шаблонный класс, определяющий вектор фиксированной длины

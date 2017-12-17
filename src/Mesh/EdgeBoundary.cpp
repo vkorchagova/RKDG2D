@@ -4,15 +4,26 @@ using namespace std;
 
 // ------------------ Constructors & Destructor ----------------
 
-void EdgeBoundary::getLocalFluxes(const Flux &flux)
+void EdgeBoundary::getLocalFluxesHor(const Flux &flux)
 {
-    cout << "in boundary edge\n";
 
     for (int i = 0; i < nGP; ++i)
     {
         numvector<double, 5> solLeft = neibCells[0]->reconstructSolution(gPoints[i]); 
         numvector<double, 5> solRight = applyBoundary(solLeft);
                         
-        localFluxes[i] = flux.evaluate(solLeft, solRight);
+        localFluxes[i] = flux.evaluateHor(solLeft, solRight);
+    }
+}
+
+void EdgeBoundary::getLocalFluxesVer(const Flux &flux)
+{
+
+    for (int i = 0; i < nGP; ++i)
+    {
+        numvector<double, 5> solLeft = neibCells[0]->reconstructSolution(gPoints[i]);
+        numvector<double, 5> solRight = applyBoundary(solLeft);
+
+        localFluxes[i] = flux.evaluateVer(solLeft, solRight);
     }
 }

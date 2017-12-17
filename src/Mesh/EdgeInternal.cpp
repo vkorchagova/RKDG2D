@@ -7,22 +7,24 @@ using namespace std;
 
 
 
-void EdgeInternal::getLocalFluxes(const Flux& flux)
+void EdgeInternal::getLocalFluxesHor(const Flux& flux)
 {
-    cout << "in internal \n";
-
-    cout << neibCells[0]->number << ' ' << neibCells[1]->number << endl;
-
     for (int i = 0; i < nGP; ++i)
     {
         numvector<double, 5> solLeft = neibCells[0]->reconstructSolution(gPoints[i]); //alpha coeffs placed in cell
         numvector<double, 5> solRight = neibCells[1]->reconstructSolution(gPoints[i]);
+        localFluxes[i] = flux.evaluateHor(solLeft, solRight);
+    }
+}
 
 
-        std::cout << "solLeft" << solLeft << '\n';
-
-
-        localFluxes[i] = flux.evaluate(solLeft, solRight);
+void EdgeInternal::getLocalFluxesVer(const Flux& flux)
+{
+    for (int i = 0; i < nGP; ++i)
+    {
+        numvector<double, 5> solLeft = neibCells[0]->reconstructSolution(gPoints[i]); //alpha coeffs placed in cell
+        numvector<double, 5> solRight = neibCells[1]->reconstructSolution(gPoints[i]);
+        localFluxes[i] = flux.evaluateVer(solLeft, solRight);
     }
 }
 

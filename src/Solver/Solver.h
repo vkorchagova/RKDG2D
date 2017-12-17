@@ -48,13 +48,13 @@ public:
     void initBoundaryConditions() const;
 
     //- Calculate coeffs with initial conditions
-    void setInitialConditions() const;
+    void setInitialConditions();
 
     //- Set flux
     void initFluxes(const Flux& flux) const;
 
     //- Assemble right hand side
-    void assembleRHS( const std::vector<numvector<double, 5 * nShapes>>& alpha) const;
+    void assembleRHS( const std::vector<numvector<double, 5 * nShapes>>& alpha);
 
     //// Other methods
 

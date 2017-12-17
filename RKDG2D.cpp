@@ -41,11 +41,16 @@ int main(int argc, char** argv)
     // Set initial conditions
     solver.setInitialConditions();
 
-    //for (int i = 0; i < mesh.cells.size(); ++i)
-      //  cout << i << ' ' << mesh.cells[i].alphaPrev << endl;
+
 
     // Set boundary conditions
     solver.initBoundaryConditions();
+
+
+    cout << "Init cond:\n " ;
+    for (int i = 0; i < mesh.cells.size(); ++i)
+        cout << problem.alpha[i] << endl;
+
 
     solver.assembleRHS(problem.alpha);
 

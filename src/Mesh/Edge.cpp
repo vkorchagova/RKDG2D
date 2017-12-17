@@ -21,6 +21,9 @@ Edge::Edge(const Point& p1, const Point& p2)
     
     // weights for gauss integration
     gWeights = { 1.0, 1.0 };
+
+    //- jacobian
+    J = 0.5 * (p2 - p1).length();
 }
 
 // ------------------ Private class methods --------------------
@@ -29,20 +32,27 @@ Edge::Edge(const Point& p1, const Point& p2)
 // ------------------ Public class methods ---------------------
 
 //// RKDG methods
-numvector<double, 5> Edge::boundaryIntegral(const std::function<double(const Point&)>& phi) const
+numvector<double, 5 * nShapes> Edge::boundaryIntegral(const std::shared_ptr<Cell> &cell) const
 {
-    numvector<double, 5> res (0.0);
+    numvector<double, 5 * nShapes> res (0.0);
+
+    double sign = (cell == neibCells[0]) ? 1.0 : -1.0;
+    cout << sign << endl;
 
 //    std::cout << "boundary integral: ";
 
     for (int i = 0; i < nGP; ++i)
     {
-        for (int k = 0; k < 5; ++k)
+        for (int p = 0; p < 5; ++p)
         {
-            res[k] += ( gWeights[i] * phi(gPoints[i]) ) * localFluxes[i][k];
+            for (int q = 0; q < nShapes; ++q)
+            {
+                res[p*nShapes + q] += localFluxes[i][p] * ( gWeights[i] * cell->phi[q](gPoints[i]) );
+
+            }
         }
     }
 
-    return res;
+    return res * J * sign;
 }
 
