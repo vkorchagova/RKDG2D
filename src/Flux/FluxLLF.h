@@ -28,8 +28,6 @@ public:
 
     //- Evaluate numerical flux through one point
     virtual numvector<double, 5> evaluate(const numvector<double, 5>& solInner, const numvector<double, 5>& solOuter, const Point& n) const override;
-    virtual numvector<double, 5> evaluateHor(const numvector<double, 5>& solInner, const numvector<double, 5>& solOuter) const override;
-    virtual numvector<double, 5> evaluateVer(const numvector<double, 5>& solInner, const numvector<double, 5>& solOuter) const override;
 };
 
 

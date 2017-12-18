@@ -17,13 +17,11 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
     int nEdgesVer = ny*(nx + 1);
 
     nCells = nx*ny;
-    //nGhostCells = 2 * nx + 2 * ny;
 
     // space step in x, y direction
 
     double hx = Lx / nx;
     double hy = Ly / ny;
-
 
     // reserve memory
 	
@@ -31,18 +29,11 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
     edgesHor.reserve(nEdgesHor);
     edgesVer.reserve(nEdgesVer);
     
-//    cells.reserve(nInternalCells);
-    //ghostCells.reserve(nGhostCells);
-    //cells.reserve(nInternalCells+nGhostCells);
-
     // fill nodes
 
     for (int i = 0; i < ny + 1; ++i)
         for (int j = 0; j < nx + 1; ++j)
             nodes.emplace_back( Point({ j * hx, i * hy }) );
-
-//    //for (int i = 0; i < nNodes; ++i)
-//    //    cout << nodes[i].x() << ' ' << nodes[i].y() << endl;
 
 
     // get horizontal edges
@@ -82,21 +73,6 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
     for (int i = 0; i < nEdgesVer; ++i)
         edgesVer[i]->n = (i % (nx + 1) == 0) ? Point({ -1.0, 0.0 }) : Point({ 1.0, 0.0 });
 
-//    for (int i = 0; i < nEdgesHor; ++i) {
-//        cout << "---\nhEdge #" << i << endl;
-//        cout << "n[0] = " << edgesHor[i]->nodes[0]->x() << ' ' << edgesHor[i]->nodes[0]->y() << endl;
-//        cout << "n[1] = " << edgesHor[i]->nodes[1]->x() << ' ' << edgesHor[i]->nodes[1]->y() << endl;
-//        cout << "gp[0] = " << edgesHor[i]->gPoints[0] << endl;
-//        cout << "gp[1] = " << edgesHor[i]->gPoints[1] << endl;
-//    }
-
-//    for (int i = 0; i < nEdgesVer; ++i) {
-//        cout << "---\nvEdge #" << i << endl;
-//        cout << "n[0] = " << edgesVer[i]->nodes[0]->x() << ' ' << edgesVer[i]->nodes[0]->y() << endl;
-//        cout << "n[1] = " << edgesVer[i]->nodes[1]->x() << ' ' << edgesVer[i]->nodes[1]->y() << endl;
-//        cout << "gp[0] = " << edgesVer[i]->gPoints[0] << endl;
-//        cout << "gp[1] = " << edgesVer[i]->gPoints[1] << endl;
-//    }
 
     // get cells as edges (counter-clockwise: lb -> rb -> ru -> rl)
     for (int i = 0; i < ny; ++i)

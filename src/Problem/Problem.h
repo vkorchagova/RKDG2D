@@ -14,7 +14,6 @@ class Problem
 
 public:
 
-
     //- Heat capacity ratio
     const double cpcv = 1.4;
 
@@ -36,7 +35,7 @@ public:
     ~Problem();
 
     //- Get actual coeffs
-    void getAlpha(const std::vector<numvector<double, 5 * nShapes> >& a);
+    void setAlpha(const std::vector<numvector<double, 5 * nShapes> >& a);
 
     //- Calculate pressure using conservative variables
     double getPressure(const numvector<double,5>& sol) const;

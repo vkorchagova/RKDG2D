@@ -53,13 +53,13 @@ public:
     //- Set flux
     void initFluxes(const Flux& flux) const;
 
-    //- Assemble right hand side
-    void assembleRHS( const std::vector<numvector<double, 5 * nShapes>>& alpha);
+    //- Assemble right-hand side
+    std::vector<numvector<double, 5 * nShapes> > assembleRHS( const std::vector<numvector<double, 5 * nShapes>>& alpha);
 
     //// Other methods
 
     //- Output for coeffs
-    void write(std::ostream& writer, const numvector<double,5*nShapes>& coeffs) const;
+    void write(std::ostream& writer, const std::vector<numvector<double,5*nShapes>>& coeffs) const;
 };
 
 #endif // SOLVER_H

@@ -12,7 +12,7 @@ Problem::Problem()
     double e0 = rho0  / cpcv / (cpcv - 1.0) ;
 
     function<double(const Point& r)> initRho = [](const Point& r) \
-    { return 2.0;};// 0.001 * exp( -2.0 * pow(r.x() - 2.0, 2) - 2.0 * pow(r.y() - 2.0, 2)); };
+    { return 0.001 * exp( -2.0 * pow(r.x() - 2.0, 2) - 2.0 * pow(r.y() - 2.0, 2)); };
 
     init = [=](const Point& r) { return numvector<double, 5> { rho0 + initRho(r), 0.0, 0.0, 0.0, (rho0 + initRho(r)) / cpcv / (cpcv - 1.0) }; };
 
@@ -36,7 +36,7 @@ Problem::~Problem()
 
 //// RKDG methods
 
-void Problem::getAlpha(const std::vector<numvector<double, 5 * nShapes> >& a)
+void Problem::setAlpha(const std::vector<numvector<double, 5 * nShapes> >& a)
 {
     alpha = a;
 }

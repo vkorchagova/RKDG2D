@@ -93,7 +93,6 @@ public:
     const Problem* problem;
 
     //- List of basis functions
-    //std::function<double(const Point&)> phi[nShapes];
     std::vector<std::function<double(const Point&)>> phi;
 
     //- Gradient of basis functions
@@ -125,13 +124,11 @@ public:
     //- Get coefficients for initial conditions
     numvector<double, 5 * nShapes> getLocalInitialConditions(std::function<numvector<double,5>(const Point& point)>& init) const;
 
-    //- Calculate local RHS
-    //numvector<double, 5 * nShapes> getLocalRHS() const;
+    //- Calculate \int_{cell} F(U) \nabla \phi_x + G(U) \nabla \phi_y
+    numvector<double, 5 * nShapes> cellIntegral();
 
     //- 2D Gauss integration of vector function
     numvector<double,5> integrate( const std::function<numvector<double, 5>(const Point&)>& f) const;
-
-
 };
 
 #endif // CELL_H

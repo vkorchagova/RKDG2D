@@ -10,20 +10,20 @@ Solver::Solver( Mesh2D& msh, Problem &prb, Flux& flx) : mesh(msh),problem(prb),f
 }
 
 
-void Solver::write(ostream& writer, const numvector<double,5*nShapes>& coeffs) const
+void Solver::write(ostream& writer, const vector<numvector<double,5*nShapes>>& coeffs) const
 {
-    for (int i = 0; i < 5*nShapes; ++i)
-        writer << coeffs[i] << ' ';
+    for (int k = 0; k < coeffs.size(); ++k)
+    {
+        for (int i = 0; i < 5*nShapes; ++i)
+            writer << coeffs[k][i] << ' ';
 
-    writer << endl;
+        writer << endl;
+    }
 } //end write
 
 void Solver::setInitialConditions()
 {
     int nCells = mesh.nCells;
-
-    ofstream writer;
-    writer.open("alphaCoeffs/0.000000");
 
     problem.alpha.resize(nCells);
 
@@ -32,9 +32,12 @@ void Solver::setInitialConditions()
         mesh.cells[k]->setProblem(problem);
         problem.alpha[k] = mesh.cells[k]->getLocalInitialConditions(problem.init);
         alphaPrev[k] = problem.alpha[k];
-
-        write(writer, problem.alpha[k]);
     }
+
+    ofstream writer;
+    writer.open("alphaCoeffs/0.000000");
+
+    write(writer, problem.alpha);
 
     writer.close();
 
@@ -52,9 +55,9 @@ void Solver::initBoundaryConditions() const
         mesh.edgesVer[i]->setBoundaryFunction(problem.infty);
 }
 
-void Solver::assembleRHS(const std::vector<numvector<double, 5 * nShapes> > &alpha)
+vector<numvector<double, 5 * nShapes>> Solver::assembleRHS(const std::vector<numvector<double, 5 * nShapes> > &alpha)
 {
-    problem.getAlpha(alpha);
+    problem.setAlpha(alpha);
 
     int nEdgesHor = mesh.edgesHor.size();
     int nEdgesVer = mesh.edgesVer.size();
@@ -64,35 +67,23 @@ void Solver::assembleRHS(const std::vector<numvector<double, 5 * nShapes> > &alp
     // compute fluxes in gauss points on edges
 
     for (int i = 0; i < nEdgesHor; ++i)
-        mesh.edgesHor[i]->getLocalFluxesHor(flux);
+        mesh.edgesHor[i]->getLocalFluxes(flux);
 
     for (int i = 0; i < nEdgesVer; ++i)
-        mesh.edgesVer[i]->getLocalFluxesVer(flux);
-
-    for (int i = 0; i < nEdgesHor; ++i)
-        cout << "fluxes hor: " <<  mesh.edgesHor[i]->localFluxes << endl;
-
-    for (int i = 0; i < nEdgesVer; ++i)
-        cout << "fluxes ver: " <<  mesh.edgesVer[i]->localFluxes << endl;
+        mesh.edgesVer[i]->getLocalFluxes(flux);
 
 
-
-    numvector<double, 5 * nShapes> res;
+    vector<numvector<double, 5 * nShapes>> rhs(mesh.nCells);
 
     for (int k = 0; k < nCells; ++k) // for all cells
     {
-        cout << "Cell #" << k << endl;
-
         // compute internal integral
-        //alphaNext =
+        rhs[k] = mesh.cells[k]->cellIntegral();
 
         // compute boundary integrals
         for (int i = 0; i < 4; ++i)
-        {
-            //cout << "bI = " << mesh.cells[k]->edges[i]->boundaryIntegral(mesh.cells[k]) << endl;
-            alphaNext[k] += mesh.cells[k]->edges[i]->boundaryIntegral(mesh.cells[k]);
-        }
-
-        cout << alphaNext[k] << endl;
+            rhs[k] -= mesh.cells[k]->edges[i]->boundaryIntegral(mesh.cells[k]);
     }
+
+    return rhs;
 }

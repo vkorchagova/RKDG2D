@@ -75,8 +75,7 @@ public:
     /// RKDG methods
     
     //- Calculate local fluxes for edge
-    virtual void getLocalFluxesHor(const Flux& flux) = 0;
-    virtual void getLocalFluxesVer(const Flux& flux) = 0;
+    virtual void getLocalFluxes(const Flux& flux) = 0;
 
     virtual void setBoundaryFunction(const numvector<double, 5>& bc) = 0;
 

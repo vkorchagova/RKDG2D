@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include "defs.h"
 #include "Mesh2D.h"
 #include "Solver.h"
 #include "FluxLLF.h"
@@ -18,11 +19,11 @@ int main(int argc, char** argv)
 {    
     // Mesh parameters
 
-    double Lx = 1.0;
-    double Ly = 1.0;
+    double Lx = 4.0;
+    double Ly = 4.0;
 
-    int nx = 1;
-    int ny = 1;
+    int nx = 20;
+    int ny = 25;
 
     // Initialize mesh
     Mesh2D mesh(nx, ny, Lx, Ly);
@@ -35,46 +36,58 @@ int main(int argc, char** argv)
     // Initialize flux
     FluxLLF numFlux (problem);
 
-    //Initialize solver
+    // Initialize solver
     Solver solver(mesh, problem, numFlux);
 
     // Set initial conditions
     solver.setInitialConditions();
 
-
-
     // Set boundary conditions
     solver.initBoundaryConditions();
 
 
-    cout << "Init cond:\n " ;
-    for (int i = 0; i < mesh.cells.size(); ++i)
-        cout << problem.alpha[i] << endl;
+//    cout << "Init cond:\n " ;
+//    for (int i = 0; i < mesh.cells.size(); ++i)
+//        cout << problem.alpha[i] << endl;
+
+    // time cycle paramentes
+
+    double Co = 0.25;
+    double tEnd = 2.01;
+
+    double tau = min(mesh.cells[0]->h().x(),mesh.cells[0]->h().x()) * Co;
+        // sound speed = 1 --- const in acoustic problems
+        // only for uniform mesh hx and hy are similar for all cells
 
 
-    solver.assembleRHS(problem.alpha);
+    // run Runge --- Kutta 2 TVD
 
+    vector<numvector<double, 5*nShapes>> k1, k2;
 
+    k1.resize(mesh.nCells);
+    k2.resize(mesh.nCells);
 
+    for (double t = tau; t < tEnd; t += tau)
+    {
+       string fileName = "alphaCoeffs/" + to_string(t);
 
-    //numvector<double,2> pt = {1.0,0.4};
-    //numvector<double,5> res,s1,s2;
-    //res=problem.reconstructSolution(problem.alphaPrev[0],pt,0);
-    //s1=problem.reconstructSolution(problem.alphaPrev[0],pt,0);
-    //s2=problem.reconstructSolution(problem.alphaPrev[1],pt,1);
-    //res=problem.fluxG(problem.reconstructSolution(problem.alphaPrev[0],pt,0));
-    //for(int p=0;p<5;++p)
-     //   cout<<res[p]<<endl;
-    //cout<< problem.c_av(s1,s2) << endl;
+       ofstream output;
+       output.open(fileName);
 
+       cout << "t = " << t << endl;
 
+       k1 = solver.assembleRHS(solver.alphaPrev);
+       solver.alphaNext = solver.alphaPrev + k1 * tau;
 
-    //cout << numFlux.problem->mesh->cellCenters.size() << endl;
-    //problem.write(cout,problem.alphaPrev[9]);
+       k2 = solver.assembleRHS(solver.alphaNext);
+       solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
 
-    //vector<numvector<double, 5*nShapes>> rhs = numFlux.getRHS(problem.alphaPrev);
+       solver.write(output,solver.alphaNext);
 
-    //problem.write(cout,rhs[9]);
+       solver.alphaPrev = solver.alphaNext;
+
+       output.close();
+    }
 
     cout << "END \n";
 
