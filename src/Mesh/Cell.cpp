@@ -28,7 +28,7 @@ Cell::Cell(const numvector<std::shared_ptr<Edge>, nEdges> &defEdges)
 
 bool Cell::insideCell(const Point& point) const
 {
-    double epsilon = 1e-15;
+    double epsilon = 1e-10;
 
     bool xCond = (center.x() - 0.5*step.x() - epsilon) < point.x()  && (center.x() + 0.5*step.x() + epsilon) > point.x();
     bool yCond = (center.y() - 0.5*step.y() - epsilon) < point.y()  && (center.y() + 0.5*step.y() + epsilon) > point.y();
@@ -101,6 +101,13 @@ numvector<double, 5> Cell::reconstructSolution(const Point& point) const
     if (!insideCell(point))
     {
         std::cout << "Error: point (" << point.x() << ", " << point.y() << ") is not inside cell #" << number << std::endl;
+        std::cout << "Cell nodes:" << std::endl;
+
+        vector<shared_ptr<Point>> ccoord = getCellCoordinates();
+
+        for (int i = 0; i < ccoord.size(); ++i)
+            std::cout << "(" << ccoord[i]->x() << "; " << ccoord[i]->y() << ")" << endl;
+
         exit(1);
     }
 

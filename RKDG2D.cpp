@@ -19,11 +19,11 @@ int main(int argc, char** argv)
 {    
     // Mesh parameters
 
-    double Lx = 4.0;
-    double Ly = 4.0;
+    double Lx = 8.0;
+    double Ly = 8.0;
 
     int nx = 20;
-    int ny = 25;
+    int ny = 40;
 
     // Initialize mesh
     Mesh2D mesh(nx, ny, Lx, Ly);
@@ -55,7 +55,7 @@ int main(int argc, char** argv)
     double Co = 0.25;
     double tEnd = 2.01;
 
-    double tau = min(mesh.cells[0]->h().x(),mesh.cells[0]->h().x()) * Co;
+    double tau = min(mesh.cells[0]->h().x(),mesh.cells[0]->h().y()) * Co;
         // sound speed = 1 --- const in acoustic problems
         // only for uniform mesh hx and hy are similar for all cells
 
