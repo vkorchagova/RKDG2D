@@ -14,6 +14,8 @@ Cell::Cell(const numvector<std::shared_ptr<Edge>, nEdges> &defEdges)
     step.y() = edges[nEdges-1]->nodes[1]->y() - edges[nEdges-1]->nodes[0]->y();
     
     area = step.x() * step.y();
+
+    J = 0.25 * area;
     
     center = *(edges[0]->nodes[0]) + 0.5 * step;
     
@@ -52,7 +54,6 @@ void Cell::setGaussPoints()
     gPoints2D[3] = localToGlobal(Point({ isqrt3,  isqrt3}));
 
     gWeights2D = { 1.0, 1.0, 1.0, 1.0 };
-    //todo to global coords
 }
 
 void Cell::setBasisFunctions()

@@ -37,18 +37,18 @@ numvector<double, 5 * nShapes> Edge::boundaryIntegral(const std::shared_ptr<Cell
     numvector<double, 5 * nShapes> res (0.0);
 
     double sign = (cell == neibCells[0]) ? 1.0 : -1.0;
-    cout << sign << endl;
+//    cout << sign << endl;
 
 //    std::cout << "boundary integral: ";
 
     for (int i = 0; i < nGP; ++i)
     {
-        for (int p = 0; p < 5; ++p)
+        for (int q = 0; q < nShapes; ++q)
         {
-            for (int q = 0; q < nShapes; ++q)
+            for (int p = 0; p < 5; ++p)
             {
+                //cout << "phi [" << q << "] in GP" << gPoints[i] << " = " << cell->phi[q](gPoints[i]) << endl;
                 res[p*nShapes + q] += localFluxes[i][p] * ( gWeights[i] * cell->phi[q](gPoints[i]) );
-
             }
         }
     }

@@ -51,14 +51,19 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
         edgesHor.emplace_back( make_shared<EdgeBoundaryInfty>(nodes[j], nodes[j + 1]) );
 
     for (int i = 1; i < ny; ++i)
-    {
        for (int j = 0; j < nx; ++j)
             edgesHor.emplace_back( make_shared<EdgeInternal>(nodes[i*(nx + 1) + j], nodes[i*(nx + 1) + j + 1]) );
 
-   }
 
     for (int j = 0; j < nx; ++j)
         edgesHor.emplace_back( make_shared<EdgeBoundaryInfty>(nodes[ny*(nx + 1) + j], nodes[ny*(nx + 1) + j + 1]) );
+
+    // set normals to horizontal edges
+    for (int i = 0; i < nx; ++i)
+        edgesHor[i]->n = Point({ 0.0, -1.0 });
+
+    for (int i = nx; i < nEdgesHor; ++i)
+        edgesHor[i]->n = Point({ 0.0,  1.0 });
 
 
     // get vertical edges
@@ -70,8 +75,28 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
         for (int j = 1; j < nx; ++j)
             edgesVer.emplace_back( make_shared<EdgeInternal>(nodes[i*(nx + 1) + j], nodes[i*(nx + 1) + j + nx + 1]) );
 
-        edgesVer.emplace_back( make_shared<EdgeBoundaryInfty>(nodes[i*(nx + 1) + nx - 1], nodes[i*(nx + 1) + nx + nx]) );
+        edgesVer.emplace_back( make_shared<EdgeBoundaryInfty>(nodes[i*(nx + 1) + nx ], nodes[i*(nx + 1) + nx + nx + 1]) );
     }
+
+    // set normals to vertical edges
+    for (int i = 0; i < nEdgesVer; ++i)
+        edgesVer[i]->n = (i % (nx + 1) == 0) ? Point({ -1.0, 0.0 }) : Point({ 1.0, 0.0 });
+
+//    for (int i = 0; i < nEdgesHor; ++i) {
+//        cout << "---\nhEdge #" << i << endl;
+//        cout << "n[0] = " << edgesHor[i]->nodes[0]->x() << ' ' << edgesHor[i]->nodes[0]->y() << endl;
+//        cout << "n[1] = " << edgesHor[i]->nodes[1]->x() << ' ' << edgesHor[i]->nodes[1]->y() << endl;
+//        cout << "gp[0] = " << edgesHor[i]->gPoints[0] << endl;
+//        cout << "gp[1] = " << edgesHor[i]->gPoints[1] << endl;
+//    }
+
+//    for (int i = 0; i < nEdgesVer; ++i) {
+//        cout << "---\nvEdge #" << i << endl;
+//        cout << "n[0] = " << edgesVer[i]->nodes[0]->x() << ' ' << edgesVer[i]->nodes[0]->y() << endl;
+//        cout << "n[1] = " << edgesVer[i]->nodes[1]->x() << ' ' << edgesVer[i]->nodes[1]->y() << endl;
+//        cout << "gp[0] = " << edgesVer[i]->gPoints[0] << endl;
+//        cout << "gp[1] = " << edgesVer[i]->gPoints[1] << endl;
+//    }
 
     // get cells as edges (counter-clockwise: lb -> rb -> ru -> rl)
     for (int i = 0; i < ny; ++i)

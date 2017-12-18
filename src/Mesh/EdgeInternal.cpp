@@ -13,7 +13,8 @@ void EdgeInternal::getLocalFluxesHor(const Flux& flux)
     {
         numvector<double, 5> solLeft = neibCells[0]->reconstructSolution(gPoints[i]); //alpha coeffs placed in cell
         numvector<double, 5> solRight = neibCells[1]->reconstructSolution(gPoints[i]);
-        localFluxes[i] = flux.evaluateHor(solLeft, solRight);
+
+        localFluxes[i] = flux.evaluate(solLeft, solRight, n);
     }
 }
 
@@ -24,7 +25,7 @@ void EdgeInternal::getLocalFluxesVer(const Flux& flux)
     {
         numvector<double, 5> solLeft = neibCells[0]->reconstructSolution(gPoints[i]); //alpha coeffs placed in cell
         numvector<double, 5> solRight = neibCells[1]->reconstructSolution(gPoints[i]);
-        localFluxes[i] = flux.evaluateVer(solLeft, solRight);
+        localFluxes[i] = flux.evaluate(solLeft, solRight, n);
     }
 }
 

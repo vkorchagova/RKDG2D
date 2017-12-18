@@ -35,6 +35,9 @@ private:
     //- Gauss weights
     numvector<double, nGP> gWeights2D;
 
+    //- Jacobian
+    double J;
+
 private:
     //- Area of cell
     double area;

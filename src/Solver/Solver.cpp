@@ -75,7 +75,7 @@ void Solver::assembleRHS(const std::vector<numvector<double, 5 * nShapes> > &alp
     for (int i = 0; i < nEdgesVer; ++i)
         cout << "fluxes ver: " <<  mesh.edgesVer[i]->localFluxes << endl;
 
-    // compute boundary integrals
+
 
     numvector<double, 5 * nShapes> res;
 
@@ -83,15 +83,16 @@ void Solver::assembleRHS(const std::vector<numvector<double, 5 * nShapes> > &alp
     {
         cout << "Cell #" << k << endl;
 
-        alphaNext =
+        // compute internal integral
+        //alphaNext =
 
+        // compute boundary integrals
         for (int i = 0; i < 4; ++i)
+        {
+            //cout << "bI = " << mesh.cells[k]->edges[i]->boundaryIntegral(mesh.cells[k]) << endl;
             alphaNext[k] += mesh.cells[k]->edges[i]->boundaryIntegral(mesh.cells[k]);
-
-
+        }
 
         cout << alphaNext[k] << endl;
     }
-
-
 }

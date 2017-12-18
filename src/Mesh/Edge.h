@@ -47,6 +47,9 @@ public:
     //- Neighbour cells for edge: 2 for internal, 1 for boundary
     std::vector<std::shared_ptr<Cell>> neibCells;
 
+    //- Normal to edge
+    Point n;
+
     /// RKDG variables
 
     //- Local numerical fluxes for edge
