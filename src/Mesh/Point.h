@@ -19,6 +19,10 @@ public:
     //- Construct with defined values
     Point(const numvector<double, 2>& coord) : numvector(coord) {}
 
+	//- Construct with initializer list
+	//Point(const std::initializer_list<double>& list) : numvector(list) {}
+
+
     //- Copy constructor
     Point(const Point& p) = default;
 

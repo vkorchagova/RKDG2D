@@ -17,6 +17,7 @@
 #include <functional>
 #include <memory>
 #include <math.h>
+#include <algorithm>
 
 class Edge;
 //class Problem;
@@ -120,6 +121,11 @@ public:
 
     //- Reconstruct solution
     numvector<double, 5> reconstructSolution(const Point& point) const;
+    double reconstructSolution(const Point& point, int numSol) const;
+    double reconstructSolution(const std::shared_ptr<Point> point, int numSol) const
+        { return reconstructSolution(*point, numSol); };
+
+
 
     //- Get coefficients for initial conditions
     numvector<double, 5 * nShapes> getLocalInitialConditions(std::function<numvector<double,5>(const Point& point)>& init) const;
@@ -129,6 +135,9 @@ public:
 
     //- 2D Gauss integration of vector function
     numvector<double,5> integrate( const std::function<numvector<double, 5>(const Point&)>& f) const;
+    
+    //- Get norm of solution for indicators
+    double getNormQ(int numSol = 0) const;
 };
 
 #endif // CELL_H

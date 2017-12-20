@@ -26,6 +26,8 @@ class Edge
 {
 private:
 
+    double length;
+
 public:
     //- Number of gauss points for edge
     static const int nGP = 2;
@@ -72,6 +74,9 @@ public:
     //- Destructor
     virtual ~Edge() = default;
 
+    //- Get length
+    double getLength() const { return length; };
+    
     /// RKDG methods
     
     //- Calculate local fluxes for edge

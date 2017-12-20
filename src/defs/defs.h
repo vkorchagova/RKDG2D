@@ -21,6 +21,7 @@ std::vector<numvector<double, dim>> operator * (const std::vector<numvector<doub
 //- Sum of two vector<numvector>s
 std::vector<numvector<double, dim>> operator + (const std::vector<numvector<double, dim>>& b, const std::vector<numvector<double, dim>>& a);
 
+
 namespace std
 {
 // ---------------------------------------------

@@ -21,9 +21,11 @@ Edge::Edge(const Point& p1, const Point& p2)
     
     // weights for gauss integration
     gWeights = { 1.0, 1.0 };
+    
+    length = (p2 - p1).length();
 
     //- jacobian
-    J = 0.5 * (p2 - p1).length();
+    J = 0.5 * length ;
 }
 
 // ------------------ Private class methods --------------------

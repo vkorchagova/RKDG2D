@@ -82,9 +82,9 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
             //define list of edges
 
             numvector<shared_ptr<Edge>,4> edges = {edgesHor[i*(nx)+j], \
-                                                    edgesVer[(i)*(nx + 1) + j + 1], \
-                                                    edgesHor[(i + 1)*(nx)+j], \
-                                                    edgesVer[(i)*(nx + 1) + j] };
+                                                   edgesVer[(i)*(nx + 1) + j + 1], \
+                                                   edgesHor[(i + 1)*(nx)+j], \
+                                                   edgesVer[(i)*(nx + 1) + j] };
 
             // add cells in list
             cells.emplace_back( make_shared<Cell>(edges));
@@ -113,7 +113,7 @@ Mesh2D::~Mesh2D()
 // ------------------ Public class methods ---------------------
 
 
-void Mesh2D::exportMesh()
+void Mesh2D::exportMesh() const
 {
     writer << "hx = " << cells[0]->h().x() << endl;
     writer << "hy = " << cells[0]->h().y() << endl;

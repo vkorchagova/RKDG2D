@@ -18,7 +18,7 @@ class Mesh2D
 private:
 
     //- File ofstream for mesh export
-    std::ofstream writer;
+    mutable std::ofstream writer;
 
 public:
 
@@ -40,7 +40,7 @@ public:
 public:
 
     //- Default constructor
-    Mesh2D() {}
+    // Mesh2D() {}
 
     //- Construct uniform rectangular mesh by number of cells and size of flow domain
     Mesh2D(int nx, int ny, double Lx, double Ly);
@@ -49,7 +49,7 @@ public:
     ~Mesh2D();
 
     //- Export mesh
-    void exportMesh();
+    void exportMesh() const;
 
 };// end Mesh 2D
 

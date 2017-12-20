@@ -51,7 +51,7 @@ public:
     void setInitialConditions();
 
     //- Set flux
-    void initFluxes(const Flux& flux) const;
+    //void initFluxes(const Flux& flux) const;
 
     //- Assemble right-hand side
     std::vector<numvector<double, 5 * nShapes> > assembleRHS( const std::vector<numvector<double, 5 * nShapes>>& alpha);

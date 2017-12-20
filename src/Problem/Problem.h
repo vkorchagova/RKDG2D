@@ -5,6 +5,11 @@
 #include <functional>
 #include "numvector.h"
 #include "Point.h"
+//#include "defs.h"
+
+//- Square
+template<class T>
+inline T sqr(T x) {return x*x;};
 
 //- Number of basis functions
 const int nShapes = 3;

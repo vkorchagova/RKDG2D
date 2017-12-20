@@ -7,21 +7,21 @@ class Flux
 {
 
 public:
-    Problem *problem;
+    const Problem& problem;
 
 public:
 
     //- Default constructor
-    Flux() {}
+    // Flux() {}
 
     //- Construct with problem
-    Flux(Problem &prb);
+    Flux(const Problem& prb) : problem(prb) {};
 
     //- Destructor
     virtual ~Flux() {}
     
     //- Overloaded "=" operator
-    Flux& operator=(const Flux& flx) { problem = flx.problem; return *this;}
+    // Flux& operator=(const Flux& flx) { problem = flx.problem; return *this;}
 
     //- Evaluate numerical flux through one point
     virtual numvector<double, 5> evaluate(const numvector<double, 5>& solInner, const numvector<double, 5>& solOuter, const Point& n) const = 0;

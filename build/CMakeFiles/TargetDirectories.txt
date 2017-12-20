@@ -1,3 +1,0 @@
-/home/v.korchagova/Документы/BMSTU/RKDG2D/build/CMakeFiles/rebuild_cache.dir
-/home/v.korchagova/Документы/BMSTU/RKDG2D/build/CMakeFiles/RKDG2D.dir
-/home/v.korchagova/Документы/BMSTU/RKDG2D/build/CMakeFiles/edit_cache.dir

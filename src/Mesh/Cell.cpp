@@ -96,7 +96,8 @@ void Cell::setProblem(const Problem& prb)
 
 } // end setProblem
 
-numvector<double, 5> Cell::reconstructSolution(const Point& point) const
+
+numvector<double, 5> Cell::reconstructSolution(const Point& point ) const
 {
     if (!insideCell(point))
     {
@@ -105,7 +106,7 @@ numvector<double, 5> Cell::reconstructSolution(const Point& point) const
 
         vector<shared_ptr<Point>> ccoord = getCellCoordinates();
 
-        for (int i = 0; i < ccoord.size(); ++i)
+        for (size_t i = 0; i < ccoord.size(); ++i)
             std::cout << "(" << ccoord[i]->x() << "; " << ccoord[i]->y() << ")" << endl;
 
         exit(1);
@@ -121,6 +122,30 @@ numvector<double, 5> Cell::reconstructSolution(const Point& point) const
 
     return sol;
 
+} // end reconstructSolution
+
+
+double Cell::reconstructSolution(const Point& point, int numSol ) const
+{
+    if (!insideCell(point))
+    {
+        std::cout << "Error: point (" << point.x() << ", " << point.y() << ") is not inside cell #" << number << std::endl;
+        std::cout << "Cell nodes:" << std::endl;
+
+        vector<shared_ptr<Point>> ccoord = getCellCoordinates();
+
+        for (size_t i = 0; i < ccoord.size(); ++i)
+            std::cout << "(" << ccoord[i]->x() << "; " << ccoord[i]->y() << ")" << endl;
+
+        exit(1);
+    }
+
+    double sol(0.0);
+    
+    for (int j = 0; j < nShapes; ++j)
+	sol += phi[j](point) * problem->alpha[number][numSol * nShapes + j];
+
+    return sol;
 } // end reconstructSolution
 
 
@@ -145,7 +170,7 @@ numvector<double, 5 * nShapes> Cell::getLocalInitialConditions(std::function<num
 
 } // end setLocalInitialConditions
 
-numvector<double, 5> Cell::integrate( const std::function<numvector<double, 5>(const Point &)> &f) const
+numvector<double, 5> Cell::integrate( const std::function<numvector<double, 5>(const Point &)>& f) const
 {
     numvector<double, 5> res = 0.0;
 
@@ -153,7 +178,7 @@ numvector<double, 5> Cell::integrate( const std::function<numvector<double, 5>(c
 
     for (int i = 0; i < nGP; ++i)
     {
-        numvector<double,5> resF = f(gPoints2D[i]);
+         numvector<double,5> resF = f(gPoints2D[i]);
 
         for (int k = 0; k < 5; ++k)
         {
@@ -186,5 +211,15 @@ numvector<double, 5 * nShapes> Cell::cellIntegral()
     }
 
     return res * J;
+} // end of cell integral
+
+double Cell::getNormQ(int numSol) const
+{
+    vector<double> rhoGP(nGP);
+    
+    for (int i = 0; i < nGP; ++i)
+	rhoGP[i] = reconstructSolution(gPoints2D[i],numSol);
+    
+    return *max_element(rhoGP.begin(), rhoGP.end());
 }
 
