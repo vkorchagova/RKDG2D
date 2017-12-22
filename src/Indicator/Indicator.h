@@ -19,7 +19,7 @@ protected:
 public:
 
     //- Constructor
-    Indicator(const Mesh2D& msh, const std::vector<numvector<double, 5 * nShapes>>& coeffs) : mesh(msh), alpha(coeffs) {};
+    Indicator(const Mesh2D& msh) : mesh(msh) {};
     
     //- Check discontinuities
     virtual std::vector<double> checkDiscontinuities() const = 0;

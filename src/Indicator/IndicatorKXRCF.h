@@ -11,7 +11,7 @@ class IndicatorKXRCF : public Indicator
 public:
 
     //- Constructor
-    IndicatorKXRCF (const Mesh2D& msh, const std::vector<numvector<double, 5 * nShapes>>& coeffs): Indicator (msh, coeffs) {};
+    IndicatorKXRCF (const Mesh2D& msh): Indicator (msh) {};
     
     
     //- Check discontinuities

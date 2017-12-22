@@ -15,17 +15,15 @@
 using namespace std;
 
 
-
-
 int main(int argc, char** argv)
 {    
     // Mesh parameters
 
-    double Lx = 1.0;
-    double Ly = 1.0;
+    double Lx = 4.0;
+    double Ly = 4.0;
 
-    int nx = 2;
-    int ny = 2;
+    int nx = 20;
+    int ny = 25;
 
     // Initialize mesh
     Mesh2D mesh(nx, ny, Lx, Ly);
@@ -53,11 +51,11 @@ int main(int argc, char** argv)
 //        cout << problem.alpha[i] << endl;
 
 
-	cout << "Indicator test..." << endl;
-	vector<double> ind;
+    //cout << "Indicator test..." << endl;
+    //vector<double> ind;
 
 	//Testing Indicator
-    IndicatorKXRCF indicator(mesh, problem.alpha);
+    //IndicatorKXRCF indicator(mesh);
     //auto ind = indicator.checkDiscontinuities();
     
     //for (size_t q = 0; q < ind.size(); ++q)
@@ -93,8 +91,9 @@ int main(int argc, char** argv)
        k1 = solver.assembleRHS(solver.alphaPrev);
        solver.alphaNext = solver.alphaPrev + k1 * tau;
 
-	   problem.setAlpha(solver.alphaNext);
+       //problem.setAlpha(solver.alphaNext);
 
+       /*
 	   ind = indicator.checkDiscontinuities();
 
 	   for (size_t i = 0; i < mesh.nCells; ++i)
@@ -108,26 +107,15 @@ int main(int argc, char** argv)
 			   }
 		   }
 	   }
-
+*/
 
        k2 = solver.assembleRHS(solver.alphaNext);
        solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
 
-	   problem.setAlpha(solver.alphaNext);
+       //problem.setAlpha(solver.alphaNext);
 
-	   ind = indicator.checkDiscontinuities();
+       // limit solution
 
-	   for (size_t i = 0; i < mesh.nCells; ++i)
-	   {
-		   if (ind[i] > 1.0)
-		   {
-			   for (int j = 0; j < 5; ++j)
-			   {
-				   solver.alphaNext[i][j*nShapes + 1] = 0.0;
-				   solver.alphaNext[i][j*nShapes + 2] = 0.0;
-			   }
-		   }
-	   }
 
        solver.write(output,solver.alphaNext);
 

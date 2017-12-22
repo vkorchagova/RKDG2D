@@ -49,13 +49,6 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
     for (int j = 0; j < nx; ++j)
         edgesHor.emplace_back( make_shared<EdgeBoundaryInfty>(nodes[ny*(nx + 1) + j], nodes[ny*(nx + 1) + j + 1]) );
 
-    // set normals to horizontal edges
-    for (int i = 0; i < nx; ++i)
-        edgesHor[i]->n = Point({ 0.0, -1.0 });
-
-    for (int i = nx; i < nEdgesHor; ++i)
-        edgesHor[i]->n = Point({ 0.0,  1.0 });
-
 
     // get vertical edges
 
@@ -68,6 +61,13 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
 
         edgesVer.emplace_back( make_shared<EdgeBoundaryInfty>(nodes[i*(nx + 1) + nx ], nodes[i*(nx + 1) + nx + nx + 1]) );
     }
+
+    // set normals to horizontal edges
+    for (int i = 0; i < nx; ++i)
+        edgesHor[i]->n = Point({ 0.0, -1.0 });
+
+    for (int i = nx; i < nEdgesHor; ++i)
+        edgesHor[i]->n = Point({ 0.0,  1.0 });
 
     // set normals to vertical edges
     for (int i = 0; i < nEdgesVer; ++i)

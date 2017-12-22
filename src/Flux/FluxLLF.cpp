@@ -20,7 +20,7 @@ numvector<double,5> FluxLLF::evaluate( const numvector<double, 5>& solInner, con
     numvector<double, 5> lG = problem.lambdaG(solInner,solOuter);
     
 
-    double lambda = n.x() * max(fabs(lF[0]), fabs(lF[4])) + n.y() * max(fabs(lG[0]),fabs(lG[4])); //!!!!
+    double lambda = fabs(n.x()) * max(fabs(lF[0]), fabs(lF[4])) + fabs(n.y()) * max(fabs(lG[0]),fabs(lG[4])); //!!!!
 
     return 0.5 * (fluxInward + fluxOutward) + 0.5 * lambda * (solInner - solOuter);
 }

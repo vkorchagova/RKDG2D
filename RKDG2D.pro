@@ -10,7 +10,8 @@ INCLUDEPATH += $$PWD \
     $$PWD/src/Problem/ \
     $$PWD/src/Integrator/ \
     $$PWD/src/Mesh/ \
-    $$PWD/src/Solver/
+    $$PWD/src/Solver/ \
+    $$PWD/src/Indicator/
 
 SOURCES += RKDG2D.cpp \
     src/Mesh/Cell.cpp \
@@ -23,7 +24,9 @@ SOURCES += RKDG2D.cpp \
     src/Solver/Solver.cpp \
     src/Flux/Flux.cpp \
     src/Flux/FluxLLF.cpp \
-    src/defs/defs.cpp
+    src/defs/defs.cpp \
+    src/Indicator/Indicator.cpp \
+    src/Indicator/IndicatorKXRCF.cpp
 
 HEADERS += src/numvector.h \
     src/Mesh/Mesh2D.h \
@@ -37,4 +40,6 @@ HEADERS += src/numvector.h \
     src/Solver/Solver.h \
     src/Flux/Flux.h \
     src/Flux/FluxLLF.h \
-    src/defs/defs.h
+    src/defs/defs.h \
+    src/Indicator/Indicator.h \
+    src/Indicator/IndicatorKXRCF.h
