@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include <time.h>
 #include "defs.h"
 #include "Mesh2D.h"
 #include "Solver.h"
@@ -79,9 +80,15 @@ int main(int argc, char** argv)
     k1.resize(mesh.nCells);
     k2.resize(mesh.nCells);
 
+    clock_t t1, t2, t00;
+
+    t00 = clock();
+
     for (double t = tau; t < tEnd; t += tau)
     {
-       string fileName = "alphaCoeffs/" + to_string((long double)t);
+        t1 = clock();
+       //string fileName = "alphaCoeffs/" + to_string((long double)t);
+       string fileName = "alphaCoeffs/" + to_string(t);
 
        ofstream output;
        output.open(fileName);
@@ -122,7 +129,12 @@ int main(int argc, char** argv)
        solver.alphaPrev = solver.alphaNext;
 
        output.close();
+       t2 = clock();
+
+       cout << "step time: " << (float)(t2 - t1) / CLOCKS_PER_SEC << endl;
     }
+
+    cout << "Elapsed time = " << (float)(t2 - t00) / CLOCKS_PER_SEC << endl;
 
     cout << "END \n";
 
