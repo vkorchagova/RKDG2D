@@ -12,6 +12,6 @@ void EdgeBoundary::getLocalFluxes(const Flux &flux)
         numvector<double, 5> solInner = neibCells[0]->reconstructSolution(gPoints[i]);
         numvector<double, 5> solOuter = applyBoundary(solInner);
                         
-        localFluxes[i] = flux.evaluate(solInner, solOuter, n);
+        localFluxes[i] = flux.evaluate(rotate(solInner, n), rotate(solOuter, n), n);
     }
 }

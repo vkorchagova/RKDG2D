@@ -16,6 +16,7 @@
 #define EDGE_H
 
 #include "numvector.h"
+#include "defs.h"
 #include "Point.h"
 #include "Cell.h"
 #include "Flux.h"
@@ -75,7 +76,7 @@ public:
     virtual ~Edge() = default;
 
     //- Get length
-    double getLength() const { return length; };
+    double getLength() const { return length; }
     
     /// RKDG methods
     

@@ -13,6 +13,6 @@ void EdgeInternal::getLocalFluxes(const Flux& flux)
         numvector<double, 5> solInner = neibCells[0]->reconstructSolution(gPoints[i]);
         numvector<double, 5> solOuter = neibCells[1]->reconstructSolution(gPoints[i]);
 
-        localFluxes[i] = flux.evaluate(solInner, solOuter, n);
+        localFluxes[i] = flux.evaluate(rotate(solInner,n), rotate(solOuter,n), n);
     }
 }

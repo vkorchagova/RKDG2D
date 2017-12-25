@@ -10,11 +10,12 @@ Problem::Problem()
     // Function for initial condition
     double rho0 = 1.0;
     double e0 = rho0  / cpcv / (cpcv - 1.0) ;
+    double v0 = 0.0;
 
     function<double(const Point& r)> initRho = [](const Point& r) \
     { 
     //    return 1.0;
-        return 0.001 * exp( -2.0 * pow(r.x() - 2.0, 2) - 2.0 * pow(r.y() - 2.0, 2));
+        return 0.001 * exp( -8.0 * sqr(r.x() - 2.0) - 8.0 * sqr(r.y() - 2.0));
 	//return (r.y() < 0.5) ? 1.0 : 0.125;
     //return (r.y() < 0.5) ? r.y() + 0.01 : r.y() + 0.51;
     };
@@ -38,7 +39,7 @@ Problem::Problem()
 
 
     // For boundary conditions
-    infty = { rho0, 0.0, 0.0, 0.0, e0 };
+    infty = { rho0, 0.0, v0, 0.0, e0 };
 
 } // end constructor by mesh
 

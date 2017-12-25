@@ -31,6 +31,8 @@ Edge::Edge(const Point& p1, const Point& p2)
 // ------------------ Private class methods --------------------
 
 
+
+
 // ------------------ Public class methods ---------------------
 
 //// RKDG methods

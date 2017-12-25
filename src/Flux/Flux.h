@@ -2,6 +2,7 @@
 #define FLUX_H
 
 #include "Problem.h"
+#include "defs.h"
 
 class Flux
 {

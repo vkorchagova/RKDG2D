@@ -24,7 +24,9 @@ int main(int argc, char** argv)
     double Ly = 4.0;
 
     int nx = 20;
-    int ny = 25;
+    int ny = 40;
+
+    // foolish left boundary!!!!
 
     // Initialize mesh
     Mesh2D mesh(nx, ny, Lx, Ly);
@@ -65,7 +67,7 @@ int main(int argc, char** argv)
 
     // time cycle paramentes
 
-    double Co = 0.25;
+    double Co = 0.1;
     double tEnd = 2.01;
 
     double tau = min(mesh.cells[0]->h().x(),mesh.cells[0]->h().y()) * Co;
@@ -93,7 +95,7 @@ int main(int argc, char** argv)
        ofstream output;
        output.open(fileName);
 
-       cout << "t = " << t << endl;
+       cout << "---------\nt = " << t << endl;
 
        k1 = solver.assembleRHS(solver.alphaPrev);
        solver.alphaNext = solver.alphaPrev + k1 * tau;
@@ -134,7 +136,7 @@ int main(int argc, char** argv)
        cout << "step time: " << (float)(t2 - t1) / CLOCKS_PER_SEC << endl;
     }
 
-    cout << "Elapsed time = " << (float)(t2 - t00) / CLOCKS_PER_SEC << endl;
+    cout << "---------\nElapsed time = " << (float)(t2 - t00) / CLOCKS_PER_SEC << endl;
 
     cout << "END \n";
 
