@@ -23,8 +23,8 @@ int main(int argc, char** argv)
     double Lx = 4.0;
     double Ly = 4.0;
 
-    int nx = 20;
-    int ny = 20;
+    int nx = 40;
+    int ny = 40;
 
     // foolish left boundary!!!!
 

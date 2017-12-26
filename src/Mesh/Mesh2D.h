@@ -7,6 +7,7 @@
 #include "FluxLLF.h"
 #include "EdgeInternal.h"
 #include "EdgeBoundaryInfty.h"
+#include "EdgeBoundarySlip.h"
 
 #include <fstream>
 #include <memory>
