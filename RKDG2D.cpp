@@ -24,7 +24,7 @@ int main(int argc, char** argv)
     double Ly = 4.0;
 
     int nx = 20;
-    int ny = 40;
+    int ny = 20;
 
     // foolish left boundary!!!!
 
@@ -67,7 +67,7 @@ int main(int argc, char** argv)
 
     // time cycle paramentes
 
-    double Co = 0.1;
+    double Co = 0.25;
     double tEnd = 2.01;
 
     double tau = min(mesh.cells[0]->h().x(),mesh.cells[0]->h().y()) * Co;
