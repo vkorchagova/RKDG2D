@@ -11,6 +11,7 @@
 #include "Mesh2D.h"
 #include "Solver.h"
 #include "FluxLLF.h"
+#include "FluxHLL.h"
 #include "IndicatorKXRCF.h"
 
 using namespace std;
@@ -23,8 +24,8 @@ int main(int argc, char** argv)
     double Lx = 4.0;
     double Ly = 4.0;
 
-    int nx = 40;
-    int ny = 40;
+    int nx = 20;
+    int ny = 20;
 
     // foolish left boundary!!!!
 
@@ -37,7 +38,7 @@ int main(int argc, char** argv)
     Problem problem;
 
     // Initialize flux
-    FluxLLF numFlux (problem);
+    FluxHLL numFlux (problem);
 
     // Initialize solver
     Solver solver(mesh, problem, numFlux);
