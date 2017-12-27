@@ -14,6 +14,7 @@
 #include "FluxHLL.h"
 #include "FluxHLLC.h"
 #include "IndicatorKXRCF.h"
+#include "LimiterFinDiff.h"
 
 using namespace std;
 
@@ -22,16 +23,16 @@ int main(int argc, char** argv)
 {    
     // Mesh parameters
 
-    double Lx = 4.0;
-    double Ly = 4.0;
+    double Lx = 0.1;
+    double Ly = 1.0;
 
-    int nx = 10;
-    int ny = 20;
+    int nx = 1;
+    int ny = 100;
 
     // Time parameters
 
     double Co = 0.25;
-    double tEnd = 2.0;
+    double tEnd = 0.2;
 
     // ---------------
 
@@ -44,13 +45,16 @@ int main(int argc, char** argv)
     Problem problem;
 
     // Initialize flux
-    FluxHLLC numFlux (problem);
+    FluxHLL numFlux (problem);
 
     // Initialize solver
     Solver solver(mesh, problem, numFlux);
 
     // Initialize indicator
     IndicatorKXRCF indicator(mesh);
+
+    //Initialize limiter
+    LimiterFinDiff limiter(indicator,problem);
 
     // ------
 
@@ -87,7 +91,7 @@ int main(int argc, char** argv)
     // run Runge --- Kutta 2 TVD
 
     vector<numvector<double, 5*nShapes>> k1, k2;
-    vector<double> ind;
+//    vector<double> ind;
 
     k1.resize(mesh.nCells);
     k2.resize(mesh.nCells);
@@ -96,7 +100,7 @@ int main(int argc, char** argv)
 
     t00 = clock();
 
-    for (double t = tau; t <= tEnd + tau; t += tau)
+    for (double t = tau; t <= tEnd + 0.5*tau; t += tau)
     {
         t1 = clock();
        //string fileName = "alphaCoeffs/" + to_string((long double)t);
@@ -110,39 +114,43 @@ int main(int argc, char** argv)
        k1 = solver.assembleRHS(solver.alphaPrev);
        solver.alphaNext = solver.alphaPrev + k1 * tau;
 
-       problem.setAlpha(solver.alphaNext);
-	   ind = indicator.checkDiscontinuities();
+       limiter.limit(solver.alphaNext);
 
-	   for (size_t i = 0; i < mesh.nCells; ++i)
-	   {
-		   if (ind[i] > 1.0)
-		   {
-			   for (int j = 0; j < 5; ++j)
-			   {
-				   solver.alphaNext[i][j*nShapes + 1] = 0.0;
-				   solver.alphaNext[i][j*nShapes + 2] = 0.0;
-			   }
-		   }
-	   }
+//       problem.setAlpha(solver.alphaNext);
+//	   ind = indicator.checkDiscontinuities();
+
+//	   for (size_t i = 0; i < mesh.nCells; ++i)
+//	   {
+//		   if (ind[i] > 1.0)
+//		   {
+//			   for (int j = 0; j < 5; ++j)
+//			   {
+//				   solver.alphaNext[i][j*nShapes + 1] = 0.0;
+//				   solver.alphaNext[i][j*nShapes + 2] = 0.0;
+//			   }
+//		   }
+//	   }
 
 
        k2 = solver.assembleRHS(solver.alphaNext);
        solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
 
-       problem.setAlpha(solver.alphaNext);
-       ind = indicator.checkDiscontinuities();
+       limiter.limit(solver.alphaNext);
 
-       for (size_t i = 0; i < mesh.nCells; ++i)
-       {
-           if (ind[i] > 1.0)
-           {
-               for (int j = 0; j < 5; ++j)
-               {
-                   solver.alphaNext[i][j*nShapes + 1] = 0.0;
-                   solver.alphaNext[i][j*nShapes + 2] = 0.0;
-               }
-           }
-       }
+//       problem.setAlpha(solver.alphaNext);
+//       ind = indicator.checkDiscontinuities();
+
+//       for (size_t i = 0; i < mesh.nCells; ++i)
+//       {
+//           if (ind[i] > 1.0)
+//           {
+//               for (int j = 0; j < 5; ++j)
+//               {
+//                   solver.alphaNext[i][j*nShapes + 1] = 0.0;
+//                   solver.alphaNext[i][j*nShapes + 2] = 0.0;
+//               }
+//           }
+//       }
 
 
        solver.write(output,solver.alphaNext);

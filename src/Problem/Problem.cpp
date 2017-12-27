@@ -15,8 +15,8 @@ Problem::Problem()
     function<double(const Point& r)> initRho = [=](const Point& r) \
     { 
     //    return 1.0;
-        return rho0 + 0.001 * exp( -2.0 * sqr(r.x() - 2.0) - 2.0 * sqr(r.y() - 2.0));
-    //    return (r.y() < 0.5) ? 1.0 : 0.125;
+    //    return rho0 + 0.001 * exp( -2.0 * sqr(r.x() - 2.0) - 2.0 * sqr(r.y() - 2.0));
+        return (r.y() < 0.5) ? 1.0 : 0.125;
     //    return (r.x() < 0.5) ? 1.0 : 0.125;
     //   return (r.y() < 1.0 && r.x() < 1.0 && r.y() > 2.0 && r.x() > 2.0) ? 0.0 : 1.0;
     //return (r.y() < 0.5) ? r.y() + 0.01 : r.y() + 0.51;
@@ -24,17 +24,16 @@ Problem::Problem()
 
     function<double(const Point& r)> initP = [=](const Point& r) \
     { 
-        return (initRho(r)) / cpcv;
-	//return 0.001 * exp( -2.0 * pow(r.x() - 4.0, 2) - 2.0 * pow(r.y() - 4.0, 2)); 
-    //    return (r.y() < 0.5) ? 1.0 : 0.1;
+    //    return (initRho(r)) / cpcv;
+        return (r.y() < 0.5) ? 1.0 : 0.1;
     //    return (r.x() < 0.5) ? 1.0 : 0.1;
     };
 
 
     function<double(const Point& r)> initV = [](const Point& r) \
     {
-        return 0.0;
-    //    return (r.y() < 0.5) ? 0.0 : 0.0;
+    //    return 0.0;
+        return (r.y() < 0.5) ? 0.0 : 0.0;
     //    return (r.x() < 0.5) ? 0.0 : 0.0;
 	//return 0.001 * exp( -2.0 * pow(r.x() - 4.0, 2) - 2.0 * pow(r.y() - 4.0, 2)); 
     //return r.y();
@@ -118,7 +117,7 @@ numvector<double, 5> Problem::lambdaF_semisum(const numvector<double, 5>& solOne
 
 numvector<double, 5> Problem::lambdaF(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const
 {
-    return lambdaF_Roe(solOne,solTwo);
+    return lambdaF_semisum(solOne,solTwo);
 } // end lambdaF
 
 numvector<double, 5> Problem::lambdaG(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const

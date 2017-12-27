@@ -16,7 +16,10 @@ protected:
 public:
 
     //- Constructor
-    Indicator(const Mesh2D& msh) : mesh(msh) {};
+    Indicator(const Mesh2D& msh) : mesh(msh) {}
+
+    //- Destructor
+    virtual ~Indicator() {}
     
     //- Check discontinuities
     virtual std::vector<double> checkDiscontinuities() const = 0;
