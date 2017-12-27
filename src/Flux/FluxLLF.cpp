@@ -25,5 +25,5 @@ numvector<double,5> FluxLLF::evaluate( const numvector<double, 5>& solLeft, cons
     
     double lambda = max(fabs(lV[0]), fabs(lV[4]));
 
-    return 0.5 * (fluxInward + fluxOutward) + 0.5 * lambda * (inverseRotate(solLeft, n) - inverseRotate(solRight, n));
+    return 0.5 * (fluxInward + fluxOutward) + 0.5 * lambda * inverseRotate(solLeft - solRight, n);
 }

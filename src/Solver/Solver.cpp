@@ -43,7 +43,7 @@ void Solver::setInitialConditions()
 
 } // end setInitialConditions
 
-void Solver::initBoundaryConditions() const
+void Solver::setBoundaryConditions() const
 {
     int nEdgesHor = mesh.edgesHor.size();
     int nEdgesVer = mesh.edgesVer.size();

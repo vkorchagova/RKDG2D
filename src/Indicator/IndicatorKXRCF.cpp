@@ -23,7 +23,7 @@ Point massFlux(const Edge& edge, const Cell& cell, const Point& nrm)
 			tau[0] = 1.0; tau[1] = 0.0;
 		}
 		else
-        { //now -- if edge is ver
+        { // now -- if edge is ver
 			mom[0] = cell.reconstructSolution(edge.nodes[0], 1) * nrm.x();
 			mom[1] = cell.reconstructSolution(edge.nodes[1], 1) * nrm.x();
 
@@ -33,15 +33,16 @@ Point massFlux(const Edge& edge, const Cell& cell, const Point& nrm)
 
         // 4 variants of flux integral (only through the part of edge with inward flux)
         // we have linear functions -> use trapezia formulae for integration
+
         if ((mom[0] >= 0.0) && (mom[1] >= 0.0))
 			return Point({ 0.0, 0.0 });
 
 		else if (mom[0] < 0.0)
 		{
-			double h = (mom[1] <= 0) ? edge.getLength() : -(mom[0] * edge.getLength() / (mom[1] - mom[0]));
+            double h = (mom[1] <= 0.0) ? edge.getLength() : -(mom[0] * edge.getLength() / (mom[1] - mom[0]));
 
-			double mySolH = cell.reconstructSolution(*edge.nodes[0] + tau*h, 0);
-			double neibSolH = neib.reconstructSolution(*edge.nodes[0] + tau*h, 0);
+            double mySolH = cell.reconstructSolution(*edge.nodes[0] + tau * h, 0);
+            double neibSolH = neib.reconstructSolution(*edge.nodes[0] + tau * h, 0);
 
 			return Point(
 			{ 0.5*h*(cell.reconstructSolution(edge.nodes[0], 0) - neib.reconstructSolution(edge.nodes[0], 0) + mySolH - neibSolH), h }
@@ -88,7 +89,7 @@ Point massFlux(const Edge& edge, const Cell& cell, const Point& nrm)
 
 		else if (mom[0] < 0.0)
 		{
-			double h = (mom[1] <= 0) ? edge.getLength() : -(mom[0] * edge.getLength() / (mom[1] - mom[0]));
+            double h = (mom[1] <= 0) ? edge.getLength() : -(mom[0] * edge.getLength() / (mom[1] - mom[0]));
 			double mySolH = cell.reconstructSolution(*edge.nodes[0] + tau*h, 0);
 			double neibSolH = edgeBound.applyBoundary(cell.reconstructSolution(*edge.nodes[0] + tau*h))[0];// neib.reconstructSolution( *edge.nodes[0] + tau*h, 0);
 
@@ -133,7 +134,7 @@ vector<double> IndicatorKXRCF::checkDiscontinuities() const
 
 		// get momentum in cell nodes
 
-        vector<shared_ptr<Point>> nodes = mesh.cells[i]->getCellCoordinates(); // store nodes?..
+        //vector<shared_ptr<Point>> nodes = mesh.cells[i]->getCellCoordinates(); // store nodes?..
 
         //vector<Point> momentum(nodes.size());
 
@@ -148,7 +149,7 @@ vector<double> IndicatorKXRCF::checkDiscontinuities() const
 		Point integral(0.0);
 
 		// for bottom edge
-		integral += massFlux(*mci.edges[0], mci, Point({ 0.0, -1.0 }));
+        integral += massFlux(*mci.edges[0], mci, Point({ 0.0, -1.0 }));
 
 		// for top edge
 		integral += massFlux(*mci.edges[2], mci, Point({ 0.0, 1.0 }));

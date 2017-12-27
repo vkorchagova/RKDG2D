@@ -48,13 +48,19 @@ public:
     //- Compute sound speed inside cell
     double c(const numvector<double, 5>& sol) const;
 
-    //- Compute averaged sound speed on edge
+    //- Compute semisum-averaged sound speed on edge
     double c_av(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const;
 
-    //- Eigenvalues for X direction ( estimation!!! )
+    //- Eigenvalues for X direction ( Roe )
+    numvector<double, 5> lambdaF_Roe(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const;
+
+    //- Eigenvalues for X direction ( semisum )
+    numvector<double, 5> lambdaF_semisum(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const;
+
+    //- Eigenvalues for X direction
     numvector<double, 5> lambdaF(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const;
 
-    //- Eigenvalues for Y direction ( estimation!!! )
+    //- Eigenvalues for Y direction ( semisum )
     numvector<double, 5> lambdaG(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const;
 
     //- Calculate fluxes in x direction

@@ -15,29 +15,33 @@ Problem::Problem()
     function<double(const Point& r)> initRho = [=](const Point& r) \
     { 
     //    return 1.0;
-    //    return rho0 + 0.001 * exp( -2.0 * sqr(r.x() - 2.0) - 2.0 * sqr(r.y() - 2.0));
-        return (r.y() < 0.5) ? 1.0 : 0.125;
+        return rho0 + 0.001 * exp( -2.0 * sqr(r.x() - 2.0) - 2.0 * sqr(r.y() - 2.0));
+    //    return (r.y() < 0.5) ? 1.0 : 0.125;
+    //    return (r.x() < 0.5) ? 1.0 : 0.125;
     //   return (r.y() < 1.0 && r.x() < 1.0 && r.y() > 2.0 && r.x() > 2.0) ? 0.0 : 1.0;
     //return (r.y() < 0.5) ? r.y() + 0.01 : r.y() + 0.51;
     };
 
     function<double(const Point& r)> initP = [=](const Point& r) \
     { 
-    //    return (initRho(r)) / cpcv;
+        return (initRho(r)) / cpcv;
 	//return 0.001 * exp( -2.0 * pow(r.x() - 4.0, 2) - 2.0 * pow(r.y() - 4.0, 2)); 
-        return (r.y() < 0.5) ? 1.0 : 0.1;
+    //    return (r.y() < 0.5) ? 1.0 : 0.1;
+    //    return (r.x() < 0.5) ? 1.0 : 0.1;
     };
 
 
     function<double(const Point& r)> initV = [](const Point& r) \
     {
-    //    return 0.0;
-        return (r.y() < 0.5) ? 0.75 : 0.0;
+        return 0.0;
+    //    return (r.y() < 0.5) ? 0.0 : 0.0;
+    //    return (r.x() < 0.5) ? 0.0 : 0.0;
 	//return 0.001 * exp( -2.0 * pow(r.x() - 4.0, 2) - 2.0 * pow(r.y() - 4.0, 2)); 
     //return r.y();
     };
 
     init = [=](const Point& r) { return numvector<double, 5> { initRho(r), 0.0, initV(r), 0.0, initP(r) / (cpcv - 1.0) }; };
+    //init = [=](const Point& r) { return numvector<double, 5> { initRho(r), initV(r), 0.0, 0.0, initP(r) / (cpcv - 1.0) }; };
 
 
     // For boundary conditions
@@ -76,6 +80,11 @@ double Problem::c(const numvector<double, 5>& sol) const
     return sqrt( cpcv * getPressure(sol) / sol[0]);
 } // end c for cell
 
+//double Problem::h(const numvector<double, 5>& sol) const
+//{
+//    return (sol[4] + getPressure(sol)) / sol[0];
+//}
+
 double Problem::c_av(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const
 {
     double semiRho = 0.5*(solOne[0] + solTwo[0]);
@@ -84,12 +93,32 @@ double Problem::c_av(const numvector<double, 5>& solOne, const numvector<double,
     return sqrt( cpcv * semiP / semiRho);
 } // end c for edge
 
-numvector<double, 5> Problem::lambdaF(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const
+numvector<double, 5> Problem::lambdaF_Roe(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const
+{
+    double sqrtRhoLeft = sqrt(solOne[0]);
+    double sqrtRhoRight = sqrt(solTwo[0]);
+    double sumSqrtRho = sqrtRhoLeft + sqrtRhoRight;
+
+    double u_av = ( solOne[1] / sqrtRhoLeft + solTwo[1] / sqrtRhoRight ) / sumSqrtRho;
+    double h_av = ( (solOne[4] + getPressure(solOne)) / sqrtRhoLeft + (solTwo[4] + getPressure(solTwo)) / sqrtRhoRight ) / sumSqrtRho;
+
+    double c_av = sqrt( (cpcv - 1) * (h_av - 0.5 * sqr(u_av)) );
+
+    return {u_av - c_av, u_av, u_av, u_av, u_av + c_av};
+
+}
+
+numvector<double, 5> Problem::lambdaF_semisum(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const
 {
     double u = 0.5*(solOne[1] / solOne[0] + solTwo[1] / solTwo[0]);
     double soundSpeed = c_av(solOne, solTwo);
 
     return { u - soundSpeed, u, u, u, u + soundSpeed};
+} // end lambdaF
+
+numvector<double, 5> Problem::lambdaF(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const
+{
+    return lambdaF_Roe(solOne,solTwo);
 } // end lambdaF
 
 numvector<double, 5> Problem::lambdaG(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const

@@ -6,8 +6,6 @@
 class FluxHLL : public Flux
 {
 public:
-    //- Default constructor
-    // FluxHLL() : Flux() {}
 
     //- Construct with problem
     FluxHLL(const Problem& prb) : Flux(prb) {}
