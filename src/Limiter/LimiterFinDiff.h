@@ -14,7 +14,7 @@ public:
     LimiterFinDiff(const Indicator& ind, Problem& prb) : Limiter(ind, prb) {}
 
     //- Limit solution gradients
-    virtual void limit(std::vector<numvector<double, 5 * nShapes> > alpha) override;
+    virtual void limit(std::vector<numvector<double, 5 * nShapes> >& alpha) override;
 };
 
 #endif // LIMITERFINDIFF_H

@@ -22,7 +22,7 @@ public:
     Limiter(const Indicator& ind, Problem& prb) : indicator(ind), problem(prb) {}
 
     //- Limit solution gradients
-    virtual void limit(std::vector<numvector<double, 5 * nShapes>> alpha) = 0;
+    virtual void limit(std::vector<numvector<double, 5 * nShapes>>& alpha) = 0;
 
 };
 

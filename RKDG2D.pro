@@ -11,7 +11,8 @@ INCLUDEPATH += $$PWD \
     $$PWD/src/Integrator/ \
     $$PWD/src/Mesh/ \
     $$PWD/src/Solver/ \
-    $$PWD/src/Indicator/
+    $$PWD/src/Indicator/ \
+    $$PWD/src/Limiter/
 
 SOURCES += RKDG2D.cpp \
     src/Mesh/Cell.cpp \
@@ -26,9 +27,12 @@ SOURCES += RKDG2D.cpp \
     src/Flux/Flux.cpp \
     src/Flux/FluxLLF.cpp \
     src/Flux/FluxHLL.cpp \
+    src/Flux/FluxHLLC.cpp \
     src/defs/defs.cpp \
     src/Indicator/Indicator.cpp \
-    src/Indicator/IndicatorKXRCF.cpp
+    src/Indicator/IndicatorKXRCF.cpp \
+    src/Limiter/Limiter.cpp \
+    src/Limiter/LimiterFinDiff.cpp
 
 
 HEADERS += src/numvector.h \
@@ -45,6 +49,9 @@ HEADERS += src/numvector.h \
     src/Flux/Flux.h \
     src/Flux/FluxLLF.h \
     src/Flux/FluxHLL.h \
+    src/Flux/FluxHLLC.h \
     src/defs/defs.h \
     src/Indicator/Indicator.h \
-    src/Indicator/IndicatorKXRCF.h
+    src/Indicator/IndicatorKXRCF.h \
+    src/Limiter/Limiter.h \
+    src/Limiter/LimiterFinDiff.h

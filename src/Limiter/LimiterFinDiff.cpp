@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void LimiterFinDiff::limit(vector<numvector<double, 5 * nShapes>> alpha)
+void LimiterFinDiff::limit(vector<numvector<double, 5 * nShapes>>& alpha)
 {
     problem.setAlpha(alpha);
     vector<double> ind = indicator.checkDiscontinuities();
@@ -18,4 +18,6 @@ void LimiterFinDiff::limit(vector<numvector<double, 5 * nShapes>> alpha)
             }
         }
     }
+
+    return;
 }

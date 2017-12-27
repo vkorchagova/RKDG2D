@@ -117,7 +117,7 @@ numvector<double, 5> Problem::lambdaF_semisum(const numvector<double, 5>& solOne
 
 numvector<double, 5> Problem::lambdaF(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const
 {
-    return lambdaF_semisum(solOne,solTwo);
+    return lambdaF_Roe(solOne,solTwo);
 } // end lambdaF
 
 numvector<double, 5> Problem::lambdaG(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const

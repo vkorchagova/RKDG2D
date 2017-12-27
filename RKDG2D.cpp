@@ -45,7 +45,7 @@ int main(int argc, char** argv)
     Problem problem;
 
     // Initialize flux
-    FluxHLL numFlux (problem);
+    FluxHLLC numFlux (problem);
 
     // Initialize solver
     Solver solver(mesh, problem, numFlux);
