@@ -20,13 +20,16 @@ SOURCES += RKDG2D.cpp \
     src/Mesh/Mesh2D.cpp \
     src/Mesh/EdgeBoundary.cpp \
     src/Mesh/EdgeBoundaryInfty.cpp \
+    src/Mesh/EdgeBoundarySlip.cpp \
     src/Problem/Problem.cpp \
     src/Solver/Solver.cpp \
     src/Flux/Flux.cpp \
     src/Flux/FluxLLF.cpp \
+    src/Flux/FluxHLL.cpp \
     src/defs/defs.cpp \
     src/Indicator/Indicator.cpp \
     src/Indicator/IndicatorKXRCF.cpp
+
 
 HEADERS += src/numvector.h \
     src/Mesh/Mesh2D.h \
@@ -36,10 +39,12 @@ HEADERS += src/numvector.h \
     src/Mesh/Cell.h \
     src/Mesh/EdgeBoundary.h \
     src/Mesh/EdgeBoundaryInfty.h \
+    src/Mesh/EdgeBoundarySlip.h \
     src/Problem/Problem.h \
     src/Solver/Solver.h \
     src/Flux/Flux.h \
     src/Flux/FluxLLF.h \
+    src/Flux/FluxHLL.h \
     src/defs/defs.h \
     src/Indicator/Indicator.h \
     src/Indicator/IndicatorKXRCF.h

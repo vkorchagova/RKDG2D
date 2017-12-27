@@ -9,30 +9,37 @@ Point massFlux(const Edge& edge, const Cell& cell, const Point& nrm)
         
 	try
 	{
-		const EdgeInternal& edgeInt = dynamic_cast<const EdgeInternal&>(edge);
+        // for internal edges
+        const EdgeInternal& edgeInt = dynamic_cast<const EdgeInternal&>(edge);
 
-		Cell& neib = (&cell == edge.neibCells[0].get()) ? *edge.neibCells[1] : *edge.neibCells[0];
+        // neighbour cell could not be equal to considered cell
+        Cell& neib = (&cell == edge.neibCells[0].get()) ? *edge.neibCells[1] : *edge.neibCells[0];
+
 		if (fabs(nrm.x()) < 1e-10)
-		{
+        { // if edge is hor
 			mom[0] = cell.reconstructSolution(edge.nodes[0], 2) * nrm.y();
 			mom[1] = cell.reconstructSolution(edge.nodes[1], 2) * nrm.y();
 
 			tau[0] = 1.0; tau[1] = 0.0;
 		}
 		else
-		{
+        { //now -- if edge is ver
 			mom[0] = cell.reconstructSolution(edge.nodes[0], 1) * nrm.x();
 			mom[1] = cell.reconstructSolution(edge.nodes[1], 1) * nrm.x();
 
 			tau[0] = 0.0; tau[1] = 1.0;
 		}
 
-		if ((mom[0] >= 0.0) && (mom[1] >= 0.0))
+
+        // 4 variants of flux integral (only through the part of edge with inward flux)
+        // we have linear functions -> use trapezia formulae for integration
+        if ((mom[0] >= 0.0) && (mom[1] >= 0.0))
 			return Point({ 0.0, 0.0 });
 
 		else if (mom[0] < 0.0)
 		{
 			double h = (mom[1] <= 0) ? edge.getLength() : -(mom[0] * edge.getLength() / (mom[1] - mom[0]));
+
 			double mySolH = cell.reconstructSolution(*edge.nodes[0] + tau*h, 0);
 			double neibSolH = neib.reconstructSolution(*edge.nodes[0] + tau*h, 0);
 
@@ -57,7 +64,8 @@ Point massFlux(const Edge& edge, const Cell& cell, const Point& nrm)
 	}
 	catch (...)
 	{
-		const EdgeBoundary& edgeBound = dynamic_cast<const EdgeBoundary&>(edge);
+        // for edge on boundary
+        const EdgeBoundary& edgeBound = dynamic_cast<const EdgeBoundary&>(edge);
 
 		//Cell& neib = (&cell == edge.neibCells[0].get()) ? *edge.neibCells[1] : *edge.neibCells[0];
 		if (fabs(nrm.x()) < 1e-10)
@@ -104,6 +112,9 @@ Point massFlux(const Edge& edge, const Cell& cell, const Point& nrm)
 		//cout << "CATCH!!!" << endl;
 		//return Point({ 100.0, 100.0 });
 	}
+
+    cout << "REALLY STRANGE!!!" << endl;
+    return Point({ 0.0, 0.0 });
     
 }
 
@@ -122,17 +133,17 @@ vector<double> IndicatorKXRCF::checkDiscontinuities() const
 
 		// get momentum in cell nodes
 
-		vector<shared_ptr<Point>> nodes = mesh.cells[i]->getCellCoordinates();
+        vector<shared_ptr<Point>> nodes = mesh.cells[i]->getCellCoordinates(); // store nodes?..
 
-		vector<Point> momentum(nodes.size());
+        //vector<Point> momentum(nodes.size());
 
 		const Cell& mci = *mesh.cells[i];
 
 
-		for (size_t j = 0; j < nodes.size(); ++j)
-		{
-			momentum[j] = Point({ mci.reconstructSolution(nodes[j], 1), mci.reconstructSolution(nodes[j], 2) });
-		}
+        //for (size_t j = 0; j < nodes.size(); ++j)
+        //{
+        //	momentum[j] = Point({ mci.reconstructSolution(nodes[j], 1), mci.reconstructSolution(nodes[j], 2) });
+        //}
 
 		Point integral(0.0);
 
@@ -143,10 +154,10 @@ vector<double> IndicatorKXRCF::checkDiscontinuities() const
 		integral += massFlux(*mci.edges[2], mci, Point({ 0.0, 1.0 }));
 
 		// for right edge
-		integral += massFlux(*mci.edges[3], mci, Point({ 1.0, 0.0 }));
+        integral += massFlux(*mci.edges[1], mci, Point({ 1.0, 0.0 }));
 
 		// for left edge
-		integral += massFlux(*mci.edges[1], mci, Point({ -1.0, 0.0 }));
+        integral += massFlux(*mci.edges[3], mci, Point({ -1.0, 0.0 }));
 
 
 		indicator[i] = fabs(integral.x()) / max((h*integral.y()*normQ), 1e-10);

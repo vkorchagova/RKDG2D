@@ -13,9 +13,6 @@ protected:
     //- Mesh
     const Mesh2D& mesh;
     
-    //- Coeffs
-    const std::vector<numvector<double, 5 * nShapes>> alpha;
-    
 public:
 
     //- Constructor

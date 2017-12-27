@@ -11,7 +11,7 @@ class IndicatorKXRCF : public Indicator
 public:
 
     //- Constructor
-    IndicatorKXRCF (const Mesh2D& msh): Indicator (msh) {};
+    IndicatorKXRCF (const Mesh2D& msh): Indicator (msh) {}
     
     
     //- Check discontinuities

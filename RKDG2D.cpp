@@ -21,13 +21,11 @@ int main(int argc, char** argv)
 {    
     // Mesh parameters
 
-    double Lx = 4.0;
-    double Ly = 4.0;
+    double Lx = 0.1;
+    double Ly = 1.0;
 
-    int nx = 20;
-    int ny = 20;
-
-    // foolish left boundary!!!!
+    int nx = 1;
+    int ny = 2;
 
     // Initialize mesh
     Mesh2D mesh(nx, ny, Lx, Ly);
@@ -55,19 +53,18 @@ int main(int argc, char** argv)
 //        cout << problem.alpha[i] << endl;
 
 
-    //cout << "Indicator test..." << endl;
-    //vector<double> ind;
+    cout << "Indicator test..." << endl;
 
-	//Testing Indicator
-    //IndicatorKXRCF indicator(mesh);
-    //auto ind = indicator.checkDiscontinuities();
+    // Testing Indicator
+    IndicatorKXRCF indicator(mesh);
+    vector<double> ind = indicator.checkDiscontinuities();
     
-    //for (size_t q = 0; q < ind.size(); ++q)
-	//cout << "q = " << q << ", ind = " << ind[q] << endl;
+    for (size_t q = 0; q < ind.size(); ++q)
+        cout << "q = " << q << ", ind = " << ind[q] << endl;
 
 
     // time cycle paramentes
-
+/*
     double Co = 0.25;
     double tEnd = 2.01;
 
@@ -117,8 +114,8 @@ int main(int argc, char** argv)
 			   }
 		   }
 	   }
-*/
-
+        */
+/*
        k2 = solver.assembleRHS(solver.alphaNext);
        solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
 
@@ -138,7 +135,7 @@ int main(int argc, char** argv)
     }
 
     cout << "---------\nElapsed time = " << (float)(t2 - t00) / CLOCKS_PER_SEC << endl;
-
+*/
     cout << "END \n";
 
 //    int aaa;
