@@ -8,7 +8,7 @@
 
 class Indicator
 {
-protected:
+public:
 
     //- Mesh
     const Mesh2D& mesh;

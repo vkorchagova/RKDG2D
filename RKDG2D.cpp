@@ -45,7 +45,7 @@ int main(int argc, char** argv)
     Problem problem;
 
     // Initialize flux
-    FluxHLLC numFlux (problem);
+    FluxHLL numFlux (problem);
 
     // Initialize solver
     Solver solver(mesh, problem, numFlux);
@@ -56,7 +56,7 @@ int main(int argc, char** argv)
     //Initialize limiter
     LimiterFinDiff limiter(indicator,problem);
 
-    // ------
+    // ---------------
 
     // Set initial conditions
     solver.setInitialConditions();
@@ -163,8 +163,8 @@ int main(int argc, char** argv)
        cout << "step time: " << (float)(t2 - t1) / CLOCKS_PER_SEC << endl;
     }
 
-    cout << "---------\nElapsed time = " << (float)(t2 - t00) / CLOCKS_PER_SEC << endl;
-    cout << "END \n";
+    cout << "=========\nElapsed time = " << (float)(t2 - t00) / CLOCKS_PER_SEC << endl;
+    cout << "---------\nEND \n";
 
 //    int aaa;
 //    cin >> aaa;

@@ -99,18 +99,18 @@ void Cell::setProblem(const Problem& prb)
 
 numvector<double, 5> Cell::reconstructSolution(const Point& point ) const
 {
-    if (!insideCell(point))
-    {
-        std::cout << "Error: point (" << point.x() << ", " << point.y() << ") is not inside cell #" << number << std::endl;
-        std::cout << "Cell nodes:" << std::endl;
+//    if (!insideCell(point))
+//    {
+//        std::cout << "Error: point (" << point.x() << ", " << point.y() << ") is not inside cell #" << number << std::endl;
+//        std::cout << "Cell nodes:" << std::endl;
 
-        vector<shared_ptr<Point>> ccoord = getCellCoordinates();
+//        vector<shared_ptr<Point>> ccoord = getCellCoordinates();
 
-        for (size_t i = 0; i < ccoord.size(); ++i)
-            std::cout << "(" << ccoord[i]->x() << "; " << ccoord[i]->y() << ")" << endl;
+//        for (size_t i = 0; i < ccoord.size(); ++i)
+//            std::cout << "(" << ccoord[i]->x() << "; " << ccoord[i]->y() << ")" << endl;
 
-        exit(1);
-    }
+//        exit(1);
+//    }
 
     numvector<double, 5> sol(0.0);
 
