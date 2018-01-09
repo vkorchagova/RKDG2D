@@ -2,10 +2,14 @@
 
 using namespace std;
 
+bool debugFlux;
+
 Point massFlux(const Edge& edge, const Cell& cell, const Point& nrm)
 {
     double mom[2];
     Point tau;
+
+    double threshold = 1e-10;
         
 	try
 	{
@@ -27,6 +31,11 @@ Point massFlux(const Edge& edge, const Cell& cell, const Point& nrm)
 			mom[0] = cell.reconstructSolution(edge.nodes[0], 1) * nrm.x();
 			mom[1] = cell.reconstructSolution(edge.nodes[1], 1) * nrm.x();
 
+            if (debugFlux)
+            {
+                cout << "mom = " << mom[0] << " " << mom[1] << endl;
+            }
+
 			tau[0] = 0.0; tau[1] = 1.0;
 		}
 
@@ -34,16 +43,22 @@ Point massFlux(const Edge& edge, const Cell& cell, const Point& nrm)
         // 4 variants of flux integral (only through the part of edge with inward flux)
         // we have linear functions -> use trapezia formulae for integration
 
-        if ((mom[0] >= 0.0) && (mom[1] >= 0.0))
+        if ((mom[0] >= -threshold) && (mom[1] >= -threshold))
 			return Point({ 0.0, 0.0 });
 
-		else if (mom[0] < 0.0)
+        else if (mom[0] < -threshold)
 		{
-            double h = (mom[1] <= 0.0) ? edge.getLength() : -(mom[0] * edge.getLength() / (mom[1] - mom[0]));
+            double h = (mom[1] <= -threshold) ? edge.getLength() : -(mom[0] * edge.getLength() / (mom[1] - mom[0]));
 
             double mySolH = cell.reconstructSolution(*edge.nodes[0] + tau * h, 0);
             double neibSolH = neib.reconstructSolution(*edge.nodes[0] + tau * h, 0);
 
+            if (debugFlux)
+            {
+                cout << "h = " << h << endl;
+                cout << "mySolH = " << mySolH << endl;
+                cout << "neibSolH = " << neibSolH << endl;
+            }
 			return Point(
 			{ 0.5*h*(cell.reconstructSolution(edge.nodes[0], 0) - neib.reconstructSolution(edge.nodes[0], 0) + mySolH - neibSolH), h }
 			);
@@ -84,12 +99,12 @@ Point massFlux(const Edge& edge, const Cell& cell, const Point& nrm)
 			tau[0] = 0.0; tau[1] = 1.0;
 		}
 
-		if ((mom[0] >= 0.0) && (mom[1] >= 0.0))
+        if ((mom[0] >= -threshold) && (mom[1] >= -threshold))
 			return Point({ 0.0, 0.0 });
 
-		else if (mom[0] < 0.0)
+        else if (mom[0] < -threshold)
 		{
-            double h = (mom[1] <= 0) ? edge.getLength() : -(mom[0] * edge.getLength() / (mom[1] - mom[0]));
+            double h = (mom[1] <= -threshold) ? edge.getLength() : -(mom[0] * edge.getLength() / (mom[1] - mom[0]));
 			double mySolH = cell.reconstructSolution(*edge.nodes[0] + tau*h, 0);
 			double neibSolH = edgeBound.applyBoundary(cell.reconstructSolution(*edge.nodes[0] + tau*h))[0];// neib.reconstructSolution( *edge.nodes[0] + tau*h, 0);
 
@@ -148,22 +163,44 @@ vector<double> IndicatorKXRCF::checkDiscontinuities() const
 
 		Point integral(0.0);
 
+        if (i == 50)
+            debugFlux = false;
+        else
+            debugFlux = false;
+
 		// for bottom edge
         integral += massFlux(*mci.edges[0], mci, Point({ 0.0, -1.0 }));
+
+        //cout << "cell b = " << i << " " << integral << endl;
 
 		// for top edge
 		integral += massFlux(*mci.edges[2], mci, Point({ 0.0, 1.0 }));
 
+        //cout << "cell t = " << i << " " << integral << endl;
+
 		// for right edge
         integral += massFlux(*mci.edges[1], mci, Point({ 1.0, 0.0 }));
+
+        //cout << "cell r = " << i << " " << integral << endl;
 
 		// for left edge
         integral += massFlux(*mci.edges[3], mci, Point({ -1.0, 0.0 }));
 
+        //cout << "cell l = " << i << " " << integral << endl;
+
+        if (debugFlux)
+        {
+            cout << "integral = " << fabs(integral.x()) << ", zn = " << max((h*integral.y()*normQ), 1e-10) << endl;
+        }
 
 		indicator[i] = fabs(integral.x()) / max((h*integral.y()*normQ), 1e-10);
 
+        //indicator[i] = 2.0;
+
 	}
     
+    //indicator[0] = 0.0;
+    //*(indicator.end()--) = 0.0;
+
     return indicator;
 }

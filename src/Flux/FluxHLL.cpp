@@ -14,6 +14,5 @@ numvector<double,5> FluxHLL::evaluate( const numvector<double, 5>& solLeft, cons
     if (lV[4] <= 0)
         return fluxR;
 
-    //return (lV[4] * fluxL - lV[0] * fluxR + lV[0] * lV[4] * (inverseRotate(solRight, n) - inverseRotate(solLeft, n))) * (1.0 / (lV[4] - lV[0]));
     return (lV[4] * fluxL - lV[0] * fluxR + lV[0] * lV[4] * inverseRotate(solRight - solLeft, n)) * (1.0 / (lV[4] - lV[0]));
 }

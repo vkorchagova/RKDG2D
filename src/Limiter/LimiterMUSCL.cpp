@@ -2,6 +2,8 @@
 
 using namespace std;
 
+// --------------------
+
 template <typename T> int sgn(T val) {
     return (T(0) < val) - (val < T(0));
 }
@@ -22,12 +24,16 @@ double m(const numvector<double, 3>& slope)
     return sign * minmod;
 }
 
+// --------------------
+
 void LimiterMUSCL::limit(vector<numvector<double, 5 * nShapes>>& alpha)
 {
     //check discontinuities
 
     problem.setAlpha(alpha);
     vector<double> ind = indicator.checkDiscontinuities();
+
+
 
     // initialize needed arrays
 
@@ -39,6 +45,8 @@ void LimiterMUSCL::limit(vector<numvector<double, 5 * nShapes>>& alpha)
     {
         if (ind[icell] > 1.0)
         {
+
+            cout << "troubled cell #" << icell << " " << ind[icell] << endl;
 
             // limit in x direction
             // --------------------

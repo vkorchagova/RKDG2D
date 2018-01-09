@@ -42,7 +42,6 @@ numvector<double,5> FluxHLLC::evaluate( const numvector<double, 5>& solLeft, con
     if (lStar >= 0.0)
         return fluxL + lL * inverseRotate(getUStar(solLeft,lL,cLeft,lStar) - solLeft, n);
 
-
     return fluxR + lR * inverseRotate(getUStar(solRight,lR,cRight,lStar) - solRight, n);
 }
 

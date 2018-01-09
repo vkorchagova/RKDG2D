@@ -25,14 +25,14 @@ int main(int argc, char** argv)
     // Mesh parameters
 
     double Lx = 1.0;
-    double Ly = 0.1;
+    double Ly = 0.01;
 
     int nx = 100;
     int ny = 1;
 
     // Time parameters
 
-    double Co = 0.25;
+    double Co = 0.1;
     double tEnd = 0.2;
 
     // ---------------

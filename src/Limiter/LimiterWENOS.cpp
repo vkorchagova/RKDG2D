@@ -32,9 +32,9 @@ void LimiterWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
 
     // limit solution in troubled cells
 
-    for (size_t cell = 0; cell < alpha.size(); ++cell)
+    for (size_t icell = 0; icell < alpha.size(); ++icell)
     {
-        if (ind[cell] > 1.0)
+        if (ind[icell] > 1.0)
         {
             // limit solution in X direction
 
@@ -44,22 +44,26 @@ void LimiterWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
 
             // norm of FF!!
 
-            numvector<shared_ptr<Cell>, 3> cellsHor = { indicator.mesh.cells[cell-1], indicator.mesh.cells[cell], indicator.mesh.cells[cell+1] };
+            numvector<shared_ptr<Cell>, 3> cellsHor = { indicator.mesh.cells[icell-1], indicator.mesh.cells[icell], indicator.mesh.cells[icell+1] };
 
             // get mean values
 
             for (int i = 0; i < 3; ++i)
-                uMean[i] = cellsHor[i]->h().x() / cellsHor[2]->h().x() * cellsHor[2]->reconstructSolution(cellsHor[i]->getCellCenter());
+                uMean[i] = cellsHor[i]->reconstructSolution(cellsHor[1]->getCellCenter());
 
             // get coeffs for polynoms p
 
-            p[0] = alpha[cell];
+            p[0] = alpha[icell-1];
+            p[1] = alpha[icell];
+            p[2] = alpha[icell+1];
+
+            for (int k = 0; k < 3; ++k)
+                for (int i = 0; i < 5; ++i)
+                    for (int j = 0; j < nShapes; ++j)
+                        p[k][i*nShapes + j] *= cellsHor[k]->offsetPhi[j];
 
             for (int i = 0; i < 5; ++i)
                 p[0][i*nShapes] += - uMean[0][i] + uMean[1][i];
-
-            p[1] = alpha[cell];
-            p[2] = alpha[cell];
 
             for (int i = 0; i < 5; ++i)
                 p[2][i*nShapes] += - uMean[2][i] + uMean[1][i];
@@ -80,16 +84,17 @@ void LimiterWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
                     w[i][j] = wTilde[i][j] / wSum[j];
             }
 
-            // calc limited solution
+            // project limited solution onto cell basis
 
             numvector<double, 5*nShapes> aLimited (0.0);
 
+            //?????
             for (int k = 0; k < 3; ++k)
                 for (int j = 0; j < 5; ++j)
                     for (int q = 0; q < nShapes; ++q)
                         aLimited[j*nShapes + q] += w[k][j] * p[k][j*nShapes + q];
 
-            alpha[cell] = aLimited;
+            alpha[icell] = aLimited;
         }
     }
 
