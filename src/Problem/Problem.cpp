@@ -16,8 +16,8 @@ Problem::Problem()
     { 
     //    return 1.0;
     //    return rho0 + 0.001 * exp( -2.0 * sqr(r.x() - 2.0) - 2.0 * sqr(r.y() - 2.0));
-        return (r.y() < 0.5) ? 1.0 : 0.125;
-    //    return (r.x() < 0.5) ? 1.0 : 0.125;
+    //    return (r.y() < 0.5) ? 1.0 : 0.125;
+        return (r.x() < 0.5) ? 1.0 : 0.125;
     //   return (r.y() < 1.0 && r.x() < 1.0 && r.y() > 2.0 && r.x() > 2.0) ? 0.0 : 1.0;
     //return (r.y() < 0.5) ? r.y() + 0.01 : r.y() + 0.51;
     };
@@ -25,22 +25,22 @@ Problem::Problem()
     function<double(const Point& r)> initP = [=](const Point& r) \
     { 
     //    return (initRho(r)) / cpcv;
-        return (r.y() < 0.5) ? 1.0 : 0.1;
-    //    return (r.x() < 0.5) ? 1.0 : 0.1;
+    //    return (r.y() < 0.5) ? 1.0 : 0.1;
+        return (r.x() < 0.5) ? 1.0 : 0.1;
     };
 
 
     function<double(const Point& r)> initV = [](const Point& r) \
     {
     //    return 0.0;
-        return (r.y() < 0.5) ? 0.0 : 0.0;
-    //    return (r.x() < 0.5) ? 0.0 : 0.0;
+    //    return (r.y() < 0.5) ? 0.0 : 0.0;
+        return (r.x() < 0.5) ? 0.0 : 0.0;
 	//return 0.001 * exp( -2.0 * pow(r.x() - 4.0, 2) - 2.0 * pow(r.y() - 4.0, 2)); 
     //return r.y();
     };
 
-    init = [=](const Point& r) { return numvector<double, 5> { initRho(r), 0.0, initV(r), 0.0, initP(r) / (cpcv - 1.0) }; };
-    //init = [=](const Point& r) { return numvector<double, 5> { initRho(r), initV(r), 0.0, 0.0, initP(r) / (cpcv - 1.0) }; };
+    //init = [=](const Point& r) { return numvector<double, 5> { initRho(r), 0.0, initV(r), 0.0, initP(r) / (cpcv - 1.0) }; };
+    init = [=](const Point& r) { return numvector<double, 5> { initRho(r), initV(r), 0.0, 0.0, initP(r) / (cpcv - 1.0) }; };
 
 
     // For boundary conditions

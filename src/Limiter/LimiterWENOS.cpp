@@ -7,9 +7,6 @@ void LimiterWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
     problem.setAlpha(alpha);
     vector<double> ind = indicator.checkDiscontinuities();
 
-    if (alpha.size() == 0)
-        return;
-
     // linear weights
 
     numvector<double, 3> gamma = { 0.001, 0.998, 0.001};

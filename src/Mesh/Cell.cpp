@@ -60,6 +60,10 @@ void Cell::setBasisFunctions()
 {
     double& hx = step.x();
     double& hy = step.y();
+
+    offsetPhi.push_back(1.0 / sqrt(hx*hy));
+    offsetPhi.push_back(sqrt(12.0 / hy / pow(hx, 3)));
+    offsetPhi.push_back(sqrt(12.0 / hx / pow(hy, 3)));
     
     phi.emplace_back([&](const Point& r){ return 1.0 / sqrt(hx*hy); });
     phi.emplace_back([&](const Point& r){ return sqrt(12.0 / hy / pow(hx, 3)) * (r.x() - center.x()); });
@@ -86,6 +90,36 @@ vector<shared_ptr<Point>> Cell::getCellCoordinates() const
     return nodeCoordinates;
 
 } // end getCellCoordinates
+
+vector<shared_ptr<Cell>> Cell::findNeighbourCellsX() const
+{
+    vector<shared_ptr<Cell>> neibCells;
+
+    // for right edge
+    if (edges[1]->neibCells.size() == 2)
+        neibCells.emplace_back(edges[1]->neibCells[1]);
+
+    // for left edge
+    if (edges[3]->neibCells.size() == 2)
+        neibCells.emplace_back(edges[1]->neibCells[0]);
+
+    return neibCells;
+}
+
+vector<shared_ptr<Cell>> Cell::findNeighbourCellsY() const
+{
+    vector<shared_ptr<Cell>> neibCells;
+
+    // for bottom edge
+    if (edges[0]->neibCells.size() == 2)
+        neibCells.emplace_back(edges[0]->neibCells[1]);
+
+    // for top edge
+    if (edges[2]->neibCells.size() == 2)
+        neibCells.emplace_back(edges[2]->neibCells[0]);
+
+    return neibCells;
+}
 
 
 // ----- RKDG -----
@@ -127,18 +161,18 @@ numvector<double, 5> Cell::reconstructSolution(const Point& point ) const
 
 double Cell::reconstructSolution(const Point& point, int numSol ) const
 {
-    if (!insideCell(point))
-    {
-        std::cout << "Error: point (" << point.x() << ", " << point.y() << ") is not inside cell #" << number << std::endl;
-        std::cout << "Cell nodes:" << std::endl;
+//    if (!insideCell(point))
+//    {
+//        std::cout << "Error: point (" << point.x() << ", " << point.y() << ") is not inside cell #" << number << std::endl;
+//        std::cout << "Cell nodes:" << std::endl;
 
-        vector<shared_ptr<Point>> ccoord = getCellCoordinates();
+//        vector<shared_ptr<Point>> ccoord = getCellCoordinates();
 
-        for (size_t i = 0; i < ccoord.size(); ++i)
-            std::cout << "(" << ccoord[i]->x() << "; " << ccoord[i]->y() << ")" << endl;
+//        for (size_t i = 0; i < ccoord.size(); ++i)
+//            std::cout << "(" << ccoord[i]->x() << "; " << ccoord[i]->y() << ")" << endl;
 
-        exit(1);
-    }
+//        exit(1);
+//    }
 
     double sol(0.0);
     

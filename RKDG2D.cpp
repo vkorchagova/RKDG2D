@@ -15,6 +15,7 @@
 #include "FluxHLLC.h"
 #include "IndicatorKXRCF.h"
 #include "LimiterFinDiff.h"
+#include "LimiterMUSCL.h"
 
 using namespace std;
 
@@ -23,11 +24,11 @@ int main(int argc, char** argv)
 {    
     // Mesh parameters
 
-    double Lx = 0.1;
-    double Ly = 1.0;
+    double Lx = 1.0;
+    double Ly = 0.1;
 
-    int nx = 1;
-    int ny = 100;
+    int nx = 100;
+    int ny = 1;
 
     // Time parameters
 

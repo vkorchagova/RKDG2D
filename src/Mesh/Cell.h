@@ -96,6 +96,9 @@ public:
     //- List of basis functions
     std::vector<std::function<double(const Point&)>> phi;
 
+    //- Offset for basis functions
+    std::vector<double> offsetPhi;
+
     //- Gradient of basis functions
     std::vector<std::function<Point(const Point&)>> gradPhi;
 
@@ -112,6 +115,12 @@ public:
 
     //- Calculate coordinates of cell nodes
     std::vector<std::shared_ptr<Point>> getCellCoordinates() const;
+
+    //- Find neighbour cells in X direction
+    std::vector<std::shared_ptr<Cell>> findNeighbourCellsX() const;
+
+    //- Find neighbour cells in Y direction
+    std::vector<std::shared_ptr<Cell>> findNeighbourCellsY() const;
 
 
     /// RKDG methods
