@@ -10,14 +10,14 @@ template <typename T> int sgn(T val) {
 
 double m(const numvector<double, 3>& slope)
 {
-    double sign = sgn(slope[0]);
+    int sign = sgn(slope[0]);
     double minmod = fabs(slope[0]);
 
     for (int i = 1; i < 3; ++i)
     {
         minmod = (fabs(slope[i]) < minmod) ? fabs(slope[i]) : minmod;
 
-        if (slope[0] * slope[i] < 0)
+        if (slope[0] * slope[i] < 0.0)
             return 0.0;
     }
 
@@ -33,9 +33,7 @@ void LimiterMUSCL::limit(vector<numvector<double, 5 * nShapes>>& alpha)
     problem.setAlpha(alpha);
     vector<double> ind = indicator.checkDiscontinuities();
 
-
-
-    // initialize needed arrays
+    // mean values
 
     numvector<numvector<double, 5>, 3> uMean;
 
@@ -45,8 +43,9 @@ void LimiterMUSCL::limit(vector<numvector<double, 5 * nShapes>>& alpha)
     {
         if (ind[icell] > 1.0)
         {
+            problem.setAlpha(alpha);
 
-            cout << "troubled cell #" << icell << " " << ind[icell] << endl;
+            //cout << "troubled cell #" << icell << " " << ind[icell] << endl;
 
             // limit in x direction
             // --------------------
@@ -68,11 +67,11 @@ void LimiterMUSCL::limit(vector<numvector<double, 5 * nShapes>>& alpha)
             {
                 numvector<double, 3> slope;
 
-                slope[0] = alpha[icell][i*nShapes + 1];
-                slope[1] = (uMean[i][2] / cellsHor[2]->offsetPhi[1]  - uMean[i][1] / cellsHor[1]->offsetPhi[1]) / 0.5 / (cellsHor[2]->h().x() + cellsHor[1]->h().x());
-                slope[2] = (uMean[i][1] / cellsHor[1]->offsetPhi[1]  - uMean[i][0] / cellsHor[0]->offsetPhi[1]) / 0.5 / (cellsHor[1]->h().x() + cellsHor[0]->h().x());
+                slope[0] = alpha[icell][i*nShapes + 1] * cellsHor[1]->offsetPhi[1];
+                slope[1] = (uMean[i][2] - uMean[i][1]) / cellsHor[1]->h().x() ;
+                slope[2] = (uMean[i][1] - uMean[i][0]) / cellsHor[1]->h().x() ;
 
-                alpha[icell][i*nShapes + 1] = m(slope);
+                alpha[icell][i*nShapes + 1] = m(slope) / cellsHor[1]->offsetPhi[1];
             }
 
         }

@@ -182,15 +182,14 @@ double Cell::reconstructSolution(const Point& point, int numSol ) const
     return sol;
 } // end reconstructSolution
 
-
-numvector<double, 5 * nShapes> Cell::getLocalInitialConditions(std::function<numvector<double,5>(const Point& point)>& init) const
+numvector<double, 5 * nShapes> Cell::projection(std::function<numvector<double,5>(const Point& point)>& foo) const
 {
     numvector<double, 5 * nShapes> alpha;
 
     for (int q = 0; q < nShapes; ++q)
     {
         std::function<numvector<double, 5>(const Point&)> f = \
-                [&](const Point& p) {  return phi[q](p) * init(p); };
+                [&](const Point& p) {  return phi[q](p) * foo(p); };
 
         numvector<double, 5> buffer = integrate(f);
 
@@ -202,7 +201,7 @@ numvector<double, 5 * nShapes> Cell::getLocalInitialConditions(std::function<num
 
     return alpha;
 
-} // end setLocalInitialConditions
+} // end projection
 
 numvector<double, 5> Cell::integrate( const std::function<numvector<double, 5>(const Point &)>& f) const
 {

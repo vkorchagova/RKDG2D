@@ -134,10 +134,8 @@ public:
     double reconstructSolution(const std::shared_ptr<Point> point, int numSol) const
         { return reconstructSolution(*point, numSol); };
 
-
-
-    //- Get coefficients for initial conditions
-    numvector<double, 5 * nShapes> getLocalInitialConditions(std::function<numvector<double,5>(const Point& point)>& init) const;
+    //- Get coefficients of projection of function foo onto cell basis
+    numvector<double, 5 * nShapes> projection(std::function<numvector<double,5>(const Point& point)>& init) const;
 
     //- Calculate \int_{cell} F(U) \nabla \phi_x + G(U) \nabla \phi_y
     numvector<double, 5 * nShapes> cellIntegral();

@@ -16,6 +16,7 @@
 #include "IndicatorKXRCF.h"
 #include "LimiterFinDiff.h"
 #include "LimiterMUSCL.h"
+#include "LimiterWENOS.h"
 
 using namespace std;
 
@@ -29,6 +30,12 @@ int main(int argc, char** argv)
 
     int nx = 100;
     int ny = 1;
+
+//    double Lx = 4.0;
+//    double Ly = 4.0;
+
+//    int nx = 20;
+//    int ny = 40;
 
     // Time parameters
 
@@ -55,7 +62,7 @@ int main(int argc, char** argv)
     IndicatorKXRCF indicator(mesh);
 
     //Initialize limiter
-    LimiterFinDiff limiter(indicator,problem);
+    LimiterWENOS limiter(indicator,problem);
 
     // ---------------
 

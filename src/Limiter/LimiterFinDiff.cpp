@@ -11,6 +11,8 @@ void LimiterFinDiff::limit(vector<numvector<double, 5 * nShapes>>& alpha)
     {
         if (ind[i] > 1.0)
         {
+            //cout << "troubled cell #" << i << " " << ind[i] << endl;
+
             for (int j = 0; j < 5; ++j)
             {
                 alpha[i][j*nShapes + 1] = 0.0;

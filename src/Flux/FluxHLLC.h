@@ -7,7 +7,7 @@
 class FluxHLLC : public Flux
 {
     //- Calculate Star Region velocity
-    numvector<double, 5> getUStar (const numvector<double, 5>& sol, double lK, double cK, double lStar) const;
+    numvector<double, 5> getUStar (const numvector<double, 5>& sol, double pK, double SK, double cK, double SStar) const;
 
 public:
 

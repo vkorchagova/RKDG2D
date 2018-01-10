@@ -18,7 +18,7 @@ const int dim = 5 * nShapes;
 numvector<double, 5> rotate(const numvector<double, 5>& sol, const Point& n);
 
 //- rotate coordinate system counter-clockwise
-numvector<double, 5> inverseRotate(numvector<double, 5> sol, const Point& n);
+numvector<double, 5> inverseRotate(const numvector<double, 5>& sol, const Point& n);
 
 
 //- vector<numvector> * alpha
