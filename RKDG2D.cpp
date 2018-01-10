@@ -53,7 +53,7 @@ int main(int argc, char** argv)
     Problem problem;
 
     // Initialize flux
-    FluxHLL numFlux (problem);
+    FluxHLLC numFlux (problem);
 
     // Initialize solver
     Solver solver(mesh, problem, numFlux);
@@ -73,22 +73,6 @@ int main(int argc, char** argv)
     solver.setBoundaryConditions();
 
 
-
-
-//    cout << "Init cond:\n " ;
-//    for (int i = 0; i < mesh.cells.size(); ++i)
-//        cout << problem.alpha[i] << endl;
-
-
-//    cout << "Indicator test..." << endl;
-
-
-//    vector<double> ind = indicator.checkDiscontinuities();
-    
-//    for (size_t q = 0; q < ind.size(); ++q)
-//        cout << "q = " << q << ", ind = " << ind[q] << endl;
-
-
     // time step
 
     double tau = min(mesh.cells[0]->h().x(),mesh.cells[0]->h().y()) * Co;
@@ -99,7 +83,6 @@ int main(int argc, char** argv)
     // run Runge --- Kutta 2 TVD
 
     vector<numvector<double, 5*nShapes>> k1, k2;
-//    vector<double> ind;
 
     k1.resize(mesh.nCells);
     k2.resize(mesh.nCells);
@@ -124,42 +107,10 @@ int main(int argc, char** argv)
 
        limiter.limit(solver.alphaNext);
 
-//       problem.setAlpha(solver.alphaNext);
-//	   ind = indicator.checkDiscontinuities();
-
-//	   for (size_t i = 0; i < mesh.nCells; ++i)
-//	   {
-//		   if (ind[i] > 1.0)
-//		   {
-//			   for (int j = 0; j < 5; ++j)
-//			   {
-//				   solver.alphaNext[i][j*nShapes + 1] = 0.0;
-//				   solver.alphaNext[i][j*nShapes + 2] = 0.0;
-//			   }
-//		   }
-//	   }
-
-
        k2 = solver.assembleRHS(solver.alphaNext);
        solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
 
        limiter.limit(solver.alphaNext);
-
-//       problem.setAlpha(solver.alphaNext);
-//       ind = indicator.checkDiscontinuities();
-
-//       for (size_t i = 0; i < mesh.nCells; ++i)
-//       {
-//           if (ind[i] > 1.0)
-//           {
-//               for (int j = 0; j < 5; ++j)
-//               {
-//                   solver.alphaNext[i][j*nShapes + 1] = 0.0;
-//                   solver.alphaNext[i][j*nShapes + 2] = 0.0;
-//               }
-//           }
-//       }
-
 
        solver.write(output,solver.alphaNext);
 
@@ -174,10 +125,7 @@ int main(int argc, char** argv)
     cout << "=========\nElapsed time = " << (float)(t2 - t00) / CLOCKS_PER_SEC << endl;
     cout << "---------\nEND \n";
 
-//    int aaa;
-//    cin >> aaa;
-
-	cin.get();
+    //cin.get();
 	return 0;
 }
 
