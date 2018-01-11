@@ -63,7 +63,7 @@ int main(int argc, char** argv)
     IndicatorKXRCF indicator(mesh);
 
     //Initialize limiter
-    LimiterMUSCL limiter(indicator,problem);
+    LimiterWENOS limiter(indicator,problem);
 
     // ---------------
 

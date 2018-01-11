@@ -9,79 +9,102 @@ void LimiterWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
 
     // linear weights
 
-    numvector<double, 3> gamma = { 0.001, 0.998, 0.001 };
+    vector<double> gamma;
+    double g = 0.001;
 
     // smoothness indicators
 
-    numvector<numvector<double, 5>, 3> beta;
+    vector<numvector<double, 5>> beta;
 
     // nonlinear weights
 
-    numvector<numvector<double, 5>, 3> w;
-    numvector<numvector<double, 5>, 3> wTilde;
+    vector<numvector<double, 5>> w;
+    vector<numvector<double, 5>> wTilde;
     numvector<double, 5> wSum;
 
     // mean values
 
-    numvector<numvector<double, 5>, 3> uMean;
+    vector<numvector<double, 5>> uMean;
 
     // p polynoms
 
-    numvector<numvector<double, 5 * nShapes>, 3> p;
+    vector<numvector<double, 5 * nShapes>> p;
 
 
     // limit solution in troubled cells
 
     for (int iCell : troubledCells)
     {
-        // limit solution in X direction
+        // find neighbours
 
-        // find neighbours in x direction (we know the mesh is rectilinear)
+        shared_ptr<Cell> cell = indicator.mesh.cells[iCell];
 
-        numvector<shared_ptr<Cell>, 3> cellsHor = { indicator.mesh.cells[iCell-1], \
-                                                    indicator.mesh.cells[iCell], \
-                                                    indicator.mesh.cells[iCell+1] };
+        vector<shared_ptr<Cell>> neibCellsX = cell->findNeighbourCellsX();
+        vector<shared_ptr<Cell>> neibCellsY = cell->findNeighbourCellsY();
+
+        vector<shared_ptr<Cell>> cells = { cell };
+
+
+        cells.insert(cells.end(), neibCellsX.begin(), neibCellsX.end());
+
+        cells.insert(cells.end(), neibCellsY.begin(), neibCellsY.end());
+
+        int nCells = cells.size();
 
         // get mean values
 
-        for (int k = 0; k < 3; ++k)
-            uMean[k] = cellsHor[k]->reconstructSolution(cellsHor[1]->getCellCenter());
+        uMean.resize(nCells);
+
+        for (size_t k = 0; k < nCells; ++k)
+            uMean[k] = cells[k]->reconstructSolution(cells[0]->getCellCenter());
 
         // get coeffs for polynoms p
 
-        p[0] = alpha[iCell-1];
-        p[1] = alpha[iCell];
-        p[2] = alpha[iCell+1];
+        p.resize(nCells);
 
-        for (int k = 0; k < 3; ++k)
+        for (size_t k = 0; k < nCells; ++k)
+            p.push_back( alpha[cells[k]->number] );
+
+        for (size_t k = 0; k < nCells; ++k)
             for (int i = 0; i < 5; ++i)
                 for (int j = 0; j < nShapes; ++j)
-                    p[k][i*nShapes + j] *= cellsHor[k]->offsetPhi[j];
+                    p[k][i*nShapes + j] *= cells[k]->offsetPhi[j];
 
-        for (int i = 0; i < 5; ++i)
-            p[0][i*nShapes] += - uMean[0][i] + uMean[1][i];
+        for (size_t k = 0; k < nCells; ++k)
+            for (int i = 0; i < 5; ++i)
+                p[k][i*nShapes] += - uMean[k][i] + uMean[0][i];
 
-        for (int i = 0; i < 5; ++i)
-            p[2][i*nShapes] += - uMean[2][i] + uMean[1][i];
+        // get linear weights
+
+        gamma.resize(nCells);
+
+        gamma[0] = 1.0 - (nCells - 1) * g;
+
+        for (size_t k = 1; k < nCells; ++k)
+            gamma[k] = g;
 
         // get smoothness indicators and nonlinear weights
 
-        for (int k = 0; k < 3; ++k)
-        {
+        beta.resize(nCells);
+        wTilde.resize(nCells);
+        w.resize(nCells);
+
+        for (size_t k = 0; k < nCells; ++k)
             for (int j = 0; j < 5; ++j)
             {
-                beta[k][j] = sqr( cellsHor[k]->h().x() * p[k][j*nShapes + 1]);
+                beta[k][j] = cells[k]->h().x() * cells[k]->h().y() * (sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
                 wTilde[k][j] = gamma[k] * (1.0 / sqr(beta[k][j] + 1e-6));
             }
-        }
 
-        wSum = wTilde[0] + wTilde[1] + wTilde[2];
+        wSum = {0.0, 0.0, 0.0, 0.0, 0.0};
 
-        for (int k = 0; k < 3; ++k)
-        {
+        for (int j = 0; j < 5; ++j)
+            for (size_t k = 0; k < nCells; ++k)
+                wSum[j] += wTilde[k][j];
+
+        for (size_t k = 0; k < nCells; ++k)
             for (int j = 0; j < 5; ++j)
                 w[k][j] = wTilde[k][j] / wSum[j];
-        }
 
         // project limited solution onto cell basis
 
@@ -90,17 +113,18 @@ void LimiterWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
             numvector<double, 5> sum (0.0);
 
             for (int i = 0; i < 5; ++i)
-                for (int k = 0; k < 3; ++k)
+                for (size_t k = 0; k < nCells; ++k)
                     sum[i] += w[k][i] * (p[k][i*nShapes] + \
-                                         p[k][i*nShapes + 1] * (r.x() - cellsHor[k]->getCellCenter().x()) + \
-                                         p[k][i*nShapes + 2] * (r.y() - cellsHor[k]->getCellCenter().y()));
+                                         p[k][i*nShapes + 1] * (r.x() - cells[k]->getCellCenter().x()) + \
+                                         p[k][i*nShapes + 2] * (r.y() - cells[k]->getCellCenter().y()));
 
 
             return sum;
         };
 
-        alpha[iCell] = cellsHor[1]->projection(foo);
+        alpha[iCell] = cells[0]->projection(foo);
 
         problem.setAlpha(alpha);
+
     }
 }
