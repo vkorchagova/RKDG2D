@@ -31,7 +31,7 @@ void LimiterMUSCL::limit(vector<numvector<double, 5 * nShapes>>& alpha)
     //check discontinuities
 
     problem.setAlpha(alpha);
-    vector<double> ind = indicator.checkDiscontinuities();
+    vector<int> troubledCells = indicator.checkDiscontinuities();
 
     // mean values
 
@@ -39,44 +39,36 @@ void LimiterMUSCL::limit(vector<numvector<double, 5 * nShapes>>& alpha)
 
     // limit solution in troubled cells
 
-    for (size_t icell = 0; icell < alpha.size(); ++icell)
+    for (int iCell : troubledCells)
     {
-        if (ind[icell] > 1.0)
+        // limit in x direction
+        // --------------------
+
+        //const Cell& cell = *(indicator.mesh.cells[icell]);
+
+        //vector<shared_ptr<Cell>> neibCells = cell.findNeighbourCellsX();
+
+        numvector<shared_ptr<Cell>, 3> cellsHor = { indicator.mesh.cells[iCell-1], indicator.mesh.cells[iCell], indicator.mesh.cells[iCell+1] };
+
+        // get mean values
+
+        for (int i = 0; i < 3; ++i)
+            uMean[i] = cellsHor[i]->reconstructSolution(cellsHor[1]->getCellCenter());
+
+        // limit
+
+        for (int i = 0; i < 5; ++i)
         {
-            problem.setAlpha(alpha);
+            numvector<double, 3> slope;
 
-            //cout << "troubled cell #" << icell << " " << ind[icell] << endl;
+            slope[0] = alpha[iCell][i*nShapes + 1] * cellsHor[1]->offsetPhi[1];
+            slope[1] = (uMean[i][2] - uMean[i][1]) / cellsHor[1]->h().x() ;
+            slope[2] = (uMean[i][1] - uMean[i][0]) / cellsHor[1]->h().x() ;
 
-            // limit in x direction
-            // --------------------
-
-            //const Cell& cell = *(indicator.mesh.cells[icell]);
-
-            //vector<shared_ptr<Cell>> neibCells = cell.findNeighbourCellsX();
-
-            numvector<shared_ptr<Cell>, 3> cellsHor = { indicator.mesh.cells[icell-1], indicator.mesh.cells[icell], indicator.mesh.cells[icell+1] };
-
-            // get mean values
-
-            for (int i = 0; i < 3; ++i)
-                uMean[i] = cellsHor[i]->reconstructSolution(cellsHor[1]->getCellCenter());
-
-            // limit
-
-            for (int i = 0; i < 5; ++i)
-            {
-                numvector<double, 3> slope;
-
-                slope[0] = alpha[icell][i*nShapes + 1] * cellsHor[1]->offsetPhi[1];
-                slope[1] = (uMean[i][2] - uMean[i][1]) / cellsHor[1]->h().x() ;
-                slope[2] = (uMean[i][1] - uMean[i][0]) / cellsHor[1]->h().x() ;
-
-                alpha[icell][i*nShapes + 1] = m(slope) / cellsHor[1]->offsetPhi[1];
-            }
-
+            alpha[iCell][i*nShapes + 1] = m(slope) / cellsHor[1]->offsetPhi[1];
         }
-    }
 
-    return;
+        problem.setAlpha(alpha);
+    }
 }
 

@@ -5,21 +5,14 @@ using namespace std;
 void LimiterFinDiff::limit(vector<numvector<double, 5 * nShapes>>& alpha)
 {
     problem.setAlpha(alpha);
-    vector<double> ind = indicator.checkDiscontinuities();
+    vector<int> troubledCells = indicator.checkDiscontinuities();
 
-    for (size_t i = 0; i < alpha.size(); ++i)
+    for (int iCell : troubledCells)
     {
-        if (ind[i] > 1.0)
+        for (int j = 0; j < 5; ++j)
         {
-            //cout << "troubled cell #" << i << " " << ind[i] << endl;
-
-            for (int j = 0; j < 5; ++j)
-            {
-                alpha[i][j*nShapes + 1] = 0.0;
-                alpha[i][j*nShapes + 2] = 0.0;
-            }
+            alpha[iCell][j*nShapes + 1] = 0.0;
+            alpha[iCell][j*nShapes + 2] = 0.0;
         }
     }
-
-    return;
 }

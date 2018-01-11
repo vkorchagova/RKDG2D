@@ -26,10 +26,10 @@ int main(int argc, char** argv)
     // Mesh parameters
 
     double Lx = 1.0;
-    double Ly = 0.5;
+    double Ly = 0.51;
 
     int nx = 100;
-    int ny = 10;
+    int ny = 1;
 
 //    double Lx = 4.0;
 //    double Ly = 4.0;
@@ -62,7 +62,7 @@ int main(int argc, char** argv)
     IndicatorKXRCF indicator(mesh);
 
     //Initialize limiter
-    LimiterWENOS limiter(indicator,problem);
+    LimiterMUSCL limiter(indicator,problem);
 
     // ---------------
 

@@ -22,7 +22,7 @@ public:
     virtual ~Indicator() {}
     
     //- Check discontinuities
-    virtual std::vector<double> checkDiscontinuities() const = 0;
+    virtual std::vector<int> checkDiscontinuities() const = 0;
 
 };
 

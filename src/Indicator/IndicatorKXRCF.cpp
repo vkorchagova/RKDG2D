@@ -135,9 +135,13 @@ Point massFlux(const Edge& edge, const Cell& cell, const Point& nrm)
 }
 
 
-vector<double> IndicatorKXRCF::checkDiscontinuities() const
+vector<int> IndicatorKXRCF::checkDiscontinuities() const
 {
-    vector<double> indicator(mesh.nCells);
+    //vector<double> indicator(mesh.nCells);
+
+    vector<int> troubledCells;
+
+    double indicator;
     
 	for (int i = 0; i < mesh.nCells; ++i)
 	{
@@ -163,10 +167,10 @@ vector<double> IndicatorKXRCF::checkDiscontinuities() const
 
 		Point integral(0.0);
 
-        if (i == 50)
-            debugFlux = false;
-        else
-            debugFlux = false;
+//        if (i == 50)
+//            debugFlux = false;
+//        else
+//            debugFlux = false;
 
 		// for bottom edge
         integral += massFlux(*mci.edges[0], mci, Point({ 0.0, -1.0 }));
@@ -193,14 +197,11 @@ vector<double> IndicatorKXRCF::checkDiscontinuities() const
             cout << "integral = " << fabs(integral.x()) << ", zn = " << max((h*integral.y()*normQ), 1e-10) << endl;
         }
 
-		indicator[i] = fabs(integral.x()) / max((h*integral.y()*normQ), 1e-10);
+        indicator = fabs(integral.x()) / max((h*integral.y()*normQ), 1e-10);
 
-        //indicator[i] = 2.0;
-
+        if (indicator > 1.0)
+            troubledCells.push_back(i);
 	}
-    
-    //indicator[0] = 0.0;
-    //*(indicator.end()--) = 0.0;
 
-    return indicator;
+    return troubledCells;
 }

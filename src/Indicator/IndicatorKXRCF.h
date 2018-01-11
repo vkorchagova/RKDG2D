@@ -15,7 +15,7 @@ public:
     
     
     //- Check discontinuities
-    virtual std::vector<double> checkDiscontinuities() const override;
+    virtual std::vector<int> checkDiscontinuities() const override;
 };
 
 
