@@ -18,6 +18,10 @@ numvector<double, 5> FluxHLLC::getFStar(const numvector<double, 5>& sol, const n
 {
     numvector<double, 5> D = { 0.0, 1.0, 0.0, 0.0, SStar};
 
+    // var 2
+    //return ( SStar * (sol*SK - fK) + D * pK ) * (1.0 / (SK - SStar));
+
+    // var 1
     return ( SStar * (sol*SK - fK) + D * SK * (pK + rhoL * cK * (SStar - sol[1] / sol[0])) ) * (1.0 / (SK - SStar));
 }
 
@@ -55,5 +59,15 @@ numvector<double,5> FluxHLLC::evaluate( const numvector<double, 5>& solLeft, con
         return inverseRotate(getFStar(solLeft,fluxL,solLeft[0],pLeft,SL,cLeft,sStar),n);
 
     return inverseRotate(getFStar(solRight,fluxR,solLeft[0],pRight,SR,cRight,sStar),n);
+
+    double pLR = 0.5 * (pLeft + pRight + solLeft[0] * cLeft * (sStar - solLeft[1] / solLeft[0]) + \
+                                         solRight[0] * cRight * (sStar - solRight[1] / solRight[0]));
+
+    if (sStar >= 0.0)
+        return inverseRotate(getFStar(solLeft,fluxL,solLeft[0],pLR,SL,cLeft,sStar),n);
+
+    return inverseRotate(getFStar(solRight,fluxR,solLeft[0],pLR,SR,cRight,sStar),n);
+
+
 }
 
