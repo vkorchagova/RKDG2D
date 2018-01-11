@@ -13,6 +13,7 @@
 #include "FluxLLF.h"
 #include "FluxHLL.h"
 #include "FluxHLLC.h"
+#include "IndicatorEverywhere.h"
 #include "IndicatorKXRCF.h"
 #include "LimiterFinDiff.h"
 #include "LimiterMUSCL.h"
@@ -26,10 +27,10 @@ int main(int argc, char** argv)
     // Mesh parameters
 
     double Lx = 1.0;
-    double Ly = 0.51;
+    double Ly = 1.0;
 
-    int nx = 100;
-    int ny = 1;
+    int nx = 20;
+    int ny = 20;
 
 //    double Lx = 4.0;
 //    double Ly = 4.0;
@@ -53,7 +54,7 @@ int main(int argc, char** argv)
     Problem problem;
 
     // Initialize flux
-    FluxHLLC numFlux (problem);
+    FluxHLLC numFlux(problem);
 
     // Initialize solver
     Solver solver(mesh, problem, numFlux);
@@ -71,7 +72,6 @@ int main(int argc, char** argv)
 
     // Set boundary conditions
     solver.setBoundaryConditions();
-
 
     // time step
 

@@ -95,13 +95,13 @@ vector<shared_ptr<Cell>> Cell::findNeighbourCellsX() const
 {
     vector<shared_ptr<Cell>> neibCells;
 
+    // for left edge
+    if (edges[3]->neibCells.size() == 2)
+        neibCells.emplace_back(edges[3]->neibCells[0]);
+
     // for right edge
     if (edges[1]->neibCells.size() == 2)
         neibCells.emplace_back(edges[1]->neibCells[1]);
-
-    // for left edge
-    if (edges[3]->neibCells.size() == 2)
-        neibCells.emplace_back(edges[1]->neibCells[0]);
 
     return neibCells;
 }
@@ -112,11 +112,11 @@ vector<shared_ptr<Cell>> Cell::findNeighbourCellsY() const
 
     // for bottom edge
     if (edges[0]->neibCells.size() == 2)
-        neibCells.emplace_back(edges[0]->neibCells[1]);
+        neibCells.emplace_back(edges[0]->neibCells[0]);
 
     // for top edge
     if (edges[2]->neibCells.size() == 2)
-        neibCells.emplace_back(edges[2]->neibCells[0]);
+        neibCells.emplace_back(edges[2]->neibCells[1]);
 
     return neibCells;
 }

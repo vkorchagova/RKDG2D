@@ -30,11 +30,14 @@ public:
 
     //- Coeffs
     std::vector<numvector<double, 5 * nShapes>> alpha;
+    //const std::vector<numvector<double, 5 * nShapes>>& alpha;
 
 public:
 
     //- Default constructor
-    Problem();
+    Problem ();
+
+    //Problem(const std::vector<numvector<double, 5 * nShapes>>& al = {});
 
     //- Destructor
     ~Problem();

@@ -199,9 +199,17 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
 
         indicator = fabs(integral.x()) / max((h*integral.y()*normQ), 1e-10);
 
+        //cout << indicator << ' ' ;
+
         if (indicator > 1.0)
             troubledCells.push_back(i);
 	}
+
+//    cout << "\ntroubled cells: " ;
+//    for (int iCell : troubledCells)
+//        cout << iCell << ' ';
+
+//    cout << endl;
 
     return troubledCells;
 }

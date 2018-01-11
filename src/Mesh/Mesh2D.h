@@ -8,6 +8,7 @@
 #include "EdgeInternal.h"
 #include "EdgeBoundaryInfty.h"
 #include "EdgeBoundarySlip.h"
+#include "EdgeBoundaryOpen.h"
 
 #include <fstream>
 #include <memory>

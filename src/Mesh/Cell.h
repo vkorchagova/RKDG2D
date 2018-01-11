@@ -20,7 +20,6 @@
 #include <algorithm>
 
 class Edge;
-//class Problem;
 
 class Cell
 {
