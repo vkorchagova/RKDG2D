@@ -60,17 +60,15 @@ void LimiterWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
 
         // get coeffs for polynoms p
 
-        p.resize(nCells);
-
         for (size_t k = 0; k < nCells; ++k)
-            p.push_back( alpha[cells[k]->number] );
+            p.emplace_back( alpha[cells[k]->number] );
 
         for (size_t k = 0; k < nCells; ++k)
             for (int i = 0; i < 5; ++i)
                 for (int j = 0; j < nShapes; ++j)
                     p[k][i*nShapes + j] *= cells[k]->offsetPhi[j];
 
-        for (size_t k = 0; k < nCells; ++k)
+        for (size_t k = 1; k < nCells; ++k)
             for (int i = 0; i < 5; ++i)
                 p[k][i*nShapes] += - uMean[k][i] + uMean[0][i];
 
@@ -92,7 +90,7 @@ void LimiterWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
         for (size_t k = 0; k < nCells; ++k)
             for (int j = 0; j < 5; ++j)
             {
-                beta[k][j] = cells[k]->h().x() * cells[k]->h().y() * (sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
+                beta[k][j] = cells[0]->h().x() * cells[0]->h().y() * (sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
                 wTilde[k][j] = gamma[k] * (1.0 / sqr(beta[k][j] + 1e-6));
             }
 
