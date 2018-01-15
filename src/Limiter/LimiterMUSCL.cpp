@@ -36,8 +36,8 @@ void LimiterMUSCL::limit(vector<numvector<double, 5 * nShapes>>& alpha)
 
     // mean values
 
-    numvector<numvector<double, 5>, 3> uMeanX;
-    numvector<numvector<double, 5>, 3> uMeanY;
+    vector<numvector<double, 5>> uMeanX;
+    vector<numvector<double, 5>> uMeanY;
 
     // limit solution in troubled cells
 
@@ -59,10 +59,10 @@ void LimiterMUSCL::limit(vector<numvector<double, 5 * nShapes>>& alpha)
         // get mean values
 
         for (size_t i = 0; i < cellsHor.size(); ++i)
-            uMeanX[i] = cellsHor[i]->reconstructSolution(cellsHor[0]->getCellCenter());
+            uMeanX.push_back( cellsHor[i]->reconstructSolution(cellsHor[0]->getCellCenter()) );
 
         for (size_t i = 0; i < cellsVer.size(); ++i)
-            uMeanY[i] = cellsVer[i]->reconstructSolution(cellsVer[0]->getCellCenter());
+            uMeanY.push_back( cellsVer[i]->reconstructSolution(cellsVer[0]->getCellCenter()) );
 
         // limit
 
@@ -71,22 +71,20 @@ void LimiterMUSCL::limit(vector<numvector<double, 5 * nShapes>>& alpha)
             vector<double> slopeX;
             vector<double> slopeY;
 
-            slopeX.push_back(alpha[iCell][i*nShapes + 1] * cellsHor[0]->offsetPhi[1]);
-            slopeY.push_back(alpha[iCell][i*nShapes + 2] * cellsVer[0]->offsetPhi[2]);
+            slopeX.push_back(alpha[iCell][i*nShapes + 1]);
+            slopeY.push_back(alpha[iCell][i*nShapes + 2]);
 
             for (size_t j = 1; j < cellsHor.size(); ++j)
-                slopeX.push_back( sgn(cellsHor[j]->getCellCenter().x() - cellsHor[0]->getCellCenter().x()) * (uMeanX[i][j] - uMeanX[i][0]) / cellsHor[0]->h().x() );
+                slopeX.push_back( sgn(cellsHor[j]->getCellCenter().x() - cellsHor[0]->getCellCenter().x()) * (uMeanX[i][j] - uMeanX[i][0]) / cellsHor[0]->h().x() / cellsHor[0]->offsetPhi[1] );
 
             for (size_t j = 1; j < cellsVer.size(); ++j)
-                slopeY.push_back( sgn(cellsVer[j]->getCellCenter().y() - cellsVer[0]->getCellCenter().y()) * (uMeanY[i][j] - uMeanY[i][0]) / cellsVer[0]->h().y() );
+                slopeY.push_back( sgn(cellsVer[j]->getCellCenter().y() - cellsVer[0]->getCellCenter().y()) * (uMeanY[i][j] - uMeanY[i][0]) / cellsVer[0]->h().y() / cellsHor[0]->offsetPhi[2] );
 
             //cout << "i = "<< i << ' ' << m(slopeX) / cellsHor[0]->offsetPhi[1] << ' ' << m(slopeY) / cellsVer[0]->offsetPhi[2] << endl;
 
-            alpha[iCell][i*nShapes + 1] = m(slopeX) / cellsHor[0]->offsetPhi[1];
-            alpha[iCell][i*nShapes + 2] = m(slopeY) / cellsVer[0]->offsetPhi[2];
+            alpha[iCell][i*nShapes + 1] = m(slopeX);
+            alpha[iCell][i*nShapes + 2] = m(slopeY);
         }
-
-        //cout << alpha[iCell] << endl;
 
         problem.setAlpha(alpha);
     }

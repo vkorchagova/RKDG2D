@@ -6,6 +6,9 @@
 
 class LimiterWENOS : public Limiter
 {
+    void limitSep(std::vector<numvector<double, 5 * nShapes> >& alpha);
+    void limitTog(std::vector<numvector<double, 5 * nShapes> >& alpha);
+    void limitX(std::vector<numvector<double, 5 * nShapes> >& alpha);
 
 public:
     //- Construct by indicator and problem

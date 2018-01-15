@@ -177,7 +177,7 @@ double Cell::reconstructSolution(const Point& point, int numSol ) const
     double sol(0.0);
     
     for (int j = 0; j < nShapes; ++j)
-	sol += phi[j](point) * problem->alpha[number][numSol * nShapes + j];
+        sol += phi[j](point) * problem->alpha[number][numSol * nShapes + j];
 
     return sol;
 } // end reconstructSolution
