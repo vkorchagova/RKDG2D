@@ -58,11 +58,14 @@ void LimiterMUSCL::limit(vector<numvector<double, 5 * nShapes>>& alpha)
 
         // get mean values
 
+        uMeanX.resize(cellsHor.size());
+        uMeanY.resize(cellsVer.size());
+
         for (size_t i = 0; i < cellsHor.size(); ++i)
-            uMeanX.push_back( cellsHor[i]->reconstructSolution(cellsHor[0]->getCellCenter()) );
+            uMeanX[i] = cellsHor[i]->reconstructSolution(cellsHor[0]->getCellCenter());
 
         for (size_t i = 0; i < cellsVer.size(); ++i)
-            uMeanY.push_back( cellsVer[i]->reconstructSolution(cellsVer[0]->getCellCenter()) );
+            uMeanY[i] = cellsVer[i]->reconstructSolution(cellsVer[0]->getCellCenter());
 
         // limit
 

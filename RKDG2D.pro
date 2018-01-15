@@ -21,6 +21,7 @@ SOURCES += RKDG2D.cpp \
     src/Mesh/Mesh2D.cpp \
     src/Mesh/EdgeBoundary.cpp \
     src/Mesh/EdgeBoundaryInfty.cpp \
+    src/Mesh/EdgeBoundaryOpen.cpp \
     src/Mesh/EdgeBoundarySlip.cpp \
     src/Problem/Problem.cpp \
     src/Solver/Solver.cpp \
@@ -32,7 +33,9 @@ SOURCES += RKDG2D.cpp \
     src/Indicator/Indicator.cpp \
     src/Indicator/IndicatorKXRCF.cpp \
     src/Limiter/Limiter.cpp \
-    src/Limiter/LimiterFinDiff.cpp
+    src/Limiter/LimiterFinDiff.cpp \
+    src/Limiter/LimiterMUSCL.cpp \
+    src/Limiter/LimiterWENOS.cpp
 
 
 HEADERS += src/numvector.h \
@@ -43,6 +46,7 @@ HEADERS += src/numvector.h \
     src/Mesh/Cell.h \
     src/Mesh/EdgeBoundary.h \
     src/Mesh/EdgeBoundaryInfty.h \
+    src/Mesh/EdgeBoundaryOpen.h \
     src/Mesh/EdgeBoundarySlip.h \
     src/Problem/Problem.h \
     src/Solver/Solver.h \
@@ -54,4 +58,6 @@ HEADERS += src/numvector.h \
     src/Indicator/Indicator.h \
     src/Indicator/IndicatorKXRCF.h \
     src/Limiter/Limiter.h \
-    src/Limiter/LimiterFinDiff.h
+    src/Limiter/LimiterFinDiff.h \
+    src/Limiter/LimiterMUSCL.h \
+    src/Limiter/LimiterWENOS.h

@@ -4,7 +4,7 @@ using namespace std;
 
 void LimiterWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
 {
-    return limitX(alpha);
+    return limitTog(alpha);
 }
 
 void LimiterWENOS::limitTog(vector<numvector<double, 5 * nShapes>>& alpha)
@@ -64,8 +64,10 @@ void LimiterWENOS::limitTog(vector<numvector<double, 5 * nShapes>>& alpha)
 
         // get coeffs for polynoms p
 
+        p.resize(nCells);
+
         for (size_t k = 0; k < nCells; ++k)
-            p.push_back( alpha[cells[k]->number] );
+            p[k] = alpha[cells[k]->number] ;
 
         for (size_t k = 0; k < nCells; ++k)
             for (int i = 0; i < 5; ++i)
@@ -94,7 +96,7 @@ void LimiterWENOS::limitTog(vector<numvector<double, 5 * nShapes>>& alpha)
         for (size_t k = 0; k < nCells; ++k)
             for (int j = 0; j < 5; ++j)
             {
-                beta[k][j] = cells[k]->h().x() * cells[k]->h().y() * min(cells[0]->h().x(),cells[0]->h().y()) * (sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
+                beta[k][j] =  (sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
                 wTilde[k][j] = gamma[k] * (1.0 / sqr(beta[k][j] + 1e-6));
             }
 
@@ -204,11 +206,14 @@ void LimiterWENOS::limitSep(vector<numvector<double, 5 * nShapes>>& alpha)
 
         // get coeffs for polynoms p
 
+        px.resize(nCellsHor);
+        py.resize(nCellsVer);
+
         for (size_t i = 0; i < cellsHor.size(); ++i)
-            px.push_back(alpha[cellsHor[i]->number]);
+            px[i] = alpha[cellsHor[i]->number];
 
         for (size_t i = 0; i < cellsVer.size(); ++i)
-            py.push_back(alpha[cellsVer[i]->number]);
+            py[i] = alpha[cellsVer[i]->number];
 
         for (size_t k = 0; k < nCellsHor; ++k)
             for (int i = 0; i < 5; ++i)
@@ -427,7 +432,7 @@ void LimiterWENOS::limitX(vector<numvector<double, 5 * nShapes>>& alpha)
         };
 
         alpha[icell] = cellsHor[1]->projection(foo);
-
-
     }
+
+    return;
 }
