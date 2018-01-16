@@ -26,11 +26,11 @@ int main(int argc, char** argv)
 {    
     // Mesh parameters
 
-    double Lx = 2.0;
-    double Ly = 2.0;
+    double Lx = 1.0;
+    double Ly = 0.1;
 
     int nx = 40;
-    int ny = 40;
+    int ny = 1;
 
 //    double Lx = 4.0;
 //    double Ly = 4.0;
