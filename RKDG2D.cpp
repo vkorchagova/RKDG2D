@@ -27,16 +27,16 @@ int main(int argc, char** argv)
     // Mesh parameters
 
     double Lx = 1.0;
-    double Ly = 0.1;
+    double Ly = 1.0;
 
     int nx = 40;
-    int ny = 1;
+    int ny = 40;
 
 //    double Lx = 4.0;
 //    double Ly = 4.0;
 
 //    int nx = 20;
-//    int ny = 40;
+//    int ny = 20;
 
     // Time parameters
 
@@ -54,7 +54,7 @@ int main(int argc, char** argv)
     Problem problem;
 
     // Initialize flux
-    FluxHLLC numFlux(problem);
+    FluxLLF numFlux(problem);
 
     // Initialize solver
     Solver solver(mesh, problem, numFlux);

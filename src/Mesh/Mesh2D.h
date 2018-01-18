@@ -22,6 +22,11 @@ private:
     //- File ofstream for mesh export
     mutable std::ofstream writer;
 
+    int nx;
+    int ny;
+    double Lx;
+    double Ly;
+
 public:
 
     //- Number of internal cells  //?

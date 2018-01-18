@@ -8,7 +8,7 @@ using namespace std;
 
 // nx --- number of cells along x axis
 // ny --- number of cells along y axis
-Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly)
+Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly) : nx(nx), ny(ny), Lx(Lx), Ly(Ly)
 {
     // define number of nodes, edges, cells
 
@@ -116,8 +116,16 @@ Mesh2D::~Mesh2D()
 
 void Mesh2D::exportMesh() const
 {
+    writer << "Lx = " << Lx << endl;
+    writer << "Ly = " << Ly << endl;
+
+    writer << "nx = " << nx << endl;
+    writer << "ny = " << ny << endl;
+
     writer << "hx = " << cells[0]->h().x() << endl;
     writer << "hy = " << cells[0]->h().y() << endl;
+
+    writer << "ff = " << nShapes << endl;
 
     writer << "cellCenters" << endl;
 
