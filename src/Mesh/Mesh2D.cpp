@@ -3,6 +3,8 @@
 
 using namespace std;
 
+typedef EdgeBoundaryDiagProjection edgeBoundaryT;
+
 // ------------------ Constructors & Destructors ----------------
 
 
@@ -39,7 +41,7 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly) : nx(nx), ny(ny), Lx(Lx), L
     // get horizontal edges
 
     for (int j = 0; j < nx; ++j)
-        edgesHor.emplace_back( make_shared<EdgeBoundaryOpen>(nodes[j], nodes[j + 1]) );
+        edgesHor.emplace_back( make_shared<edgeBoundaryT>(nodes[j], nodes[j + 1]) );
 
     for (int i = 1; i < ny; ++i)
        for (int j = 0; j < nx; ++j)
@@ -47,19 +49,19 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly) : nx(nx), ny(ny), Lx(Lx), L
 
 
     for (int j = 0; j < nx; ++j)
-        edgesHor.emplace_back( make_shared<EdgeBoundaryOpen>(nodes[ny*(nx + 1) + j], nodes[ny*(nx + 1) + j + 1]) );
+        edgesHor.emplace_back( make_shared<edgeBoundaryT>(nodes[ny*(nx + 1) + j], nodes[ny*(nx + 1) + j + 1]) );
 
 
     // get vertical edges
 
     for (int i = 0; i < ny; ++i)
     {
-        edgesVer.emplace_back( make_shared<EdgeBoundaryOpen>(nodes[i*(nx + 1)], nodes[i*(nx + 1) + nx + 1]) );
+        edgesVer.emplace_back( make_shared<edgeBoundaryT>(nodes[i*(nx + 1)], nodes[i*(nx + 1) + nx + 1]) );
 
         for (int j = 1; j < nx; ++j)
             edgesVer.emplace_back( make_shared<EdgeInternal>(nodes[i*(nx + 1) + j], nodes[i*(nx + 1) + j + nx + 1]) );
 
-        edgesVer.emplace_back( make_shared<EdgeBoundaryOpen>(nodes[i*(nx + 1) + nx ], nodes[i*(nx + 1) + nx + nx + 1]) );
+        edgesVer.emplace_back( make_shared<edgeBoundaryT>(nodes[i*(nx + 1) + nx ], nodes[i*(nx + 1) + nx + nx + 1]) );
     }
 
     // set normals to horizontal edges

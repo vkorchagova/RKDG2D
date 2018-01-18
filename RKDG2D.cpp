@@ -73,6 +73,9 @@ int main(int argc, char** argv)
     // Set boundary conditions
     solver.setBoundaryConditions();
 
+    // Set mesh pointer in case of DiagProject BC
+    solver.setMeshPointerForDiagBC();
+
     // time step
 
     double tau = min(mesh.cells[0]->h().x(),mesh.cells[0]->h().y()) * Co;

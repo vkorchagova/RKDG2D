@@ -9,6 +9,7 @@
 #include "EdgeBoundaryInfty.h"
 #include "EdgeBoundarySlip.h"
 #include "EdgeBoundaryOpen.h"
+#include "EdgeBoundaryDiagProjection.h"
 
 #include <fstream>
 #include <memory>

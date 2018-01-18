@@ -18,6 +18,9 @@
 #define EDGEBOUNDARY_H
 
 #include "Edge.h"
+//#include "Mesh2D.h"
+
+//class Mesh2D;
 
 class EdgeBoundary : public Edge
 {
@@ -36,6 +39,8 @@ public:
     virtual ~EdgeBoundary() = default;
 
     virtual void setBoundaryFunction(const numvector<double, 5>& bc) override = 0;
+
+   // virtual void setMeshPointer(const Mesh2D& msh) {};
 
     //- Apply boundary conditions
     virtual numvector<double, 5> applyBoundary(const numvector<double, 5>& sol = {0.0, 0.0, 0.0, 0.0, 0.0}) const = 0;

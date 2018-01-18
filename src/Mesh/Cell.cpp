@@ -28,7 +28,7 @@ Cell::Cell(const numvector<std::shared_ptr<Edge>, nEdges> &defEdges)
 
 bool Cell::insideCell(const Point& point) const
 {
-    double epsilon = 1e-10;
+    double epsilon = 1e-16;
 
     bool xCond = (center.x() - 0.5*step.x() - epsilon) < point.x()  && (center.x() + 0.5*step.x() + epsilon) > point.x();
     bool yCond = (center.y() - 0.5*step.y() - epsilon) < point.y()  && (center.y() + 0.5*step.y() + epsilon) > point.y();
@@ -123,13 +123,6 @@ vector<shared_ptr<Cell>> Cell::findNeighbourCellsY() const
 
 
 // ----- RKDG -----
-
-void Cell::setProblem(const Problem& prb)
-{
-    problem = &prb;
-
-} // end setProblem
-
 
 numvector<double, 5> Cell::reconstructSolution(const Point& point ) const
 {

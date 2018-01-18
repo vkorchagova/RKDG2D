@@ -53,7 +53,33 @@ void Solver::setBoundaryConditions() const
 
     for (int i = 0; i < nEdgesVer; ++i)
         mesh.edgesVer[i]->setBoundaryFunction(problem.infty);
-}
+} // setBoundaryConditions
+
+void Solver::setMeshPointerForDiagBC()
+{
+    int nEdgesHor = mesh.edgesHor.size();
+    int nEdgesVer = mesh.edgesVer.size();
+
+    for (int i = 0; i < nEdgesHor; ++i)
+    {
+        shared_ptr<EdgeBoundaryDiagProjection> edgeBound = dynamic_pointer_cast<EdgeBoundaryDiagProjection>(mesh.edgesHor[i]);
+
+        if (edgeBound == NULL)
+            continue;
+
+        edgeBound->setMeshPointer(mesh);
+    }
+
+    for (int i = 0; i < nEdgesVer; ++i)
+    {
+        shared_ptr<EdgeBoundaryDiagProjection> edgeBound = dynamic_pointer_cast<EdgeBoundaryDiagProjection>(mesh.edgesVer[i]);
+
+        if (edgeBound == NULL)
+            continue;
+
+        edgeBound->setMeshPointer(mesh);
+    }
+} // end setMeshPointerForDiagBC
 
 vector<numvector<double, 5 * nShapes>> Solver::assembleRHS(const std::vector<numvector<double, 5 * nShapes> > &alpha)
 {

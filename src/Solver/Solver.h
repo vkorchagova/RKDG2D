@@ -50,6 +50,9 @@ public:
     //- Calculate coeffs with initial conditions
     void setInitialConditions();
 
+    //- Set mesh pointer in case of DiagProject BC
+    void setMeshPointerForDiagBC();
+
     //- Set flux
     //void initFluxes(const Flux& flux) const;
 

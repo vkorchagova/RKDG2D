@@ -48,9 +48,6 @@ private:
     //- Space steps (hx, hy)
     Point step;
 
-    //- Check if point belongs cell
-    bool insideCell(const Point& point) const;
-
     //- local [-1,1]x[-1,1] to global rectangular cell
     Point localToGlobal(const Point& point) const;
 
@@ -121,11 +118,14 @@ public:
     //- Find neighbour cells in Y direction
     std::vector<std::shared_ptr<Cell>> findNeighbourCellsY() const;
 
+    //- Check if point belongs cell
+    bool insideCell(const Point& point) const;
+
 
     /// RKDG methods
 
     //- Set problem
-    void setProblem(const Problem& prb);
+    void setProblem(const Problem& prb) { problem = &prb; }
 
     //- Reconstruct solution
     numvector<double, 5> reconstructSolution(const Point& point) const;
