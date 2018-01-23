@@ -12,6 +12,8 @@ Solver::Solver( Mesh2D& msh, Problem &prb, Flux& flx) : mesh(msh),problem(prb),f
 
 void Solver::write(ostream& writer, const vector<numvector<double,5*nShapes>>& coeffs) const
 {
+    writer.precision(12);
+
     for (size_t k = 0; k < coeffs.size(); ++k)
     {
         for (int i = 0; i < 5*nShapes; ++i)

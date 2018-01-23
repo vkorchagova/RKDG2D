@@ -13,6 +13,7 @@
 #include "FluxLLF.h"
 #include "FluxHLL.h"
 #include "FluxHLLC.h"
+#include "IndicatorNowhere.h"
 #include "IndicatorEverywhere.h"
 #include "IndicatorKXRCF.h"
 #include "LimiterFinDiff.h"
@@ -22,26 +23,30 @@
 using namespace std;
 
 
+
+
 int main(int argc, char** argv)
 {    
     // Mesh parameters
 
-    double Lx = 1.0;
-    double Ly = 1.0;
+//    double Lx = 1.0;
+//    double Ly = 1.0;
 
-    int nx = 40;
-    int ny = 40;
+//    int nx = 100;
+//    int ny = 1;
 
-//    double Lx = 4.0;
-//    double Ly = 4.0;
+    double Lx = 12.0;
+    double Ly = 12.0;
 
-//    int nx = 20;
-//    int ny = 20;
+    int nx = 60;
+    int ny = 60;
 
     // Time parameters
 
-    double Co = 0.1;
-    double tEnd = 0.2;
+    double Co = 0.2;
+    double tEnd = 40.0;
+
+    int freqWrite = 1;
 
     // ---------------
 
@@ -54,13 +59,13 @@ int main(int argc, char** argv)
     Problem problem;
 
     // Initialize flux
-    FluxLLF numFlux(problem);
+    FluxHLLC numFlux(problem);
 
     // Initialize solver
     Solver solver(mesh, problem, numFlux);
 
     // Initialize indicator
-    IndicatorKXRCF indicator(mesh);
+    IndicatorNowhere indicator(mesh);
 
     //Initialize limiter
     LimiterWENOS limiter(indicator,problem);
@@ -94,14 +99,11 @@ int main(int argc, char** argv)
 
     t00 = clock();
 
+    int iT = 1; //iteration number
+
     for (double t = tau; t <= tEnd + 0.5*tau; t += tau)
     {
-        t1 = clock();
-       //string fileName = "alphaCoeffs/" + to_string((long double)t);
-       string fileName = "alphaCoeffs/" + to_string(t);
-
-       ofstream output;
-       output.open(fileName);
+       t1 = clock();
 
        cout << "---------\nt = " << t << endl;
 
@@ -115,11 +117,23 @@ int main(int argc, char** argv)
 
        limiter.limit(solver.alphaNext);
 
-       solver.write(output,solver.alphaNext);
+       if (iT % freqWrite == 0)
+       {
+           //string fileName = "alphaCoeffs/" + to_string((long double)t);
+           string fileName = "alphaCoeffs/" + to_string(t);
+
+           ofstream output;
+           output.open(fileName);
+
+           solver.write(output,solver.alphaNext);
+
+           output.close();
+       }
 
        solver.alphaPrev = solver.alphaNext;
 
-       output.close();
+       iT++;
+
        t2 = clock();
 
        cout << "step time: " << (float)(t2 - t1) / CLOCKS_PER_SEC << endl;

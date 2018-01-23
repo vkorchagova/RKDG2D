@@ -9,7 +9,7 @@
 
 //- Square
 template<class T>
-inline T sqr(T x) {return x*x;};
+inline T sqr(T x) {return x*x;}
 
 //- Number of basis functions
 const int nShapes = 3;
@@ -26,7 +26,7 @@ public:
     std::function<numvector<double, 5>(const Point& r)> init;
 
     //- Parameters on infinity
-    numvector<double,5> infty;
+    numvector<double, 5> infty;
 
     //- Coeffs
     std::vector<numvector<double, 5 * nShapes>> alpha;

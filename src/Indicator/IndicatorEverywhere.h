@@ -9,7 +9,6 @@ public:
     //- Constructor
     IndicatorEverywhere (const Mesh2D& msh): Indicator (msh) {}
 
-
     //- Check discontinuities
     virtual std::vector<int> checkDiscontinuities() const override;
 };

@@ -3,7 +3,7 @@
 
 using namespace std;
 
-typedef EdgeBoundaryDiagProjection edgeBoundaryT;
+typedef EdgeBoundaryOpen edgeBoundaryT;
 
 // ------------------ Constructors & Destructors ----------------
 

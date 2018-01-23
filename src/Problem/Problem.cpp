@@ -16,10 +16,10 @@ Problem::Problem()
     function<double(const Point& r)> initRho = [=](const Point& r) \
     { 
     //    return 1.0;
-    //   return rho0 + 0.001 * exp( -2.0 * sqr(r.x() - 2.0) - 2.0 * sqr(r.y() - 2.0));
+       return rho0 + 1e-3 * exp( -2.0 * sqr(r.x() - 6.0) - 2.0 * sqr(r.y() - 6.0));
     //    return (r.y() < 0.5) ? 1.0 : 0.125;
-       return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.125;
-    //    return (r.x() < 0.5) ? 1.0 : 0.125;
+    //   return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.125;
+    //    return (r.x() < 0.5) ? 1.0 : 0.925;
     //   return (r.y() < 1.0 && r.x() < 1.0 && r.y() > 2.0 && r.x() > 2.0) ? 0.0 : 1.0;
     //return (r.y() < 0.5) ? r.y() + 0.01 : r.y() + 0.51;
     };
@@ -27,9 +27,10 @@ Problem::Problem()
     function<double(const Point& r)> initP = [=](const Point& r) \
     { 
     //    return (initRho(r)) / cpcv;
+        return (initRho(r));
     //    return (r.y() < 0.5) ? 1.0 : 0.1;
-        return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.1;
-    //    return (r.x() < 0.5) ? 1.0 : 0.1;
+    //    return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.1;
+    //    return (r.x() < 0.5) ? 1.0 : 0.9;
     };
 
 

@@ -45,15 +45,46 @@ Point Cell::localToGlobal(const Point& point) const
 }
 
 void Cell::setGaussPoints()
-{
-    double isqrt3 = 1.0/1.732050807568877;
+{    
+    if (nShapes == 6)
+    {
+        nGP = 9;
 
-    gPoints2D[0] = localToGlobal(Point({-isqrt3, -isqrt3}));
-    gPoints2D[1] = localToGlobal(Point({ isqrt3, -isqrt3}));
-    gPoints2D[2] = localToGlobal(Point({-isqrt3,  isqrt3}));
-    gPoints2D[3] = localToGlobal(Point({ isqrt3,  isqrt3}));
+        const double sqrtfrac35 = 0.7745966692414834;
 
-    gWeights2D = { 1.0, 1.0, 1.0, 1.0 };
+        for (int i = -1; i <= 1; i++)
+            for (int j = -1; j <= 1; j++)
+                gPoints2D.push_back(localToGlobal(Point({ i * sqrtfrac35, j * sqrtfrac35 })));
+
+        const double frac59 = 0.5555555555555556;
+        const double frac89 = 0.8888888888888889;
+
+        vector <double> gWeights1D = { frac59, frac89, frac59 };
+
+        for (int i = 0; i <= 2; ++i)
+            for (int j = 0; j <= 2; ++j)
+                gWeights2D.push_back(gWeights1D[i] * gWeights1D[j]);
+
+    }
+    else if (nShapes == 3 || nShapes == 1)
+    {
+        nGP = 4;
+
+        double isqrt3 = 0.57735026918962576;
+
+        for (int i = -1; i <= 1; i += 2)
+            for (int j = -1; j <= 1; j += 2)
+                gPoints2D.push_back(localToGlobal(Point({ i * isqrt3, j * isqrt3 })));
+
+        gWeights2D = { 1.0, 1.0, 1.0, 1.0 };
+    }
+    else
+    {
+        cout << "Wrong number of basis functions " << nShapes;
+        cout << "Avaliable: 1,3,6 FF in 2D case \n";
+
+        exit(0);
+    }
 }
 
 void Cell::setBasisFunctions()
@@ -69,9 +100,28 @@ void Cell::setBasisFunctions()
     phi.emplace_back([&](const Point& r){ return sqrt(12.0 / hy / pow(hx, 3)) * (r.x() - center.x()); });
     phi.emplace_back([&](const Point& r){ return sqrt(12.0 / hx / pow(hy, 3)) * (r.y() - center.y()); });
 
-    gradPhi.emplace_back([&](const Point& r)->Point { return Point({0.0, 0.0}); });
-    gradPhi.emplace_back([&](const Point& r)->Point { return Point({sqrt(12.0 / hy / pow(hx, 3)), 0.0}); });
-    gradPhi.emplace_back([&](const Point& r)->Point { return Point({0.0, sqrt(12.0 / hx / pow(hy, 3))}); });
+    gradPhi.emplace_back([&](const Point& r)->Point { return Point({ 0.0, 0.0 }); });
+    gradPhi.emplace_back([&](const Point& r)->Point { return Point({ sqrt(12.0 / hy / pow(hx, 3)), 0.0 }); });
+    gradPhi.emplace_back([&](const Point& r)->Point { return Point({ 0.0, sqrt(12.0 / hx / pow(hy, 3)) }); });
+
+    if (nShapes == 6)
+    {
+        phi.emplace_back([&](const Point& r)
+            { return sqrt(180.0 / pow(hx, 5) / hy) * ( sqr(r.x() - center.x()) - sqr(hx) / 12.0); });
+        phi.emplace_back([&](const Point& r)
+            { return sqrt(144.0 / pow(hx, 3) / pow(hy, 3)) * (r.x() - center.x()) * (r.y() - center.y()); });
+        phi.emplace_back([&](const Point& r)
+            { return sqrt(180.0 / pow(hy, 5) / hx) * ( sqr(r.y() - center.y()) - sqr(hy) / 12.0); });
+
+        gradPhi.emplace_back([&](const Point& r)->Point
+            { return Point({ sqrt(180.0 / pow(hx, 5) / hy) * 2 * (r.x() - center.x()) , 0.0}); });
+        gradPhi.emplace_back([&](const Point& r)->Point
+            { return Point({ sqrt(144.0 / pow(hx, 3) / pow(hy, 3)) * (r.y() - center.y()), \
+                             sqrt(144.0 / pow(hx, 3) / pow(hy, 3)) * (r.x() - center.x()) }); });
+        gradPhi.emplace_back([&](const Point& r)->Point
+            { return Point({ 0.0, sqrt(180.0 / pow(hy, 5) / hx) * 2.0 * (r.y() - center.y()) }); });
+
+    }
 }
 
 // ------------------ Public class methods ---------------------

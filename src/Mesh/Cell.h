@@ -27,13 +27,13 @@ class Cell
 private:
 
     //- Number of Gauss points
-    static const int nGP = 4;
+    int nGP;
 
     //- Gauss points
-    numvector<Point, nGP> gPoints2D;
+    std::vector<Point> gPoints2D;
 
     //- Gauss weights
-    numvector<double, nGP> gWeights2D;
+    std::vector<double> gWeights2D;
 
     //- Jacobian
     double J;

@@ -31,13 +31,13 @@ private:
 
 public:
     //- Number of gauss points for edge
-    static const int nGP = 2;
+    int nGP;
 
     //- Gauss points
-    numvector<Point, nGP> gPoints;
+    std::vector<Point> gPoints;
 
     //- Weights for integration
-    numvector<double, nGP> gWeights;
+    std::vector<double> gWeights;
 
     //- Jacobian
     double J;
@@ -56,7 +56,7 @@ public:
     /// RKDG variables
 
     //- Local numerical fluxes for edge
-    numvector<numvector<double, 5>, nGP> localFluxes;
+    std::vector<numvector<double, 5>> localFluxes;
 
 public:
 
