@@ -75,9 +75,11 @@ void Problem::setAlpha(const std::vector<numvector<double, 5 * nShapes> >& a)
 
 double Problem::getPressure(const numvector<double, 5>& sol) const
 {
-	double magRhoU2 = sqr(sol[1]) + sqr(sol[2]) + sqr(sol[3]);
+    //double magRhoU2 = sqr(sol[1]) + sqr(sol[2]) + sqr(sol[3]);
 
-	return (cpcv - 1.0)*(sol[4] - 0.5*magRhoU2 / sol[0]);
+    //return (cpcv - 1.0)*(sol[4] - 0.5*magRhoU2 / sol[0]);
+
+    return sol[0];
 } // end getPressure
 
 double Problem::c(const numvector<double, 5>& sol) const

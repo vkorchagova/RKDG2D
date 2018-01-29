@@ -44,9 +44,9 @@ int main(int argc, char** argv)
     // Time parameters
 
     double Co = 0.2;
-    double tEnd = 40.0;
+    double tEnd = 4.0;
 
-    int freqWrite = 1;
+    int freqWrite = 25;
 
     // ---------------
 
@@ -59,7 +59,7 @@ int main(int argc, char** argv)
     Problem problem;
 
     // Initialize flux
-    FluxHLLC numFlux(problem);
+    FluxHLL numFlux(problem);
 
     // Initialize solver
     Solver solver(mesh, problem, numFlux);

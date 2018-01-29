@@ -57,7 +57,7 @@ public:
     //void initFluxes(const Flux& flux) const;
 
     //- Assemble right-hand side
-    std::vector<numvector<double, 5 * nShapes> > assembleRHS( const std::vector<numvector<double, 5 * nShapes>>& alpha);
+    std::vector<numvector<double, 5 * nShapes> > assembleRHS(const std::vector<numvector<double, 5 * nShapes>>& alpha);
 
     //// Other methods
 
