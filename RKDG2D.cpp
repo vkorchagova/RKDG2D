@@ -35,15 +35,15 @@ int main(int argc, char** argv)
 //    int nx = 100;
 //    int ny = 1;
 
-    double Lx = 12.0;
-    double Ly = 12.0;
+    double Lx = 8.0;
+    double Ly = 8.0;
 
-    int nx = 60;
-    int ny = 60;
+    int nx = 40;
+    int ny = 40;
 
     // Time parameters
 
-    double Co = 0.2;
+    double Co = 0.1;
     double tEnd = 4.0;
 
     int freqWrite = 25;

@@ -16,7 +16,7 @@ Problem::Problem()
     function<double(const Point& r)> initRho = [=](const Point& r) \
     { 
     //    return 1.0;
-       return rho0 + 1e-3 * exp( -2.0 * sqr(r.x() - 6.0) - 2.0 * sqr(r.y() - 6.0));
+       return rho0 + 1e-6 * exp( -2.0 * sqr(r.x() - 4.0) - 2.0 * sqr(r.y() - 4.0));
     //    return (r.y() < 0.5) ? 1.0 : 0.125;
     //   return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.125;
     //    return (r.x() < 0.5) ? 1.0 : 0.925;
