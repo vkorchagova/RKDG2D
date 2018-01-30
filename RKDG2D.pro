@@ -31,6 +31,8 @@ SOURCES += RKDG2D.cpp \
     src/Flux/FluxHLLC.cpp \
     src/defs/defs.cpp \
     src/Indicator/Indicator.cpp \
+    src/Indicator/IndicatorEverywhere.cpp \
+    src/Indicator/IndicatorNowhere.cpp \
     src/Indicator/IndicatorKXRCF.cpp \
     src/Limiter/Limiter.cpp \
     src/Limiter/LimiterFinDiff.cpp \
@@ -56,6 +58,8 @@ HEADERS += src/numvector.h \
     src/Flux/FluxHLLC.h \
     src/defs/defs.h \
     src/Indicator/Indicator.h \
+    src/Indicator/IndicatorEverywhere.h \
+    src/Indicator/IndicatorNowhere.h \
     src/Indicator/IndicatorKXRCF.h \
     src/Limiter/Limiter.h \
     src/Limiter/LimiterFinDiff.h \
