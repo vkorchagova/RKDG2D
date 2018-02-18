@@ -10,7 +10,7 @@ Problem::Problem()
 {
     // Function for initial condition
     double rho0 = 1.0;
-    double e0 = rho0  / cpcv / (cpcv - 1.0) ;
+    double e0 = rho0  / (cpcv - 1.0) ;
     double v0 = 0.0;
 
     function<double(const Point& r)> initRho = [=](const Point& r) \

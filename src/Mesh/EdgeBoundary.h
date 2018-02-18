@@ -18,9 +18,7 @@
 #define EDGEBOUNDARY_H
 
 #include "Edge.h"
-//#include "Mesh2D.h"
-
-//class Mesh2D;
+#include "Boundary.h"
 
 class EdgeBoundary : public Edge
 {
@@ -29,6 +27,9 @@ class EdgeBoundary : public Edge
     static const int nNeighbourCells = 1;
 
 public:
+    //- Boundary
+    std::shared_ptr<Boundary> bc;
+
     //- Default constructor
     EdgeBoundary() : Edge() {}
 
@@ -38,12 +39,15 @@ public:
     //- Destructor
     virtual ~EdgeBoundary() = default;
 
-    virtual void setBoundaryFunction(const numvector<double, 5>& bc) override = 0;
+    //virtual void setBoundaryFunction(const numvector<double, 5>& bc) override = 0;
 
    // virtual void setMeshPointer(const Mesh2D& msh) {};
 
     //- Apply boundary conditions
-    virtual numvector<double, 5> applyBoundary(const numvector<double, 5>& sol = {0.0, 0.0, 0.0, 0.0, 0.0}) const = 0;
+    //virtual numvector<double, 5> applyBoundary(const numvector<double, 5>& sol = {0.0, 0.0, 0.0, 0.0, 0.0}) const = 0;
+
+    //- Set boundary condition
+    void setBoundary(const std::shared_ptr<Boundary>& bound) {bc = bound;}
 
     //- Calculate local fluxes in gauss points
     virtual void getLocalFluxes(const Flux& flux) override;

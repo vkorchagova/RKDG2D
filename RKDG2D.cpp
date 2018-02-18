@@ -38,15 +38,15 @@ int main(int argc, char** argv)
     double Lx = 8.0;
     double Ly = 8.0;
 
-    int nx = 80;
-    int ny = 80;
+    int nx = 20;
+    int ny = 20;
 
     // Time parameters
 
     double Co = 0.1;
     double tEnd = 2.0;
 
-    int freqWrite = 100;
+    int freqWrite = 25;
 
     // ---------------
 

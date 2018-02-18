@@ -6,9 +6,9 @@
 #include "Cell.h"
 #include "FluxLLF.h"
 #include "EdgeInternal.h"
-#include "EdgeBoundaryInfty.h"
-#include "EdgeBoundarySlip.h"
-#include "EdgeBoundaryOpen.h"
+#include "BoundaryConstant.h"
+#include "BoundarySlip.h"
+#include "BoundaryOpen.h"
 #include "EdgeBoundaryDiagProjection.h"
 
 #include <fstream>
