@@ -27,7 +27,8 @@ class EdgeBoundary : public Edge
     static const int nNeighbourCells = 1;
 
 public:
-    //- Boundary
+
+    //- Boundary condition
     std::shared_ptr<Boundary> bc;
 
     //- Default constructor
@@ -39,12 +40,7 @@ public:
     //- Destructor
     virtual ~EdgeBoundary() = default;
 
-    //virtual void setBoundaryFunction(const numvector<double, 5>& bc) override = 0;
-
-   // virtual void setMeshPointer(const Mesh2D& msh) {};
-
-    //- Apply boundary conditions
-    //virtual numvector<double, 5> applyBoundary(const numvector<double, 5>& sol = {0.0, 0.0, 0.0, 0.0, 0.0}) const = 0;
+    // virtual void setMeshPointer(const Mesh2D& msh) {};
 
     //- Set boundary condition
     void setBoundary(const std::shared_ptr<Boundary>& bound) {bc = bound;}

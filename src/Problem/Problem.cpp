@@ -1,6 +1,9 @@
 #include "Problem.h"
 #include <iostream>
 
+#include "Patch.h"
+#include "EdgeBoundary.h"
+
 using namespace std;
 
 // ------------------ Constructors & Destructors ----------------
@@ -8,13 +11,30 @@ using namespace std;
 //Problem::Problem(const std::vector<numvector<double, 5 * nShapes> > &al) : alpha(al)
 Problem::Problem()
 {
+
+    setInitialConditions();
+
+} // end constructor by mesh
+
+Problem::~Problem()
+{
+
+}
+
+
+// ------------------ Private class methods --------------------
+
+// ------------------ Public class methods --------------------
+
+void Problem::setInitialConditions()
+{
     // Function for initial condition
     double rho0 = 1.0;
     double e0 = rho0  / (cpcv - 1.0) ;
     double v0 = 0.0;
 
     function<double(const Point& r)> initRho = [=](const Point& r) \
-    { 
+    {
     //    return 1.0;
        return rho0 + 1e-6 * exp( -2.0 * sqr(r.x() - 4.0) - 2.0 * sqr(r.y() - 4.0));
     //    return (r.y() < 0.5) ? 1.0 : 0.125;
@@ -25,7 +45,7 @@ Problem::Problem()
     };
 
     function<double(const Point& r)> initP = [=](const Point& r) \
-    { 
+    {
     //    return (initRho(r)) / cpcv;
         return (initRho(r));
     //    return (r.y() < 0.5) ? 1.0 : 0.1;
@@ -40,7 +60,7 @@ Problem::Problem()
     //    return (r.y() < 0.5) ? 0.0 : 0.0;
     //    return ((r.x() + r.y()) < 0.5) ? 0.0 : 0.0;
     //    return (r.x() < 0.5) ? 0.75 : 0.0;
-	//return 0.001 * exp( -2.0 * pow(r.x() - 4.0, 2) - 2.0 * pow(r.y() - 4.0, 2)); 
+    //return 0.001 * exp( -2.0 * pow(r.x() - 4.0, 2) - 2.0 * pow(r.y() - 4.0, 2));
     //return r.y();
     };
 
@@ -50,21 +70,16 @@ Problem::Problem()
 
     // For boundary conditions
     infty = { rho0, 0.0, v0, 0.0, e0 };
-
-
-} // end constructor by mesh
-
-Problem::~Problem()
-{
-
 }
 
+void Problem::setBoundaryConditions(const std::vector<Patch>& patches)
+{
+    shared_ptr<BoundarySlip> bSlip = make_shared<BoundarySlip>();
 
-// ------------------ Private class methods --------------------
-
-// ------------------ Public class methods --------------------
-
-
+    for (int i = 0; i < patches.size(); ++i)
+        for (int j = 0; j < patches[i].edgeGroup.size(); ++j)
+            patches[i].edgeGroup[j]->setBoundary(bSlip);
+}
 
 //// RKDG methods
 
@@ -128,13 +143,6 @@ numvector<double, 5> Problem::lambdaF(const numvector<double, 5>& solOne, const 
     return lambdaF_Roe(solOne,solTwo);
 } // end lambdaF
 
-numvector<double, 5> Problem::lambdaG(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const
-{
-    double v = 0.5*(solOne[2] / solOne[0] + solTwo[2] / solTwo[0]);
-    double soundSpeed = c_av(solOne, solTwo);
-
-    return { v - soundSpeed, v, v, v, v + soundSpeed};
-} // end lambdaG
 
 
 numvector<double, 5> Problem::fluxF(const numvector<double, 5>& sol) const

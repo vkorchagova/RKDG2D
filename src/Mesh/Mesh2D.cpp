@@ -10,7 +10,22 @@ typedef EdgeBoundary edgeBoundaryT;
 
 // nx --- number of cells along x axis
 // ny --- number of cells along y axis
-Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly) : nx(nx), ny(ny), Lx(Lx), Ly(Ly)
+Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly, const Problem &prb) : nx(nx), ny(ny), Lx(Lx), Ly(Ly)
+{
+    createRectangularMesh(prb);
+
+
+    writer.open("mesh2D");
+}
+
+Mesh2D::~Mesh2D()
+{
+
+}
+
+// ------------------ Private class methods --------------------
+
+void Mesh2D::createRectangularMesh(const Problem &prb)
 {
     // define number of nodes, edges, cells
 
@@ -26,61 +41,71 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly) : nx(nx), ny(ny), Lx(Lx), L
     double hy = Ly / ny;
 
     // reserve memory
-	
+
     nodes.reserve(nNodes);
+
+    vector<shared_ptr<Edge>> edgesHor;
+    vector<shared_ptr<Edge>> edgesVer;
+
     edgesHor.reserve(nEdgesHor);
     edgesVer.reserve(nEdgesVer);
-    
+
+    edgesInternal.reserve( (nx - 1) * (ny - 1) );
+    edgesBoundary.reserve( 2*nx + 2*ny );
+
     // fill nodes
 
     for (int i = 0; i < ny + 1; ++i)
         for (int j = 0; j < nx + 1; ++j)
             nodes.emplace_back( Point({ j * hx, i * hy }) );
 
-
     // get horizontal edges
 
-    for (int j = 0; j < nx; ++j) // bottom boundary
-        edgesHor.emplace_back( make_shared<edgeBoundaryT>(nodes[j], nodes[j + 1]) );
-
-    for (int j = 0; j < nx; ++j) // top boundary
-        edgesHor.emplace_back( make_shared<edgeBoundaryT>(nodes[ny*(nx + 1) + j], nodes[ny*(nx + 1) + j + 1]) );
+    for (int j = 0; j < nx; ++j)
+    { // bottom boundary
+        edgesHor.emplace_back( make_shared<EdgeBoundary>(nodes[j], nodes[j + 1]) );
+        edgesHor.back()->n = Point({ 0.0, -1.0 });
+        edgesBoundary.emplace_back( make_shared<EdgeBoundary>(nodes[j], nodes[j + 1]) );
+    }
 
     for (int i = 1; i < ny; ++i)
        for (int j = 0; j < nx; ++j)
+       {
             edgesHor.emplace_back( make_shared<EdgeInternal>(nodes[i*(nx + 1) + j], nodes[i*(nx + 1) + j + 1]) );
+            edgesHor.back()->n = Point({ 0.0, 1.0 });
+            edgesInternal.emplace_back( make_shared<EdgeInternal>(nodes[i*(nx + 1) + j], nodes[i*(nx + 1) + j + 1]) );
+       }
+
+    for (int j = 0; j < nx; ++j)
+    { // top boundary
+        edgesHor.emplace_back( make_shared<EdgeBoundary>(nodes[ny*(nx + 1) + j], nodes[ny*(nx + 1) + j + 1]) );
+        edgesHor.back()->n = Point({ 0.0, 1.0 });
+        edgesBoundary.emplace_back( make_shared<EdgeBoundary>(nodes[ny*(nx + 1) + j], nodes[ny*(nx + 1) + j + 1]) );
+    }
 
     // get vertical edges: boundary + internal
 
-    for (int i = 0; i < ny; ++i) // left boundary
-        edgesVer.emplace_back( make_shared<edgeBoundaryT>(nodes[i*(nx + 1)], nodes[i*(nx + 1) + nx + 1]) );
-
-    for (int i = 0; i < ny; ++i) // right boundary
-        edgesVer.emplace_back( make_shared<edgeBoundaryT>(nodes[i*(nx + 1) + nx ], nodes[i*(nx + 1) + nx + nx + 1]) );
-
     for (int i = 0; i < ny; ++i)
+    {
+        // left boundary
+        edgesVer.emplace_back( make_shared<EdgeBoundary>(nodes[i*(nx + 1)], nodes[i*(nx + 1) + nx + 1]) );
+        edgesVer.back()->n = Point({ -1.0, 0.0 });
+        edgesBoundary.emplace_back( make_shared<EdgeBoundary>(nodes[i*(nx + 1)], nodes[i*(nx + 1) + nx + 1]) );
+
         for (int j = 1; j < nx; ++j)
+        {
             edgesVer.emplace_back( make_shared<EdgeInternal>(nodes[i*(nx + 1) + j], nodes[i*(nx + 1) + j + nx + 1]) );
+            edgesVer.back()->n = Point({ 1.0, 0.0 });
+            edgesInternal.emplace_back( make_shared<EdgeInternal>(nodes[i*(nx + 1) + j], nodes[i*(nx + 1) + j + nx + 1]) );
+        }
+        // right boundary
+        edgesVer.emplace_back( make_shared<EdgeBoundary>(nodes[i*(nx + 1) + nx ], nodes[i*(nx + 1) + nx + nx + 1]) );
+        edgesVer.back()->n = Point({ 1.0, 0.0 });
+    }
 
-    // set boundaries
-    BoundarySlip bSlip;
-
-    for (int j = 0; j < nx; ++j)
-        edgesHor[j].setBoundary(make_shared(bSlip));
-
-
-
-    // set normals to horizontal edges
-    for (int i = 0; i < nx; ++i)
-        edgesHor[i]->n = Point({ 0.0, -1.0 });
-
-    for (int i = nx; i < nEdgesHor; ++i)
-        edgesHor[i]->n = Point({ 0.0,  1.0 });
-
-    // set normals to vertical edges
-    for (int i = 0; i < nEdgesVer; ++i)
-        edgesVer[i]->n = (i % (nx + 1) == 0) ? Point({ -1.0, 0.0 }) : Point({ 1.0, 0.0 });
-
+    // add right boundary to list of boundary cells
+    for (int i = 0; i < ny; ++i)
+        edgesBoundary.emplace_back( make_shared<EdgeBoundary>(nodes[i*(nx + 1) + nx ], nodes[i*(nx + 1) + nx + nx + 1]) );
 
     // get cells as edges (counter-clockwise: lb -> rb -> ru -> rl)
     for (int i = 0; i < ny; ++i)
@@ -95,7 +120,7 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly) : nx(nx), ny(ny), Lx(Lx), L
                                                    edgesVer[(i)*(nx + 1) + j] };
 
             // add cells in list
-            cells.emplace_back( make_shared<Cell>(edges));
+            cells.emplace_back( make_shared<Cell>(edges,prb));
 
             // this cell is neighbour for its edges
 
@@ -108,22 +133,34 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly) : nx(nx), ny(ny), Lx(Lx), L
         }
     }
 
+    // make groups of boundaries
+    patches.resize(4);
 
-    writer.open("mesh2D");
+    patches[0].patchName = "bottom";
+    patches[0].patchName = "top";
+    patches[0].patchName = "left";
+    patches[0].patchName = "right";
+
+    for (int i = 0; i < nx; ++i)
+    {
+        patches[0].edgeGroup.push_back(edgesBoundary[i]);
+        patches[1].edgeGroup.push_back(edgesBoundary[i + nx]);
+    }
+
+    for (int i = 0; i < ny; ++i)
+    {
+        patches[2].edgeGroup.push_back(edgesBoundary[i + 2*nx]);
+        patches[3].edgeGroup.push_back(edgesBoundary[i + 2*nx + ny]);
+    }
 }
-
-Mesh2D::~Mesh2D()
-{
-    writer.close();
-}
-
-// ------------------ Private class methods --------------------
 
 // ------------------ Public class methods ---------------------
 
 
 void Mesh2D::exportMesh() const
 {
+    writer.open("mesh2D");
+
     writer << "Lx = " << Lx << endl;
     writer << "Ly = " << Ly << endl;
 
@@ -143,4 +180,6 @@ void Mesh2D::exportMesh() const
     }
 
     cout << "Mesh export OK" << endl;
+
+    writer.close();
 }

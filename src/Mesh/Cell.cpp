@@ -6,7 +6,7 @@ using namespace std;
 
 // ------------------ Constructors & Destructor ----------------
 
-Cell::Cell(const numvector<std::shared_ptr<Edge>, nEdges> &defEdges)
+Cell::Cell(const numvector<std::shared_ptr<Edge>, nEdges> &defEdges, const Problem& prb) : problem(prb)
 {
     edges = defEdges;
     
@@ -176,25 +176,12 @@ vector<shared_ptr<Cell>> Cell::findNeighbourCellsY() const
 
 numvector<double, 5> Cell::reconstructSolution(const Point& point ) const
 {
-//    if (!insideCell(point))
-//    {
-//        std::cout << "Error: point (" << point.x() << ", " << point.y() << ") is not inside cell #" << number << std::endl;
-//        std::cout << "Cell nodes:" << std::endl;
-
-//        vector<shared_ptr<Point>> ccoord = getCellCoordinates();
-
-//        for (size_t i = 0; i < ccoord.size(); ++i)
-//            std::cout << "(" << ccoord[i]->x() << "; " << ccoord[i]->y() << ")" << endl;
-
-//        exit(1);
-//    }
-
     numvector<double, 5> sol(0.0);
 
     for (int i = 0; i < 5; ++i)
     {
         for (int j = 0; j < nShapes; ++j)
-            sol[i] += phi[j](point) * problem->alpha[number][i * nShapes + j];
+            sol[i] += phi[j](point) * problem.alpha[number][i * nShapes + j];
     }
 
     return sol;
@@ -204,23 +191,10 @@ numvector<double, 5> Cell::reconstructSolution(const Point& point ) const
 
 double Cell::reconstructSolution(const Point& point, int numSol ) const
 {
-//    if (!insideCell(point))
-//    {
-//        std::cout << "Error: point (" << point.x() << ", " << point.y() << ") is not inside cell #" << number << std::endl;
-//        std::cout << "Cell nodes:" << std::endl;
-
-//        vector<shared_ptr<Point>> ccoord = getCellCoordinates();
-
-//        for (size_t i = 0; i < ccoord.size(); ++i)
-//            std::cout << "(" << ccoord[i]->x() << "; " << ccoord[i]->y() << ")" << endl;
-
-//        exit(1);
-//    }
-
     double sol(0.0);
     
     for (int j = 0; j < nShapes; ++j)
-        sol += phi[j](point) * problem->alpha[number][numSol * nShapes + j];
+        sol += phi[j](point) * problem.alpha[number][numSol * nShapes + j];
 
     return sol;
 } // end reconstructSolution
@@ -278,8 +252,8 @@ numvector<double, 5 * nShapes> Cell::cellIntegral()
 
         for (int q = 0; q < nShapes; ++q)
         {
-            resV = problem->fluxF(sol) * gradPhi[q](gPoints2D[i])[0] + \
-                   problem->fluxG(sol) * gradPhi[q](gPoints2D[i])[1];
+            resV = problem.fluxF(sol) * gradPhi[q](gPoints2D[i])[0] + \
+                   problem.fluxG(sol) * gradPhi[q](gPoints2D[i])[1];
 
             for (int p = 0; p < 5; ++p)
                 res[p * nShapes + q] += resV[p] * gWeights2D[i];

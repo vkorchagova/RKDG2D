@@ -4,6 +4,8 @@ using namespace std;
 
 // ------------------ Constructors & Destructor ----------------
 
+// ------------------ Private class methods ---------------------
+
 Point EdgeBoundaryDiagProjection::getDiagProjection(const Point& p) const
 {
     Point diag ({ neibCells[0]->h().x(), neibCells[0]->h().y()});
@@ -26,6 +28,8 @@ int EdgeBoundaryDiagProjection::getNumDiagCell(const Point& p)
     cout << "No cell" << endl;
     exit(0);
 }
+
+// ------------------ Public class methods ---------------------
 
 void EdgeBoundaryDiagProjection::getLocalFluxes(const Flux &flux)
 {

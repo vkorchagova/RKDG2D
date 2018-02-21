@@ -8,6 +8,7 @@
 #include <string>
 #include <time.h>
 #include "defs.h"
+#include "Time.h"
 #include "Mesh2D.h"
 #include "Solver.h"
 #include "FluxLLF.h"
@@ -38,25 +39,30 @@ int main(int argc, char** argv)
     double Lx = 8.0;
     double Ly = 8.0;
 
-    int nx = 20;
-    int ny = 20;
+    int nx = 40;
+    int ny = 40;
 
     // Time parameters
 
-    double Co = 0.1;
+    double Co = 0.2;
     double tEnd = 2.0;
 
     int freqWrite = 25;
 
     // ---------------
 
-    // Initialize mesh
-    Mesh2D mesh(nx, ny, Lx, Ly);
-
-    mesh.exportMesh();
+    // Initialize time
+    Time time;
 
     // Initialize problem
     Problem problem;
+
+    // Initialize mesh
+    Mesh2D mesh(nx, ny, Lx, Ly, problem);
+
+    mesh.exportMesh();
+
+    problem.setBoundaryConditions(mesh.patches);
 
     // Initialize flux
     FluxHLL numFlux(problem);
@@ -74,9 +80,6 @@ int main(int argc, char** argv)
 
     // Set initial conditions
     solver.setInitialConditions();
-
-    // Set boundary conditions
-    solver.setBoundaryConditions();
 
     // Set mesh pointer in case of DiagProject BC
     solver.setMeshPointerForDiagBC();

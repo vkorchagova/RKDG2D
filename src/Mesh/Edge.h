@@ -1,7 +1,7 @@
 /// ------------------------------
 /// Edge
 /// ------------------------------
-/// Abstract class
+/// Abstract Edge class
 ///
 /// Parameters:
 /// -   nodes;
@@ -20,6 +20,7 @@
 #include "Point.h"
 #include "Cell.h"
 #include "Flux.h"
+#include "Boundary.h"
 #include <functional>
 #include <iostream>
 
@@ -27,9 +28,11 @@ class Edge
 {
 private:
 
+    //- Lenght of edge
     double length;
 
 public:
+
     //- Number of gauss points for edge
     int nGP;
 
@@ -66,12 +69,6 @@ public:
     //- Construct using two nodes
     Edge(const Point& p1, const Point& p2);
 
-    //- Copy constructor
-    //Edge (const Edge&) = delete;
-
-    //- Overloaded "=" operator
-    //Edge& operator=(const Edge&) = delete;
-
     //- Destructor
     virtual ~Edge() = default;
 
@@ -83,7 +80,8 @@ public:
     //- Calculate local fluxes for edge
     virtual void getLocalFluxes(const Flux& flux) = 0;
 
-    virtual void setBoundaryFunction(const numvector<double, 5>& bc) = 0;
+    //- Set boundary condition --- implemented only for boundary edges
+    virtual void setBoundary(const std::shared_ptr<Boundary>& bound) = 0;
 
     //- Calculate 1D integral through edge
     numvector<double, 5 * nShapes> boundaryIntegral(const std::shared_ptr<Cell>& cell) const;
