@@ -36,18 +36,18 @@ int main(int argc, char** argv)
 //    int nx = 100;
 //    int ny = 1;
 
-    double Lx = 8.0;
-    double Ly = 8.0;
+    double Lx = 10.0;
+    double Ly = 1;
 
-    int nx = 20;
-    int ny = 20;
+    int nx = 100;
+    int ny = 10;
 
     // Time parameters
 
-    double Co = 0.1;
-    double tEnd = 2.0;
+    double Co = 0.2;
+    double tEnd = 10.0;
 
-    int freqWrite = 1;
+    int freqWrite = 50;
 
     // ---------------
 
@@ -55,7 +55,7 @@ int main(int argc, char** argv)
     Time time;
 
     // Initialize problem
-    Problem problem;
+    Problem problem(time);
 
     // Initialize mesh
     Mesh2D mesh(nx, ny, Lx, Ly, problem);
@@ -107,6 +107,8 @@ int main(int argc, char** argv)
     for (double t = tau; t <= tEnd + 0.5*tau; t += tau)
     {
        t1 = clock();
+
+       time.updateTime(t);
 
        cout << "---------\nt = " << t << endl;
 

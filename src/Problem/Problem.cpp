@@ -9,11 +9,9 @@ using namespace std;
 // ------------------ Constructors & Destructors ----------------
 
 //Problem::Problem(const std::vector<numvector<double, 5 * nShapes> > &al) : alpha(al)
-Problem::Problem()
+Problem::Problem(const Time& t) : time(t)
 {
-
     setInitialConditions();
-
 } // end constructor by mesh
 
 Problem::~Problem()
@@ -35,8 +33,9 @@ void Problem::setInitialConditions()
 
     function<double(const Point& r)> initRho = [=](const Point& r) \
     {
+        return rho0;
     //    return 1.0;
-       return rho0 + 1e-6 * exp( -2.0 * sqr(r.x() - 4.0) - 2.0 * sqr(r.y() - 4.0));
+     //  return rho0 + 1e-6 * exp( -2.0 * sqr(r.x() - 4.0) - 2.0 * sqr(r.y() - 4.0));
     //    return (r.y() < 0.5) ? 1.0 : 0.125;
     //   return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.125;
     //    return (r.x() < 0.5) ? 1.0 : 0.925;
@@ -66,19 +65,22 @@ void Problem::setInitialConditions()
 
     //init = [=](const Point& r) { return numvector<double, 5> { initRho(r), 0.0, initV(r), 0.0, initP(r) / (cpcv - 1.0) }; };
     init = [=](const Point& r) { return numvector<double, 5> { initRho(r), initV(r), 0.0, 0.0, initP(r) / (cpcv - 1.0) }; };
-
-
-    // For boundary conditions
-    infty = { rho0, 0.0, v0, 0.0, e0 };
 }
 
 void Problem::setBoundaryConditions(const std::vector<Patch>& patches)
 {
     shared_ptr<BoundarySlip> bSlip = make_shared<BoundarySlip>();
+    shared_ptr<BoundaryOpen> bOpen = make_shared<BoundaryOpen>();
+    shared_ptr<BoundarySine> bSine = make_shared<BoundarySine>(1e-3,0.5,time,*this);
+
+    // boundary conditions: bottom/top/left/right
+    vector<shared_ptr<Boundary>> bc = {bOpen, bOpen, bSine, bOpen};
+
+    //bottom
 
     for (int i = 0; i < patches.size(); ++i)
         for (int j = 0; j < patches[i].edgeGroup.size(); ++j)
-            patches[i].edgeGroup[j]->setBoundary(bSlip);
+            patches[i].edgeGroup[j]->setBoundary(bc[i]);
 }
 
 //// RKDG methods
@@ -102,10 +104,6 @@ double Problem::c(const numvector<double, 5>& sol) const
     return sqrt( cpcv * getPressure(sol) / sol[0]);
 } // end c for cell
 
-//double Problem::h(const numvector<double, 5>& sol) const
-//{
-//    return (sol[4] + getPressure(sol)) / sol[0];
-//}
 
 double Problem::c_av(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const
 {

@@ -139,9 +139,9 @@ void Mesh2D::createRectangularMesh(const Problem &prb)
     patches.resize(4);
 
     patches[0].patchName = "bottom";
-    patches[0].patchName = "top";
-    patches[0].patchName = "left";
-    patches[0].patchName = "right";
+    patches[1].patchName = "top";
+    patches[2].patchName = "left";
+    patches[3].patchName = "right";
 
     for (int i = 0; i < nx; ++i)
     {

@@ -6,6 +6,8 @@
 #include "numvector.h"
 #include "Point.h"
 #include "BoundarySlip.h"
+#include "BoundaryOpen.h"
+#include "BoundarySine.h"
 #include "defs.h"
 
 //- Square
@@ -33,10 +35,13 @@ public:
     std::vector<numvector<double, 5 * nShapes>> alpha;
     //const std::vector<numvector<double, 5 * nShapes>>& alpha;
 
+    //- Reference to time
+    const Time& time;
+
 public:
 
-    //- Default constructor
-    Problem ();
+    //- Constructor
+    Problem (const Time& t);
 
     //- Destructor
     ~Problem();
