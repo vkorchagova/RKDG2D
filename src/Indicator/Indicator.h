@@ -12,11 +12,14 @@ public:
 
     //- Mesh
     const Mesh2D& mesh;
+
+    //- Problem
+    const Problem& problem;
     
 public:
 
     //- Constructor
-    Indicator(const Mesh2D& msh) : mesh(msh) {}
+    Indicator(const Mesh2D& msh, const Problem& prb) : mesh(msh), problem(prb) {}
 
     //- Destructor
     virtual ~Indicator() {}

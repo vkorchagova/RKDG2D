@@ -1,14 +1,13 @@
 //- RKDG 2D v.0.1
 //  Structured rectangular mesh
 
-
-
 #include <stdio.h>
 #include <iostream>
 #include <string>
-#include <time.h>
+
 #include "defs.h"
-#include "Time.h"
+#include "TimeClass.h"
+#include <time.h>
 #include "Mesh2D.h"
 #include "Solver.h"
 #include "FluxLLF.h"
@@ -17,37 +16,42 @@
 #include "IndicatorNowhere.h"
 #include "IndicatorEverywhere.h"
 #include "IndicatorKXRCF.h"
+#include "IndicatorHarten.h"
 #include "LimiterFinDiff.h"
 #include "LimiterMUSCL.h"
 #include "LimiterWENOS.h"
 
+
 using namespace std;
-
-
 
 
 int main(int argc, char** argv)
 {    
     // Mesh parameters
 
-//    double Lx = 1.0;
-//    double Ly = 1.0;
-
-//    int nx = 100;
-//    int ny = 1;
-
-    double Lx = 10.0;
-    double Ly = 1;
+    double Lx = 1.0;
+    double Ly = 1.0;
 
     int nx = 100;
-    int ny = 10;
+    int ny = 1;
+
+//    double Lx = 10.0;
+//    double Ly = 1;
+
+//    int nx = 128;
+//    int ny = 1;
 
     // Time parameters
 
-    double Co = 0.2;
-    double tEnd = 10.0;
+//    double Co = 0.1;
+//    double tEnd = 3.0;
 
-    int freqWrite = 50;
+//    int freqWrite = 100;
+
+    double Co = 0.1;
+    double tEnd = 0.2;
+
+    int freqWrite = 1000;
 
     // ---------------
 
@@ -65,16 +69,16 @@ int main(int argc, char** argv)
     problem.setBoundaryConditions(mesh.patches);
 
     // Initialize flux
-    FluxHLL numFlux(problem);
+    FluxLLF numFlux(problem);
 
     // Initialize solver
     Solver solver(mesh, problem, numFlux);
 
     // Initialize indicator
-    IndicatorNowhere indicator(mesh);
+    IndicatorHarten indicator(mesh, problem);
 
     //Initialize limiter
-    LimiterWENOS limiter(indicator,problem);
+    LimiterWENOS limiter(indicator, problem);
 
     // ---------------
 

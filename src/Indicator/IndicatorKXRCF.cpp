@@ -137,8 +137,6 @@ Point massFlux(const Edge& edge, const Cell& cell, const Point& nrm)
 
 vector<int> IndicatorKXRCF::checkDiscontinuities() const
 {
-    //vector<double> indicator(mesh.nCells);
-
     vector<int> troubledCells;
 
     double indicator;

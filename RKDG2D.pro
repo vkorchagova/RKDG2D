@@ -6,6 +6,7 @@ CONFIG -= qt
 INCLUDEPATH += $$PWD \
     $$PWD/src/ \
     $$PWD/src/defs/ \
+    $$PWD/src/Time/ \
     $$PWD/src/Boundary/ \
     $$PWD/src/Flux/ \
     $$PWD/src/Problem/ \
@@ -16,6 +17,7 @@ INCLUDEPATH += $$PWD \
     $$PWD/src/Limiter/
 
 SOURCES += RKDG2D.cpp \
+    src/Time/TimeClass.cpp \
     src/Mesh/Cell.cpp \
     src/Mesh/Edge.cpp \
     src/Mesh/EdgeInternal.cpp \
@@ -40,10 +42,13 @@ SOURCES += RKDG2D.cpp \
     src/Boundary/Boundary.cpp \
     src/Boundary/BoundarySlip.cpp \
     src/Boundary/BoundaryOpen.cpp \
-    src/Boundary/BoundaryConstant.cpp
+    src/Boundary/BoundaryConstant.cpp \
+    src/Boundary/BoundarySine.cpp \
+    src/Indicator/IndicatorHarten.cpp
 
 
 HEADERS += src/numvector.h \
+    src/Time/TimeClass.h \
     src/Mesh/Mesh2D.h \
     src/Mesh/Point.h \
     src/Mesh/Edge.h \
@@ -69,4 +74,6 @@ HEADERS += src/numvector.h \
     src/Boundary/Boundary.h \
     src/Boundary/BoundarySlip.h \
     src/Boundary/BoundaryOpen.h \
-    src/Boundary/BoundaryConstant.h
+    src/Boundary/BoundaryConstant.h \
+    src/Boundary/BoundarySine.h \
+    src/Indicator/IndicatorHarten.h

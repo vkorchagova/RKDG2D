@@ -2,7 +2,7 @@
 #define BOUNDARYSINE_H
 
 #include "numvector.h"
-#include "Time.h"
+#include "TimeClass.h"
 #include "Boundary.h"
 
 class Problem;
@@ -34,7 +34,7 @@ public:
     void setRefValue(const numvector<double,5>& u0) {u0_ = u0;}
 
     //- Apply boundary condition
-    numvector<double, 5> applyBoundary(const numvector<double, 5>& solLeft = {0.0, 0.0, 0.0, 0.0, 0.0}) const override;
+    virtual numvector<double, 5> applyBoundary(const numvector<double, 5>& solLeft = {0.0, 0.0, 0.0, 0.0, 0.0}) const override;
 
 };
 

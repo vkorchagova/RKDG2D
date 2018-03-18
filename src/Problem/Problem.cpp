@@ -28,17 +28,18 @@ void Problem::setInitialConditions()
 {
     // Function for initial condition
     double rho0 = 1.0;
-    double e0 = rho0  / (cpcv - 1.0) ;
+    double e0 = rho0  / cpcv / (cpcv - 1.0) ;
     double v0 = 0.0;
 
     function<double(const Point& r)> initRho = [=](const Point& r) \
     {
-        return rho0;
+    //    return rho0;
     //    return 1.0;
+    //    return rho0 + 1e-3 * exp( - sqr(r.x() - 5.0));
      //  return rho0 + 1e-6 * exp( -2.0 * sqr(r.x() - 4.0) - 2.0 * sqr(r.y() - 4.0));
     //    return (r.y() < 0.5) ? 1.0 : 0.125;
     //   return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.125;
-    //    return (r.x() < 0.5) ? 1.0 : 0.925;
+        return (r.x() < 0.5) ? 1.0 : 0.125;
     //   return (r.y() < 1.0 && r.x() < 1.0 && r.y() > 2.0 && r.x() > 2.0) ? 0.0 : 1.0;
     //return (r.y() < 0.5) ? r.y() + 0.01 : r.y() + 0.51;
     };
@@ -46,10 +47,10 @@ void Problem::setInitialConditions()
     function<double(const Point& r)> initP = [=](const Point& r) \
     {
     //    return (initRho(r)) / cpcv;
-        return (initRho(r));
+    //    return (initRho(r));
     //    return (r.y() < 0.5) ? 1.0 : 0.1;
     //    return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.1;
-    //    return (r.x() < 0.5) ? 1.0 : 0.9;
+        return (r.x() < 0.5) ? 1.0 : 0.1;
     };
 
 
@@ -74,7 +75,7 @@ void Problem::setBoundaryConditions(const std::vector<Patch>& patches)
     shared_ptr<BoundarySine> bSine = make_shared<BoundarySine>(1e-3,0.5,time,*this);
 
     // boundary conditions: bottom/top/left/right
-    vector<shared_ptr<Boundary>> bc = {bOpen, bOpen, bSine, bOpen};
+    vector<shared_ptr<Boundary>> bc = {bOpen, bOpen, bOpen, bOpen};
 
     //bottom
 
@@ -92,11 +93,17 @@ void Problem::setAlpha(const std::vector<numvector<double, 5 * nShapes> >& a)
 
 double Problem::getPressure(const numvector<double, 5>& sol) const
 {
-    //double magRhoU2 = sqr(sol[1]) + sqr(sol[2]) + sqr(sol[3]);
+    // uncomment for LEE
+//    numvector<double,5> initfun = init(Point({0.0,0.0}));
 
-    //return (cpcv - 1.0)*(sol[4] - 0.5*magRhoU2 / sol[0]);
+//    double rho0 = initfun[0];
+//    double p0 = initfun[4] * (cpcv - 1);
 
-    return sol[0];
+//    return p0 * pow(sol[0] / rho0 , cpcv);
+
+    double magRhoU2 = sqr(sol[1]) + sqr(sol[2]) + sqr(sol[3]);
+
+    return (cpcv - 1.0)*(sol[4] - 0.5*magRhoU2 / sol[0]);
 } // end getPressure
 
 double Problem::c(const numvector<double, 5>& sol) const

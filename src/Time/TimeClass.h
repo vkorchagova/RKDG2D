@@ -1,5 +1,5 @@
-#ifndef TIME_H
-#define TIME_H
+#ifndef TIMECLASS_H
+#define TIMECLASS_H
 
 
 class Time
