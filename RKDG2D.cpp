@@ -48,8 +48,8 @@ int main(int argc, char** argv)
 
 //    int freqWrite = 100;
 
-    double Co = 0.1;
-    double tEnd = 0.2;
+    double Co = 0.01;
+    double tEnd = 0.0005;
 
     int freqWrite = 1000;
 
@@ -63,6 +63,8 @@ int main(int argc, char** argv)
 
     // Initialize mesh
     Mesh2D mesh(nx, ny, Lx, Ly, problem);
+
+//    mesh.importMesh("Mesh_1.unv");
 
     mesh.exportMesh();
 

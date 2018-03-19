@@ -21,6 +21,9 @@ private:
     //- File ofstream for mesh export
     mutable std::ofstream writer;
 
+    //- File ifstream for mesh import
+    mutable std::ifstream reader;
+
     int nx;
     int ny;
     double Lx;
@@ -54,8 +57,14 @@ public:
     //- Construct uniform rectangular mesh by number of cells and size of flow domain
     Mesh2D(int nx, int ny, double Lx, double Ly, const Problem& prb);
 
+    //- Construct mesh by import from UNV file
+    Mesh2D(std::string fileName);
+
     //- Destructor
     ~Mesh2D();
+
+    //- Import mesh from UNV file
+    void importMesh(std::string fileName) const;
 
     //- Export mesh
     void exportMesh() const;

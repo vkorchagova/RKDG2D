@@ -16,6 +16,11 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly, const Problem &prb) : nx(nx
 
 }
 
+Mesh2D::Mesh2D(string fileName)
+{
+    importMesh(fileName);
+}
+
 Mesh2D::~Mesh2D()
 {
 
@@ -187,4 +192,21 @@ void Mesh2D::exportMesh() const
     cout << "Mesh export OK" << endl;
 
     writer.close();
+}
+
+void Mesh2D::importMesh(string fileName) const
+{
+    string x;
+    reader.open(fileName);
+    getline(reader,x);
+
+    cout << x << endl;
+
+    //first blocks are standard (Cartesian coordinate system, SI units, no additional info about FE)
+
+    //find block with mesh numbers
+
+
+
+    reader.close();
 }

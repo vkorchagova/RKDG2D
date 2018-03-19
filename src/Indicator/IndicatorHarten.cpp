@@ -17,7 +17,7 @@ vector<int> IndicatorHarten::checkDiscontinuities() const
 
     double kappa = 2.0;
 
-    //check discontinuities on all cells
+    //check discontinuities for all cells
 
     for (int i = 0; i < mesh.nCells; ++i)
     {
@@ -26,7 +26,7 @@ vector<int> IndicatorHarten::checkDiscontinuities() const
         shared_ptr<Cell> cell = mesh.cells[i];
 
         vector<shared_ptr<Cell>> neibCellsX = cell->findNeighbourCellsX();
-        vector<shared_ptr<Cell>> neibCellsY = cell->findNeighbourCellsY();
+        //vector<shared_ptr<Cell>> neibCellsY = cell->findNeighbourCellsY();
 
         if (neibCellsX.size() == 2)
         {
@@ -37,30 +37,31 @@ vector<int> IndicatorHarten::checkDiscontinuities() const
             for (size_t k = 1; k < 3; ++k)
                 uMean[k] = neibCellsX[k-1]->reconstructSolution(cell->getCellCenter());
 
-            // get coeffs (deriv*coeff near form function)
+
+            // get conditions for troubled cell
 
 
-            // get conditions for trouble cell
+            diffSignesForAve = ( (uMean[1] - uMean[0])*(uMean[2] - uMean[0]) < -1e-7 );
 
+            bool a2 = (fabs(problem.alpha[neibCellsX[0]->number][1]) > kappa*(problem.alpha[i][1]) || \
+                    kappa*fabs(problem.alpha[neibCellsX[0]->number][1]) < (problem.alpha[i][1]) );
 
-            diffSignesForAve = ( (uMean[1] - uMean[0])*(uMean[2] - uMean[0]) < -1e-12 );
-            largeDerivRatio = ( fabs(problem.alpha[neibCellsX[0]->number][5]) > kappa*(problem.alpha[i][5]) || \
-                                     fabs(problem.alpha[neibCellsX[1]->number][5]) > kappa*(problem.alpha[i][5]) || \
-                                     kappa*fabs(problem.alpha[neibCellsX[0]->number][5]) > (problem.alpha[i][5]) || \
-                                     kappa*fabs(problem.alpha[neibCellsX[1]->number][5]) > (problem.alpha[i][5]) \
-                                   );
+            bool a3 = (fabs(problem.alpha[neibCellsX[1]->number][1]) > kappa*(problem.alpha[i][1]) || \
+                    kappa*fabs(problem.alpha[neibCellsX[1]->number][1]) < (problem.alpha[i][1]) );
+
+            largeDerivRatio = ( a2 || a3);
         }
 
 
-        if (diffSignesForAve || largeDerivRatio)
+        if (diffSignesForAve && largeDerivRatio)
             troubledCells.push_back(i);
     }
 
-//    cout << "\ntroubled cells: " ;
-//    for (int iCell : troubledCells)
-//        cout << iCell << ' ';
+    cout << "\ntroubled cells: " ;
+    for (int iCell : troubledCells)
+        cout << iCell << ' ';
 
-//    cout << endl;
+    cout << endl;
 
     return troubledCells;
 }
