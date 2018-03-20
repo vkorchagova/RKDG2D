@@ -50,7 +50,7 @@ int main(int argc, char** argv)
 //    int freqWrite = 100;
 
     double Co = 0.1;
-    double tEnd = 0.001;
+    double tEnd = 0.2;
 
     int freqWrite = 100;
 
@@ -78,7 +78,7 @@ int main(int argc, char** argv)
     Solver solver(mesh, problem, numFlux);
 
     // Initialize indicator
-    IndicatorKXRCF indicator(mesh, problem);
+    IndicatorHarten indicator(mesh, problem);
 
     //Initialize limiter
     LimiterWENOS limiter(indicator, problem);
