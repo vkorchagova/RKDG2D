@@ -12,8 +12,6 @@ void LimiterWENOS::limitTog(vector<numvector<double, 5 * nShapes>>& alpha)
     problem.setAlpha(alpha);
     vector<int> troubledCells = indicator.checkDiscontinuities();
 
-    // linear weights
-
     vector<double> gamma;
     double g = 0.001;
 
@@ -40,12 +38,16 @@ void LimiterWENOS::limitTog(vector<numvector<double, 5 * nShapes>>& alpha)
 
     for (int iCell : troubledCells)
     {
+
+
         // find neighbours
 
         shared_ptr<Cell> cell = indicator.mesh.cells[iCell];
 
         vector<shared_ptr<Cell>> neibCellsX = cell->findNeighbourCellsX();
         vector<shared_ptr<Cell>> neibCellsY = cell->findNeighbourCellsY();
+
+        //cout << "coeffs right neighbour = " << alpha[neibCellsX[1]->number] << endl;
 
         vector<shared_ptr<Cell>> cells = { cell };
 
@@ -96,9 +98,11 @@ void LimiterWENOS::limitTog(vector<numvector<double, 5 * nShapes>>& alpha)
         for (size_t k = 0; k < nCells; ++k)
             for (int j = 0; j < 5; ++j)
             {
-                beta[k][j] =  sqr(cells[0]->h().x() * cells[0]-> h().y()) *(sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
+                beta[k][j] =  (cells[0]->h().x() * cells[0]-> h().y()) *(sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
                 wTilde[k][j] = gamma[k] * (1.0 / sqr(beta[k][j] + 1e-6));
             }
+
+
 
         wSum = {0.0, 0.0, 0.0, 0.0, 0.0};
 
@@ -106,9 +110,35 @@ void LimiterWENOS::limitTog(vector<numvector<double, 5 * nShapes>>& alpha)
             for (size_t k = 0; k < nCells; ++k)
                 wSum[j] += wTilde[k][j];
 
+        //cout << wSum << endl;
+
         for (size_t k = 0; k < nCells; ++k)
             for (int j = 0; j < 5; ++j)
                 w[k][j] = wTilde[k][j] / wSum[j];
+
+//        cout << "----\n num tr cell = " << iCell << endl;
+
+//        cout << "beta:\n";
+//        for (size_t k = 0; k < nCells; ++k)
+//        {
+//            cout << "cell no = " << k << endl;
+//            cout << beta[k] << endl;
+//        }
+
+//        cout << "wtilde:\n";
+//        for (size_t k = 0; k < nCells; ++k)
+//        {
+//            cout << "cell no = " << k << endl;
+//            cout << wTilde[k] << endl;
+//        }
+
+//        cout << "w:\n";
+//        for (size_t k = 0; k < nCells; ++k)
+//        {
+//            cout << "cell no = " << k << endl;
+//            cout << w[k] << endl;
+//        }
+
 
         // project limited solution onto cell basis
 

@@ -27,6 +27,7 @@ using namespace std;
 
 int main(int argc, char** argv)
 {    
+
     // Mesh parameters
 
     double Lx = 1.0;
@@ -55,10 +56,10 @@ int main(int argc, char** argv)
 
 //    int freqWrite = 100;
 
-    double Co = 0.01;
-    double tEnd = 0.0005;
+    double Co = 0.1;
+    double tEnd = 0.2;
 
-    int freqWrite = 1000;
+    int freqWrite = 100;
 
     // ---------------
 
@@ -117,6 +118,7 @@ int main(int argc, char** argv)
 
 //    t00 = clock();
 
+
 //    int iT = 1; //iteration number
 
 //    for (double t = tau; t <= tEnd + 0.5*tau; t += tau)
@@ -130,10 +132,18 @@ int main(int argc, char** argv)
 //       k1 = solver.assembleRHS(solver.alphaPrev);
 //       solver.alphaNext = solver.alphaPrev + k1 * tau;
 
+
 //       limiter.limit(solver.alphaNext);
 
 //       k2 = solver.assembleRHS(solver.alphaNext);
 //       solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
+
+       //cout << "before limiting" << solver.alphaNext[49] << endl;
+
+ //      limiter.limit(solver.alphaNext);
+
+       //cout << "after limiting" << solver.alphaNext[49] << endl;
+
 
 //       limiter.limit(solver.alphaNext);
 

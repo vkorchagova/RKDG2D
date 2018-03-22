@@ -6,21 +6,26 @@ vector<int> IndicatorHarten::checkDiscontinuities() const
 {
     vector<int> troubledCells;
 
-    bool diffSignesForAve;
-    bool largeDerivRatio;
+    bool diffSignesForAve = false;
+    bool largeDerivRatio = false;
 
     // mean values
 
     vector<numvector<double, 5>> uMean (3);
-
+    double meanCondition;
     // calibration coefficient
 
     double kappa = 2.0;
+
+    bool a2, a3;
 
     //check discontinuities for all cells
 
     for (int i = 0; i < mesh.nCells; ++i)
     {
+        diffSignesForAve = false;
+        largeDerivRatio = false;
+
         // find neighbours
 
         shared_ptr<Cell> cell = mesh.cells[i];
@@ -40,28 +45,62 @@ vector<int> IndicatorHarten::checkDiscontinuities() const
 
             // get conditions for troubled cell
 
+            for (int j = 4; j < 5; ++j)
+                if ((uMean[1][j] - uMean[0][j])*(uMean[2][j] - uMean[0][j]) < -1e-7)
+                    diffSignesForAve = true;
 
-            diffSignesForAve = ( (uMean[1] - uMean[0])*(uMean[2] - uMean[0]) < -1e-7 );
+            //diffSignesForAve = ( meanCondition < -1e-7 );
 
-            bool a2 = (fabs(problem.alpha[neibCellsX[0]->number][1]) > kappa*(problem.alpha[i][1]) || \
-                    kappa*fabs(problem.alpha[neibCellsX[0]->number][1]) < (problem.alpha[i][1]) );
+            // neibCellsX[0]->number = number of left neighbour
+            // neibCellsX[1]->number = number of right neighbour
+            // i = number of considered cell
+            // [1] = coefficient for density for 1st basis function
 
-            bool a3 = (fabs(problem.alpha[neibCellsX[1]->number][1]) > kappa*(problem.alpha[i][1]) || \
-                    kappa*fabs(problem.alpha[neibCellsX[1]->number][1]) < (problem.alpha[i][1]) );
+            for (int j = 4; j < 5; ++j)
+            {
+                if (fabs(problem.alpha[neibCellsX[0]->number][nShapes*j + 1]) > kappa*fabs(problem.alpha[i][nShapes*j + 1]) || \
+                        kappa*fabs(problem.alpha[neibCellsX[0]->number][nShapes*j + 1]) < fabs(problem.alpha[i][nShapes*j + 1]) )
+                    a2 = true;
+
+                if (fabs(problem.alpha[neibCellsX[1]->number][nShapes*j + 1]) > kappa*fabs(problem.alpha[i][nShapes*j + 1]) || \
+                        kappa*fabs(problem.alpha[neibCellsX[1]->number][nShapes*j + 1]) < fabs(problem.alpha[i][nShapes*j + 1]) );
+
+                    a3 = true;
+            }
+
+            a2 = (fabs(problem.alpha[neibCellsX[0]->number][1]) > kappa*fabs(problem.alpha[i][1]) || \
+                    kappa*fabs(problem.alpha[neibCellsX[0]->number][1]) < fabs(problem.alpha[i][1]) );
+
+            a3 = (fabs(problem.alpha[neibCellsX[1]->number][1]) > kappa*fabs(problem.alpha[i][1]) || \
+                    kappa*fabs(problem.alpha[neibCellsX[1]->number][1]) < fabs(problem.alpha[i][1]) );
 
             largeDerivRatio = ( a2 || a3);
         }
 
 
         if (diffSignesForAve && largeDerivRatio)
+        {
+//            cout << "cell number = " << i << endl;
+//            cout << "mean condition: " << meanCondition << endl;
+//            for (int jj = 0; jj < 3; ++jj)
+//                cout << uMean[jj][0] << endl;
+//            //cout << "1st condition:" << (uMean[1][0] - uMean[0][0])*(uMean[2][0] - uMean[0][0]) << endl;
+//            cout << "v: "<< fabs(problem.alpha[i][1]) << endl;
+//            cout << "v3: "<< fabs(problem.alpha[neibCellsX[0]->number][1]) << endl;
+//            cout << "v4: "<< fabs(problem.alpha[neibCellsX[1]->number][1]) << endl;
+
+//            cout << "a1 = " << diffSignesForAve << ", a2 = "<< a2 << " a3 = " << a3 << endl;
+
             troubledCells.push_back(i);
+        }
     }
 
-    cout << "\ntroubled cells: " ;
-    for (int iCell : troubledCells)
-        cout << iCell << ' ';
+//    cout << "-----\ntroubled cells: " ;
+//    for (int iCell : troubledCells)
+//        cout << iCell << ' ';
 
-    cout << endl;
+//    cout << endl;
+//     cout << "-----\n";
 
     return troubledCells;
 }
