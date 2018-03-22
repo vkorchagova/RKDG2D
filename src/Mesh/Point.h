@@ -13,6 +13,9 @@ class Point : public numvector<double, 2>
 
 public:
 
+    //- Number of node
+    int number;
+
     //- Default constructor
     Point(double val = 0.0) : numvector(val) {}
 

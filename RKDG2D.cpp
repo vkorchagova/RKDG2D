@@ -32,8 +32,15 @@ int main(int argc, char** argv)
     double Lx = 1.0;
     double Ly = 1.0;
 
-    int nx = 100;
-    int ny = 1;
+    int nx = 10;
+    int ny = 10;
+
+
+//    double Lx = 1.0;
+//    double Ly = 1.0;
+
+//    int nx = 100;
+//    int ny = 1;
 
 //    double Lx = 10.0;
 //    double Ly = 1;
@@ -68,89 +75,91 @@ int main(int argc, char** argv)
 
     mesh.exportMesh();
 
-    problem.setBoundaryConditions(mesh.patches);
+//    mesh.exportUniformMesh();
 
-    // Initialize flux
-    FluxLLF numFlux(problem);
+//    problem.setBoundaryConditions(mesh.patches);
 
-    // Initialize solver
-    Solver solver(mesh, problem, numFlux);
+//    // Initialize flux
+//    FluxLLF numFlux(problem);
 
-    // Initialize indicator
-    IndicatorHarten indicator(mesh, problem);
+//    // Initialize solver
+//    Solver solver(mesh, problem, numFlux);
 
-    //Initialize limiter
-    LimiterWENOS limiter(indicator, problem);
+//    // Initialize indicator
+//    IndicatorHarten indicator(mesh, problem);
 
-    // ---------------
+//    //Initialize limiter
+//    LimiterWENOS limiter(indicator, problem);
 
-    // Set initial conditions
-    solver.setInitialConditions();
+//    // ---------------
 
-    // Set mesh pointer in case of DiagProject BC
-    solver.setMeshPointerForDiagBC();
+//    // Set initial conditions
+//    solver.setInitialConditions();
 
-    // time step
+//    // Set mesh pointer in case of DiagProject BC
+//    solver.setMeshPointerForDiagBC();
 
-    double tau = min(mesh.cells[0]->h().x(),mesh.cells[0]->h().y()) * Co;
-        // sound speed = 1 --- const in acoustic problems
-        // only for uniform mesh hx and hy are similar for all cells
+//    // time step
+
+//    double tau = min(mesh.cells[0]->h().x(),mesh.cells[0]->h().y()) * Co;
+//        // sound speed = 1 --- const in acoustic problems
+//        // only for uniform mesh hx and hy are similar for all cells
 
 
-    // run Runge --- Kutta 2 TVD
+//    // run Runge --- Kutta 2 TVD
 
-    vector<numvector<double, 5*nShapes>> k1, k2;
+//    vector<numvector<double, 5*nShapes>> k1, k2;
 
-    k1.resize(mesh.nCells);
-    k2.resize(mesh.nCells);
+//    k1.resize(mesh.nCells);
+//    k2.resize(mesh.nCells);
 
-    clock_t t1, t2, t00;
+//    clock_t t1, t2, t00;
 
-    t00 = clock();
+//    t00 = clock();
 
-    int iT = 1; //iteration number
+//    int iT = 1; //iteration number
 
-    for (double t = tau; t <= tEnd + 0.5*tau; t += tau)
-    {
-       t1 = clock();
+//    for (double t = tau; t <= tEnd + 0.5*tau; t += tau)
+//    {
+//       t1 = clock();
 
-       time.updateTime(t);
+//       time.updateTime(t);
 
-       cout << "---------\nt = " << t << endl;
+//       cout << "---------\nt = " << t << endl;
 
-       k1 = solver.assembleRHS(solver.alphaPrev);
-       solver.alphaNext = solver.alphaPrev + k1 * tau;
+//       k1 = solver.assembleRHS(solver.alphaPrev);
+//       solver.alphaNext = solver.alphaPrev + k1 * tau;
 
-       limiter.limit(solver.alphaNext);
+//       limiter.limit(solver.alphaNext);
 
-       k2 = solver.assembleRHS(solver.alphaNext);
-       solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
+//       k2 = solver.assembleRHS(solver.alphaNext);
+//       solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
 
-       limiter.limit(solver.alphaNext);
+//       limiter.limit(solver.alphaNext);
 
-       if (iT % freqWrite == 0)
-       {
-           //string fileName = "alphaCoeffs/" + to_string((long double)t);
-           string fileName = "alphaCoeffs/" + to_string(t);
+//       if (iT % freqWrite == 0)
+//       {
+//           //string fileName = "alphaCoeffs/" + to_string((long double)t);
+//           string fileName = "alphaCoeffs/" + to_string(t);
 
-           ofstream output;
-           output.open(fileName);
+//           ofstream output;
+//           output.open(fileName);
 
-           solver.write(output,solver.alphaNext);
+//           solver.write(output,solver.alphaNext);
 
-           output.close();
-       }
+//           output.close();
+//       }
 
-       solver.alphaPrev = solver.alphaNext;
+//       solver.alphaPrev = solver.alphaNext;
 
-       iT++;
+//       iT++;
 
-       t2 = clock();
+//       t2 = clock();
 
-       cout << "step time: " << (float)(t2 - t1) / CLOCKS_PER_SEC << endl;
-    }
+//       cout << "step time: " << (float)(t2 - t1) / CLOCKS_PER_SEC << endl;
+//    }
 
-    cout << "=========\nElapsed time = " << (float)(t2 - t00) / CLOCKS_PER_SEC << endl;
+//    cout << "=========\nElapsed time = " << (float)(t2 - t00) / CLOCKS_PER_SEC << endl;
     cout << "---------\nEND \n";
 
     //cin.get();

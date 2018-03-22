@@ -47,6 +47,9 @@ public:
 
     /// geometric variables
 
+    //- Edge number
+    int number;
+
     //- Two nodes define edge
     numvector<std::shared_ptr<Point>, 2> nodes;
 

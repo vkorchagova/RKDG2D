@@ -62,6 +62,9 @@ void Mesh2D::createRectangularMesh(const Problem &prb)
         for (int j = 0; j < nx + 1; ++j)
             nodes.emplace_back( Point({ j * hx, i * hy }) );
 
+    for (int i = 0; i < nNodes; ++i)
+        nodes[i].number = i;
+
     // get horizontal edges
 
     for (int j = 0; j < nx; ++j)
@@ -112,6 +115,13 @@ void Mesh2D::createRectangularMesh(const Problem &prb)
     for (int i = 0; i < nEdgesVer-nx; ++i)
         if (i % (nx+1) == 0)
             edgesBoundary.emplace_back( dynamic_pointer_cast<EdgeBoundary>(edgesVer[i+nx]) );
+
+    //add numbers of edges
+    for (int i = 0; i < edgesBoundary.size(); ++i)
+        edgesBoundary[i]->number = i;
+
+    for (int i = 0; i < edgesInternal.size(); ++i)
+        edgesInternal[i]->number = i + edgesBoundary.size();
 
 
     // get cells as edges (counter-clockwise: lb -> rb -> ru -> rl)
@@ -164,7 +174,7 @@ void Mesh2D::createRectangularMesh(const Problem &prb)
 // ------------------ Public class methods ---------------------
 
 
-void Mesh2D::exportMesh() const
+void Mesh2D::exportUniformMesh() const
 {
     writer.open("mesh2D");
 
@@ -190,6 +200,108 @@ void Mesh2D::exportMesh() const
     }
 
     cout << "Mesh export OK" << endl;
+
+    writer.close();
+}
+
+
+//-----------------------------------------------------------------------
+
+void Mesh2D::exportMesh() const
+{
+    // open writer
+
+    writer.open("mesh2D");
+
+    // export mesh nodes        ---------------------------
+
+    writer << "$Nodes\n";
+
+    writer << nodes.size() << endl;
+
+    for (size_t i = 0; i < nodes.size(); ++i)
+        writer << i+1 << ' ' << nodes[i].x() << ' ' << nodes[i].y() << endl;
+
+    writer << "$EndNodes\n";
+
+    // export edges             ---------------------------
+
+    writer << "$Edges\n";
+
+    writer << edgesBoundary.size() << endl;
+    writer << edgesBoundary.size() + edgesInternal.size() << endl;
+
+    for (size_t i = 0; i < edgesBoundary.size(); ++i)
+        writer << i+1 << ' ' << edgesBoundary[i]->nodes[0]->number + 1 << ' ' << edgesBoundary[i]->nodes[1]->number + 1 << endl;
+
+    for (size_t i = 0; i < edgesInternal.size(); ++i)
+        writer << i+1+edgesBoundary.size() << ' ' << edgesInternal[i]->nodes[0]->number + 1  << ' ' << edgesInternal[i]->nodes[1]->number + 1 << endl;
+
+    writer << "$EndEdges\n";
+
+    // export normals to edges  ---------------------------
+
+    writer << "$EdgeNormals\n";
+
+    writer << edgesBoundary.size() + edgesInternal.size() << endl;
+
+    for (size_t i = 0; i < edgesBoundary.size(); ++i)
+        writer << i+1 << ' ' << edgesBoundary[i]->n.x() << ' ' << edgesBoundary[i]->n.y() << endl;
+
+    for (size_t i = 0; i < edgesInternal.size(); ++i)
+        writer << i+1+edgesBoundary.size() << ' ' << edgesInternal[i]->n.x() << ' ' << edgesInternal[i]->n.y() << endl;
+
+
+    writer << "$EndEdgeNormals\n";
+
+    // export cells             ---------------------------
+
+    writer << "$Cells\n";
+
+    writer << cells.size() << endl;
+
+    for (size_t i = 0; i < cells.size(); ++i)
+    {
+        writer << i+1 << ' ' << cells[i]->edges.size();
+
+        for (int j = 0; j < cells[i]->edges.size(); j++)
+            writer << ' ' << cells[i]->edges[j]->number  + 1 ;
+
+        writer << endl;
+    }
+
+    writer << "$EndCells\n";
+
+    // export cell centers      ---------------------------
+
+    writer << "$CellCenters\n";
+
+    writer << cells.size() << endl;
+
+    for (size_t i = 0; i < cells.size(); ++i)
+        writer << i+1 << ' ' << cells[i]->getCellCenter().x() << ' ' << cells[i]->getCellCenter().y() << endl;
+
+    writer << "$EndCellCenters\n";
+
+    // export patches           ---------------------------
+
+    writer << "$Patches\n";
+
+    writer << patches.size() << endl;
+
+    for (size_t i = 0; i < patches.size(); ++i)
+    {
+        writer << i + 1  << ' ' << patches[i].patchName << endl;
+
+        writer << patches[i].edgeGroup.size() << endl;
+
+        for (size_t j = 0; j < patches[i].edgeGroup.size(); ++j)
+            writer << patches[i].edgeGroup[j]->number + 1  << endl;
+    }
+
+    writer << "$EndPatches\n";
+
+    //close writer
 
     writer.close();
 }

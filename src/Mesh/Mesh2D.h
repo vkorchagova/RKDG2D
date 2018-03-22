@@ -63,10 +63,13 @@ public:
     //- Destructor
     ~Mesh2D();
 
-    //- Import mesh from UNV file
+    //- Import mesh
     void importMesh(std::string fileName) const;
 
-    //- Export mesh
+    //- Export uniform rectangular mesh
+    void exportUniformMesh() const;
+
+    //- Export arbitrary 2D mesh in custom format like .msh
     void exportMesh() const;
 
 };// end Mesh 2D
