@@ -19,7 +19,7 @@
 /// See more after class definition
 
 
-//- Boundary between sections
+//- Boundary between UNV sections
 const std::string SEPARATOR("    -1");
 
 // does not work((
@@ -48,7 +48,7 @@ private:
     //- fstream for UNV mesh
     std::ifstream reader;
 
-    //- ftream for RKDG mesh
+    //- fstream for RKDG mesh
     std::ofstream writer;
 
     //- nodes
@@ -76,8 +76,17 @@ private:
     //- Read nodes
     void readNodes();
 
-    //- Read elements
+    //- Read element
     void readElements();
+
+    //- Find edges for cell defined by nodes
+    void getElementEdges(const std::vector<int>& nodeNumbers);
+
+    //- Find center of cell;
+    void getCellCenter(const std::vector<int>& nodes);
+
+    //- Find normal vectors for edges
+    void getEgdeNormals();
 
 
 public:
