@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <string>
 
 /// Mesh converter from Ideas UNV format to RKDG2D format
 ///
@@ -64,6 +65,18 @@ private:
     //- cell centers
     std::vector<std::vector<double>> cellCenters;
 
+    //- adjoint cells for edges
+    std::vector<std::vector<int>> adjEdgeCells;
+
+    //- edge normals
+    std::vector<std::vector<double>> edgeNormals;
+
+    //- patch names
+    std::vector<std::string> patchNames;
+
+    //- patch edge groups
+    std::vector<std::vector<int>> patchEdgeGroups;
+
 
     /// Methods
 
@@ -76,8 +89,11 @@ private:
     //- Read nodes
     void readNodes();
 
-    //- Read element
+    //- Read elements (edges + cells)
     void readElements();
+
+    //- Read patches
+    void readPatches();
 
     //- Find edges for cell defined by nodes
     void getElementEdges(const std::vector<int>& nodeNumbers);
@@ -87,6 +103,9 @@ private:
 
     //- Find normal vectors for edges
     void getEgdeNormals();
+
+    //- Find ajoint cells for each edge
+    void setAdjointCells();
 
 
 public:

@@ -1,6 +1,7 @@
 #include "FileConverter.h"
 
 #include <functional>
+#include <math.h>
 
 using namespace std;
 
@@ -162,6 +163,7 @@ void FileConverter::readElements()
 
                 break;
             }
+            case 41:    // plane triangular
             case 44:    // plane quadrilateral
             {
                 getline(reader, str);
@@ -184,6 +186,57 @@ void FileConverter::readElements()
     cout << "OK\n";
 
 }  // End readElements
+
+void FileConverter::readPatches()
+{
+    string str;
+
+    do
+    {
+        vector<int> edgeGroup;
+        vector<int> patchProperties;
+
+        getline(reader, str);
+        patchProperties = parseStringInt(str);
+
+        if (patchProperties[0] == -1)
+            break;
+
+        int nEdgesInGroup = patchProperties.back();
+
+        getline(reader, str);
+
+        patchNames.push_back(str);
+
+        //getline(reader, str);
+
+        function<int()> getEdgeNumber = [&]()
+        {
+            int number;
+
+            for (int j = 0; j < 2; ++j)
+                reader >> number;
+
+            int edgeNumber = number;
+
+            for (int j = 0; j < 2; ++j)
+                reader >> number;
+
+            return edgeNumber;
+        };
+
+        for (int i = 0; i < nEdgesInGroup; ++i)
+            edgeGroup.push_back(getEdgeNumber());
+
+        patchEdgeGroups.push_back(edgeGroup);
+
+        getline(reader, str);
+
+
+    } while (str != SEPARATOR);
+
+    cout << "OK\n";
+}  // End readPatches
 
 void FileConverter::getElementEdges(const std::vector<int>& nodeNumbers)
 {
@@ -273,10 +326,63 @@ void FileConverter::getCellCenter(const vector<int> &nodeNumbers)
 
 } // End getCellCenter
 
+void FileConverter::setAdjointCells()
+{
+    int nBEdges = edgesBoundary.size();
+    int nIEdges = edgesInternal.size();
+
+    adjEdgeCells.resize(nBEdges + nIEdges);
+
+    for (size_t iCell = 0; iCell < cells.size(); ++iCell)
+        for (int iEdge : cells[iCell])
+            adjEdgeCells[iEdge-1].push_back(iCell+1);
+
+} // End setAdjointCells
+
 void FileConverter::getEgdeNormals()
 {
+    edgeNormals.reserve(edgesBoundary.size() + edgesInternal.size());
 
-}
+    for (size_t i = 0; i < edgesBoundary.size(); ++i)
+    {
+        vector<int> edge = edgesBoundary[i];
+        vector<double> edgeV = {nodes[edge[1]-1][0] - nodes[edge[0]-1][0], nodes[edge[1]-1][1] - nodes[edge[0]-1][1]};
+        vector<double> centerV = {cellCenters[adjEdgeCells[i][0]-1][0] - nodes[edge[0]-1][0], cellCenters[adjEdgeCells[i][0]-1][1] - nodes[edge[0]-1][1]};
+        vector<double> n = {edgeV[1], -edgeV[0]};
+        if (n[0]*centerV[0] + n[1]*centerV[1] > 0)
+        {
+            n[0] *= -1;
+            n[1] *= -1;
+        }
+
+        double ilen = 1.0/sqrt(n[0]*n[0] + n[1]*n[1]);
+
+        n[0] *= ilen;
+        n[1] *= ilen;
+
+        edgeNormals.push_back(n);
+    }
+
+    for (size_t i = 0; i < edgesInternal.size(); ++i)
+    {
+        vector<int> edge = edgesInternal[i];
+        vector<double> edgeV = {nodes[edge[1]-1][0] - nodes[edge[0]-1][0], nodes[edge[1]-1][1] - nodes[edge[0]-1][1]};
+        vector<double> centerV = {cellCenters[adjEdgeCells[i+edgesBoundary.size()][0]-1][0] - nodes[edge[0]-1][0], cellCenters[adjEdgeCells[i+edgesBoundary.size()][0]-1][1] - nodes[edge[0]-1][1]};
+        vector<double> n = {edgeV[1], -edgeV[0]};
+        if (n[0]*centerV[0] + n[1]*centerV[1] > 0)
+        {
+            n[0] *= -1;
+            n[1] *= -1;
+        }
+
+        double ilen = 1.0/sqrt(n[0]*n[0] + n[1]*n[1]);
+
+        n[0] *= ilen;
+        n[1] *= ilen;
+
+        edgeNormals.push_back(n);
+    }
+} // End getEgdeNormals
 
 
 // ------------------------------ Public methods ------------------------------
@@ -318,18 +424,21 @@ void FileConverter::importUNV ()
             {
                 cout << "Processing elements (boundary edges + cells) ... ";
                 readElements();
+                setAdjointCells();
+                getEgdeNormals();
 
                 cout << "edges bound \n";
                 for (size_t i = 0; i < edgesBoundary.size(); ++i)
-                    cout << edgesBoundary[i][0] << ' ' << edgesBoundary[i][1] << endl;
+                    cout << i+1 << '|' << edgesBoundary[i][0] << ' ' << edgesBoundary[i][1] << endl;
 
                 cout << "edges internal \n";
                 for (size_t i = 0; i < edgesInternal.size(); ++i)
-                    cout << edgesInternal[i][0] << ' ' << edgesInternal[i][1] << endl;
+                    cout << i+1+edgesBoundary.size() << '|' << edgesInternal[i][0] << ' ' << edgesInternal[i][1] << endl;
 
                 cout << "cells\n";
                 for (size_t i = 0; i < cells.size(); ++i)
                 {
+                    cout << i+1 << '|';
                     for (size_t j = 0; j < cells[i].size(); ++j)
                          cout << cells[i][j] << ' ';
                     cout << endl;
@@ -337,14 +446,41 @@ void FileConverter::importUNV ()
 
                 cout << "cell centers\n";
                 for (size_t i = 0; i < cells.size(); ++i)
-                    cout << cellCenters[i][0] << ' ' << cellCenters[i][1] << endl;
+                    cout << i+1 << '|' << cellCenters[i][0] << ' ' << cellCenters[i][1] << endl;
+
+                cout << "adjoint cells for edges\n";
+                for (size_t i = 0; i < adjEdgeCells.size(); ++i)
+                {
+                    cout << i+1 << '|';
+                    for (size_t j = 0; j < adjEdgeCells[i].size(); ++j)
+                        cout << adjEdgeCells[i][j] << ' ' ;
+                    cout << endl;
+                }
+
+                cout << "edge normals\n";
+                for (size_t i = 0; i < edgeNormals.size(); ++i)
+                    cout << i+1 << '|' << edgeNormals[i][0] << ' ' << edgeNormals[i][1] << endl;
 
                 break;
             }
             case 2467:  //patches
             {
                 cout << "Processing patches ... ";
-                skipSection();
+                readPatches();
+
+                cout << "patch names\n";
+                for (size_t i = 0; i < patchNames.size(); ++i)
+                    cout << i+1 << '|' << patchNames[i] << endl;
+
+                cout << "patch groups\n";
+                for (size_t i = 0; i < patchEdgeGroups.size(); ++i)
+                {
+                    cout << i+1 << '|';
+                    for (size_t j = 0; j < patchEdgeGroups[i].size(); ++j)
+                        cout << patchEdgeGroups[i][j] << ' ' ;
+                    cout << endl;
+                }
+
                 break;
             }
             default:
@@ -358,4 +494,99 @@ void FileConverter::importUNV ()
     }
 }
 
+void FileConverter::exportRKDG()
+{
+    //writer.precision(15);
+
+    // --------------------------------------
+
+    writer << "$Nodes\n";
+    writer << nodes.size() << endl;
+
+    for (int i = 0; i < nodes.size(); ++i)
+        writer << nodes[i][0] << ' ' << nodes[i][1] << endl;
+
+    writer << "$EndNodes\n";
+
+    // --------------------------------------
+
+    writer << "$Edges\n";
+    writer << edgesBoundary.size() << endl;
+    writer << edgesBoundary.size() + edgesInternal.size() << endl;
+
+    for (size_t i = 0; i < edgesBoundary.size(); ++i)
+        writer << edgesBoundary[i][0] << ' ' << edgesBoundary[i][1] << endl;
+
+    for (size_t i = 0; i < edgesInternal.size(); ++i)
+        writer << edgesInternal[i][0] << ' ' << edgesInternal[i][1] << endl;
+
+    writer << "$EndEdges\n";
+
+    // --------------------------------------
+
+    writer << "$Cells\n";
+    writer << cells.size() << endl;
+
+    for (size_t i = 0; i < cells.size(); ++i)
+    {
+        for (size_t j = 0; j < cells[i].size(); ++j)
+             writer << cells[i][j] << ' ';
+        writer << endl;
+    }
+
+    writer << "$EndCells\n";
+
+    // --------------------------------------
+
+    writer << "$CellCenters\n";
+    writer << cells.size() << endl;
+
+    for (size_t i = 0; i < cells.size(); ++i)
+        writer << cellCenters[i][0] << ' ' << cellCenters[i][1] << endl;
+
+    writer << "$EndCellCenters\n";
+
+    // --------------------------------------
+
+    writer << "$AdjointCellsForEdges\n";
+    writer << edgesBoundary.size() + edgesInternal.size() << endl;
+
+    for (size_t i = 0; i < adjEdgeCells.size(); ++i)
+    {
+        for (size_t j = 0; j < adjEdgeCells[i].size(); ++j)
+            writer << adjEdgeCells[i][j] << ' ' ;
+        writer << endl;
+    }
+
+    writer << "$EndAdjointCellsForEdges\n";
+
+    // --------------------------------------
+
+    writer << "$EdgeNormals\n";
+    writer << edgesBoundary.size() + edgesInternal.size() << endl;
+
+    for (size_t i = 0; i < edgeNormals.size(); ++i)
+        writer << edgeNormals[i][0] << ' ' << edgeNormals[i][1] << endl;
+
+    writer << "$EndEdgeNormals\n";
+
+    // --------------------------------------
+
+    writer << "$Patches\n";
+    writer << patchNames.size() << endl;
+
+    for (size_t i = 0; i < patchEdgeGroups.size(); ++i)
+    {
+        writer  << patchNames[i] << endl;
+        writer  << patchEdgeGroups[i].size() << endl;
+
+        for (size_t j = 0; j < patchEdgeGroups[i].size(); ++j)
+            writer << patchEdgeGroups[i][j] << endl;
+    }
+
+    writer << "$EndPatches\n";
+
+    cout << "Export OK\n";
+
+}
 
