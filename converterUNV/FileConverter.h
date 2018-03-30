@@ -130,38 +130,43 @@ public:
 /// ----------------
 ///
 /// $Nodes
-/// number_of_nodes
-/// num x y
-/// ...
+///     number_of_nodes
+///     x y
+///     ...
 /// $EndNodes
 /// $Edges //at first - boundary edges, after - internal
-/// number_of_boundary_edges
-/// total_number_of_edges
-/// num node_1 node_2
-/// ...
+///     number_of_boundary_edges
+///     total_number_of_edges
+///     node_1 node_2
+///     ...
 /// $EndEdges
-/// $EdgeNormals
-/// total_number_of_edges
-/// num n_x n_y
-/// /// ...
-/// $EndEdgeNormals
 /// $Cells
-/// number_of_cells
-/// num number_of_edges_in_cell edge1 edge 2 ...
-/// ...
+///     number_of_cells
+///     number_of_edges_in_cell edge1 edge 2 ...
+///     ...
 /// $EndCells
 /// $CellCenters
-/// number_of_cells
-/// num x y
-/// ...
+///     number_of_cells
+///     x y
+///     ...
 /// $EndCellCenters
+/// $AdjointCellsForEdges
+///     total_number_of_edges
+///     cell1 cell2
+///     ...
+/// $EndAdjointCellsForEdges
+/// $EdgeNormals
+///     total_number_of_edges
+///     n_x n_y
+/// /// ...
+/// $EndEdgeNormals
 /// $Patches
-/// number_of_patches
-/// patch_name1
-/// number_of_edges_in_patch
-/// edgenum1
-/// edgenum2
-/// ...
-/// patch_name_2
-/// ...
+///     number_of_patches
+///     patch_name1
+///         number_of_edges_in_patch
+///         edgenum1
+///         edgenum2
+///         ...
+///     patch_name_2
+///         ...
 /// $EndPatches

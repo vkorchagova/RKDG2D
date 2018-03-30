@@ -74,7 +74,7 @@ public:
     static const int nEdges = 4;
 
     //- Edges define cell
-    numvector<std::shared_ptr<Edge>, nEdges> edges;
+    std::vector<std::shared_ptr<Edge>> edges;
 
     //- Compute area of cell
     double getArea() const { return area; }
@@ -102,7 +102,7 @@ public:
     Cell(const Problem& prb) : problem(prb) {}
 
     //- Construct cell using numvector of edges
-    Cell(const numvector<std::shared_ptr<Edge>, nEdges>& edges, const Problem& prb);
+    Cell(const std::vector<std::shared_ptr<Edge> > &edges, const Problem& prb);
 
     //- Destructor
     ~Cell() {}

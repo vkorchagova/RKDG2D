@@ -16,9 +16,9 @@ Mesh2D::Mesh2D(int nx, int ny, double Lx, double Ly, const Problem &prb) : nx(nx
 
 }
 
-Mesh2D::Mesh2D(string fileName)
+Mesh2D::Mesh2D(string fileName, const Problem& prb)
 {
-    importMesh(fileName);
+    importMesh(fileName,prb);
 }
 
 Mesh2D::~Mesh2D()
@@ -131,7 +131,7 @@ void Mesh2D::createRectangularMesh(const Problem &prb)
         {
             //define list of edges
 
-            numvector<shared_ptr<Edge>,4> edges = {edgesHor[i*(nx)+j], \
+            vector<shared_ptr<Edge>> edges = {edgesHor[i*(nx)+j], \
                                                    edgesVer[(i)*(nx + 1) + j + 1], \
                                                    edgesHor[(i + 1)*(nx)+j], \
                                                    edgesVer[(i)*(nx + 1) + j] };
@@ -220,7 +220,7 @@ void Mesh2D::exportMesh() const
     writer << nodes.size() << endl;
 
     for (size_t i = 0; i < nodes.size(); ++i)
-        writer << i+1 << ' ' << nodes[i].x() << ' ' << nodes[i].y() << endl;
+        writer << nodes[i].x() << ' ' << nodes[i].y() << endl;
 
     writer << "$EndNodes\n";
 
@@ -232,27 +232,12 @@ void Mesh2D::exportMesh() const
     writer << edgesBoundary.size() + edgesInternal.size() << endl;
 
     for (size_t i = 0; i < edgesBoundary.size(); ++i)
-        writer << i+1 << ' ' << edgesBoundary[i]->nodes[0]->number + 1 << ' ' << edgesBoundary[i]->nodes[1]->number + 1 << endl;
+        writer << edgesBoundary[i]->nodes[0]->number + 1 << ' ' << edgesBoundary[i]->nodes[1]->number + 1 << endl;
 
     for (size_t i = 0; i < edgesInternal.size(); ++i)
-        writer << i+1+edgesBoundary.size() << ' ' << edgesInternal[i]->nodes[0]->number + 1  << ' ' << edgesInternal[i]->nodes[1]->number + 1 << endl;
+        writer << edgesInternal[i]->nodes[0]->number + 1  << ' ' << edgesInternal[i]->nodes[1]->number + 1 << endl;
 
     writer << "$EndEdges\n";
-
-    // export normals to edges  ---------------------------
-
-    writer << "$EdgeNormals\n";
-
-    writer << edgesBoundary.size() + edgesInternal.size() << endl;
-
-    for (size_t i = 0; i < edgesBoundary.size(); ++i)
-        writer << i+1 << ' ' << edgesBoundary[i]->n.x() << ' ' << edgesBoundary[i]->n.y() << endl;
-
-    for (size_t i = 0; i < edgesInternal.size(); ++i)
-        writer << i+1+edgesBoundary.size() << ' ' << edgesInternal[i]->n.x() << ' ' << edgesInternal[i]->n.y() << endl;
-
-
-    writer << "$EndEdgeNormals\n";
 
     // export cells             ---------------------------
 
@@ -262,7 +247,7 @@ void Mesh2D::exportMesh() const
 
     for (size_t i = 0; i < cells.size(); ++i)
     {
-        writer << i+1 << ' ' << cells[i]->edges.size();
+        writer << cells[i]->edges.size();
 
         for (int j = 0; j < cells[i]->edges.size(); j++)
             writer << ' ' << cells[i]->edges[j]->number  + 1 ;
@@ -279,9 +264,47 @@ void Mesh2D::exportMesh() const
     writer << cells.size() << endl;
 
     for (size_t i = 0; i < cells.size(); ++i)
-        writer << i+1 << ' ' << cells[i]->getCellCenter().x() << ' ' << cells[i]->getCellCenter().y() << endl;
+        writer << cells[i]->getCellCenter().x() << ' ' << cells[i]->getCellCenter().y() << endl;
 
     writer << "$EndCellCenters\n";
+
+    // export adjoint cells for edges  ---------------------------
+
+    writer << "$AdjointCellsForEdges\n";
+
+    writer << edgesBoundary.size() + edgesInternal.size() << endl;
+
+    for (size_t i = 0; i < edgesBoundary.size(); ++i)
+    {
+        for (size_t j = 0; j < edgesBoundary[i]->neibCells.size(); ++i)
+            writer << edgesBoundary[i]->neibCells[j]->number + 1 << ' ';
+        writer << endl;
+    }
+
+    for (size_t i = 0; i < edgesInternal.size(); ++i)
+    {
+        for (size_t j = 0; j < edgesInternal[i]->neibCells.size(); ++i)
+            writer << edgesInternal[i]->neibCells[j]->number + 1 << ' ';
+        writer << endl;
+    }
+
+    writer << "$EndAdjointCellsForEdges\n";
+
+    // export normals to edges  ---------------------------
+
+    writer << "$EdgeNormals\n";
+
+    writer << edgesBoundary.size() + edgesInternal.size() << endl;
+
+    for (size_t i = 0; i < edgesBoundary.size(); ++i)
+        writer << edgesBoundary[i]->n.x() << ' ' << edgesBoundary[i]->n.y() << endl;
+
+    for (size_t i = 0; i < edgesInternal.size(); ++i)
+        writer << edgesInternal[i]->n.x() << ' ' << edgesInternal[i]->n.y() << endl;
+
+    writer << "$EndEdgeNormals\n";
+
+
 
     // export patches           ---------------------------
 
@@ -291,7 +314,7 @@ void Mesh2D::exportMesh() const
 
     for (size_t i = 0; i < patches.size(); ++i)
     {
-        writer << i + 1  << ' ' << patches[i].patchName << endl;
+        writer << patches[i].patchName << endl;
 
         writer << patches[i].edgeGroup.size() << endl;
 
@@ -306,19 +329,112 @@ void Mesh2D::exportMesh() const
     writer.close();
 }
 
-void Mesh2D::importMesh(string fileName) const
+void Mesh2D::importMesh(string fileName, const Problem& prb)
 {
-    string x;
+    string tag;
     reader.open(fileName);
-    getline(reader,x);
 
-    cout << x << endl;
+    cout << "Processing mesh file " << fileName << endl;
 
-    //first blocks are standard (Cartesian coordinate system, SI units, no additional info about FE)
+    while (reader.peek() != EOF)
+    {
+        getline(reader, tag);
 
-    //find block with mesh numbers
+        if (tag == "$Nodes")
+        {
+            int nNodes;
+            double x, y;
 
+            reader >> nNodes;
+            nodes.reserve(nNodes);
 
+            for (int i = 0; i < nNodes; ++i)
+            {
+                reader >> x >> y;
+                nodes.emplace_back(Point({x,y}));
+            }
+
+            do
+            {
+                getline(reader, tag);
+
+            } while (tag != "$EndNodes");
+
+            cout << "Number of nodes: " << nNodes << endl;
+        }
+        else if (tag == "$Edges")
+        {
+            int nBoundEdges;
+            int nEdges;
+            int node1, node2;
+
+            reader >> nBoundEdges >> nEdges;
+
+            int nInternalEdges = nEdges - nBoundEdges;
+
+            edgesBoundary.reserve(nBoundEdges);
+            edgesInternal.reserve(nInternalEdges);
+
+            for (int i = 0; i < nBoundEdges; ++i)
+            {
+                reader >> node1 >> node2;
+                edgesBoundary.emplace_back(make_shared<EdgeBoundary>(node1-1, node2-1));
+            }
+
+            for (int i = 0; i < nInternalEdges; ++i)
+            {
+                reader >> node1 >> node2;
+                edgesInternal.emplace_back(make_shared<EdgeInternal>(node1-1, node2-1));
+            }
+
+            do
+            {
+                getline(reader, tag);
+
+            } while (tag != "$EndEdges");
+
+            cout << "Number of edges: " << nEdges << ", on boundary: " << nBoundEdges << endl;
+        }
+        else if (tag == "$Cells")
+        {
+            reader >> nCells;
+            cells.reserve(nCells);
+
+            for (int i = 0; i < nCells; ++i)
+            {
+                int nEdgesInCell;
+                int edge;
+                reader >> nEdgesInCell;
+
+                vector<shared_ptr<Edge>> edges;
+                edges.reserve(nEdgesInCell);
+
+                for (int j = 0; j < nEdgesInCell; ++j)
+                {
+                    reader >> edge;
+                    edges.push_back(make_shared(edge);
+                }
+
+                // add cells in list
+                cells.emplace_back( make_shared<Cell>(edges,prb));
+
+                do
+                {
+                    getline(reader, tag);
+
+                } while (tag != "$EndCells");
+
+            }
+
+            cout << "Number of cells: " << nCells << endl;
+        }
+        else
+        {
+            cout << "Tag \"" << tag << "\" is not supported\n";
+            exit(0);
+            break;
+        }
+    }
 
     reader.close();
 }

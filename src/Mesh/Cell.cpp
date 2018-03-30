@@ -6,7 +6,7 @@ using namespace std;
 
 // ------------------ Constructors & Destructor ----------------
 
-Cell::Cell(const numvector<std::shared_ptr<Edge>, nEdges> &defEdges, const Problem& prb) : problem(prb)
+Cell::Cell(const vector<std::shared_ptr<Edge>> &defEdges, const Problem& prb) : problem(prb)
 {
     edges = defEdges;
     

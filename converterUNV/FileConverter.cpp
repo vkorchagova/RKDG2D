@@ -529,6 +529,7 @@ void FileConverter::exportRKDG()
 
     for (size_t i = 0; i < cells.size(); ++i)
     {
+        writer << cells[i].size() << ' ';
         for (size_t j = 0; j < cells[i].size(); ++j)
              writer << cells[i][j] << ' ';
         writer << endl;

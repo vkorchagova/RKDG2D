@@ -4,13 +4,12 @@
 using namespace std;
 
 
-
 // ----------------------------------------------------------------------------
 
 
 int main()
 {
-    FileConverter converter("Mesh_Triangle.unv","Mesh2D");
+    FileConverter converter("..//Mesh_Triangle.unv","..//mesh2D");
 
     converter.importUNV();
     converter.exportRKDG();

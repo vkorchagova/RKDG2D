@@ -30,11 +30,11 @@ int main(int argc, char** argv)
 
     // Mesh parameters
 
-    double Lx = 1.0;
-    double Ly = 1.0;
+//    double Lx = 1.0;
+//    double Ly = 1.0;
 
-    int nx = 10;
-    int ny = 10;
+//    int nx = 10;
+ //   int ny = 10;
 
 
 //    double Lx = 1.0;
@@ -70,11 +70,11 @@ int main(int argc, char** argv)
     Problem problem(time);
 
     // Initialize mesh
-    Mesh2D mesh(nx, ny, Lx, Ly, problem);
+//    Mesh2D mesh(nx, ny, Lx, Ly, problem);
 
-//    mesh.importMesh("Mesh_1.unv");
+    Mesh2D mesh("mesh2D",problem);
 
-    mesh.exportMesh();
+//    mesh.exportMesh();
 
 //    mesh.exportUniformMesh();
 

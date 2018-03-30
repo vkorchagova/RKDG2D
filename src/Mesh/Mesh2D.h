@@ -58,18 +58,18 @@ public:
     Mesh2D(int nx, int ny, double Lx, double Ly, const Problem& prb);
 
     //- Construct mesh by import from UNV file
-    Mesh2D(std::string fileName);
+    Mesh2D(std::string fileName, const Problem& prb);
 
     //- Destructor
     ~Mesh2D();
 
     //- Import mesh
-    void importMesh(std::string fileName) const;
+    void importMesh(std::string fileName, const Problem &prb);
 
     //- Export uniform rectangular mesh
     void exportUniformMesh() const;
 
-    //- Export arbitrary 2D mesh in custom format like .msh
+    //- Export arbitrary 2D mesh in custom RKDG format like .msh
     void exportMesh() const;
 
 };// end Mesh 2D
