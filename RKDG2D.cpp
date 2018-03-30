@@ -72,7 +72,7 @@ int main(int argc, char** argv)
     // Initialize mesh
 //    Mesh2D mesh(nx, ny, Lx, Ly, problem);
 
-    Mesh2D mesh("mesh2D",problem);
+    Mesh2D mesh("../RKDG2D/mesh2D",problem);
 
 //    mesh.exportMesh();
 

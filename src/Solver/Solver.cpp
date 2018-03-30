@@ -46,35 +46,38 @@ void Solver::setInitialConditions()
 
 void Solver::setMeshPointerForDiagBC()
 {
-    int nEdgesBou = mesh.edgesBoundary.size();
+//    int nEdgesBou = mesh.edgesBoundary.size();
 
-    for (int i = 0; i < nEdgesBou; ++i)
-    {
-        shared_ptr<EdgeBoundaryDiagProjection> edgeBound = dynamic_pointer_cast<EdgeBoundaryDiagProjection>(mesh.edgesBoundary[i]);
+//    for (int i = 0; i < nEdgesBou; ++i)
+//    {
+//        shared_ptr<EdgeBoundaryDiagProjection> edgeBound = dynamic_pointer_cast<EdgeBoundaryDiagProjection>(mesh.edgesBoundary[i]);
 
-        if (edgeBound == NULL)
-            continue;
+//        if (edgeBound == NULL)
+//            continue;
 
-        edgeBound->setMeshPointer(mesh);
-    }
+//        edgeBound->setMeshPointer(mesh);
+//    }
 } // end setMeshPointerForDiagBC
 
 vector<numvector<double, 5 * nShapes>> Solver::assembleRHS(const std::vector<numvector<double, 5 * nShapes> > &alpha)
 {
     problem.setAlpha(alpha);
 
-    int nEdgesInt = mesh.edgesInternal.size();
-    int nEdgesBou = mesh.edgesBoundary.size();
+    //int nEdgesInt = mesh.edgesInternal.size();
+    //int nEdgesBou = mesh.edgesBoundary.size();
 
     int nCells = mesh.cells.size();
 
     // compute fluxes in gauss points on edges
 
-    for (int i = 0; i < nEdgesInt; ++i)
-        mesh.edgesInternal[i]->getLocalFluxes(flux);
+    for (size_t i = 0; i < mesh.edges.size(); ++i)
+        mesh.edges[i]->getLocalFluxes(flux);
 
-    for (int i = 0; i < nEdgesBou; ++i)
-        mesh.edgesBoundary[i]->getLocalFluxes(flux);
+//    for (int i = 0; i < nEdgesInt; ++i)
+//        mesh.edgesInternal[i]->getLocalFluxes(flux);
+
+//    for (int i = 0; i < nEdgesBou; ++i)
+//        mesh.edgesBoundary[i]->getLocalFluxes(flux);
 
 
     vector<numvector<double, 5 * nShapes>> rhs(mesh.nCells);

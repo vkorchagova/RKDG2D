@@ -37,14 +37,20 @@ public:
     //- Number of cells
     int nCells;
 
+    int nEdges;
+    int nBoundEdges;
+
     //- Coordinates of nodes (x,y)
     std::vector<Point> nodes;
 
     //- Internal edges (node1, node2)
-    std::vector<std::shared_ptr<EdgeInternal>> edgesInternal;
+    //std::vector<std::shared_ptr<EdgeInternal>> edgesInternal;
 
     //- Boundary edges
-    std::vector<std::shared_ptr<EdgeBoundary>> edgesBoundary;
+    //std::vector<std::shared_ptr<EdgeBoundary>> edgesBoundary;
+
+    //- Edges
+    std::vector<std::shared_ptr<Edge>> edges;
 
     //- Mesh cells (edge1, ..., edgek counterclockwise)
     std::vector<std::shared_ptr<Cell>> cells;
