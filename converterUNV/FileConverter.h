@@ -60,7 +60,8 @@ private:
     std::vector<std::vector<int>> edgesInternal;
 
     //- cells = numbers of edges
-    std::vector<std::vector<int>> cells;
+    std::vector<std::vector<int>> cellsAsEdges;
+    std::vector<std::vector<int>> cellsAsNodes;
 
     //- cell centers
     std::vector<std::vector<double>> cellCenters;
@@ -142,7 +143,7 @@ public:
 /// $EndEdges
 /// $Cells
 ///     number_of_cells
-///     number_of_edges_in_cell edge1 edge 2 ...
+///     number_of_edges_in_cell node1 node2 ... edge1 edge2 ... // number_of_nodes = number_of_edges
 ///     ...
 /// $EndCells
 /// $CellCenters

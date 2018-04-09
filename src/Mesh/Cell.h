@@ -39,7 +39,7 @@ private:
     std::vector<double> gWeights2D;
 
     //- Jacobian
-    double J;
+    std::function<double(const Point&)> J;
 
     //- Area of cell
     double area;
@@ -48,10 +48,13 @@ private:
     Point center;
 
     //- Space steps (hx, hy)
+        // DELETE!
     Point step;
 
+    std::vector<std::vector<double>> nonOrthoMatrix;
+
     //- local [-1,1]x[-1,1] to global rectangular cell
-    Point localToGlobal(const Point& point) const;
+    Point localToGlobal(const Point& localPoint) const;
 
     //- Set Gauss points
     void setGaussPoints();
@@ -65,22 +68,35 @@ public:
     /// geometric variables
 
     //- Compute hx, hy
+    // DELETE!
     const Point& h() const { return step; }
 
     //- Number of cell
     int number;
 
-    //- Number of edges
-    static const int nEdges = 4;
+    //- Number of entities (edges or numbers - mo matter)
+    int nEntities;
 
-    //- Edges define cell
+    //- Edges in cell
+    std::vector<std::shared_ptr<Point>> nodes;
+
+    //- Edges in cell
     std::vector<std::shared_ptr<Edge>> edges;
 
-    //- Compute area of cell
+    //- Return area of cell
     double getArea() const { return area; }
 
-    //- Calculate center of cell
+    //- Return center of cell
     const Point& getCellCenter() const { return center; }
+
+    //- Calculate element area
+    void setArea();
+
+    //- Set cell center
+    void setCellCenter(const Point& cc) { center = cc; }
+
+    //- Define Jacobian function
+    void setJacobian();
 
     /// RKDG variables
 
@@ -101,8 +117,8 @@ public:
 
     Cell(const Problem& prb) : problem(prb) {}
 
-    //- Construct cell using numvector of edges
-    Cell(const std::vector<std::shared_ptr<Edge> > &edges, const Problem& prb);
+    //- Construct cell using vectors of nodes and edges
+    Cell(const std::vector<std::shared_ptr<Point> > &nodes, const std::vector<std::shared_ptr<Edge> > &edges, const Problem& prb);
 
     //- Destructor
     ~Cell() {}
@@ -112,10 +128,15 @@ public:
     //- Calculate coordinates of cell nodes
     std::vector<std::shared_ptr<Point>> getCellCoordinates() const;
 
+    //- Find neighbour cells
+    std::vector<std::shared_ptr<Cell>> findNeighbourCells() const ;
+
     //- Find neighbour cells in X direction
+    //DELETE
     std::vector<std::shared_ptr<Cell>> findNeighbourCellsX() const;
 
     //- Find neighbour cells in Y direction
+    //DELETE
     std::vector<std::shared_ptr<Cell>> findNeighbourCellsY() const;
 
     //- Check if point belongs cell
@@ -135,8 +156,18 @@ public:
     //- Get coefficients of projection of function foo onto cell basis
     numvector<double, 5 * nShapes> projection(std::function<numvector<double,5>(const Point& point)>& init) const;
 
+    //- Calculate matrix of int ff multiplication
+    void setNonOrthoMatrix();
+
+    //- Solve SLAE in case of non-orthogonal functions
+    numvector<double, 5 * nShapes> correctNonOrtho(const numvector<double, 5 * nShapes>& rhs) const;
+
     //- Calculate \int_{cell} F(U) \nabla \phi_x + G(U) \nabla \phi_y
     numvector<double, 5 * nShapes> cellIntegral();
+
+    //- 2D Gauss integration of scalar function
+    double integrate( const std::function<double(const Point &)>& f) const;
+
 
     //- 2D Gauss integration of vector function
     numvector<double,5> integrate( const std::function<numvector<double, 5>(const Point&)>& f) const;

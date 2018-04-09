@@ -168,6 +168,7 @@ void FileConverter::readElements()
             {
                 getline(reader, str);
                 elementNodeNumbers = parseStringInt(str);
+                cellsAsNodes.push_back(elementNodeNumbers);
 
                 getElementEdges(elementNodeNumbers);
                 getCellCenter(elementNodeNumbers);
@@ -304,7 +305,8 @@ void FileConverter::getElementEdges(const std::vector<int>& nodeNumbers)
        createNewEdge(nodeNumbers[n-1],nodeNumbers[0]);
     }
 
-    cells.push_back(elementEdges);
+    cellsAsEdges.push_back(elementEdges);
+
 
 } // End getElementEdges
 
@@ -333,8 +335,8 @@ void FileConverter::setAdjointCells()
 
     adjEdgeCells.resize(nBEdges + nIEdges);
 
-    for (size_t iCell = 0; iCell < cells.size(); ++iCell)
-        for (int iEdge : cells[iCell])
+    for (size_t iCell = 0; iCell < cellsAsEdges.size(); ++iCell)
+        for (int iEdge : cellsAsEdges[iCell])
             adjEdgeCells[iEdge-1].push_back(iCell+1);
 
 } // End setAdjointCells
@@ -436,16 +438,16 @@ void FileConverter::importUNV ()
                     cout << i+1+edgesBoundary.size() << '|' << edgesInternal[i][0] << ' ' << edgesInternal[i][1] << endl;
 
                 cout << "cells\n";
-                for (size_t i = 0; i < cells.size(); ++i)
+                for (size_t i = 0; i < cellsAsEdges.size(); ++i)
                 {
                     cout << i+1 << '|';
-                    for (size_t j = 0; j < cells[i].size(); ++j)
-                         cout << cells[i][j] << ' ';
+                    for (size_t j = 0; j < cellsAsEdges[i].size(); ++j)
+                         cout << cellsAsEdges[i][j] << ' ';
                     cout << endl;
                 }
 
                 cout << "cell centers\n";
-                for (size_t i = 0; i < cells.size(); ++i)
+                for (size_t i = 0; i < cellsAsEdges.size(); ++i)
                     cout << i+1 << '|' << cellCenters[i][0] << ' ' << cellCenters[i][1] << endl;
 
                 cout << "adjoint cells for edges\n";
@@ -525,13 +527,15 @@ void FileConverter::exportRKDG()
     // --------------------------------------
 
     writer << "$Cells\n";
-    writer << cells.size() << endl;
+    writer << cellsAsEdges.size() << endl;
 
-    for (size_t i = 0; i < cells.size(); ++i)
+    for (size_t i = 0; i < cellsAsEdges.size(); ++i)
     {
-        writer << cells[i].size() << ' ';
-        for (size_t j = 0; j < cells[i].size(); ++j)
-             writer << cells[i][j] << ' ';
+        writer << cellsAsEdges[i].size() << ' ';
+        for (size_t j = 0; j < cellsAsNodes[i].size(); ++j)
+             writer << cellsAsNodes[i][j] << ' ';
+        for (size_t j = 0; j < cellsAsEdges[i].size(); ++j)
+             writer << cellsAsEdges[i][j] << ' ';
         writer << endl;
     }
 
@@ -540,9 +544,9 @@ void FileConverter::exportRKDG()
     // --------------------------------------
 
     writer << "$CellCenters\n";
-    writer << cells.size() << endl;
+    writer << cellsAsEdges.size() << endl;
 
-    for (size_t i = 0; i < cells.size(); ++i)
+    for (size_t i = 0; i < cellsAsEdges.size(); ++i)
         writer << cellCenters[i][0] << ' ' << cellCenters[i][1] << endl;
 
     writer << "$EndCellCenters\n";

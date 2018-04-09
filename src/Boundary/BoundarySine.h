@@ -28,7 +28,7 @@ class BoundarySine : public Boundary
 public:
 
     //- Constructor
-    BoundarySine(double a, double f, const Time& t, const Problem& prb, const numvector<double,5>& u0 = {1,0,0,0,1}) : a_(a), f_(f), u0_(u0), time_(t), problem_(prb) {}
+    BoundarySine(double a, double f, const Time& t, const Problem& prb, const numvector<double,5>& u0 = {1,0,0,0,1}) : Boundary(), a_(a), f_(f), u0_(u0), time_(t), problem_(prb) { type = "sine";}
 
     //- Set ref value
     void setRefValue(const numvector<double,5>& u0) {u0_ = u0;}

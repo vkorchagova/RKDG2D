@@ -35,18 +35,18 @@ void Problem::setInitialConditions()
     {
     //    return rho0;
     //    return 1.0;
-    //    return rho0 + 1e-3 * exp( - sqr(r.x() - 5.0));
+        return rho0 + 1e-3 * exp( - sqr(r.x() ));
      //  return rho0 + 1e-6 * exp( -2.0 * sqr(r.x() - 4.0) - 2.0 * sqr(r.y() - 4.0));
     //    return (r.y() < 0.5) ? 1.0 : 0.125;
     //   return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.125;
-        return (r.x() < 0.5) ? 1.0 : 0.125;
+    //    return (r.x() < 0.5) ? 1.0 : 0.125;
     //   return (r.y() < 1.0 && r.x() < 1.0 && r.y() > 2.0 && r.x() > 2.0) ? 0.0 : 1.0;
     //return (r.y() < 0.5) ? r.y() + 0.01 : r.y() + 0.51;
     };
 
     function<double(const Point& r)> initP = [=](const Point& r) \
     {
-    //    return (initRho(r)) / cpcv;
+       return (initRho(r)) / cpcv;
     //    return (initRho(r));
     //    return (r.y() < 0.5) ? 1.0 : 0.1;
     //    return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.1;
@@ -75,13 +75,15 @@ void Problem::setBoundaryConditions(const std::vector<Patch>& patches)
     shared_ptr<BoundarySine> bSine = make_shared<BoundarySine>(1e-3,0.5,time,*this);
 
     // boundary conditions: bottom/top/left/right
-    vector<shared_ptr<Boundary>> bc = {bOpen, bOpen, bOpen, bOpen};
-
-    //bottom
+    //vector<shared_ptr<Boundary>> bc = {bOpen, bOpen, bOpen, bOpen};
+    vector<shared_ptr<Boundary>> bc = {bOpen, bSine};
 
     for (int i = 0; i < patches.size(); ++i)
         for (int j = 0; j < patches[i].edgeGroup.size(); ++j)
             patches[i].edgeGroup[j]->setBoundary(bc[i]);
+
+    for (int i = 0; i < patches.size(); ++i)
+        cout << "Patch #" << i << ": type = " << bc[i]->type << endl;
 }
 
 //// RKDG methods

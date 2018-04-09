@@ -78,13 +78,13 @@ int main(int argc, char** argv)
 
 //    mesh.exportUniformMesh();
 
-//    problem.setBoundaryConditions(mesh.patches);
+    problem.setBoundaryConditions(mesh.patches);
 
 //    // Initialize flux
-//    FluxLLF numFlux(problem);
+    FluxLLF numFlux(problem);
 
 //    // Initialize solver
-//    Solver solver(mesh, problem, numFlux);
+    Solver solver(mesh, problem, numFlux);
 
 //    // Initialize indicator
 //    IndicatorHarten indicator(mesh, problem);
@@ -95,7 +95,7 @@ int main(int argc, char** argv)
 //    // ---------------
 
 //    // Set initial conditions
-//    solver.setInitialConditions();
+    solver.setInitialConditions();
 
 //    // Set mesh pointer in case of DiagProject BC
 //    solver.setMeshPointerForDiagBC();

@@ -24,14 +24,6 @@ private:
     //- File ifstream for mesh import
     mutable std::ifstream reader;
 
-    int nx;
-    int ny;
-    double Lx;
-    double Ly;
-
-    //- Construct rectangular mesh in the source code
-    void createRectangularMesh(const Problem &prb);
-
 public:
 
     //- Number of cells
@@ -60,9 +52,6 @@ public:
 
 public:
 
-    //- Construct uniform rectangular mesh by number of cells and size of flow domain
-    Mesh2D(int nx, int ny, double Lx, double Ly, const Problem& prb);
-
     //- Construct mesh by import from UNV file
     Mesh2D(std::string fileName, const Problem& prb);
 
@@ -71,9 +60,6 @@ public:
 
     //- Import mesh
     void importMesh(std::string fileName, const Problem &prb);
-
-    //- Export uniform rectangular mesh
-    void exportUniformMesh() const;
 
     //- Export arbitrary 2D mesh in custom RKDG format like .msh
     void exportMesh() const;

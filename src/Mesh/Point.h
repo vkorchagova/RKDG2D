@@ -16,6 +16,8 @@ public:
     //- Number of node
     int number;
 
+public:
+
     //- Default constructor
     Point(double val = 0.0) : numvector(val) {}
 

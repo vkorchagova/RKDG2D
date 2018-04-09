@@ -31,7 +31,7 @@ void Solver::setInitialConditions()
 
     for (int k = 0; k < nCells; ++k)
     {
-        problem.alpha[k] = mesh.cells[k]->projection(problem.init);
+        problem.alpha[k] = mesh.cells[k]->correctNonOrtho(mesh.cells[k]->projection(problem.init));
         alphaPrev[k] = problem.alpha[k];
     }
 

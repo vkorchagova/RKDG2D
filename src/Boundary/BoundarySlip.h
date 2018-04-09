@@ -6,7 +6,7 @@
 class BoundarySlip : public Boundary
 {
 public:
-    BoundarySlip() {};
+    BoundarySlip() : Boundary() { type = "slip";}
 
     //- Apply boundary condition
     numvector<double, 5> applyBoundary(const numvector<double, 5>& solLeft = {0.0, 0.0, 0.0, 0.0, 0.0}) const override;

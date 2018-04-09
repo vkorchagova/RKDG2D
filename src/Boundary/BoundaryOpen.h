@@ -8,7 +8,7 @@ class BoundaryOpen : public Boundary
 public:
 
     //- Default constructor
-    BoundaryOpen() {};
+    BoundaryOpen() : Boundary() { type = "open";}
 
     //- Apply boundary condition
     numvector<double, 5> applyBoundary(const numvector<double, 5>& solLeft = {0.0, 0.0, 0.0, 0.0, 0.0}) const override;

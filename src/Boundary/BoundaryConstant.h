@@ -10,7 +10,7 @@ class BoundaryConstant : public Boundary
 public:
 
     //- Constructor
-    BoundaryConstant(const numvector<double, 5>& defValue) : fixedValue(defValue) {};
+    BoundaryConstant(const numvector<double, 5>& defValue) : Boundary(), fixedValue(defValue) { type = "constant"; }
 
     //- Apply boundary condition
     numvector<double, 5> applyBoundary(const numvector<double, 5>& solLeft = {0.0, 0.0, 0.0, 0.0, 0.0}) const override;

@@ -29,6 +29,15 @@ std::vector<numvector<double, dim>> operator * (const std::vector<numvector<doub
 //- Sum of two vector<numvector>s
 std::vector<numvector<double, dim>> operator + (const std::vector<numvector<double, dim>>& b, const std::vector<numvector<double, dim>>& a);
 
+// return LU-factorization of matrix (+ transform of rhs)
+
+std::vector<std::vector<double> > forwardGauss(const std::vector<std::vector<double>>& data, bool partChoice = true);
+
+std::vector<double > reverseGauss(const std::vector<std::vector<double>>& data);
+
+int maxAbsPosition(const std::vector<std::vector<double>>& data, int i);
+
+void ChangeRows(std::vector<std::vector<double>>& data, int p, int q);
 
 namespace std
 {

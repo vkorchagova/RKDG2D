@@ -52,6 +52,99 @@ void sum (const vector<numvector<double, dim>>& a, const vector<numvector<double
         res[cell][val] = a[cell][val] + b[cell][val];
 };
 
+// return LU-factorization of matrix (+ transform of rhs)
+
+vector<vector<double> > forwardGauss(const vector<vector<double> >& data, const bool partChoice)
+{
+    int n = data.size();
+
+    vector<vector<double> > LU = data;
+
+    for (int i = 0; i < n; ++i) //for all rows
+    {
+        if (partChoice)
+        {
+            int maxI = maxAbsPosition(LU,i);
+            ChangeRows(LU,i,maxI);
+        }
+
+        if (fabs(LU[i][i]) < 1e-12)
+        {
+            cout << "Bad matrix: element " << i << " in diag = " << LU[i][i] << endl;
+            exit(0);
+        }
+
+        for (int k = i+1; k < n; ++k) //just see elements lower than matrix diag
+        {
+            double c = LU[k][i]/LU[i][i];
+
+            for (int j = i; j < n; ++j)
+            {
+                LU[k][j] = LU[k][j] - c*LU[i][j];
+            }
+
+            //for right part
+            LU[k][n] = LU[k][n] - c*LU[i][n];
+        }
+    }
+
+    return LU;
+}
+
+vector<double > reverseGauss(const vector<vector<double> >& data)
+{
+    int n = data.size();
+
+    vector<double> solution(n,0);
+
+    for (int i = n-1; i >=0 ; --i)
+    {
+        solution[i] = data[i][n] / data[i][i];
+
+        for (int j = n-1; j > i; --j)
+        {
+            solution[i] -= solution[j]*data[i][j]/data[i][i];
+        }
+    }
+
+    return solution;
+}
+
+int maxAbsPosition(const vector<vector<double > >& data, const int i)
+{
+    int n = data.size();
+
+    int maxI = i;
+    double maxAbs = 0;
+
+    for (int k = i+1; k < n; ++k)
+    {
+        if (maxAbs < fabs(data[k][i]))
+        {
+            maxAbs = fabs(data[k][i]);
+            maxI = k;
+        }
+    }
+
+    return maxI;
+}
+
+void ChangeRows(vector<vector<double > >& data, const int p, const int q)
+{
+    if (p == q)
+    {
+        return;
+    }
+
+    int n = data[p].size();
+
+    for (int j = 0; j < n; ++j)
+    {
+        data[p][j] -= data[q][j];
+        data[q][j] += data[p][j];
+        data[p][j] = data[q][j] - data[p][j];
+    }
+}
 
 
 //-----------------------------------------------------------------------------------------
