@@ -6,8 +6,6 @@ CONFIG -= qt
 INCLUDEPATH += $$PWD \
     $$PWD/src/ \
     $$PWD/src/defs/ \
-    $$PWD/src/Time/ \
-    $$PWD/src/Boundary/ \
     $$PWD/src/Flux/ \
     $$PWD/src/Problem/ \
     $$PWD/src/Integrator/ \
@@ -17,13 +15,14 @@ INCLUDEPATH += $$PWD \
     $$PWD/src/Limiter/
 
 SOURCES += RKDG2D.cpp \
-    src/Time/TimeClass.cpp \
     src/Mesh/Cell.cpp \
     src/Mesh/Edge.cpp \
     src/Mesh/EdgeInternal.cpp \
     src/Mesh/Mesh2D.cpp \
     src/Mesh/EdgeBoundary.cpp \
-    src/Mesh/EdgeBoundaryDiagProjection.cpp \
+    src/Mesh/EdgeBoundaryInfty.cpp \
+    src/Mesh/EdgeBoundaryOpen.cpp \
+    src/Mesh/EdgeBoundarySlip.cpp \
     src/Problem/Problem.cpp \
     src/Solver/Solver.cpp \
     src/Flux/Flux.cpp \
@@ -38,24 +37,19 @@ SOURCES += RKDG2D.cpp \
     src/Limiter/Limiter.cpp \
     src/Limiter/LimiterFinDiff.cpp \
     src/Limiter/LimiterMUSCL.cpp \
-    src/Limiter/LimiterWENOS.cpp \
-    src/Boundary/Boundary.cpp \
-    src/Boundary/BoundarySlip.cpp \
-    src/Boundary/BoundaryOpen.cpp \
-    src/Boundary/BoundaryConstant.cpp \
-    src/Boundary/BoundarySine.cpp \
-    src/Indicator/IndicatorHarten.cpp
+    src/Limiter/LimiterWENOS.cpp
 
 
 HEADERS += src/numvector.h \
-    src/Time/TimeClass.h \
     src/Mesh/Mesh2D.h \
     src/Mesh/Point.h \
     src/Mesh/Edge.h \
     src/Mesh/EdgeInternal.h \
     src/Mesh/Cell.h \
     src/Mesh/EdgeBoundary.h \
-    src/Mesh/EdgeBoundaryDiagProjection.h \
+    src/Mesh/EdgeBoundaryInfty.h \
+    src/Mesh/EdgeBoundaryOpen.h \
+    src/Mesh/EdgeBoundarySlip.h \
     src/Problem/Problem.h \
     src/Solver/Solver.h \
     src/Flux/Flux.h \
@@ -70,10 +64,4 @@ HEADERS += src/numvector.h \
     src/Limiter/Limiter.h \
     src/Limiter/LimiterFinDiff.h \
     src/Limiter/LimiterMUSCL.h \
-    src/Limiter/LimiterWENOS.h \
-    src/Boundary/Boundary.h \
-    src/Boundary/BoundarySlip.h \
-    src/Boundary/BoundaryOpen.h \
-    src/Boundary/BoundaryConstant.h \
-    src/Boundary/BoundarySine.h \
-    src/Indicator/IndicatorHarten.h
+    src/Limiter/LimiterWENOS.h

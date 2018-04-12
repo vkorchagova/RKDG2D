@@ -1,13 +1,13 @@
 //- RKDG 2D v.0.1
 //  Structured rectangular mesh
 
+
+
 #include <stdio.h>
 #include <iostream>
 #include <string>
-
-#include "defs.h"
-#include "TimeClass.h"
 #include <time.h>
+#include "defs.h"
 #include "Mesh2D.h"
 #include "Solver.h"
 #include "FluxLLF.h"
@@ -21,21 +21,14 @@
 #include "LimiterMUSCL.h"
 #include "LimiterWENOS.h"
 
-
 using namespace std;
+
+
 
 
 int main(int argc, char** argv)
 {    
-
     // Mesh parameters
-
-    double Lx = 1.0;
-    double Ly = 1.0;
-
-    int nx = 40;
-    int ny = 40;
-
 
 //    double Lx = 1.0;
 //    double Ly = 1.0;
@@ -43,42 +36,28 @@ int main(int argc, char** argv)
 //    int nx = 100;
 //    int ny = 1;
 
-//    double Lx = 10.0;
-//    double Ly = 1;
+    double Lx = 1.0;
+    double Ly = 1.0;
 
-//    int nx = 128;
-//    int ny = 1;
+    int nx = 100;
+    int ny = 100;
 
     // Time parameters
-
-//    double Co = 0.1;
-//    double tEnd = 3.0;
-
-//    int freqWrite = 100;
 
     double Co = 0.1;
     double tEnd = 0.2;
 
-    int freqWrite = 1;
+    int freqWrite = 10;
 
     // ---------------
 
-    // Initialize time
-    Time time;
+    // Initialize mesh
+    Mesh2D mesh(nx, ny, Lx, Ly);
+
+    mesh.exportMesh();
 
     // Initialize problem
-    Problem problem(time);
-
-    // Initialize mesh
-    Mesh2D mesh(nx, ny, Lx, Ly, problem);
-
-//    mesh.importMesh("Mesh_1.unv");
-
-//    mesh.exportMesh();
-
-    mesh.exportUniformMesh();
-
-    problem.setBoundaryConditions(mesh.patches);
+    Problem problem;
 
     // Initialize flux
     FluxLLF numFlux(problem);
@@ -87,15 +66,18 @@ int main(int argc, char** argv)
     Solver solver(mesh, problem, numFlux);
 
     // Initialize indicator
-    IndicatorKXRCF indicator(mesh, problem);
+    IndicatorKXRCF indicator(mesh,problem);
 
     //Initialize limiter
-    LimiterWENOS limiter(indicator, problem);
+    LimiterWENOS limiter(indicator,problem);
 
     // ---------------
 
     // Set initial conditions
     solver.setInitialConditions();
+
+    // Set boundary conditions
+    solver.setBoundaryConditions();
 
     // Set mesh pointer in case of DiagProject BC
     solver.setMeshPointerForDiagBC();
@@ -118,35 +100,23 @@ int main(int argc, char** argv)
 
     t00 = clock();
 
-
     int iT = 1; //iteration number
 
     for (double t = tau; t <= tEnd + 0.5*tau; t += tau)
     {
        t1 = clock();
 
-       time.updateTime(t);
-
        cout << "---------\nt = " << t << endl;
 
        k1 = solver.assembleRHS(solver.alphaPrev);
        solver.alphaNext = solver.alphaPrev + k1 * tau;
 
-       cout << "before limiting" << solver.alphaNext[49] << endl;
-
-
        limiter.limit(solver.alphaNext);
-
-       cout << "after limiting" << solver.alphaNext[49] << endl;
 
        k2 = solver.assembleRHS(solver.alphaNext);
        solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
 
-       cout << "before limiting" << solver.alphaNext[49] << endl;
-
        limiter.limit(solver.alphaNext);
-
-       cout << "after limiting" << solver.alphaNext[49] << endl;
 
        if (iT % freqWrite == 0)
        {

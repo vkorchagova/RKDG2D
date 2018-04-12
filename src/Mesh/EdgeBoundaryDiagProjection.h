@@ -32,10 +32,14 @@ public:
     //// RKDG methods
 
     //- Set BC function
-    virtual void setBoundary(const std::shared_ptr<Boundary>& bound) override {}
+    virtual void setBoundaryFunction(const numvector<double, 5>& bc) override { }
 
     //- Set mesh pointer
     void setMeshPointer(const Mesh2D& msh) { mesh = &msh; }
+
+    //- Apply boundary condition
+    numvector<double, 5> applyBoundary(const numvector<double, 5>& solLeft = {0.0, 0.0, 0.0, 0.0, 0.0}) const override
+    { return { 0, 0, 0, 0, 0 }; }
 
     //- Calculate local fluxes in gauss points
     virtual void getLocalFluxes(const Flux& flux) override;

@@ -31,6 +31,7 @@ void Solver::setInitialConditions()
 
     for (int k = 0; k < nCells; ++k)
     {
+        mesh.cells[k]->setProblem(problem);
         problem.alpha[k] = mesh.cells[k]->projection(problem.init);
         alphaPrev[k] = problem.alpha[k];
     }
@@ -44,13 +45,36 @@ void Solver::setInitialConditions()
 
 } // end setInitialConditions
 
+void Solver::setBoundaryConditions() const
+{
+    int nEdgesHor = mesh.edgesHor.size();
+    int nEdgesVer = mesh.edgesVer.size();
+
+    for (int i = 0; i < nEdgesHor; ++i)
+        mesh.edgesHor[i]->setBoundaryFunction(problem.infty);
+
+    for (int i = 0; i < nEdgesVer; ++i)
+        mesh.edgesVer[i]->setBoundaryFunction(problem.infty);
+} // setBoundaryConditions
+
 void Solver::setMeshPointerForDiagBC()
 {
-    int nEdgesBou = mesh.edgesBoundary.size();
+    int nEdgesHor = mesh.edgesHor.size();
+    int nEdgesVer = mesh.edgesVer.size();
 
-    for (int i = 0; i < nEdgesBou; ++i)
+    for (int i = 0; i < nEdgesHor; ++i)
     {
-        shared_ptr<EdgeBoundaryDiagProjection> edgeBound = dynamic_pointer_cast<EdgeBoundaryDiagProjection>(mesh.edgesBoundary[i]);
+        shared_ptr<EdgeBoundaryDiagProjection> edgeBound = dynamic_pointer_cast<EdgeBoundaryDiagProjection>(mesh.edgesHor[i]);
+
+        if (edgeBound == NULL)
+            continue;
+
+        edgeBound->setMeshPointer(mesh);
+    }
+
+    for (int i = 0; i < nEdgesVer; ++i)
+    {
+        shared_ptr<EdgeBoundaryDiagProjection> edgeBound = dynamic_pointer_cast<EdgeBoundaryDiagProjection>(mesh.edgesVer[i]);
 
         if (edgeBound == NULL)
             continue;
@@ -63,18 +87,18 @@ vector<numvector<double, 5 * nShapes>> Solver::assembleRHS(const std::vector<num
 {
     problem.setAlpha(alpha);
 
-    int nEdgesInt = mesh.edgesInternal.size();
-    int nEdgesBou = mesh.edgesBoundary.size();
+    int nEdgesHor = mesh.edgesHor.size();
+    int nEdgesVer = mesh.edgesVer.size();
 
     int nCells = mesh.cells.size();
 
     // compute fluxes in gauss points on edges
 
-    for (int i = 0; i < nEdgesInt; ++i)
-        mesh.edgesInternal[i]->getLocalFluxes(flux);
+    for (int i = 0; i < nEdgesHor; ++i)
+        mesh.edgesHor[i]->getLocalFluxes(flux);
 
-    for (int i = 0; i < nEdgesBou; ++i)
-        mesh.edgesBoundary[i]->getLocalFluxes(flux);
+    for (int i = 0; i < nEdgesVer; ++i)
+        mesh.edgesVer[i]->getLocalFluxes(flux);
 
 
     vector<numvector<double, 5 * nShapes>> rhs(mesh.nCells);

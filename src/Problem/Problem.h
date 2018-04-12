@@ -5,17 +5,14 @@
 #include <functional>
 #include "numvector.h"
 #include "Point.h"
-#include "BoundarySlip.h"
-#include "BoundaryOpen.h"
-#include "BoundarySine.h"
-#include "defs.h"
+//#include "defs.h"
 
 //- Square
 template<class T>
 inline T sqr(T x) {return x*x;}
 
-class Patch;
-
+//- Number of basis functions
+const int nShapes = 3;
 
 class Problem
 {
@@ -35,24 +32,18 @@ public:
     std::vector<numvector<double, 5 * nShapes>> alpha;
     //const std::vector<numvector<double, 5 * nShapes>>& alpha;
 
-    //- Reference to time
-    const Time& time;
-
 public:
 
-    //- Constructor
-    Problem (const Time& t);
+    //- Default constructor
+    Problem ();
+
+    //Problem(const std::vector<numvector<double, 5 * nShapes>>& al = {});
 
     //- Destructor
     ~Problem();
 
-    //- Set actual coeffs
+    //- Get actual coeffs
     void setAlpha(const std::vector<numvector<double, 5 * nShapes> >& a);
-
-    //- Set initial conditions as functions
-    void setInitialConditions();
-
-    void setBoundaryConditions(const std::vector<Patch> &patches);
 
     //- Calculate pressure using conservative variables
     double getPressure(const numvector<double,5>& sol) const;

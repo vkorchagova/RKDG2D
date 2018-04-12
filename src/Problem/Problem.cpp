@@ -1,17 +1,57 @@
 #include "Problem.h"
 #include <iostream>
 
-#include "Patch.h"
-#include "EdgeBoundary.h"
-
 using namespace std;
 
 // ------------------ Constructors & Destructors ----------------
 
 //Problem::Problem(const std::vector<numvector<double, 5 * nShapes> > &al) : alpha(al)
-Problem::Problem(const Time& t) : time(t)
+Problem::Problem()
 {
-    setInitialConditions();
+    // Function for initial condition
+    double rho0 = 1.0;
+    double e0 = rho0  / cpcv / (cpcv - 1.0) ;
+    double v0 = 0.0;
+
+    function<double(const Point& r)> initRho = [=](const Point& r) \
+    { 
+    //    return 1.0;
+    //   return rho0 + 1e-6 * exp( -2.0 * sqr(r.x() - 4.0) - 2.0 * sqr(r.y() - 4.0));
+    //    return (r.y() < 0.5) ? 1.0 : 0.125;
+       return ((r.x() + r.y()) < 1.001) ? 1.0 : 0.125;
+    //    return (r.x() < 0.5) ? 1.0 : 0.925;
+    //   return (r.y() < 1.0 && r.x() < 1.0 && r.y() > 2.0 && r.x() > 2.0) ? 0.0 : 1.0;
+    //return (r.y() < 0.5) ? r.y() + 0.01 : r.y() + 0.51;
+    };
+
+    function<double(const Point& r)> initP = [=](const Point& r) \
+    { 
+    //    return (initRho(r)) / cpcv;
+    //    return (initRho(r));
+    //    return (r.y() < 0.5) ? 1.0 : 0.1;
+        return ((r.x() + r.y()) < 1.001) ? 1.0 : 0.1;
+    //    return (r.x() < 0.5) ? 1.0 : 0.9;
+    };
+
+
+    function<double(const Point& r)> initV = [](const Point& r) \
+    {
+        return 0.0;
+    //    return (r.y() < 0.5) ? 0.0 : 0.0;
+    //    return ((r.x() + r.y()) < 0.5) ? 0.0 : 0.0;
+    //    return (r.x() < 0.5) ? 0.75 : 0.0;
+	//return 0.001 * exp( -2.0 * pow(r.x() - 4.0, 2) - 2.0 * pow(r.y() - 4.0, 2)); 
+    //return r.y();
+    };
+
+    //init = [=](const Point& r) { return numvector<double, 5> { initRho(r), 0.0, initV(r), 0.0, initP(r) / (cpcv - 1.0) }; };
+    init = [=](const Point& r) { return numvector<double, 5> { initRho(r), initV(r), 0.0, 0.0, initP(r) / (cpcv - 1.0) }; };
+
+
+    // For boundary conditions
+    infty = { rho0, 0.0, v0, 0.0, e0 };
+
+
 } // end constructor by mesh
 
 Problem::~Problem()
@@ -24,65 +64,7 @@ Problem::~Problem()
 
 // ------------------ Public class methods --------------------
 
-void Problem::setInitialConditions()
-{
-    // Function for initial condition
-    double rho0 = 1.0;
-    double e0 = rho0  / cpcv / (cpcv - 1.0) ;
-    double v0 = 0.0;
 
-    function<double(const Point& r)> initRho = [=](const Point& r) \
-    {
-    //    return rho0;
-    //    return 1.0;
-    //    return rho0 + 1e-3 * exp( - sqr(r.x() - 5.0));
-     //  return rho0 + 1e-6 * exp( -2.0 * sqr(r.x() - 4.0) - 2.0 * sqr(r.y() - 4.0));
-    //    return (r.y() < 0.5) ? 1.0 : 0.125;
-       return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.125;
-    //    return (r.x() < 0.5) ? 1.0 : 0.125;
-    //   return (r.y() < 1.0 && r.x() < 1.0 && r.y() > 2.0 && r.x() > 2.0) ? 0.0 : 1.0;
-    //return (r.y() < 0.5) ? r.y() + 0.01 : r.y() + 0.51;
-    };
-
-    function<double(const Point& r)> initP = [=](const Point& r) \
-    {
-    //    return (initRho(r)) / cpcv;
-    //    return (initRho(r));
-    //    return (r.y() < 0.5) ? 1.0 : 0.1;
-        return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.1;
-    //    return (r.x() < 0.5) ? 1.0 : 0.1;
-    };
-
-
-    function<double(const Point& r)> initV = [](const Point& r) \
-    {
-        return 0.0;
-    //    return (r.y() < 0.5) ? 0.0 : 0.0;
-    //    return ((r.x() + r.y()) < 0.5) ? 0.0 : 0.0;
-    //    return (r.x() < 0.5) ? 0.75 : 0.0;
-    //return 0.001 * exp( -2.0 * pow(r.x() - 4.0, 2) - 2.0 * pow(r.y() - 4.0, 2));
-    //return r.y();
-    };
-
-    //init = [=](const Point& r) { return numvector<double, 5> { initRho(r), 0.0, initV(r), 0.0, initP(r) / (cpcv - 1.0) }; };
-    init = [=](const Point& r) { return numvector<double, 5> { initRho(r), initV(r), 0.0, 0.0, initP(r) / (cpcv - 1.0) }; };
-}
-
-void Problem::setBoundaryConditions(const std::vector<Patch>& patches)
-{
-    shared_ptr<BoundarySlip> bSlip = make_shared<BoundarySlip>();
-    shared_ptr<BoundaryOpen> bOpen = make_shared<BoundaryOpen>();
-    shared_ptr<BoundarySine> bSine = make_shared<BoundarySine>(1e-3,0.5,time,*this);
-
-    // boundary conditions: bottom/top/left/right
-    vector<shared_ptr<Boundary>> bc = {bOpen, bOpen, bOpen, bOpen};
-
-    //bottom
-
-    for (int i = 0; i < patches.size(); ++i)
-        for (int j = 0; j < patches[i].edgeGroup.size(); ++j)
-            patches[i].edgeGroup[j]->setBoundary(bc[i]);
-}
 
 //// RKDG methods
 
@@ -93,17 +75,11 @@ void Problem::setAlpha(const std::vector<numvector<double, 5 * nShapes> >& a)
 
 double Problem::getPressure(const numvector<double, 5>& sol) const
 {
-    // uncomment for LEE
-//    numvector<double,5> initfun = init(Point({0.0,0.0}));
-
-//    double rho0 = initfun[0];
-//    double p0 = initfun[4] * (cpcv - 1);
-
-//    return p0 * pow(sol[0] / rho0 , cpcv);
-
     double magRhoU2 = sqr(sol[1]) + sqr(sol[2]) + sqr(sol[3]);
 
     return (cpcv - 1.0)*(sol[4] - 0.5*magRhoU2 / sol[0]);
+
+    //return sol[0];
 } // end getPressure
 
 double Problem::c(const numvector<double, 5>& sol) const
@@ -111,6 +87,10 @@ double Problem::c(const numvector<double, 5>& sol) const
     return sqrt( cpcv * getPressure(sol) / sol[0]);
 } // end c for cell
 
+//double Problem::h(const numvector<double, 5>& sol) const
+//{
+//    return (sol[4] + getPressure(sol)) / sol[0];
+//}
 
 double Problem::c_av(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const
 {
@@ -148,6 +128,13 @@ numvector<double, 5> Problem::lambdaF(const numvector<double, 5>& solOne, const 
     return lambdaF_Roe(solOne,solTwo);
 } // end lambdaF
 
+numvector<double, 5> Problem::lambdaG(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const
+{
+    double v = 0.5*(solOne[2] / solOne[0] + solTwo[2] / solTwo[0]);
+    double soundSpeed = c_av(solOne, solTwo);
+
+    return { v - soundSpeed, v, v, v, v + soundSpeed};
+} // end lambdaG
 
 
 numvector<double, 5> Problem::fluxF(const numvector<double, 5>& sol) const

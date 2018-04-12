@@ -8,11 +8,9 @@
 #include <functional>
 
 #include "numvector.h"
-#include "Point.h"
+#include "Problem.h"
 
 
-//- Number of basis functions
-const int nShapes = 3;
 
 const int dim = 5 * nShapes;
 

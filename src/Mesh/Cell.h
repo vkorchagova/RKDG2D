@@ -12,8 +12,7 @@
 #include "Point.h"
 //#include "Edge.h"
 #include "numvector.h"
-//#include "Problem.h"
-#include "defs.h"
+#include "Problem.h"
 
 #include <functional>
 #include <memory>
@@ -21,8 +20,6 @@
 #include <algorithm>
 
 class Edge;
-class Problem;
-
 
 class Cell
 {
@@ -41,6 +38,7 @@ private:
     //- Jacobian
     double J;
 
+private:
     //- Area of cell
     double area;
 
@@ -58,6 +56,9 @@ private:
 
     //- Set basis functions
     void setBasisFunctions();
+    
+    //- Default constructor
+    Cell() {}
 
 
 public:
@@ -65,9 +66,10 @@ public:
     /// geometric variables
 
     //- Compute hx, hy
-    const Point& h() const { return step; }
+    const Point& h() const { return step; };
 
     //- Number of cell
+    //debug
     int number;
 
     //- Number of edges
@@ -85,13 +87,12 @@ public:
     /// RKDG variables
 
     //- Pointer to problem
-    const Problem& problem;
+    const Problem* problem;
 
     //- List of basis functions
     std::vector<std::function<double(const Point&)>> phi;
 
     //- Offset for basis functions
-    //debug
     std::vector<double> offsetPhi;
 
     //- Gradient of basis functions
@@ -99,13 +100,12 @@ public:
 
 public:
 
-    Cell(const Problem& prb) : problem(prb) {}
 
     //- Construct cell using numvector of edges
-    Cell(const numvector<std::shared_ptr<Edge>, nEdges>& edges, const Problem& prb);
+    Cell(const numvector<std::shared_ptr<Edge>, nEdges>& edges);
 
     //- Destructor
-    ~Cell() {}
+    ~Cell() {};
 
     /// geometric methods
 
@@ -121,10 +121,11 @@ public:
     //- Check if point belongs cell
     bool insideCell(const Point& point) const;
 
-    //- TODO: list of neighbour cells
-
 
     /// RKDG methods
+
+    //- Set problem
+    void setProblem(const Problem& prb) { problem = &prb; }
 
     //- Reconstruct solution
     numvector<double, 5> reconstructSolution(const Point& point) const;

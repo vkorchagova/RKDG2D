@@ -34,7 +34,7 @@ public:
     //- Destructor
     virtual ~EdgeInternal() = default;
 
-    virtual void setBoundary(const std::shared_ptr<Boundary>& bound) override {}
+    virtual void setBoundaryFunction(const numvector<double, 5>& bc) override {}
 
     //- Calculate local fluxes in gauss points
     virtual void getLocalFluxes(const Flux& flux) override;

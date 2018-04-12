@@ -4,22 +4,15 @@ using namespace std;
 
 void LimiterWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
 {
-    return limitTog(alpha);
+    return limitSep(alpha);
 }
 
 void LimiterWENOS::limitTog(vector<numvector<double, 5 * nShapes>>& alpha)
 {
     problem.setAlpha(alpha);
-    vector<int> troubledCells = {100500};
-    troubledCells = indicator.checkDiscontinuities();
+    vector<int> troubledCells = indicator.checkDiscontinuities();
 
-
-//        cout << "-----\ntroubled cells in limiter: " ;
-//        for (int iCell : troubledCells)
-//            cout << iCell << ' ';
-
-//        cout << endl;
-//         cout << "-----\n";
+    // linear weights
 
     vector<double> gamma;
     double g = 0.001;
@@ -47,8 +40,6 @@ void LimiterWENOS::limitTog(vector<numvector<double, 5 * nShapes>>& alpha)
 
     for (int iCell : troubledCells)
     {
-        //cout << "----\n num tr cell = " << iCell << endl;
-
         // find neighbours
 
         shared_ptr<Cell> cell = indicator.mesh.cells[iCell];
@@ -109,19 +100,11 @@ void LimiterWENOS::limitTog(vector<numvector<double, 5 * nShapes>>& alpha)
                 wTilde[k][j] = gamma[k] * (1.0 / sqr(beta[k][j] + 1e-6));
             }
 
-//        for (size_t k = 0; k < nCells; ++k)
-//        {
-//            cout << "cell no = " << k << endl;
-//            cout << beta[k] << endl;
-//        }
-
         wSum = {0.0, 0.0, 0.0, 0.0, 0.0};
 
         for (int j = 0; j < 5; ++j)
             for (size_t k = 0; k < nCells; ++k)
                 wSum[j] += wTilde[k][j];
-
-        //cout << wSum << endl;
 
         for (size_t k = 0; k < nCells; ++k)
             for (int j = 0; j < 5; ++j)

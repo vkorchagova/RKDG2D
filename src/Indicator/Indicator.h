@@ -19,7 +19,7 @@ public:
 public:
 
     //- Constructor
-    Indicator(const Mesh2D& msh, const Problem& prb) : mesh(msh), problem(prb) {}
+    Indicator(const Mesh2D& msh, const Problem& prb) : mesh(msh),problem(prb) {}
 
     //- Destructor
     virtual ~Indicator() {}

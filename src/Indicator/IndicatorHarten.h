@@ -5,6 +5,8 @@
 
 class IndicatorHarten : public Indicator
 {
+
+
 public:
 
     //- Constructor

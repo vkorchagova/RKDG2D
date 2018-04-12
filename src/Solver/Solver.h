@@ -44,6 +44,9 @@ public:
 
     //// RKDG methods
 
+    //- Set functions for boundary conditions
+    void setBoundaryConditions() const;
+
     //- Calculate coeffs with initial conditions
     void setInitialConditions();
 

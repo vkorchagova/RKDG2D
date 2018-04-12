@@ -106,18 +106,18 @@ Point massFlux(const Edge& edge, const Cell& cell, const Point& nrm)
 		{
             double h = (mom[1] <= -threshold) ? edge.getLength() : -(mom[0] * edge.getLength() / (mom[1] - mom[0]));
 			double mySolH = cell.reconstructSolution(*edge.nodes[0] + tau*h, 0);
-            double neibSolH = edgeBound.bc->applyBoundary(cell.reconstructSolution(*edge.nodes[0] + tau*h))[0];// neib.reconstructSolution( *edge.nodes[0] + tau*h, 0);
+			double neibSolH = edgeBound.applyBoundary(cell.reconstructSolution(*edge.nodes[0] + tau*h))[0];// neib.reconstructSolution( *edge.nodes[0] + tau*h, 0);
 
-            return Point({ 0.5*h*(cell.reconstructSolution(edge.nodes[0], 0) - edgeBound.bc->applyBoundary(cell.reconstructSolution(*edge.nodes[0]))[0] + mySolH - neibSolH), h });
+			return Point({ 0.5*h*(cell.reconstructSolution(edge.nodes[0], 0) - edgeBound.applyBoundary(cell.reconstructSolution(*edge.nodes[0]))[0] + mySolH - neibSolH), h });
 		}
 		else
 		{
 			double h = -(mom[0] * edge.getLength() / (mom[1] - mom[0]));
 			double mySolH = cell.reconstructSolution(*edge.nodes[0] + tau*h, 0);
-            double neibSolH = edgeBound.bc->applyBoundary(cell.reconstructSolution(*edge.nodes[0] + tau*h))[0];// neib.reconstructSolution( *edge.nodes[0] + tau*h, 0);
+			double neibSolH = edgeBound.applyBoundary(cell.reconstructSolution(*edge.nodes[0] + tau*h))[0];// neib.reconstructSolution( *edge.nodes[0] + tau*h, 0);
 
 			return Point(
-            { 0.5*(edge.getLength() - h)*(cell.reconstructSolution(edge.nodes[1], 0) - edgeBound.bc->applyBoundary(cell.reconstructSolution(*edge.nodes[1]))[0] + mySolH - neibSolH), edge.getLength() - h }
+			{ 0.5*(edge.getLength() - h)*(cell.reconstructSolution(edge.nodes[1], 0) - edgeBound.applyBoundary(cell.reconstructSolution(*edge.nodes[1]))[0] + mySolH - neibSolH), edge.getLength() - h }
 			);
 		}
 
@@ -137,6 +137,8 @@ Point massFlux(const Edge& edge, const Cell& cell, const Point& nrm)
 
 vector<int> IndicatorKXRCF::checkDiscontinuities() const
 {
+    //vector<double> indicator(mesh.nCells);
+
     vector<int> troubledCells;
 
     double indicator;

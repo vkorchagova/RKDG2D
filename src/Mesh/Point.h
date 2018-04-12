@@ -2,25 +2,26 @@
 /// 2D Point class
 /// ------------------------------
 
+
 #ifndef POINT_H
 #define POINT_H
 
 #include "numvector.h"
 
 
+
 class Point : public numvector<double, 2>
 {
-
 public:
-
-    //- Number of node
-    int number;
-
     //- Default constructor
     Point(double val = 0.0) : numvector(val) {}
 
     //- Construct with defined values
     Point(const numvector<double, 2>& coord) : numvector(coord) {}
+
+	//- Construct with initializer list
+	//Point(const std::initializer_list<double>& list) : numvector(list) {}
+
 
     //- Copy constructor
     Point(const Point& p) = default;
