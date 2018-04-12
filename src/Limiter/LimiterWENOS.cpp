@@ -14,12 +14,12 @@ void LimiterWENOS::limitTog(vector<numvector<double, 5 * nShapes>>& alpha)
     troubledCells = indicator.checkDiscontinuities();
 
 
-        cout << "-----\ntroubled cells in limiter: " ;
-        for (int iCell : troubledCells)
-            cout << iCell << ' ';
+//        cout << "-----\ntroubled cells in limiter: " ;
+//        for (int iCell : troubledCells)
+//            cout << iCell << ' ';
 
-        cout << endl;
-         cout << "-----\n";
+//        cout << endl;
+//         cout << "-----\n";
 
     vector<double> gamma;
     double g = 0.001;
@@ -47,7 +47,7 @@ void LimiterWENOS::limitTog(vector<numvector<double, 5 * nShapes>>& alpha)
 
     for (int iCell : troubledCells)
     {
-        cout << "----\n num tr cell = " << iCell << endl;
+        //cout << "----\n num tr cell = " << iCell << endl;
 
         // find neighbours
 

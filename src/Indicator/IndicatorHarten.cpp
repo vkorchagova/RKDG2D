@@ -77,12 +77,12 @@ vector<int> IndicatorHarten::checkDiscontinuities() const
         }
     }
 
-    cout << "-----\ntroubled cells: " ;
-    for (int iCell : troubledCells)
-        cout << iCell << ' ';
+//    cout << "-----\ntroubled cells: " ;
+//    for (int iCell : troubledCells)
+//        cout << iCell << ' ';
 
-    cout << endl;
-     cout << "-----\n";
+//    cout << endl;
+//     cout << "-----\n";
 
     return troubledCells;
 }

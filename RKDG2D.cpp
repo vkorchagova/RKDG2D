@@ -33,8 +33,8 @@ int main(int argc, char** argv)
     double Lx = 1.0;
     double Ly = 1.0;
 
-    int nx = 10;
-    int ny = 10;
+    int nx = 40;
+    int ny = 40;
 
 
 //    double Lx = 1.0;
@@ -57,9 +57,9 @@ int main(int argc, char** argv)
 //    int freqWrite = 100;
 
     double Co = 0.1;
-    double tEnd = 0.001;
+    double tEnd = 0.2;
 
-    int freqWrite = 100;
+    int freqWrite = 1;
 
     // ---------------
 
@@ -74,107 +74,103 @@ int main(int argc, char** argv)
 
 //    mesh.importMesh("Mesh_1.unv");
 
-    mesh.exportMesh();
+//    mesh.exportMesh();
 
-//    mesh.exportUniformMesh();
+    mesh.exportUniformMesh();
 
-//    problem.setBoundaryConditions(mesh.patches);
+    problem.setBoundaryConditions(mesh.patches);
 
-//    // Initialize flux
-//    FluxLLF numFlux(problem);
+    // Initialize flux
+    FluxLLF numFlux(problem);
 
-<<<<<<< HEAD
-//    // Initialize solver
-//    Solver solver(mesh, problem, numFlux);
-=======
+    // Initialize solver
+    Solver solver(mesh, problem, numFlux);
+
     // Initialize indicator
     IndicatorKXRCF indicator(mesh, problem);
->>>>>>> parent of f735259... fixed bugs in Harten & WENO_S
 
-//    // Initialize indicator
-//    IndicatorHarten indicator(mesh, problem);
+    //Initialize limiter
+    LimiterWENOS limiter(indicator, problem);
 
-//    //Initialize limiter
-//    LimiterWENOS limiter(indicator, problem);
+    // ---------------
 
-//    // ---------------
+    // Set initial conditions
+    solver.setInitialConditions();
 
-//    // Set initial conditions
-//    solver.setInitialConditions();
+    // Set mesh pointer in case of DiagProject BC
+    solver.setMeshPointerForDiagBC();
 
-//    // Set mesh pointer in case of DiagProject BC
-//    solver.setMeshPointerForDiagBC();
+    // time step
 
-//    // time step
-
-//    double tau = min(mesh.cells[0]->h().x(),mesh.cells[0]->h().y()) * Co;
-//        // sound speed = 1 --- const in acoustic problems
-//        // only for uniform mesh hx and hy are similar for all cells
+    double tau = min(mesh.cells[0]->h().x(),mesh.cells[0]->h().y()) * Co;
+        // sound speed = 1 --- const in acoustic problems
+        // only for uniform mesh hx and hy are similar for all cells
 
 
-//    // run Runge --- Kutta 2 TVD
+    // run Runge --- Kutta 2 TVD
 
-//    vector<numvector<double, 5*nShapes>> k1, k2;
+    vector<numvector<double, 5*nShapes>> k1, k2;
 
-//    k1.resize(mesh.nCells);
-//    k2.resize(mesh.nCells);
+    k1.resize(mesh.nCells);
+    k2.resize(mesh.nCells);
 
-//    clock_t t1, t2, t00;
+    clock_t t1, t2, t00;
 
-//    t00 = clock();
-
-
-//    int iT = 1; //iteration number
-
-//    for (double t = tau; t <= tEnd + 0.5*tau; t += tau)
-//    {
-//       t1 = clock();
-
-//       time.updateTime(t);
-
-//       cout << "---------\nt = " << t << endl;
-
-//       k1 = solver.assembleRHS(solver.alphaPrev);
-//       solver.alphaNext = solver.alphaPrev + k1 * tau;
+    t00 = clock();
 
 
-//       limiter.limit(solver.alphaNext);
+    int iT = 1; //iteration number
 
-//       k2 = solver.assembleRHS(solver.alphaNext);
-//       solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
+    for (double t = tau; t <= tEnd + 0.5*tau; t += tau)
+    {
+       t1 = clock();
 
-       //cout << "before limiting" << solver.alphaNext[49] << endl;
+       time.updateTime(t);
 
- //      limiter.limit(solver.alphaNext);
+       cout << "---------\nt = " << t << endl;
 
-       //cout << "after limiting" << solver.alphaNext[49] << endl;
+       k1 = solver.assembleRHS(solver.alphaPrev);
+       solver.alphaNext = solver.alphaPrev + k1 * tau;
+
+       cout << "before limiting" << solver.alphaNext[49] << endl;
 
 
-//       limiter.limit(solver.alphaNext);
+       limiter.limit(solver.alphaNext);
 
-//       if (iT % freqWrite == 0)
-//       {
-//           //string fileName = "alphaCoeffs/" + to_string((long double)t);
-//           string fileName = "alphaCoeffs/" + to_string(t);
+       cout << "after limiting" << solver.alphaNext[49] << endl;
 
-//           ofstream output;
-//           output.open(fileName);
+       k2 = solver.assembleRHS(solver.alphaNext);
+       solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
 
-//           solver.write(output,solver.alphaNext);
+       cout << "before limiting" << solver.alphaNext[49] << endl;
 
-//           output.close();
-//       }
+       limiter.limit(solver.alphaNext);
 
-//       solver.alphaPrev = solver.alphaNext;
+       cout << "after limiting" << solver.alphaNext[49] << endl;
 
-//       iT++;
+       if (iT % freqWrite == 0)
+       {
+           //string fileName = "alphaCoeffs/" + to_string((long double)t);
+           string fileName = "alphaCoeffs/" + to_string(t);
 
-//       t2 = clock();
+           ofstream output;
+           output.open(fileName);
 
-//       cout << "step time: " << (float)(t2 - t1) / CLOCKS_PER_SEC << endl;
-//    }
+           solver.write(output,solver.alphaNext);
 
-//    cout << "=========\nElapsed time = " << (float)(t2 - t00) / CLOCKS_PER_SEC << endl;
+           output.close();
+       }
+
+       solver.alphaPrev = solver.alphaNext;
+
+       iT++;
+
+       t2 = clock();
+
+       cout << "step time: " << (float)(t2 - t1) / CLOCKS_PER_SEC << endl;
+    }
+
+    cout << "=========\nElapsed time = " << (float)(t2 - t00) / CLOCKS_PER_SEC << endl;
     cout << "---------\nEND \n";
 
     //cin.get();

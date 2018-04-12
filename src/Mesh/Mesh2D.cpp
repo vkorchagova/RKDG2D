@@ -3,7 +3,7 @@
 
 using namespace std;
 
-typedef EdgeBoundary edgeBoundaryT;
+typedef EdgeBoundaryDiagProjection edgeBoundaryT;
 
 // ------------------ Constructors & Destructors ----------------
 
@@ -69,9 +69,9 @@ void Mesh2D::createRectangularMesh(const Problem &prb)
 
     for (int j = 0; j < nx; ++j)
     { // bottom boundary
-        edgesHor.emplace_back( make_shared<EdgeBoundary>(nodes[j], nodes[j + 1]) );
+        edgesHor.emplace_back( make_shared<edgeBoundaryT>(nodes[j], nodes[j + 1]) );
         edgesHor.back()->n = Point({ 0.0, -1.0 });
-        edgesBoundary.emplace_back(dynamic_pointer_cast<EdgeBoundary>(edgesHor.back()));
+        edgesBoundary.emplace_back(dynamic_pointer_cast<edgeBoundaryT>(edgesHor.back()));
     }
 
 
@@ -85,9 +85,9 @@ void Mesh2D::createRectangularMesh(const Problem &prb)
 
     for (int j = 0; j < nx; ++j)
     { // top boundary
-        edgesHor.emplace_back( make_shared<EdgeBoundary>(nodes[ny*(nx + 1) + j], nodes[ny*(nx + 1) + j + 1]) );
+        edgesHor.emplace_back( make_shared<edgeBoundaryT>(nodes[ny*(nx + 1) + j], nodes[ny*(nx + 1) + j + 1]) );
         edgesHor.back()->n = Point({ 0.0, 1.0 });
-        edgesBoundary.emplace_back( dynamic_pointer_cast<EdgeBoundary>(edgesHor.back()) );
+        edgesBoundary.emplace_back( dynamic_pointer_cast<edgeBoundaryT>(edgesHor.back()) );
     }
 
     // get vertical edges: boundary + internal
@@ -95,9 +95,9 @@ void Mesh2D::createRectangularMesh(const Problem &prb)
     for (int i = 0; i < ny; ++i)
     {
         // left boundary
-        edgesVer.emplace_back( make_shared<EdgeBoundary>(nodes[i*(nx + 1)], nodes[i*(nx + 1) + nx + 1]) );
+        edgesVer.emplace_back( make_shared<edgeBoundaryT>(nodes[i*(nx + 1)], nodes[i*(nx + 1) + nx + 1]) );
         edgesVer.back()->n = Point({ -1.0, 0.0 });
-        edgesBoundary.emplace_back( dynamic_pointer_cast<EdgeBoundary>(edgesVer.back()) );
+        edgesBoundary.emplace_back( dynamic_pointer_cast<edgeBoundaryT>(edgesVer.back()) );
 
         for (int j = 1; j < nx; ++j)
         {
@@ -106,7 +106,7 @@ void Mesh2D::createRectangularMesh(const Problem &prb)
             edgesInternal.emplace_back( dynamic_pointer_cast<EdgeInternal>(edgesVer.back()) );
         }
         // right boundary
-        edgesVer.emplace_back( make_shared<EdgeBoundary>(nodes[i*(nx + 1) + nx ], nodes[i*(nx + 1) + nx + nx + 1]) );
+        edgesVer.emplace_back( make_shared<edgeBoundaryT>(nodes[i*(nx + 1) + nx ], nodes[i*(nx + 1) + nx + nx + 1]) );
         edgesVer.back()->n = Point({ 1.0, 0.0 });
         //edgesBoundary.emplace_back( dynamic_pointer_cast<EdgeBoundary>(edgesVer.back()) );
     }
@@ -114,7 +114,7 @@ void Mesh2D::createRectangularMesh(const Problem &prb)
     // add right boundary to list of boundary cells
     for (int i = 0; i < nEdgesVer-nx; ++i)
         if (i % (nx+1) == 0)
-            edgesBoundary.emplace_back( dynamic_pointer_cast<EdgeBoundary>(edgesVer[i+nx]) );
+            edgesBoundary.emplace_back( dynamic_pointer_cast<edgeBoundaryT>(edgesVer[i+nx]) );
 
     //add numbers of edges
     for (int i = 0; i < edgesBoundary.size(); ++i)
