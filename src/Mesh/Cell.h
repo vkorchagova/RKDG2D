@@ -39,7 +39,7 @@ private:
     std::vector<double> gWeights2D;
 
     //- Jacobian
-    std::function<double(const Point&)> J;
+    std::vector<double> J;
 
     //- Area of cell
     double area;
@@ -56,11 +56,7 @@ private:
     //- local [-1,1]x[-1,1] to global rectangular cell
     Point localToGlobal(const Point& localPoint) const;
 
-    //- Set Gauss points
-    void setGaussPoints();
 
-    //- Set basis functions
-    void setBasisFunctions();
 
 
 public:
@@ -97,6 +93,12 @@ public:
 
     //- Define Jacobian function
     void setJacobian();
+
+    //- Set Gauss points
+    void setGaussPoints();
+
+    //- Set basis functions
+    void setBasisFunctions();
 
     /// RKDG variables
 

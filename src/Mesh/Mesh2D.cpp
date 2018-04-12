@@ -11,7 +11,16 @@ typedef EdgeBoundary edgeBoundaryT;
 Mesh2D::Mesh2D(string fileName, const Problem& prb)
 {
     importMesh(fileName,prb);
-    // setGaussPoints
+
+
+    for (int i = 0; i < nCells; ++i)
+    {
+        cells[i]->setArea();
+        cells[i]->setGaussPoints();
+        cells[i]->setJacobian();
+        cells[i]->setBasisFunctions();
+        cells[i]->setNonOrthoMatrix();
+    }
 }
 
 Mesh2D::~Mesh2D()

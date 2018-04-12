@@ -15,14 +15,6 @@ Cell::Cell(const std::vector<std::shared_ptr<Point> > &defNodes, const vector<st
     
     //step.x() = edges[0]->nodes[1]->x() - edges[0]->nodes[0]->x();
     //step.y() = edges[nEdges-1]->nodes[1]->y() - edges[nEdges-1]->nodes[0]->y();
-    
-    setArea();
-    setGaussPoints();
-    setJacobian();
-    setBasisFunctions();
-    setNonOrthoMatrix();
-
-
 }
 
 // ------------------ Private class methods --------------------
@@ -91,13 +83,15 @@ void Cell::setArea()
 
 void Cell::setJacobian()
 {
+    function<double(const Point&)> fJ;
+
     if (nEntities == 3)
     {
-        J = [&](const Point& r){ return 2.0*area; };
+        fJ = [&](const Point& r){ return area; };
     }
     else if (nEntities == 4)
     {
-        J = [&](const Point& r)
+        fJ = [&](const Point& r)
         {
             double dpde = (nodes[1]->x() - nodes[0]->x()) * (1.0 - r.y()) + (nodes[2]->x() - nodes[3]->x()) * (1.0 + r.y());
             double dqde = (nodes[1]->y() - nodes[0]->y()) * (1.0 - r.y()) + (nodes[2]->y() - nodes[3]->y()) * (1.0 + r.y());
@@ -113,6 +107,10 @@ void Cell::setJacobian()
         exit(0);
     }
 
+    J.resize(nGP);
+
+    for (int i = 0; i < nGP; ++i)
+        J[i] = fJ(gPoints2D[i]);
 }
 
 void Cell::setGaussPoints()
@@ -143,7 +141,7 @@ void Cell::setGaussPoints()
     {
         if (nEntities == 4)
         {
-            nGP = 3;
+            nGP = 4;
 
             double isqrt3 = 0.57735026918962576;
 
@@ -155,11 +153,18 @@ void Cell::setGaussPoints()
         }
         else if (nEntities == 3)
         {
-            nGP = 1;
+//            nGP = 1;
 
-            gPoints2D.push_back(localToGlobal(Point({ 1.0/3.0, 1.0/3.0 })));
+//            gPoints2D.push_back(localToGlobal(Point({ 1.0/3.0, 1.0/3.0 })));
 
-            gWeights2D = { 1.0 };
+//            gWeights2D = { 1.0 };
+            nGP = 3;
+
+            gPoints2D.push_back(localToGlobal(Point({ 1.0/6.0, 1.0/6.0 })));
+            gPoints2D.push_back(localToGlobal(Point({ 2.0/3.0, 1.0/6.0 })));
+            gPoints2D.push_back(localToGlobal(Point({ 1.0/6.0, 2.0/3.0 })));
+
+            gWeights2D = { 1.0/3.0, 1.0/3.0, 1.0/3.0 };
         }
         else
         {
@@ -179,17 +184,31 @@ void Cell::setGaussPoints()
 
 void Cell::setBasisFunctions()
 {
-    offsetPhi.push_back(1.0);
-    offsetPhi.push_back(1.0);
-    offsetPhi.push_back(1.0);
+//    double isqrta  = 1.0 / sqrt(area);
+//    double isqrta2 = 1.0 / sqrt(area * area / 6.0 / sqrt(3));
 
-    phi.emplace_back([&](const Point& r){ return 1.0; });
-    phi.emplace_back([&](const Point& r){ return (r.x() - center.x()); });
-    phi.emplace_back([&](const Point& r){ return (r.y() - center.y()); });
+//    double isqrta  = 1.0;
+//    double isqrta2 = 1.0;
 
-    gradPhi.emplace_back([&](const Point& r)->Point { return Point({ 0.0, 0.0 }); });
-    gradPhi.emplace_back([&](const Point& r)->Point { return Point({ 1.0, 0.0 }); });
-    gradPhi.emplace_back([&](const Point& r)->Point { return Point({ 0.0, 1.0 }); });
+    offsetPhi.push_back(1.0 / sqrt(area));
+    offsetPhi.push_back(1.0 / sqrt(area * area / 6.0 / sqrt(3)));
+    offsetPhi.push_back(1.0 / sqrt(area * area / 6.0 / sqrt(3)));
+
+    phi.reserve(nShapes);
+    gradPhi.reserve(nShapes);
+
+//    phi.emplace_back([&](const Point& r){ return 1.0 ; });
+//    phi.emplace_back([&](const Point& r){ return (r.x() - center.x()); });
+//    phi.emplace_back([&](const Point& r){ return (r.y() - center.y()); });
+
+
+    phi.emplace_back([&](const Point& r){ return 1.0 / sqrt(area); });
+    phi.emplace_back([&](const Point& r){ return (r.x() - center.x()) * 1.0 / sqrt(area * area / 6.0 / sqrt(3)); });
+    phi.emplace_back([&](const Point& r){ return (r.y() - center.y()) * 1.0 / sqrt(area * area / 6.0 / sqrt(3)); });
+
+    gradPhi.emplace_back([&](const Point& r)->Point { return Point({ 0.0    , 0.0 }); });
+    gradPhi.emplace_back([&](const Point& r)->Point { return Point({ 1.0 / sqrt(area * area / 6.0 / sqrt(3)), 0.0 }); });
+    gradPhi.emplace_back([&](const Point& r)->Point { return Point({ 0.0    , 1.0 / sqrt(area * area / 6.0 / sqrt(3)) }); });
 
     if (nShapes == 6)
     {
@@ -229,7 +248,7 @@ void Cell::setNonOrthoMatrix()
 
     for (int i = 0; i < nShapes; ++i)
     {
-        f = [&](const Point& p) {  return phi[i](p) * phi[i](p); };
+        f = [&](const Point& p) { return phi[i](p) * phi[i](p); };
         nonOrthoMatrix[i][i] = integrate(f);
 
         for (int j = i+1; j < nShapes; ++j)
@@ -346,7 +365,7 @@ double Cell::integrate( const std::function<double(const Point &)>& f) const
     {
         double resF = f(gPoints2D[i]);
 
-        res += gWeights2D[i] * resF * J(gPoints2D[i]);
+        res += gWeights2D[i] * resF * J[i];
 
     }
 
@@ -364,7 +383,7 @@ numvector<double, 5> Cell::integrate( const std::function<numvector<double, 5>(c
 
         for (int k = 0; k < 5; ++k)
         {
-           res[k] += gWeights2D[i] * resF[k] * J(gPoints2D[i]);
+           res[k] += gWeights2D[i] * resF[k] * J[i];
         }
     }
 
@@ -388,7 +407,7 @@ numvector<double, 5 * nShapes> Cell::cellIntegral()
                    problem.fluxG(sol) * gradPhi[q](gPoints2D[i])[1];
 
             for (int p = 0; p < 5; ++p)
-                res[p * nShapes + q] += resV[p] * gWeights2D[i] * J(gPoints2D[i]);
+                res[p * nShapes + q] += resV[p] * gWeights2D[i] * J[i];
         }
     }
 
@@ -409,25 +428,31 @@ numvector<double, 5 * nShapes> Cell::correctNonOrtho(const numvector<double, 5 *
 {
     numvector<double, 5 * nShapes> alphaCorr;
 
-    vector<vector<double>> slae(nShapes);
+//    vector<vector<double>> slae(nShapes);
 
-    for (int i = 0; i < nShapes; ++i)
-        slae[i].resize(nShapes+1);
+//    for (int i = 0; i < nShapes; ++i)
+//        slae[i].resize(nShapes+1);
 
     for (int iSol = 0; iSol < 5; ++iSol)
     {
         // prepare data for gaussian solver
-        for (int i = 0; i < nShapes; ++i)
-        {
-            for (int j = 0; j < nShapes; ++j)
-                slae[i][j] = nonOrthoMatrix[i][j];
-            slae[i][nShapes] = rhs[i + iSol*nShapes];
-        }
+//        for (int i = 0; i < nShapes; ++i)
+//        {
+//            for (int j = 0; j < nShapes; ++j)
+//                slae[i][j] = nonOrthoMatrix[i][j];
+//            slae[i][nShapes] = rhs[i + iSol*nShapes];
+//        }
 
         // solve slae
-        vector<vector<double>> LU = forwardGauss(slae,true);
-        vector<double> solution = reverseGauss(LU);
+        vector<double> solution(nShapes); //for 3 ff!!!
 
+        double ref = nonOrthoMatrix[1][1] / nonOrthoMatrix[2][1];
+
+        solution[0] = rhs[iSol*nShapes];
+        solution[2] = (rhs[iSol*nShapes + 2] * ref - rhs[iSol*nShapes + 1]) \
+                / (nonOrthoMatrix[2][2] * ref);
+        solution[1] = (rhs[iSol*nShapes + 1] - solution[2] * nonOrthoMatrix[1][2]) \
+                / (nonOrthoMatrix[1][1]);
         //set solution to appropriate positions
         for (int i = 0; i < nShapes; ++i)
             alphaCorr[i + iSol*nShapes] = solution[i];

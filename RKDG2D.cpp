@@ -1,6 +1,10 @@
 //- RKDG 2D v.0.1
 //  Structured rectangular mesh
 
+#if !defined(__linux__)
+#include <direct.h>
+#endif
+
 #include <stdio.h>
 #include <iostream>
 #include <string>
@@ -93,6 +97,12 @@ int main(int argc, char** argv)
 //    LimiterWENOS limiter(indicator, problem);
 
 //    // ---------------
+
+    #if !defined(__linux__)
+        _mkdir("alphaCoeffs");
+    #else
+        mkdir("alphaCoeffs", S_IRWXU | S_IRGRP | S_IROTH);
+    #endif
 
 //    // Set initial conditions
     solver.setInitialConditions();
