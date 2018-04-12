@@ -57,7 +57,7 @@ int main(int argc, char** argv)
 //    int freqWrite = 100;
 
     double Co = 0.1;
-    double tEnd = 0.2;
+    double tEnd = 0.001;
 
     int freqWrite = 100;
 
@@ -83,8 +83,13 @@ int main(int argc, char** argv)
 //    // Initialize flux
 //    FluxLLF numFlux(problem);
 
+<<<<<<< HEAD
 //    // Initialize solver
 //    Solver solver(mesh, problem, numFlux);
+=======
+    // Initialize indicator
+    IndicatorKXRCF indicator(mesh, problem);
+>>>>>>> parent of f735259... fixed bugs in Harten & WENO_S
 
 //    // Initialize indicator
 //    IndicatorHarten indicator(mesh, problem);
