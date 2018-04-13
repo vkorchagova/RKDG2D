@@ -19,7 +19,7 @@ Mesh2D::Mesh2D(string fileName, const Problem& prb)
         cells[i]->setGaussPoints();
         cells[i]->setJacobian();
         cells[i]->setBasisFunctions();
-        cells[i]->setNonOrthoMatrix();
+        cells[i]->setGramian();
     }
 }
 

@@ -35,7 +35,7 @@ void Problem::setInitialConditions()
     {
     //    return rho0;
     //    return 1.0;
-        return rho0 + 1e-3*exp( - 20.0*sqr(r.x() )- 20.0*sqr(r.y() ));
+        return rho0 + 1e-6*exp( - 20.0*sqr(r.x() )- 20.0*sqr(r.y() ));
      //  return rho0 + 1e-6 * exp( -2.0 * sqr(r.x() - 4.0) - 2.0 * sqr(r.y() - 4.0));
     //    return (r.y() < 0.5) ? 1.0 : 0.125;
     //   return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.125;

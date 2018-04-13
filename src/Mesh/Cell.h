@@ -51,7 +51,7 @@ private:
         // DELETE!
     Point step;
 
-    std::vector<std::vector<double>> nonOrthoMatrix;
+    std::vector<std::vector<double>> gramian;
 
     //- local [-1,1]x[-1,1] to global rectangular cell
     Point localToGlobal(const Point& localPoint) const;
@@ -158,8 +158,8 @@ public:
     //- Get coefficients of projection of function foo onto cell basis
     numvector<double, 5 * nShapes> projection(std::function<numvector<double,5>(const Point& point)>& init) const;
 
-    //- Calculate matrix of int ff multiplication
-    void setNonOrthoMatrix();
+    //- Calculate Gramian matrix
+    void setGramian();
 
     //- Solve SLAE in case of non-orthogonal functions
     numvector<double, 5 * nShapes> correctNonOrtho(const numvector<double, 5 * nShapes>& rhs) const;

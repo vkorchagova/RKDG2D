@@ -5,6 +5,8 @@
 #include <direct.h>
 #endif
 
+#include <sys/stat.h>
+
 #include <stdio.h>
 #include <iostream>
 #include <string>

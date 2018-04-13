@@ -85,6 +85,8 @@ void Cell::setJacobian()
 {
     function<double(const Point&)> fJ;
 
+//    function<double(double)> chop = [](double num) { if (fabs(num) < 1e-12) return 0.0; return num;};
+
     if (nEntities == 3)
     {
         fJ = [&](const Point& r){ return area; };
@@ -98,7 +100,7 @@ void Cell::setJacobian()
             double dpdn = (nodes[3]->x() - nodes[0]->x()) * (1.0 - r.x()) + (nodes[2]->x() - nodes[1]->x()) * (1.0 + r.x());
             double dqdn = (nodes[3]->y() - nodes[0]->y()) * (1.0 - r.x()) + (nodes[2]->y() - nodes[1]->y()) * (1.0 + r.x());
 
-            return 0.25 * (dpde * dqdn - dpdn * dqde);
+            return 0.25 * fabs(dpde * dqdn - dpdn * dqde);
         };
     }
     else
@@ -110,7 +112,15 @@ void Cell::setJacobian()
     J.resize(nGP);
 
     for (int i = 0; i < nGP; ++i)
+    {
         J[i] = fJ(gPoints2D[i]);
+//        cout << J[i] << ' ';
+    }
+
+//    cout.precision(12);
+//    cout << "a = " << area << endl;
+
+//    cout << endl;
 }
 
 void Cell::setGaussPoints()
@@ -237,26 +247,26 @@ void Cell::setBasisFunctions()
     }
 }
 
-void Cell::setNonOrthoMatrix()
+void Cell::setGramian()
 {
-    nonOrthoMatrix.resize(nShapes);
+    gramian.resize(nShapes);
 
     for (int i = 0; i < nShapes; ++i)
-        nonOrthoMatrix[i].resize(nShapes);
+        gramian[i].resize(nShapes);
 
     std::function<double(const Point&)> f ;
 
     for (int i = 0; i < nShapes; ++i)
     {
         f = [&](const Point& p) { return phi[i](p) * phi[i](p); };
-        nonOrthoMatrix[i][i] = integrate(f);
+        gramian[i][i] = integrate(f);
 
         for (int j = i+1; j < nShapes; ++j)
         {
             f = [&](const Point& p) {  return phi[i](p) * phi[j](p); };
-            nonOrthoMatrix[i][j] = integrate(f);
+            gramian[i][j] = integrate(f);
 
-            nonOrthoMatrix[j][i] = nonOrthoMatrix[i][j];
+            gramian[j][i] = gramian[i][j];
         }
     }
 }
@@ -439,20 +449,18 @@ numvector<double, 5 * nShapes> Cell::correctNonOrtho(const numvector<double, 5 *
 //        for (int i = 0; i < nShapes; ++i)
 //        {
 //            for (int j = 0; j < nShapes; ++j)
-//                slae[i][j] = nonOrthoMatrix[i][j];
+//                slae[i][j] = gramian[i][j];
 //            slae[i][nShapes] = rhs[i + iSol*nShapes];
 //        }
 
         // solve slae
         vector<double> solution(nShapes); //for 3 ff!!!
 
-        double ref = nonOrthoMatrix[1][1] / nonOrthoMatrix[2][1];
-
-        solution[0] = rhs[iSol*nShapes];
-        solution[2] = (rhs[iSol*nShapes + 2] * ref - rhs[iSol*nShapes + 1]) \
-                / (nonOrthoMatrix[2][2] * ref);
-        solution[1] = (rhs[iSol*nShapes + 1] - solution[2] * nonOrthoMatrix[1][2]) \
-                / (nonOrthoMatrix[1][1]);
+        solution[0] = rhs[iSol*nShapes] / gramian[0][0];
+        solution[2] = (rhs[iSol*nShapes + 2] * gramian[1][1] - rhs[iSol*nShapes + 1] * gramian[2][1]) \
+                / (gramian[2][2] * gramian[1][1] - gramian[1][2] * gramian[2][1]);
+        solution[1] = (rhs[iSol*nShapes + 1] - solution[2] * gramian[1][2]) \
+                / (gramian[1][1]);
         //set solution to appropriate positions
         for (int i = 0; i < nShapes; ++i)
             alphaCorr[i + iSol*nShapes] = solution[i];

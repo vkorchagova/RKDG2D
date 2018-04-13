@@ -498,7 +498,7 @@ void FileConverter::importUNV ()
 
 void FileConverter::exportRKDG()
 {
-    //writer.precision(15);
+    writer.precision(15);
 
     // --------------------------------------
 
