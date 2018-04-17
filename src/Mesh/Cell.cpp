@@ -84,12 +84,19 @@ void Cell::setArea()
 void Cell::setJacobian()
 {
     function<double(const Point&)> fJ;
+    vector<Point> localGP;
 
 //    function<double(double)> chop = [](double num) { if (fabs(num) < 1e-12) return 0.0; return num;};
 
     if (nEntities == 3)
     {
         fJ = [&](const Point& r){ return area; };
+
+
+        localGP.push_back(Point({ 1.0/6.0, 1.0/6.0 }));
+        localGP.push_back(Point({ 2.0/3.0, 1.0/6.0 }));
+        localGP.push_back(Point({ 1.0/6.0, 2.0/3.0 }));
+
     }
     else if (nEntities == 4)
     {
@@ -100,8 +107,15 @@ void Cell::setJacobian()
             double dpdn = (nodes[3]->x() - nodes[0]->x()) * (1.0 - r.x()) + (nodes[2]->x() - nodes[1]->x()) * (1.0 + r.x());
             double dqdn = (nodes[3]->y() - nodes[0]->y()) * (1.0 - r.x()) + (nodes[2]->y() - nodes[1]->y()) * (1.0 + r.x());
 
-            return 0.25 * fabs(dpde * dqdn - dpdn * dqde);
+            return 0.0625 * fabs(dpde * dqdn - dpdn * dqde);
         };
+
+        double isqrt3 = 0.57735026918962576;
+
+        for (int i = -1; i <= 1; i += 2)
+            for (int j = -1; j <= 1; j += 2)
+                localGP.push_back(Point({ i * isqrt3, j * isqrt3 }));
+
     }
     else
     {
@@ -113,7 +127,7 @@ void Cell::setJacobian()
 
     for (int i = 0; i < nGP; ++i)
     {
-        J[i] = fJ(gPoints2D[i]);
+        J[i] = fJ(localGP[i]);
 //        cout << J[i] << ' ';
     }
 
@@ -192,6 +206,15 @@ void Cell::setGaussPoints()
     }
 }
 
+void Cell::setCellCenter()
+{
+    double xc = integrate(function<double(const Point&)>([](const Point& r) {return r.x();}));
+    double yc = integrate(function<double(const Point&)>([](const Point& r) {return r.y();}));
+
+    center.x() = xc / area;
+    center.y() = yc / area;
+}
+
 void Cell::setBasisFunctions()
 {
 //    double isqrta  = 1.0 / sqrt(area);
@@ -201,8 +224,8 @@ void Cell::setBasisFunctions()
 //    double isqrta2 = 1.0;
 
     offsetPhi.push_back(1.0 / sqrt(area));
-    offsetPhi.push_back(1.0 / sqrt(area * area / 6.0 / sqrt(3)));
-    offsetPhi.push_back(1.0 / sqrt(area * area / 6.0 / sqrt(3)));
+    offsetPhi.push_back(2.0 * sqrt(3) / area);
+    offsetPhi.push_back(2.0 * sqrt(3) / area);
 
     phi.reserve(nShapes);
     gradPhi.reserve(nShapes);
@@ -213,12 +236,12 @@ void Cell::setBasisFunctions()
 
 
     phi.emplace_back([&](const Point& r){ return 1.0 / sqrt(area); });
-    phi.emplace_back([&](const Point& r){ return (r.x() - center.x()) * 1.0 / sqrt(area * area / 6.0 / sqrt(3)); });
-    phi.emplace_back([&](const Point& r){ return (r.y() - center.y()) * 1.0 / sqrt(area * area / 6.0 / sqrt(3)); });
+    phi.emplace_back([&](const Point& r){ return (r.x() - center.x()) * 2.0 * sqrt(3) / area; });
+    phi.emplace_back([&](const Point& r){ return (r.y() - center.y()) * 2.0 * sqrt(3) / area; });
 
     gradPhi.emplace_back([&](const Point& r)->Point { return Point({ 0.0    , 0.0 }); });
-    gradPhi.emplace_back([&](const Point& r)->Point { return Point({ 1.0 / sqrt(area * area / 6.0 / sqrt(3)), 0.0 }); });
-    gradPhi.emplace_back([&](const Point& r)->Point { return Point({ 0.0    , 1.0 / sqrt(area * area / 6.0 / sqrt(3)) }); });
+    gradPhi.emplace_back([&](const Point& r)->Point { return Point({ 2.0 * sqrt(3) / area, 0.0 }); });
+    gradPhi.emplace_back([&](const Point& r)->Point { return Point({ 0.0    , 2.0 * sqrt(3) / area }); });
 
     if (nShapes == 6)
     {

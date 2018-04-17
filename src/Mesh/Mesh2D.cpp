@@ -15,9 +15,11 @@ Mesh2D::Mesh2D(string fileName, const Problem& prb)
 
     for (int i = 0; i < nCells; ++i)
     {
+        cells[i]->number = i;
         cells[i]->setArea();
         cells[i]->setGaussPoints();
         cells[i]->setJacobian();
+        cells[i]->setCellCenter();
         cells[i]->setBasisFunctions();
         cells[i]->setGramian();
     }
@@ -280,14 +282,6 @@ void Mesh2D::importMesh(string fileName, const Problem& prb)
                 exit(0);
             }
 
-            double x,y;
-
-            for (int i = 0; i < nCells; ++i)
-            {
-                reader >> x >> y;
-                cells[i]->setCellCenter(Point({x,y}));
-            }
-
             do
             {
                 getline(reader, tag);
@@ -333,6 +327,15 @@ void Mesh2D::importMesh(string fileName, const Problem& prb)
         }
         else if (tag == "$EdgeNormals")
         {
+            getline(reader, tag);
+            double nx, ny;
+
+            for (int i = 0; i < nEdges; ++i)
+            {
+                reader >> nx >> ny;
+                edges[i]->n = Point({nx, ny});
+            }
+
             do
             {
                 getline(reader, tag);

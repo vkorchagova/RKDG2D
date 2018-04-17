@@ -429,39 +429,39 @@ void FileConverter::importUNV ()
                 setAdjointCells();
                 getEgdeNormals();
 
-                cout << "edges bound \n";
-                for (size_t i = 0; i < edgesBoundary.size(); ++i)
-                    cout << i+1 << '|' << edgesBoundary[i][0] << ' ' << edgesBoundary[i][1] << endl;
+//                cout << "edges bound \n";
+//                for (size_t i = 0; i < edgesBoundary.size(); ++i)
+//                    cout << i+1 << '|' << edgesBoundary[i][0] << ' ' << edgesBoundary[i][1] << endl;
 
-                cout << "edges internal \n";
-                for (size_t i = 0; i < edgesInternal.size(); ++i)
-                    cout << i+1+edgesBoundary.size() << '|' << edgesInternal[i][0] << ' ' << edgesInternal[i][1] << endl;
+//                cout << "edges internal \n";
+//                for (size_t i = 0; i < edgesInternal.size(); ++i)
+//                    cout << i+1+edgesBoundary.size() << '|' << edgesInternal[i][0] << ' ' << edgesInternal[i][1] << endl;
 
-                cout << "cells\n";
-                for (size_t i = 0; i < cellsAsEdges.size(); ++i)
-                {
-                    cout << i+1 << '|';
-                    for (size_t j = 0; j < cellsAsEdges[i].size(); ++j)
-                         cout << cellsAsEdges[i][j] << ' ';
-                    cout << endl;
-                }
+//                cout << "cells\n";
+//                for (size_t i = 0; i < cellsAsEdges.size(); ++i)
+//                {
+//                    cout << i+1 << '|';
+//                    for (size_t j = 0; j < cellsAsEdges[i].size(); ++j)
+//                         cout << cellsAsEdges[i][j] << ' ';
+//                    cout << endl;
+//                }
 
-                cout << "cell centers\n";
-                for (size_t i = 0; i < cellsAsEdges.size(); ++i)
-                    cout << i+1 << '|' << cellCenters[i][0] << ' ' << cellCenters[i][1] << endl;
+//                cout << "cell centers\n";
+//                for (size_t i = 0; i < cellsAsEdges.size(); ++i)
+//                    cout << i+1 << '|' << cellCenters[i][0] << ' ' << cellCenters[i][1] << endl;
 
-                cout << "adjoint cells for edges\n";
-                for (size_t i = 0; i < adjEdgeCells.size(); ++i)
-                {
-                    cout << i+1 << '|';
-                    for (size_t j = 0; j < adjEdgeCells[i].size(); ++j)
-                        cout << adjEdgeCells[i][j] << ' ' ;
-                    cout << endl;
-                }
+//                cout << "adjoint cells for edges\n";
+//                for (size_t i = 0; i < adjEdgeCells.size(); ++i)
+//                {
+//                    cout << i+1 << '|';
+//                    for (size_t j = 0; j < adjEdgeCells[i].size(); ++j)
+//                        cout << adjEdgeCells[i][j] << ' ' ;
+//                    cout << endl;
+//                }
 
-                cout << "edge normals\n";
-                for (size_t i = 0; i < edgeNormals.size(); ++i)
-                    cout << i+1 << '|' << edgeNormals[i][0] << ' ' << edgeNormals[i][1] << endl;
+//                cout << "edge normals\n";
+//                for (size_t i = 0; i < edgeNormals.size(); ++i)
+//                    cout << i+1 << '|' << edgeNormals[i][0] << ' ' << edgeNormals[i][1] << endl;
 
                 break;
             }
@@ -472,16 +472,16 @@ void FileConverter::importUNV ()
 
                 cout << "patch names\n";
                 for (size_t i = 0; i < patchNames.size(); ++i)
-                    cout << i+1 << '|' << patchNames[i] << endl;
+                    cout << i+1 << '|' << patchNames[i] << ", " << patchEdgeGroups[i].size() << " edges" << endl;
 
-                cout << "patch groups\n";
-                for (size_t i = 0; i < patchEdgeGroups.size(); ++i)
-                {
-                    cout << i+1 << '|';
-                    for (size_t j = 0; j < patchEdgeGroups[i].size(); ++j)
-                        cout << patchEdgeGroups[i][j] << ' ' ;
-                    cout << endl;
-                }
+//                cout << "patch groups\n";
+//                for (size_t i = 0; i < patchEdgeGroups.size(); ++i)
+//                {
+//                    cout << i+1 << '|';
+//                    for (size_t j = 0; j < patchEdgeGroups[i].size(); ++j)
+//                        cout << patchEdgeGroups[i][j] << ' ' ;
+//                    cout << endl;
+//                }
 
                 break;
             }
@@ -498,7 +498,7 @@ void FileConverter::importUNV ()
 
 void FileConverter::exportRKDG()
 {
-    writer.precision(15);
+    writer.precision(16);
 
     // --------------------------------------
 

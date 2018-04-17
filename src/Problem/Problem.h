@@ -8,6 +8,7 @@
 #include "BoundarySlip.h"
 #include "BoundaryOpen.h"
 #include "BoundarySine.h"
+#include "BoundaryConstant.h"
 #include "defs.h"
 
 //- Square

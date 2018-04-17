@@ -35,7 +35,7 @@ void Problem::setInitialConditions()
     {
     //    return rho0;
     //    return 1.0;
-        return rho0 + 1e-6*exp( - 20.0*sqr(r.x() )- 20.0*sqr(r.y() ));
+        return rho0 + 1e-6*exp( - 40.0*sqr(r.x() )- 40.0*sqr(r.y() ));
      //  return rho0 + 1e-6 * exp( -2.0 * sqr(r.x() - 4.0) - 2.0 * sqr(r.y() - 4.0));
     //    return (r.y() < 0.5) ? 1.0 : 0.125;
     //   return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.125;
@@ -50,7 +50,7 @@ void Problem::setInitialConditions()
     //    return (initRho(r));
     //    return (r.y() < 0.5) ? 1.0 : 0.1;
     //    return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.1;
-        return (r.x() < 0.5) ? 1.0 : 0.1;
+    //    return (r.x() < 0.5) ? 1.0 : 0.1;
     };
 
 
@@ -73,9 +73,12 @@ void Problem::setBoundaryConditions(const std::vector<Patch>& patches)
     shared_ptr<BoundarySlip> bSlip = make_shared<BoundarySlip>();
     shared_ptr<BoundaryOpen> bOpen = make_shared<BoundaryOpen>();
     shared_ptr<BoundarySine> bSine = make_shared<BoundarySine>(1e-3,0.5,time,*this);
+    shared_ptr<BoundaryConstant> bConst = make_shared<BoundaryConstant>(numvector<double,5>({1.0, 0.0, 0.0, 0.0, 1.0 / cpcv / (cpcv - 1.0)}));
+
 
     // boundary conditions: bottom/top/left/right
     //vector<shared_ptr<Boundary>> bc = {bOpen, bOpen, bOpen, bOpen};
+    //vector<shared_ptr<Boundary>> bc = {bConst, bConst, bConst, bConst};
     vector<shared_ptr<Boundary>> bc = {bOpen, bSine};
 
     for (int i = 0; i < patches.size(); ++i)
@@ -96,12 +99,12 @@ void Problem::setAlpha(const std::vector<numvector<double, 5 * nShapes> >& a)
 double Problem::getPressure(const numvector<double, 5>& sol) const
 {
     // uncomment for LEE
-//    numvector<double,5> initfun = init(Point({0.0,0.0}));
+    numvector<double,5> initfun = init(Point({0.0,0.0}));
 
-//    double rho0 = initfun[0];
-//    double p0 = initfun[4] * (cpcv - 1);
+    double rho0 = initfun[0];
+    double p0 = initfun[4] * (cpcv - 1);
 
-//    return p0 * pow(sol[0] / rho0 , cpcv);
+    return p0 * pow(sol[0] / rho0 , cpcv);
 
     double magRhoU2 = sqr(sol[1]) + sqr(sol[2]) + sqr(sol[3]);
 

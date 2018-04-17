@@ -56,6 +56,9 @@ public:
     //- Assemble right-hand side
     std::vector<numvector<double, 5 * nShapes> > assembleRHS(const std::vector<numvector<double, 5 * nShapes>>& alpha);
 
+    //- Correct alpha coeffs in case if non-orthogonal basis functions
+    void correctNonOrtho(std::vector<numvector<double, 5 * nShapes>>& alpha) const;
+
     //// Other methods
 
     //- Output for coeffs

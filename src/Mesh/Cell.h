@@ -89,7 +89,7 @@ public:
     void setArea();
 
     //- Set cell center
-    void setCellCenter(const Point& cc) { center = cc; }
+    void setCellCenter();
 
     //- Define Jacobian function
     void setJacobian();

@@ -63,9 +63,9 @@ int main(int argc, char** argv)
 //    int freqWrite = 100;
 
     double Co = 0.1;
-    double tEnd = 0.2;
+    double tEnd = 1.0;
 
-    int freqWrite = 100;
+    int freqWrite = 1;
 
     // ---------------
 
@@ -87,16 +87,16 @@ int main(int argc, char** argv)
     problem.setBoundaryConditions(mesh.patches);
 
 //    // Initialize flux
-    FluxLLF numFlux(problem);
+    FluxHLL numFlux(problem);
 
 //    // Initialize solver
     Solver solver(mesh, problem, numFlux);
 
-//    // Initialize indicator
-//    IndicatorHarten indicator(mesh, problem);
+    // Initialize indicator
+    IndicatorNowhere indicator(mesh, problem);
 
-//    //Initialize limiter
-//    LimiterWENOS limiter(indicator, problem);
+    //Initialize limiter
+    LimiterWENOS limiter(indicator, problem);
 
 //    // ---------------
 
@@ -114,6 +114,8 @@ int main(int argc, char** argv)
 
 //    // time step
 
+    double tau = Co * 0.05; //preliminarly
+
 //    double tau = min(mesh.cells[0]->h().x(),mesh.cells[0]->h().y()) * Co;
 //        // sound speed = 1 --- const in acoustic problems
 //        // only for uniform mesh hx and hy are similar for all cells
@@ -121,67 +123,68 @@ int main(int argc, char** argv)
 
 //    // run Runge --- Kutta 2 TVD
 
-//    vector<numvector<double, 5*nShapes>> k1, k2;
+    vector<numvector<double, 5*nShapes>> k1, k2;
 
-//    k1.resize(mesh.nCells);
-//    k2.resize(mesh.nCells);
+    k1.resize(mesh.nCells);
+    k2.resize(mesh.nCells);
 
-//    clock_t t1, t2, t00;
+    clock_t t1, t2, t00;
 
-//    t00 = clock();
+    t00 = clock();
+
+    int iT = 1; //iteration number
+
+    for (double t = tau; t <= tEnd + 0.5*tau; t += tau)
+    {
+       t1 = clock();
+
+       time.updateTime(t);
+
+       cout << "---------\nt = " << t << endl;
+
+       k1 = solver.assembleRHS(solver.alphaPrev);
+       solver.alphaNext = solver.alphaPrev + k1 * tau;
+      // solver.correctNonOrtho(solver.alphaNext);
 
 
-//    int iT = 1; //iteration number
+       limiter.limit(solver.alphaNext);
 
-//    for (double t = tau; t <= tEnd + 0.5*tau; t += tau)
-//    {
-//       t1 = clock();
-
-//       time.updateTime(t);
-
-//       cout << "---------\nt = " << t << endl;
-
-//       k1 = solver.assembleRHS(solver.alphaPrev);
-//       solver.alphaNext = solver.alphaPrev + k1 * tau;
-
-
-//       limiter.limit(solver.alphaNext);
-
-//       k2 = solver.assembleRHS(solver.alphaNext);
-//       solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
+       k2 = solver.assembleRHS(solver.alphaNext);
+       solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
+      // solver.correctNonOrtho(solver.alphaNext);
 
        //cout << "before limiting" << solver.alphaNext[49] << endl;
 
- //      limiter.limit(solver.alphaNext);
+       limiter.limit(solver.alphaNext);
 
        //cout << "after limiting" << solver.alphaNext[49] << endl;
 
 
-//       limiter.limit(solver.alphaNext);
+       limiter.limit(solver.alphaNext);
 
-//       if (iT % freqWrite == 0)
-//       {
-//           //string fileName = "alphaCoeffs/" + to_string((long double)t);
-//           string fileName = "alphaCoeffs/" + to_string(t);
+       if (iT % freqWrite == 0)
+       {
+           //string fileName = "alphaCoeffs/" + to_string((long double)t);
+           string fileName = "alphaCoeffs/" + to_string(t);
 
-//           ofstream output;
-//           output.open(fileName);
+           ofstream output;
+           output.open(fileName);
 
-//           solver.write(output,solver.alphaNext);
+           solver.write(output,solver.alphaNext);
 
-//           output.close();
-//       }
+           output.close();
+       }
 
-//       solver.alphaPrev = solver.alphaNext;
+       solver.alphaPrev = solver.alphaNext;
 
-//       iT++;
+       iT++;
 
-//       t2 = clock();
+       t2 = clock();
 
-//       cout << "step time: " << (float)(t2 - t1) / CLOCKS_PER_SEC << endl;
-//    }
+       cout << "step time: " << (float)(t2 - t1) / CLOCKS_PER_SEC << endl;
+    }
 
-//    cout << "=========\nElapsed time = " << (float)(t2 - t00) / CLOCKS_PER_SEC << endl;
+    cout << "=========\nElapsed time = " << (float)(t2 - t00) / CLOCKS_PER_SEC << endl;
     cout << "---------\nEND \n";
 
     //cin.get();

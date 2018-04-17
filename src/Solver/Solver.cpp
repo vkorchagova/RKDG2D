@@ -12,7 +12,7 @@ Solver::Solver( Mesh2D& msh, Problem &prb, Flux& flx) : mesh(msh),problem(prb),f
 
 void Solver::write(ostream& writer, const vector<numvector<double,5*nShapes>>& coeffs) const
 {
-    writer.precision(15);
+    writer.precision(16);
 
     for (size_t k = 0; k < coeffs.size(); ++k)
     {
@@ -29,9 +29,12 @@ void Solver::setInitialConditions()
 
     problem.alpha.resize(nCells);
 
+    numvector<double, 5*nShapes> rhs;
+
     for (int k = 0; k < nCells; ++k)
     {
-        problem.alpha[k] = mesh.cells[k]->correctNonOrtho(mesh.cells[k]->projection(problem.init));
+        rhs = mesh.cells[k]->projection(problem.init);
+        problem.alpha[k] = mesh.cells[k]->correctNonOrtho(rhs);
         alphaPrev[k] = problem.alpha[k];
     }
 
@@ -88,9 +91,17 @@ vector<numvector<double, 5 * nShapes>> Solver::assembleRHS(const std::vector<num
         rhs[k] = mesh.cells[k]->cellIntegral();
 
         // compute boundary integrals
-        for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < mesh.cells[k]->nEntities; ++i)
             rhs[k] -= mesh.cells[k]->edges[i]->boundaryIntegral(mesh.cells[k]);
     }
 
     return rhs;
+}
+
+void Solver::correctNonOrtho(std::vector<numvector<double, 5 * nShapes>> &alpha) const
+{
+    //problem.setAlpha(alpha);
+
+    for (int i = 0; i < mesh.nCells; ++i)
+        alpha[i] = mesh.cells[i]->correctNonOrtho(alpha[i]);
 }
