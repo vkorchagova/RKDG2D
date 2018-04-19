@@ -447,6 +447,16 @@ numvector<double, 5 * nShapes> Cell::cellIntegral()
     return res;
 } // end of cell integral
 
+double Cell::totalMassFlux() const
+{
+    double totalFlux = 0.0;
+
+    for (int i = 0; i < nEntities; ++i)
+        totalFlux += edges[i]->getMassFlux(make_shared<Cell>(*this));
+
+    return totalFlux;
+}
+
 double Cell::getNormQ(int numSol) const
 {
     vector<double> rhoGP(nGP);

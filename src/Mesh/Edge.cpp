@@ -66,6 +66,7 @@ Edge::Edge(const Point& p1, const Point& p2)
 // ------------------ Public class methods ---------------------
 
 //// RKDG methods
+
 numvector<double, 5 * nShapes> Edge::boundaryIntegral(const std::shared_ptr<Cell> &cell) const
 {
     numvector<double, 5 * nShapes> res (0.0);
@@ -79,4 +80,17 @@ numvector<double, 5 * nShapes> Edge::boundaryIntegral(const std::shared_ptr<Cell
 
     return res * J * sign;
 }
+
+double Edge::getMassFlux(const std::shared_ptr<Cell> &cell) const
+{
+    double res = 0.0;
+
+    double sign = (cell == neibCells[0]) ? 1.0 : -1.0;
+
+    for (int i = 0; i < nGP; ++i)
+        res += localFluxes[i][0] * gWeights[i];
+
+    return res * J * sign;
+}
+
 

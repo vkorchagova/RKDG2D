@@ -13,6 +13,7 @@
 
 #include "defs.h"
 #include "TimeClass.h"
+#include "TimeControl.h"
 #include <time.h>
 #include "Mesh2D.h"
 #include "Solver.h"
@@ -67,6 +68,12 @@ int main(int argc, char** argv)
 
     int freqWrite = 1;
 
+    double initDeltaT = 1e-5;
+    double maxDeltaT = 1.0;
+    double maxTauGrowth = 1.2;
+    bool isDynamicTimeStep = true;
+
+
     // ---------------
 
     // Initialize time
@@ -92,6 +99,9 @@ int main(int argc, char** argv)
 //    // Initialize solver
     Solver solver(mesh, problem, numFlux);
 
+    // Initialize time controller
+    TimeControl dynamicTimeController(mesh,Co,maxDeltaT,maxTauGrowth,initDeltaT,isDynamicTimeStep);
+
     // Initialize indicator
     IndicatorNowhere indicator(mesh, problem);
 
@@ -109,16 +119,9 @@ int main(int argc, char** argv)
 //    // Set initial conditions
     solver.setInitialConditions();
 
-//    // Set mesh pointer in case of DiagProject BC
-//    solver.setMeshPointerForDiagBC();
-
 //    // time step
 
-    double tau = Co * 0.05; //preliminarly
-
-//    double tau = min(mesh.cells[0]->h().x(),mesh.cells[0]->h().y()) * Co;
-//        // sound speed = 1 --- const in acoustic problems
-//        // only for uniform mesh hx and hy are similar for all cells
+    double tau = initDeltaT;
 
 
 //    // run Runge --- Kutta 2 TVD
@@ -143,13 +146,17 @@ int main(int argc, char** argv)
        cout << "---------\nt = " << t << endl;
 
        k1 = solver.assembleRHS(solver.alphaPrev);
+       dynamicTimeController.updateTimeStep();
+
        solver.alphaNext = solver.alphaPrev + k1 * tau;
       // solver.correctNonOrtho(solver.alphaNext);
 
-
        limiter.limit(solver.alphaNext);
 
+
        k2 = solver.assembleRHS(solver.alphaNext);
+       dynamicTimeController.updateTimeStep();
+
        solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
       // solver.correctNonOrtho(solver.alphaNext);
 
@@ -158,9 +165,6 @@ int main(int argc, char** argv)
        limiter.limit(solver.alphaNext);
 
        //cout << "after limiting" << solver.alphaNext[49] << endl;
-
-
-       limiter.limit(solver.alphaNext);
 
        if (iT % freqWrite == 0)
        {
@@ -180,6 +184,8 @@ int main(int argc, char** argv)
        iT++;
 
        t2 = clock();
+
+       tau = dynamicTimeController.getNewTau();
 
        cout << "step time: " << (float)(t2 - t1) / CLOCKS_PER_SEC << endl;
     }

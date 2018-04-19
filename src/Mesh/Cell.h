@@ -167,6 +167,9 @@ public:
     //- Calculate \int_{cell} F(U) \nabla \phi_x + G(U) \nabla \phi_y
     numvector<double, 5 * nShapes> cellIntegral();
 
+    //- Calculate total mass flux
+    double totalMassFlux() const;
+
     //- 2D Gauss integration of scalar function
     double integrate( const std::function<double(const Point &)>& f) const;
 

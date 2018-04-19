@@ -89,6 +89,9 @@ public:
     //- Calculate 1D integral through edge
     numvector<double, 5 * nShapes> boundaryIntegral(const std::shared_ptr<Cell>& cell) const;
 
+    //- Compute mass flux throug edge
+    double getMassFlux(const std::shared_ptr<Cell> &cell) const;
+
 }; // for Edge
 
 #endif // EDGE_H
