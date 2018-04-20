@@ -23,3 +23,4 @@ numvector<double,5> FluxLLF::evaluate( const numvector<double, 5>& solLeft, cons
 
     return inverseRotate(0.5 * (fluxInward + fluxOutward) + 0.5 * lambda * (solLeft - solRight), n);
 }
+

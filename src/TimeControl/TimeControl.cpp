@@ -19,9 +19,17 @@ void TimeControl::updateTimeStep()
         vector<double> newTauLocal;
         newTauLocal.reserve(mesh.nCells);
 
-        for (int i = 0; i < mesh.nCells; ++i)
+        for (const shared_ptr<Edge> edge : mesh.edges)
+            edge->getMaxUL();
+
+        for (const shared_ptr<Cell> cell : mesh.cells)
         {
-            factCo = 0.5 * tauOld * massFlux[i] / mesh.cells[i]->totalMass();
+            double uSum = 0.0;
+
+            for (const shared_ptr<Edge> edge : cell->edges)
+                uSum += edge->maxUL();
+
+            factCo = 0.5 * tauOld * uSum / cell->getArea();
             relTau = CoNum / (factCo + 1e-6); //1e-6 is technical small number
             relTau = min(relTau, maxTauGrowth);
             tauNew = min(relTau * tauOld, maxTau);

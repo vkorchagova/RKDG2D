@@ -64,6 +64,9 @@ public:
     //- Local numerical fluxes for edge
     std::vector<numvector<double, 5>> localFluxes;
 
+    //- Max velocity multiplied with edge length
+    double uMaxL;
+
 public:
 
     //- Default constructor
@@ -89,8 +92,14 @@ public:
     //- Calculate 1D integral through edge
     numvector<double, 5 * nShapes> boundaryIntegral(const std::shared_ptr<Cell>& cell) const;
 
-    //- Compute mass flux throug edge
+    //- Compute mass flux through edge
     double getMassFlux(const std::shared_ptr<Cell> &cell) const;
+
+    //- Compute max speed on edge
+    virtual void getMaxUL() = 0;
+
+    //- Return maxUL
+    double maxUL() const {return uMaxL;}
 
 }; // for Edge
 

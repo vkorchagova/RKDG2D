@@ -1,3 +1,0 @@
-/home/v.korchagova/Документы/BMSTU/RKDG2D/build-converterUNV-Desktop-Default/CMakeFiles/rebuild_cache.dir
-/home/v.korchagova/Документы/BMSTU/RKDG2D/build-converterUNV-Desktop-Default/CMakeFiles/converterUNV.dir
-/home/v.korchagova/Документы/BMSTU/RKDG2D/build-converterUNV-Desktop-Default/CMakeFiles/edit_cache.dir

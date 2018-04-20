@@ -47,6 +47,9 @@ public:
 
     //- Calculate local fluxes in gauss points
     virtual void getLocalFluxes(const Flux& flux) override;
+
+    //- Compute max speed on edge
+    virtual void getMaxUL() override;
 };
 
 #endif // EDGEBOUNDARY_H

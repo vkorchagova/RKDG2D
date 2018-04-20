@@ -81,6 +81,7 @@ numvector<double, 5 * nShapes> Edge::boundaryIntegral(const std::shared_ptr<Cell
     return res * J * sign;
 }
 
+
 double Edge::getMassFlux(const std::shared_ptr<Cell> &cell) const
 {
     double res = 0.0;
@@ -88,7 +89,7 @@ double Edge::getMassFlux(const std::shared_ptr<Cell> &cell) const
     double sign = (cell == neibCells[0]) ? 1.0 : -1.0;
 
     for (int i = 0; i < nGP; ++i)
-        res += localFluxes[i][0] * gWeights[i];
+        res += localFluxes[i][0] * gWeights[i] / cell->reconstructSolution(gPoints[i],0);
 
     return res * J * sign;
 }

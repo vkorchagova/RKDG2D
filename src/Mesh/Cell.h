@@ -152,8 +152,11 @@ public:
     //- Reconstruct solution
     numvector<double, 5> reconstructSolution(const Point& point) const;
     double reconstructSolution(const Point& point, int numSol) const;
+
+    numvector<double, 5> reconstructSolution(const std::shared_ptr<Point> point) const
+        { return reconstructSolution(*point); }
     double reconstructSolution(const std::shared_ptr<Point> point, int numSol) const
-        { return reconstructSolution(*point, numSol); };
+        { return reconstructSolution(*point, numSol); }
 
     //- Get coefficients of projection of function foo onto cell basis
     numvector<double, 5 * nShapes> projection(std::function<numvector<double,5>(const Point& point)>& init) const;
