@@ -3,6 +3,13 @@
 
 using namespace std;
 
+void TimeControl::getMassFlux()
+{
+    for (int i = 0; i < mesh.nCells; ++i)
+        massFlux[i] += mesh.cells[i]->totalMassFlux();
+
+}
+
 void TimeControl::updateTimeStep()
 {
     if (modifyTime)
@@ -12,16 +19,18 @@ void TimeControl::updateTimeStep()
         vector<double> newTauLocal;
         newTauLocal.reserve(mesh.nCells);
 
-        for (const shared_ptr<Cell> cell : mesh.cells)
+        for (int i = 0; i < mesh.nCells; ++i)
         {
-            factCo = tauOld * cell->totalMassFlux() / cell->getArea();
+            factCo = 0.5 * tauOld * massFlux[i] / mesh.cells[i]->totalMass();
             relTau = CoNum / (factCo + 1e-6); //1e-6 is technical small number
             relTau = min(relTau, maxTauGrowth);
             tauNew = min(relTau * tauOld, maxTau);
             newTauLocal.push_back(tauNew);
         }
 
-        tauNew = distance(newTauLocal.begin(),min_element(newTauLocal.begin(),newTauLocal.end()));
+        tauNew = *min_element(newTauLocal.begin(),newTauLocal.end());
         tauOld = tauNew;
     }
+
+    fill(massFlux.begin(), massFlux.end(), 0.0);
 }

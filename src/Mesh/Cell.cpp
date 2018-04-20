@@ -452,9 +452,22 @@ double Cell::totalMassFlux() const
     double totalFlux = 0.0;
 
     for (int i = 0; i < nEntities; ++i)
-        totalFlux += edges[i]->getMassFlux(make_shared<Cell>(*this));
+        totalFlux += fabs(edges[i]->getMassFlux(make_shared<Cell>(*this)));
 
     return totalFlux;
+}
+
+double Cell::totalMass() const
+{
+    double totalMass = 0.0;
+
+    for (int i = 0; i < nGP; ++i)
+    {
+        totalMass += reconstructSolution(gPoints2D[i],0) * gWeights2D[i] * J[i];
+
+    }
+
+    return totalMass;
 }
 
 double Cell::getNormQ(int numSol) const
@@ -462,7 +475,7 @@ double Cell::getNormQ(int numSol) const
     vector<double> rhoGP(nGP);
     
     for (int i = 0; i < nGP; ++i)
-	rhoGP[i] = reconstructSolution(gPoints2D[i],numSol);
+        rhoGP[i] = reconstructSolution(gPoints2D[i],numSol);
     
     return *max_element(rhoGP.begin(), rhoGP.end());
 }

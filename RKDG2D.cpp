@@ -68,9 +68,9 @@ int main(int argc, char** argv)
 
     int freqWrite = 1;
 
-    double initDeltaT = 1e-5;
+    double initDeltaT = 1e-3;
     double maxDeltaT = 1.0;
-    double maxTauGrowth = 1.2;
+    double maxTauGrowth = 1.1;
     bool isDynamicTimeStep = true;
 
 
@@ -144,9 +144,10 @@ int main(int argc, char** argv)
        time.updateTime(t);
 
        cout << "---------\nt = " << t << endl;
+       cout << "tau = " << tau << endl;
 
        k1 = solver.assembleRHS(solver.alphaPrev);
-       dynamicTimeController.updateTimeStep();
+       dynamicTimeController.getMassFlux();
 
        solver.alphaNext = solver.alphaPrev + k1 * tau;
       // solver.correctNonOrtho(solver.alphaNext);
@@ -155,6 +156,7 @@ int main(int argc, char** argv)
 
 
        k2 = solver.assembleRHS(solver.alphaNext);
+       dynamicTimeController.getMassFlux();
        dynamicTimeController.updateTimeStep();
 
        solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;

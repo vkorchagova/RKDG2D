@@ -170,6 +170,9 @@ public:
     //- Calculate total mass flux
     double totalMassFlux() const;
 
+    //- Calculate total mass in cell
+    double totalMass() const;
+
     //- 2D Gauss integration of scalar function
     double integrate( const std::function<double(const Point &)>& f) const;
 

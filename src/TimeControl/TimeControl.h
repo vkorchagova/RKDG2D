@@ -29,18 +29,24 @@ private:
     //- Switch static/dynamic time step
     bool modifyTime;
 
+    //- Mass flux in all studies of solution
+    std::vector<double> massFlux;
+
 public:
 
     //- Constructor
     TimeControl(const Mesh2D& msh, double Co, double maxDeltaT, double maxGrowth, double initTau, bool modified = false) : \
                 mesh(msh), CoNum(Co), maxTau(maxDeltaT), maxTauGrowth(maxGrowth), tauOld(initTau), modifyTime(modified) \
-                {tauNew = tauOld;}
+                {tauNew = tauOld; massFlux.resize(mesh.nCells); std::fill(massFlux.begin(), massFlux.end(), 0.0);}
 
     //- Get new time step
     double getNewTau() const {return tauNew;}
 
     //- Update time step
     void updateTimeStep();
+
+    //- Get fabs of mass flux through cell edges in one study
+    void getMassFlux();
 
 };
 
