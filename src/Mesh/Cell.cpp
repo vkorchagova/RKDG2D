@@ -475,7 +475,7 @@ double Cell::getNormQ(int numSol) const
     vector<double> rhoGP(nGP);
     
     for (int i = 0; i < nGP; ++i)
-        rhoGP[i] = reconstructSolution(gPoints2D[i],numSol);
+        rhoGP[i] = reconstructSolution(gPoints2D[i], numSol);
     
     return *max_element(rhoGP.begin(), rhoGP.end());
 }

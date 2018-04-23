@@ -10,6 +10,7 @@ void LimiterWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
 void LimiterWENOS::limitTog(vector<numvector<double, 5 * nShapes>>& alpha)
 {
     problem.setAlpha(alpha);
+
     vector<int> troubledCells = indicator.checkDiscontinuities();
 
     vector<double> gamma;

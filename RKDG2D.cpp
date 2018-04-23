@@ -63,15 +63,15 @@ int main(int argc, char** argv)
 
 //    int freqWrite = 100;
 
-    double Co = 0.5;
-    double tEnd = 1.0;
-
-    int freqWrite = 1;
+    double Co = 0.15;
+    double tEnd = 0.00001;
 
     double initDeltaT = 1e-2;
     double maxDeltaT = 1.0;
     double maxTauGrowth = 1.2;
-    bool isDynamicTimeStep = true;
+    bool isDynamicTimeStep = false;
+
+    int freqWrite = 1;
 
 
     // ---------------
@@ -103,7 +103,7 @@ int main(int argc, char** argv)
     TimeControl dynamicTimeController(mesh,Co,maxDeltaT,maxTauGrowth,initDeltaT,isDynamicTimeStep);
 
     // Initialize indicator
-    IndicatorNowhere indicator(mesh, problem);
+    IndicatorKXRCF indicator(mesh, problem);
 
     //Initialize limiter
     LimiterWENOS limiter(indicator, problem);
@@ -118,6 +118,8 @@ int main(int argc, char** argv)
 
 //    // Set initial conditions
     solver.setInitialConditions();
+
+    limiter.limit(solver.alphaPrev);
 
 //    // time step
 
@@ -154,16 +156,16 @@ int main(int argc, char** argv)
        limiter.limit(solver.alphaNext);
 
 
-       k2 = solver.assembleRHS(solver.alphaNext);
+//       k2 = solver.assembleRHS(solver.alphaNext);
 
-       solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
-      // solver.correctNonOrtho(solver.alphaNext);
+//       solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
+//      // solver.correctNonOrtho(solver.alphaNext);
 
-       //cout << "before limiting" << solver.alphaNext[49] << endl;
+//       //cout << "before limiting" << solver.alphaNext[49] << endl;
 
-       limiter.limit(solver.alphaNext);
+//       limiter.limit(solver.alphaNext);
 
-       //cout << "after limiting" << solver.alphaNext[49] << endl;
+//       //cout << "after limiting" << solver.alphaNext[49] << endl;
 
        if (iT % freqWrite == 0)
        {

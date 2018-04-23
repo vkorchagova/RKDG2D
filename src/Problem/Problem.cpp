@@ -35,22 +35,24 @@ void Problem::setInitialConditions()
     {
     //    return rho0;
     //    return 1.0;
-        return rho0 + 1e-6*exp( - 40.0*sqr(r.x() )- 40.0*sqr(r.y() ));
+ //       return rho0 + 1e-6*exp( - 40.0*sqr(r.x() )- 40.0*sqr(r.y() ));
      //  return rho0 + 1e-6 * exp( -2.0 * sqr(r.x() - 4.0) - 2.0 * sqr(r.y() - 4.0));
     //    return (r.y() < 0.5) ? 1.0 : 0.125;
     //   return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.125;
-    //    return (r.x() < 0.5) ? 1.0 : 0.125;
+//        return (r.x() < 0.5) ? 1.0 : 0.125;
+        return (r.x() < 0) ? 1.0 : 0.125;
     //   return (r.y() < 1.0 && r.x() < 1.0 && r.y() > 2.0 && r.x() > 2.0) ? 0.0 : 1.0;
     //return (r.y() < 0.5) ? r.y() + 0.01 : r.y() + 0.51;
     };
 
     function<double(const Point& r)> initP = [=](const Point& r) \
     {
-       return (initRho(r)) / cpcv;
+    //   return (initRho(r)) / cpcv;
     //    return (initRho(r));
     //    return (r.y() < 0.5) ? 1.0 : 0.1;
     //    return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.1;
     //    return (r.x() < 0.5) ? 1.0 : 0.1;
+        return (r.x() < 0) ? 1.0 : 0.1;
     };
 
 
@@ -99,12 +101,12 @@ void Problem::setAlpha(const std::vector<numvector<double, 5 * nShapes> >& a)
 double Problem::getPressure(const numvector<double, 5>& sol) const
 {
     // uncomment for LEE
-    numvector<double,5> initfun = init(Point({0.0,0.0}));
+//    numvector<double,5> initfun = init(Point({0.0,0.0}));
 
-    double rho0 = initfun[0];
-    double p0 = initfun[4] * (cpcv - 1);
+//    double rho0 = initfun[0];
+//    double p0 = initfun[4] * (cpcv - 1);
 
-    return p0 * pow(sol[0] / rho0 , cpcv);
+//    return p0 * pow(sol[0] / rho0 , cpcv);
 
     double magRhoU2 = sqr(sol[1]) + sqr(sol[2]) + sqr(sol[3]);
 
