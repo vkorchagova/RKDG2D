@@ -119,6 +119,8 @@ int main(int argc, char** argv)
 //    // Set initial conditions
     solver.setInitialConditions();
 
+//    cout << solver.alphaPrev[7] << endl;
+
     limiter.limit(solver.alphaPrev);
 
 //    // time step

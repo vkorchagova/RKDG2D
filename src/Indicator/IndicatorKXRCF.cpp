@@ -24,7 +24,7 @@ Point massFlux(const Edge& edge, const Cell& cell)
         Cell& neib = (&cell == edge.neibCells[0].get()) ? *edge.neibCells[1] : *edge.neibCells[0];
 
         // correct normal position: outside related to considered cell
-        n = ((n0 - cell.getCellCenter())*n > 0) ? edge.n : Point(-edge.n);
+        n = ((n0 - cell.getCellCenter())*edge.n >= threshold) ? edge.n : Point(-edge.n);
 
         //get normal velocity component in nodes of edge
         f[0] = rotate(cell.reconstructSolution(n0), n)[1];
@@ -52,6 +52,7 @@ Point massFlux(const Edge& edge, const Cell& cell)
 
             if (debugFlux)
             {
+                cout << "u1 < 0 int \n";
                 cout << "h = " << h << endl;
                 cout << "mySolH = " << mySolH << endl;
                 cout << "neibSolH = " << neibSolH << endl;
@@ -68,6 +69,14 @@ Point massFlux(const Edge& edge, const Cell& cell)
 
             double mySolH = cell.reconstructSolution(nZero, 0);
             double neibSolH = neib.reconstructSolution(nZero, 0);
+
+            if (debugFlux)
+            {
+                cout << "u1 > 0, u2 < 0 int \n";
+                cout << "h = " << h << endl;
+                cout << "mySolH = " << mySolH << endl;
+                cout << "neibSolH = " << neibSolH << endl;
+            }
 
 			return Point(
             { 0.5*h*(cell.reconstructSolution(n1, 0) - neib.reconstructSolution(n1, 0) + mySolH - neibSolH), h }
@@ -104,7 +113,18 @@ Point massFlux(const Edge& edge, const Cell& cell)
             double mySolH = cell.reconstructSolution(nZero, 0);
             double neibSolH = edgeBound.bc->applyBoundary(cell.reconstructSolution(nZero))[0];// neib.reconstructSolution( *edge.nodes[0] + tau*h, 0);
 
-            return Point({ 0.5*h*(cell.reconstructSolution(n0, 0) - edgeBound.bc->applyBoundary(cell.reconstructSolution(n0))[0] + mySolH - neibSolH), h });
+
+            if (debugFlux)
+            {
+                cout << "u1 < 0 bound\n";
+                cout << "h = " << h << endl;
+                cout << "mySolH = " << mySolH << endl;
+                cout << "neibSolH = " << neibSolH << endl;
+            }
+
+            return Point(
+            { 0.5*h*(cell.reconstructSolution(n0, 0) - edgeBound.bc->applyBoundary(cell.reconstructSolution(n0))[0] + mySolH - neibSolH), h }
+            );
 		}
 		else
 		{
@@ -114,6 +134,15 @@ Point massFlux(const Edge& edge, const Cell& cell)
 
             double mySolH = cell.reconstructSolution(nZero, 0);
             double neibSolH = edgeBound.bc->applyBoundary(cell.reconstructSolution(nZero))[0];// neib.reconstructSolution( *edge.nodes[0] + tau*h, 0);
+
+            if (debugFlux)
+            {
+                cout << "u1 > 0, u2 < 0 bound\n";
+
+                cout << "h = " << h << endl;
+                cout << "mySolH = " << mySolH << endl;
+                cout << "neibSolH = " << neibSolH << endl;
+            }
 
 			return Point(
             { 0.5*h*(cell.reconstructSolution(n1, 0) - edgeBound.bc->applyBoundary(cell.reconstructSolution(n1))[0] + mySolH - neibSolH), h }
@@ -179,7 +208,7 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
 
         }
 
-        cout << "cell #" << cell->number <<": indicator = " << indicator << "\n===============\n";
+        //cout << "cell #" << cell->number <<": indicator = " << indicator << "\n===============\n";
 
         if (indicator > 1.0)
             troubledCells.push_back(cell->number);
