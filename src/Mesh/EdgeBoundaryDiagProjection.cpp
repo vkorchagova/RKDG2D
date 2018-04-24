@@ -8,7 +8,7 @@ using namespace std;
 
 Point EdgeBoundaryDiagProjection::getDiagProjection(const Point& p) const
 {
-    Point diag ({ neibCells[0]->h().x(), neibCells[0]->h().y()});
+    Point diag = Point({0,0});// ({ neibCells[0]->h().x(), neibCells[0]->h().y()});
     diag.normalize();
 
     double projection = diag * p;

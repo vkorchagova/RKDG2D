@@ -38,12 +38,12 @@ void Solver::setInitialConditions()
         alphaPrev[k] = problem.alpha[k];
     }
 
-    ofstream writer;
-    writer.open("alphaCoeffs/0.000000");
+//    ofstream writer;
+//    writer.open("alphaCoeffs/0.000000");
 
-    write(writer, problem.alpha);
+//    write(writer, problem.alpha);
 
-    writer.close();
+//    writer.close();
 
 } // end setInitialConditions
 

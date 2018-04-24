@@ -12,9 +12,6 @@ Cell::Cell(const std::vector<std::shared_ptr<Point> > &defNodes, const vector<st
     edges = defEdges;
 
     nEntities = defNodes.size();
-    
-    //step.x() = edges[0]->nodes[1]->x() - edges[0]->nodes[0]->x();
-    //step.y() = edges[nEdges-1]->nodes[1]->y() - edges[nEdges-1]->nodes[0]->y();
 }
 
 // ------------------ Private class methods --------------------
@@ -24,8 +21,13 @@ bool Cell::insideCell(const Point& point) const
 {
     double epsilon = 1e-16;
 
-    bool xCond = (center.x() - 0.5*step.x() - epsilon) < point.x()  && (center.x() + 0.5*step.x() + epsilon) > point.x();
-    bool yCond = (center.y() - 0.5*step.y() - epsilon) < point.y()  && (center.y() + 0.5*step.y() + epsilon) > point.y();
+//    bool xCond = (center.x() - 0.5*step.x() - epsilon) < point.x()  && (center.x() + 0.5*step.x() + epsilon) > point.x();
+//    bool yCond = (center.y() - 0.5*step.y() - epsilon) < point.y()  && (center.y() + 0.5*step.y() + epsilon) > point.y();
+
+
+    bool xCond = (center.x()  - epsilon) < point.x()  && (center.x() + epsilon) > point.x();
+    bool yCond = (center.y()  - epsilon) < point.y()  && (center.y() +  epsilon) > point.y();
+
 
     if (xCond && yCond)
         return true;
@@ -126,15 +128,7 @@ void Cell::setJacobian()
     J.resize(nGP);
 
     for (int i = 0; i < nGP; ++i)
-    {
         J[i] = fJ(localGP[i]);
-//        cout << J[i] << ' ';
-    }
-
-//    cout.precision(12);
-//    cout << "a = " << area << endl;
-
-//    cout << endl;
 }
 
 void Cell::setGaussPoints()
@@ -217,23 +211,12 @@ void Cell::setCellCenter()
 
 void Cell::setBasisFunctions()
 {
-//    double isqrta  = 1.0 / sqrt(area);
-//    double isqrta2 = 1.0 / sqrt(area * area / 6.0 / sqrt(3));
-
-//    double isqrta  = 1.0;
-//    double isqrta2 = 1.0;
-
     offsetPhi.push_back(1.0 / sqrt(area));
     offsetPhi.push_back(2.0 * sqrt(3) / area);
     offsetPhi.push_back(2.0 * sqrt(3) / area);
 
     phi.reserve(nShapes);
     gradPhi.reserve(nShapes);
-
-//    phi.emplace_back([&](const Point& r){ return 1.0 ; });
-//    phi.emplace_back([&](const Point& r){ return (r.x() - center.x()); });
-//    phi.emplace_back([&](const Point& r){ return (r.y() - center.y()); });
-
 
     phi.emplace_back([&](const Point& r){ return 1.0 / sqrt(area); });
     phi.emplace_back([&](const Point& r){ return (r.x() - center.x()) * 2.0 * sqrt(3) / area; });
@@ -310,6 +293,8 @@ vector<shared_ptr<Point>> Cell::getCellCoordinates() const
     return nodeCoordinates;
 
 } // end getCellCoordinates
+
+
 
 vector<shared_ptr<Cell>> Cell::findNeighbourCellsX() const
 {

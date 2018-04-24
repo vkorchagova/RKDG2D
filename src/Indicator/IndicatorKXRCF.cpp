@@ -4,7 +4,7 @@ using namespace std;
 
 bool debugFlux;
 
-Point massFlux(const Edge& edge, const Cell& cell)
+numvector<double,3>  massFlux(const Edge& edge, const Cell& cell)
 {
     double f[2];
 
@@ -15,7 +15,7 @@ Point massFlux(const Edge& edge, const Cell& cell)
 
     double threshold = 1e-10;
         
-	try
+    try // find internal edges
 	{
         // for internal edges
         const EdgeInternal& edgeInt = dynamic_cast<const EdgeInternal&>(edge);
@@ -36,58 +36,91 @@ Point massFlux(const Edge& edge, const Cell& cell)
 
         // no entrance
         if ((f[0] >= -threshold) && (f[1] >= -threshold))
-			return Point({ 0.0, 0.0 });
+            return { 0.0, 0.0, 0.0 };
+
+        double h = 0.0;
+        double intRho = 0.0;
+        double intE = 0.0;
 
         //entrance at n[0]
-        else if (f[0] < -threshold)
+        if (f[0] < -threshold)
 		{
             Point nZero = (f[1] <= -threshold) ? \
                            *edge.nodes[1] : \
                            Point({ (f[1] * n0.x() - f[0] * n1.x())/ (f[1] - f[0]), (f[1] * n0.y() - f[0] * n1.y())/ (f[1] - f[0])});
 
-            double h = (nZero - n0).length();
+            h = (nZero - n0).length();
 
-            double mySolH   = cell.reconstructSolution(nZero, 0);
-            double neibSolH = neib.reconstructSolution(nZero, 0);
+            intRho = 0.5*h*(
+                        cell.reconstructSolution(n0, 0) + cell.reconstructSolution(nZero, 0) -
+                        neib.reconstructSolution(n0, 0) - neib.reconstructSolution(nZero, 0)
+                  );
+
+            intE = 0.5*h*(
+                        cell.reconstructSolution(n0, 4) + cell.reconstructSolution(nZero, 4) -
+                        neib.reconstructSolution(n0, 4) - neib.reconstructSolution(nZero, 4)
+                  );
 
             if (debugFlux)
             {
-                cout << "u1 < 0 int \n";
+                cout << "\n----\nu0 < 0 int \n -- \n";
                 cout << "h = " << h << endl;
-                cout << "mySolH = " << mySolH << endl;
-                cout << "neibSolH = " << neibSolH << endl;
+                cout << "mySol zero rho = "   << cell.reconstructSolution(nZero, 0) << endl;
+                cout << "neibSol zero rho = " << neib.reconstructSolution(nZero, 0) << endl;
+                cout << "mySol zero e = "     << cell.reconstructSolution(nZero, 4) << endl;
+                cout << "neibSol zero e = "   << neib.reconstructSolution(nZero, 4) << endl;
+                cout << "mySol n0 rho = "     << cell.reconstructSolution(n0, 0) << endl;
+                cout << "neibSol n0 rho = "   << neib.reconstructSolution(n0, 0) << endl;
+                cout << "mySol n0 e = "       << cell.reconstructSolution(n0, 4) << endl;
+                cout << "neibSol n0 e = "     << neib.reconstructSolution(n0, 4) << endl;
+
+                cout << "int rho = "          << intRho << endl;
+                cout << "int e = "            << intE << endl;
             }
-			return Point(
-            { 0.5*h*(cell.reconstructSolution(n0, 0) - neib.reconstructSolution(n0, 0) + mySolH - neibSolH), h }
-			);
 		}
         else // no entrance at n0, entrance at n1
 		{
             Point nZero = Point({ (f[1] * n0.x() - f[0] * n1.x())/ (f[1] - f[0]), (f[1] * n0.y() - f[0] * n1.y())/ (f[1] - f[0])});
 
-            double h = (n1 - nZero).length();
+            h = (n1 - nZero).length();
 
-            double mySolH = cell.reconstructSolution(nZero, 0);
-            double neibSolH = neib.reconstructSolution(nZero, 0);
+            intRho = 0.5*h*(
+                        cell.reconstructSolution(n1, 0) + cell.reconstructSolution(nZero, 0) -
+                        neib.reconstructSolution(n1, 0) - neib.reconstructSolution(nZero, 0)
+                  );
+
+            intE = 0.5*h*(
+                        cell.reconstructSolution(n1, 4) + cell.reconstructSolution(nZero, 4) -
+                        neib.reconstructSolution(n1, 4) - neib.reconstructSolution(nZero, 4)
+                  );
 
             if (debugFlux)
             {
-                cout << "u1 > 0, u2 < 0 int \n";
+                cout << "\n----\nu0 > 0, u1 < 0 int \n -- \n";
                 cout << "h = " << h << endl;
-                cout << "mySolH = " << mySolH << endl;
-                cout << "neibSolH = " << neibSolH << endl;
-            }
+                cout << "mySol zero rho = "   << cell.reconstructSolution(nZero, 0) << endl;
+                cout << "neibSol zero rho = " << neib.reconstructSolution(nZero, 0) << endl;
+                cout << "mySol zero e = "     << cell.reconstructSolution(nZero, 4) << endl;
+                cout << "neibSol zero e = "   << neib.reconstructSolution(nZero, 4) << endl;
+                cout << "mySol n1 rho = "     << cell.reconstructSolution(n1, 0) << endl;
+                cout << "neibSol n1 rho = "   << neib.reconstructSolution(n1, 0) << endl;
+                cout << "mySol n1 e = "       << cell.reconstructSolution(n1, 4) << endl;
+                cout << "neibSol n1 e = "     << neib.reconstructSolution(n1, 4) << endl;
 
-			return Point(
-            { 0.5*h*(cell.reconstructSolution(n1, 0) - neib.reconstructSolution(n1, 0) + mySolH - neibSolH), h }
-			);
+                cout << "int rho = "          << intRho << endl;
+                cout << "int e = "            << intE << endl;
+            }
 		}
 
-		cout << "STRANGE!!!" << endl;
-		return Point({ 0.0, 0.0 });
+        return
+        {
+            intRho,
+            intE,
+            h
+        };
 
-	}
-	catch (...)
+    } // end try
+    catch (...) // other edges are boundaries
 	{
         // for edge on boundary
         const EdgeBoundary& edgeBound = dynamic_cast<const EdgeBoundary&>(edge);
@@ -100,66 +133,89 @@ Point massFlux(const Edge& edge, const Cell& cell)
 
 
         if ((f[0] >= -threshold) && (f[1] >= -threshold))
-			return Point({ 0.0, 0.0 });
+            return { 0.0, 0.0, 0.0 };
 
-        else if (f[0] < -threshold)
+        double h = 0.0;
+        double intRho = 0.0;
+        double intE = 0.0;
+
+        if (f[0] < -threshold)
 		{
             Point nZero = (f[1] <= -threshold) ? \
                            *edge.nodes[1] : \
                            Point({ (f[1] * n0.x() - f[0] * n1.x())/ (f[1] - f[0]), (f[1] * n0.y() - f[0] * n1.y())/ (f[1] - f[0])});
 
-            double h = (nZero - n0).length();
+            h = (nZero - n0).length();
 
-            double mySolH = cell.reconstructSolution(nZero, 0);
-            double neibSolH = edgeBound.bc->applyBoundary(cell.reconstructSolution(nZero))[0];// neib.reconstructSolution( *edge.nodes[0] + tau*h, 0);
+            intRho = 0.5*h*(
+                        cell.reconstructSolution(n0, 0)    - edgeBound.bc->applyBoundary(cell.reconstructSolution(n0))[0] +
+                        cell.reconstructSolution(nZero, 0) - edgeBound.bc->applyBoundary(cell.reconstructSolution(nZero))[0]
+                  );
 
+            intE = 0.5*h*(
+                        cell.reconstructSolution(n0, 4)    - edgeBound.bc->applyBoundary(cell.reconstructSolution(n0))[4] +
+                        cell.reconstructSolution(nZero, 4) - edgeBound.bc->applyBoundary(cell.reconstructSolution(nZero))[4]
+                  );
 
             if (debugFlux)
             {
-                cout << "u1 < 0 bound\n";
+                cout << "\n----\nu0 < 0 bound \n -- \n";
                 cout << "h = " << h << endl;
-                cout << "mySolH = " << mySolH << endl;
-                cout << "neibSolH = " << neibSolH << endl;
-            }
+                cout << "mySol zero rho = "   << cell.reconstructSolution(nZero, 0) << endl;
+                cout << "neibSol zero rho = " << edgeBound.bc->applyBoundary(cell.reconstructSolution(nZero))[0] << endl;
+                cout << "mySol zero e = "     << cell.reconstructSolution(nZero, 4) << endl;
+                cout << "neibSol zero e = "   << edgeBound.bc->applyBoundary(cell.reconstructSolution(nZero))[4] << endl;
+                cout << "mySol n0 rho = "     << cell.reconstructSolution(n0, 0) << endl;
+                cout << "neibSol n0 rho = "   << edgeBound.bc->applyBoundary(cell.reconstructSolution(n0))[0] << endl;
+                cout << "mySol n0 e = "       << cell.reconstructSolution(n0, 4) << endl;
+                cout << "neibSol n0 e = "     << edgeBound.bc->applyBoundary(cell.reconstructSolution(n0))[4] << endl;
 
-            return Point(
-            { 0.5*h*(cell.reconstructSolution(n0, 0) - edgeBound.bc->applyBoundary(cell.reconstructSolution(n0))[0] + mySolH - neibSolH), h }
-            );
-		}
+                cout << "int rho = "          << intRho << endl;
+                cout << "int e = "            << intE << endl;
+            }
+        }
 		else
 		{
             Point nZero = Point({ (f[1] * n0.x() - f[0] * n1.x())/ (f[1] - f[0]), (f[1] * n0.y() - f[0] * n1.y())/ (f[1] - f[0])});
 
-            double h = (n1 - nZero).length();
+            h = (n1 - nZero).length();
 
-            double mySolH = cell.reconstructSolution(nZero, 0);
-            double neibSolH = edgeBound.bc->applyBoundary(cell.reconstructSolution(nZero))[0];// neib.reconstructSolution( *edge.nodes[0] + tau*h, 0);
+            intRho = 0.5*h*(
+                        cell.reconstructSolution(n1, 0)    - edgeBound.bc->applyBoundary(cell.reconstructSolution(n1))[0] +
+                        cell.reconstructSolution(nZero, 0) - edgeBound.bc->applyBoundary(cell.reconstructSolution(nZero))[0]
+                  );
+
+            intE = 0.5*h*(
+                        cell.reconstructSolution(n1, 4)    - edgeBound.bc->applyBoundary(cell.reconstructSolution(n1))[4] +
+                        cell.reconstructSolution(nZero, 4) - edgeBound.bc->applyBoundary(cell.reconstructSolution(nZero))[4]
+                  );
 
             if (debugFlux)
             {
-                cout << "u1 > 0, u2 < 0 bound\n";
+                cout << "\n----\nu0 > 0, u1 < 0 bound\n -- \n";
 
                 cout << "h = " << h << endl;
-                cout << "mySolH = " << mySolH << endl;
-                cout << "neibSolH = " << neibSolH << endl;
-            }
+                cout << "mySol zero rho = "   << cell.reconstructSolution(nZero, 0) << endl;
+                cout << "neibSol zero rho = " << edgeBound.bc->applyBoundary(cell.reconstructSolution(nZero))[0] << endl;
+                cout << "mySol zero e = "     << cell.reconstructSolution(nZero, 4) << endl;
+                cout << "neibSol zero e = "   << edgeBound.bc->applyBoundary(cell.reconstructSolution(nZero))[4] << endl;
+                cout << "mySol n0 rho = "     << cell.reconstructSolution(n1, 0) << endl;
+                cout << "neibSol n0 rho = "   << edgeBound.bc->applyBoundary(cell.reconstructSolution(n1))[0] << endl;
+                cout << "mySol n0 e = "       << cell.reconstructSolution(n1, 4) << endl;
+                cout << "neibSol n0 e = "     << edgeBound.bc->applyBoundary(cell.reconstructSolution(n1))[4] << endl;
 
-			return Point(
-            { 0.5*h*(cell.reconstructSolution(n1, 0) - edgeBound.bc->applyBoundary(cell.reconstructSolution(n1))[0] + mySolH - neibSolH), h }
-			);
+                cout << "int rho = "          << intRho << endl;
+                cout << "int e = "            << intE << endl;
+            }
 		}
 
-		cout << "STRANGE!!!" << endl;
-		return Point({ 0.0, 0.0 });
-		
-
-		//cout << "CATCH!!!" << endl;
-		//return Point({ 100.0, 100.0 });
-	}
-
-    cout << "REALLY STRANGE!!!" << endl;
-    return Point({ 0.0, 0.0 });
-    
+        return
+        {
+            intRho,
+            intE,
+            h
+        };
+    } // end catch
 }
 
 
@@ -170,23 +226,47 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
 {
     vector<int> troubledCells;
 
-    double indicator;
+    double indicatorRho = 0.0;
+    double indicatorE = 0.0;
+    bool rhoNeg = false;
+
+//    cout << "\n========\nRun KXRCF\n--------\n";
     
     for (const shared_ptr<Cell> cell : mesh.cells)
 	{
-		// get ~ radius of circumscribed circle in cell[i]
-        double h = sqrt(0.5 * cell->getArea());
+//        if (cell->number == 90 || cell->number == 148 || cell->number == 1026 || cell->number == 1468)
+//            debugFlux = true;
+//        else
+//            debugFlux = false;
+
+        // check negative rho values
+
+        for (const shared_ptr<Point> node : cell->nodes)
+        {
+            if (cell->reconstructSolution(node,0) < 0.0 || cell->reconstructSolution(node,4) < 0.0)
+            {
+                rhoNeg = true;
+                break;
+            }
+        }
+
+        if (rhoNeg)
+        {
+            troubledCells.push_back(cell->number);
+            continue;
+        }
+
+
+
+        // get ~ radius of circumscribed circle in cell[i]
+        double h = sqrt(0.5*cell->getArea());
 
 		// get norm Q_j
-        double normQ = cell->getNormQ();
+        double normQrho = cell->getNormQ(0);
+        double normQe = cell->getNormQ(4);
 
 		// get momentum in cell nodes
-
-        double integralRho = 0.0;
-        double integralE = 0.0;
-        double lenEntrance = 0.0;
-
-        Point integral = Point({0.0, 0.0});
+        numvector<double,3> integral = {0.0, 0.0, 0.0}; // rho|e|length
 
         for (const shared_ptr<Edge> edge : cell->edges)
         {
@@ -194,32 +274,30 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
         }
 
 
-        if (cell->number == 6 || cell->number == 7 || cell->number == 8)
-            debugFlux = true;
-        else
-            debugFlux = false;
-
-
-        indicator = fabs(integral.x()) / max((h*integral.y()*normQ), 1e-10);
+        indicatorRho = fabs(integral[0]) / max((h*integral[2]*normQrho), 1e-10);
+        indicatorE   = fabs(integral[1]) / max((h*integral[2]*normQe), 1e-10);
 
         if (debugFlux)
         {
-            cout << "integral = " << fabs(integral.x()) << ", len = " << integral.y() << endl;
+            cout << "integralRho = " << fabs(integral[0]) << ", integralE = " << fabs(integral[1]) << ", len = " << integral[2] << endl;
 
         }
 
-        //cout << "cell #" << cell->number <<": indicator = " << indicator << "\n===============\n";
+        if (debugFlux)
+        {
+            cout << "cell #" << cell->number <<": indicatorRho = " << indicatorRho << ", indicatorE = " << indicatorE << "\n===============\n";
+        }
 
-        if (indicator > 1.0)
+        if (indicatorRho > 1.0 || indicatorE > 1.0)
             troubledCells.push_back(cell->number);
 	}
 
-    cout << "\ntroubled cells: " ;
+//    cout << "\ntroubled cells: " ;
 
-    for (int iCell : troubledCells)
-        cout << iCell << ' ';
+//    for (int iCell : troubledCells)
+//        cout << iCell << ' ';
 
-    cout << endl;
+//    cout << endl;
 
     return troubledCells;
 }

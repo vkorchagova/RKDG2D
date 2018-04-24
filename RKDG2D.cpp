@@ -34,42 +34,16 @@ using namespace std;
 
 int main(int argc, char** argv)
 {    
-
-    // Mesh parameters
-
-//    double Lx = 1.0;
-//    double Ly = 1.0;
-
-//    int nx = 10;
- //   int ny = 10;
-
-
-//    double Lx = 1.0;
-//    double Ly = 1.0;
-
-//    int nx = 100;
-//    int ny = 1;
-
-//    double Lx = 10.0;
-//    double Ly = 1;
-
-//    int nx = 128;
-//    int ny = 1;
-
     // Time parameters
 
-//    double Co = 0.1;
-//    double tEnd = 3.0;
 
-//    int freqWrite = 100;
+    double Co = 0.1;
+    double tEnd = 0.2e-6;
 
-    double Co = 0.15;
-    double tEnd = 0.00001;
-
-    double initDeltaT = 1e-2;
+    double initDeltaT = 5e-3;
     double maxDeltaT = 1.0;
     double maxTauGrowth = 1.2;
-    bool isDynamicTimeStep = false;
+    bool isDynamicTimeStep = true;
 
     int freqWrite = 1;
 
@@ -83,20 +57,15 @@ int main(int argc, char** argv)
     Problem problem(time);
 
     // Initialize mesh
-//    Mesh2D mesh(nx, ny, Lx, Ly, problem);
-
     Mesh2D mesh("../RKDG2D/mesh2D",problem);
 
-//    mesh.exportMesh();
-
-//    mesh.exportUniformMesh();
-
+    // Set BC
     problem.setBoundaryConditions(mesh.patches);
 
-//    // Initialize flux
+    // Initialize flux
     FluxHLL numFlux(problem);
 
-//    // Initialize solver
+    // Initialize solver
     Solver solver(mesh, problem, numFlux);
 
     // Initialize time controller
@@ -105,10 +74,10 @@ int main(int argc, char** argv)
     // Initialize indicator
     IndicatorKXRCF indicator(mesh, problem);
 
-    //Initialize limiter
-    LimiterWENOS limiter(indicator, problem);
+    // Initialize limiter
+    LimiterFinDiff limiter(indicator, problem);
 
-//    // ---------------
+    // ---------------
 
     #if !defined(__linux__)
         _mkdir("alphaCoeffs");
@@ -116,19 +85,32 @@ int main(int argc, char** argv)
         mkdir("alphaCoeffs", S_IRWXU | S_IRGRP | S_IROTH);
     #endif
 
-//    // Set initial conditions
+    // Set initial conditions
     solver.setInitialConditions();
-
-//    cout << solver.alphaPrev[7] << endl;
 
     limiter.limit(solver.alphaPrev);
 
-//    // time step
+    ofstream output;
+    output.open("alphaCoeffs/0.000000");
+
+    solver.write(output,solver.alphaPrev);
+
+    output.close();
+
+//    for (const shared_ptr<Cell> cell : mesh.cells)
+//    {
+//        cout << "neibs for cell #" << cell-> number << ": ";
+//        for (const shared_ptr<Cell> neib : cell->neibCells)
+//            cout << neib->number << ' ';
+//        cout << endl;
+//    }
+
+   // time step
 
     double tau = initDeltaT;
 
 
-//    // run Runge --- Kutta 2 TVD
+    // run Runge --- Kutta 2 TVD
 
     vector<numvector<double, 5*nShapes>> k1, k2;
 
@@ -153,21 +135,21 @@ int main(int argc, char** argv)
        k1 = solver.assembleRHS(solver.alphaPrev);
 
        solver.alphaNext = solver.alphaPrev + k1 * tau;
-      // solver.correctNonOrtho(solver.alphaNext);
+       solver.correctNonOrtho(solver.alphaNext);
 
        limiter.limit(solver.alphaNext);
 
 
-//       k2 = solver.assembleRHS(solver.alphaNext);
+       k2 = solver.assembleRHS(solver.alphaNext);
 
-//       solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
-//      // solver.correctNonOrtho(solver.alphaNext);
+       solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
+       solver.correctNonOrtho(solver.alphaNext);
 
-//       //cout << "before limiting" << solver.alphaNext[49] << endl;
+       //cout << "before limiting" << solver.alphaNext[49] << endl;
 
-//       limiter.limit(solver.alphaNext);
+       limiter.limit(solver.alphaNext);
 
-//       //cout << "after limiting" << solver.alphaNext[49] << endl;
+       //cout << "after limiting" << solver.alphaNext[49] << endl;
 
        if (iT % freqWrite == 0)
        {

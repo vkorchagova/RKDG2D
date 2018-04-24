@@ -16,6 +16,7 @@ void TimeControl::updateTimeStep()
     {
         double factCo = 0.0;
         double relTau = 0.0;
+
         vector<double> newTauLocal;
         newTauLocal.reserve(mesh.nCells);
 

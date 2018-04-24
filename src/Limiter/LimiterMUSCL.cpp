@@ -77,11 +77,11 @@ void LimiterMUSCL::limit(vector<numvector<double, 5 * nShapes>>& alpha)
             slopeX.push_back(alpha[iCell][i*nShapes + 1]);
             slopeY.push_back(alpha[iCell][i*nShapes + 2]);
 
-            for (size_t j = 1; j < cellsHor.size(); ++j)
-                slopeX.push_back( sgn(cellsHor[j]->getCellCenter().x() - cellsHor[0]->getCellCenter().x()) * (uMeanX[i][j] - uMeanX[i][0]) / cellsHor[0]->h().x() / cellsHor[0]->offsetPhi[1] );
+//            for (size_t j = 1; j < cellsHor.size(); ++j)
+//                slopeX.push_back( sgn(cellsHor[j]->getCellCenter().x() - cellsHor[0]->getCellCenter().x()) * (uMeanX[i][j] - uMeanX[i][0]) / cellsHor[0]->h().x() / cellsHor[0]->offsetPhi[1] );
 
-            for (size_t j = 1; j < cellsVer.size(); ++j)
-                slopeY.push_back( sgn(cellsVer[j]->getCellCenter().y() - cellsVer[0]->getCellCenter().y()) * (uMeanY[i][j] - uMeanY[i][0]) / cellsVer[0]->h().y() / cellsHor[0]->offsetPhi[2] );
+//            for (size_t j = 1; j < cellsVer.size(); ++j)
+//                slopeY.push_back( sgn(cellsVer[j]->getCellCenter().y() - cellsVer[0]->getCellCenter().y()) * (uMeanY[i][j] - uMeanY[i][0]) / cellsVer[0]->h().y() / cellsHor[0]->offsetPhi[2] );
 
             //cout << "i = "<< i << ' ' << m(slopeX) / cellsHor[0]->offsetPhi[1] << ' ' << m(slopeY) / cellsVer[0]->offsetPhi[2] << endl;
 

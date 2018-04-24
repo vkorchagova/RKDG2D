@@ -47,10 +47,8 @@ private:
     //- Mass center of cell
     Point center;
 
-    //- Space steps (hx, hy)
-        // DELETE!
-    Point step;
 
+    //- Gramian matrix
     std::vector<std::vector<double>> gramian;
 
     //- local [-1,1]x[-1,1] to global rectangular cell
@@ -63,21 +61,20 @@ public:
 
     /// geometric variables
 
-    //- Compute hx, hy
-    // DELETE!
-    const Point& h() const { return step; }
-
     //- Number of cell
     int number;
 
     //- Number of entities (edges or numbers - mo matter)
     int nEntities;
 
-    //- Edges in cell
+    //- Nodes in cell
     std::vector<std::shared_ptr<Point>> nodes;
 
     //- Edges in cell
     std::vector<std::shared_ptr<Edge>> edges;
+
+    //- Neighbour cells
+    std::vector<std::shared_ptr<Cell>> neibCells;
 
     //- Return area of cell
     double getArea() const { return area; }
@@ -131,7 +128,7 @@ public:
     std::vector<std::shared_ptr<Point>> getCellCoordinates() const;
 
     //- Find neighbour cells
-    std::vector<std::shared_ptr<Cell>> findNeighbourCells() const ;
+    void findNeighbourCells();
 
     //- Find neighbour cells in X direction
     //DELETE
@@ -184,7 +181,7 @@ public:
     numvector<double,5> integrate( const std::function<numvector<double, 5>(const Point&)>& f) const;
     
     //- Get norm of solution for indicators
-    double getNormQ(int numSol = 0) const;
+    double getNormQ(int numSol) const;
 };
 
 #endif // CELL_H

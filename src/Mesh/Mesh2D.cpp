@@ -22,6 +22,7 @@ Mesh2D::Mesh2D(string fileName, const Problem& prb)
         cells[i]->setCellCenter();
         cells[i]->setBasisFunctions();
         cells[i]->setGramian();
+        findNeighbourCells(cells[i]);
     }
 }
 
@@ -32,9 +33,23 @@ Mesh2D::~Mesh2D()
 
 // ------------------ Private class methods --------------------
 
-
+void Mesh2D::findNeighbourCells(const shared_ptr<Cell>& cell) const
+{
+    for (const shared_ptr<Edge> edge : cell->edges)
+    {
+        if (edge->neibCells.size() == 2)
+        {
+            if (edge->neibCells[0] == cell)
+                cell->neibCells.push_back(edge->neibCells[1]);
+            else
+                cell->neibCells.push_back(edge->neibCells[0]);
+        }
+    }
+}
 
 // ------------------ Public class methods ---------------------
+
+
 
 void Mesh2D::exportMesh() const
 {

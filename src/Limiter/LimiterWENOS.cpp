@@ -96,26 +96,26 @@ void LimiterWENOS::limitTog(vector<numvector<double, 5 * nShapes>>& alpha)
         wTilde.resize(nCells);
         w.resize(nCells);
 
-        for (size_t k = 0; k < nCells; ++k)
-            for (int j = 0; j < 5; ++j)
-            {
-                beta[k][j] =  (cells[0]->h().x() * cells[0]-> h().y()) *(sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
-                wTilde[k][j] = gamma[k] * (1.0 / sqr(beta[k][j] + 1e-6));
-            }
+//        for (size_t k = 0; k < nCells; ++k)
+//            for (int j = 0; j < 5; ++j)
+//            {
+//                beta[k][j] =  (cells[0]->h().x() * cells[0]-> h().y()) *(sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
+//                wTilde[k][j] = gamma[k] * (1.0 / sqr(beta[k][j] + 1e-6));
+//            }
 
 
 
-        wSum = {0.0, 0.0, 0.0, 0.0, 0.0};
+//        wSum = {0.0, 0.0, 0.0, 0.0, 0.0};
 
-        for (int j = 0; j < 5; ++j)
-            for (size_t k = 0; k < nCells; ++k)
-                wSum[j] += wTilde[k][j];
+//        for (int j = 0; j < 5; ++j)
+//            for (size_t k = 0; k < nCells; ++k)
+//                wSum[j] += wTilde[k][j];
 
-        //cout << wSum << endl;
+//        //cout << wSum << endl;
 
-        for (size_t k = 0; k < nCells; ++k)
-            for (int j = 0; j < 5; ++j)
-                w[k][j] = wTilde[k][j] / wSum[j];
+//        for (size_t k = 0; k < nCells; ++k)
+//            for (int j = 0; j < 5; ++j)
+//                w[k][j] = wTilde[k][j] / wSum[j];
 
 //        cout << "----\n num tr cell = " << iCell << endl;
 
@@ -287,23 +287,23 @@ void LimiterWENOS::limitSep(vector<numvector<double, 5 * nShapes>>& alpha)
         wTildey.resize(nCellsVer);
         wy.resize(nCellsVer);
 
-        for (size_t k = 0; k < nCellsHor; ++k)
-        {
-            for (int j = 0; j < 5; ++j)
-            {
-                betax[k][j] = cellsHor[k]->h().x() * cellsHor[0]->h().x() * sqr(px[k][j*nShapes + 1]);
-                wTildex[k][j] = gammax[k] * (1.0 / sqr(betax[k][j] + 1e-6));
-            }
-        }
+//        for (size_t k = 0; k < nCellsHor; ++k)
+//        {
+//            for (int j = 0; j < 5; ++j)
+//            {
+//                betax[k][j] = cellsHor[k]->h().x() * cellsHor[0]->h().x() * sqr(px[k][j*nShapes + 1]);
+//                wTildex[k][j] = gammax[k] * (1.0 / sqr(betax[k][j] + 1e-6));
+//            }
+//        }
 
-        for (size_t k = 0; k < nCellsVer; ++k)
-        {
-            for (int j = 0; j < 5; ++j)
-            {
-                betay[k][j] = cellsVer[k]->h().y() * cellsVer[0]->h().y() * sqr( py[k][j*nShapes + 2]);
-                wTildey[k][j] = gammay[k] * (1.0 / sqr(betay[k][j] + 1e-6));
-            }
-        }
+//        for (size_t k = 0; k < nCellsVer; ++k)
+//        {
+//            for (int j = 0; j < 5; ++j)
+//            {
+//                betay[k][j] = cellsVer[k]->h().y() * cellsVer[0]->h().y() * sqr( py[k][j*nShapes + 2]);
+//                wTildey[k][j] = gammay[k] * (1.0 / sqr(betay[k][j] + 1e-6));
+//            }
+//        }
 
         wSumx = { 0.0, 0.0, 0.0, 0.0, 0.0 };
         wSumy = { 0.0, 0.0, 0.0, 0.0, 0.0 };
@@ -429,22 +429,22 @@ void LimiterWENOS::limitX(vector<numvector<double, 5 * nShapes>>& alpha)
 
         // get smoothness indicators and nonlinear weights
 
-        for (int k = 0; k < 3; ++k)
-        {
-            for (int j = 0; j < 5; ++j)
-            {
-                beta[k][j] = sqr( min(cellsHor[k]->h().x(),cellsHor[k]->h().y()) * p[k][j*nShapes + 1] );
-                wTilde[k][j] = gamma[k] * (1.0 / sqr(beta[k][j] + 1e-6));
-            }
-        }
+//        for (int k = 0; k < 3; ++k)
+//        {
+//            for (int j = 0; j < 5; ++j)
+//            {
+//                beta[k][j] = sqr( min(cellsHor[k]->h().x(),cellsHor[k]->h().y()) * p[k][j*nShapes + 1] );
+//                wTilde[k][j] = gamma[k] * (1.0 / sqr(beta[k][j] + 1e-6));
+//            }
+//        }
 
-        wSum = wTilde[0] + wTilde[1] + wTilde[2];
+//        wSum = wTilde[0] + wTilde[1] + wTilde[2];
 
-        for (int k = 0; k < 3; ++k)
-        {
-            for (int j = 0; j < 5; ++j)
-                w[k][j] = wTilde[k][j] / wSum[j];
-        }
+//        for (int k = 0; k < 3; ++k)
+//        {
+//            for (int j = 0; j < 5; ++j)
+//                w[k][j] = wTilde[k][j] / wSum[j];
+//        }
 
         // project limited solution onto cell basis
 

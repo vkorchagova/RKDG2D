@@ -24,6 +24,9 @@ private:
     //- File ifstream for mesh import
     mutable std::ifstream reader;
 
+    //- Find neighbours for given cell
+    void findNeighbourCells (const std::shared_ptr<Cell>& cell) const;
+
 public:
 
     //- Number of cells
