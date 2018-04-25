@@ -38,9 +38,9 @@ int main(int argc, char** argv)
 
 
     double Co = 0.1;
-    double tEnd = 0.4;
+    double tEnd = 0.002;
 
-    double initDeltaT = 5e-3;
+    double initDeltaT = 1e-3;
     double maxDeltaT = 1.0;
     double maxTauGrowth = 1.2;
     bool isDynamicTimeStep = false;
@@ -63,7 +63,7 @@ int main(int argc, char** argv)
     problem.setBoundaryConditions(mesh.patches);
 
     // Initialize flux
-    FluxHLL numFlux(problem);
+    FluxLLF numFlux(problem);
 
     // Initialize solver
     Solver solver(mesh, problem, numFlux);
@@ -75,7 +75,7 @@ int main(int argc, char** argv)
     IndicatorKXRCF indicator(mesh, problem);
 
     // Initialize limiter
-    LimiterWENOS limiter(indicator, problem);
+    LimiterFinDiff limiter(indicator, problem);
 
     // ---------------
 

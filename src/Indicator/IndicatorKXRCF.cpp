@@ -241,20 +241,20 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
 
         // check negative rho values
 
-        for (const shared_ptr<Point> node : cell->nodes)
-        {
-            if (cell->reconstructSolution(node,0) < 0.0 || cell->reconstructSolution(node,4) < 0.0)
-            {
-                rhoNeg = true;
-                break;
-            }
-        }
+//        for (const shared_ptr<Point> node : cell->nodes)
+//        {
+//            if (cell->reconstructSolution(node,0) < 0.0 || cell->reconstructSolution(node,4) < 0.0)
+//            {
+//                rhoNeg = true;
+//                break;
+//            }
+//        }
 
-        if (rhoNeg)
-        {
-            troubledCells.push_back(cell->number);
-            continue;
-        }
+//        if (rhoNeg)
+//        {
+//            troubledCells.push_back(cell->number);
+//            continue;
+//        }
 
 
 
@@ -292,12 +292,12 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
             troubledCells.push_back(cell->number);
 	}
 
-//    cout << "\ntroubled cells: " ;
+    cout << "\ntroubled cells: " ;
 
-//    for (int iCell : troubledCells)
-//        cout << iCell << ' ';
+    for (int iCell : troubledCells)
+        cout << iCell << ' ';
 
-//    cout << endl;
+    cout << endl;
 
     return troubledCells;
 }
