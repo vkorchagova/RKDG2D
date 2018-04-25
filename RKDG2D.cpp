@@ -38,7 +38,7 @@ int main(int argc, char** argv)
 
 
     double Co = 0.1;
-    double tEnd = 0.2;
+    double tEnd = 0.4;
 
     double initDeltaT = 5e-3;
     double maxDeltaT = 1.0;
@@ -89,6 +89,8 @@ int main(int argc, char** argv)
     solver.setInitialConditions();
 
     limiter.limit(solver.alphaPrev);
+
+    cout << "---------\nt = " << 0 << endl;
 
     ofstream output;
     output.open("alphaCoeffs/0.000000");

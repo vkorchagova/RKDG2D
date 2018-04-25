@@ -81,7 +81,7 @@ void Problem::setBoundaryConditions(const std::vector<Patch>& patches)
     // boundary conditions: bottom/top/left/right
     //vector<shared_ptr<Boundary>> bc = {bOpen, bOpen, bOpen, bOpen};
     //vector<shared_ptr<Boundary>> bc = {bConst, bConst, bConst, bConst};
-    vector<shared_ptr<Boundary>> bc = {bOpen, bSine};
+    vector<shared_ptr<Boundary>> bc = {bSlip};
 
     for (int i = 0; i < patches.size(); ++i)
         for (int j = 0; j < patches[i].edgeGroup.size(); ++j)
