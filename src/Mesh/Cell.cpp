@@ -371,6 +371,8 @@ numvector<double, 5 * nShapes> Cell::projection(std::function<numvector<double,5
         }// for p
     }
 
+    correctNonOrtho(alpha);
+
     return alpha;
 
 } // end projection

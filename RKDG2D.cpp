@@ -38,12 +38,12 @@ int main(int argc, char** argv)
 
 
     double Co = 0.1;
-    double tEnd = 0.2e-6;
+    double tEnd = 0.2;
 
     double initDeltaT = 5e-3;
     double maxDeltaT = 1.0;
     double maxTauGrowth = 1.2;
-    bool isDynamicTimeStep = true;
+    bool isDynamicTimeStep = false;
 
     int freqWrite = 1;
 
@@ -75,7 +75,7 @@ int main(int argc, char** argv)
     IndicatorKXRCF indicator(mesh, problem);
 
     // Initialize limiter
-    LimiterFinDiff limiter(indicator, problem);
+    LimiterWENOS limiter(indicator, problem);
 
     // ---------------
 

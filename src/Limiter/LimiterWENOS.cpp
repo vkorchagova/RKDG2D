@@ -29,6 +29,7 @@ void LimiterWENOS::limitTog(vector<numvector<double, 5 * nShapes>>& alpha)
     // mean values
 
     vector<numvector<double, 5>> uMean;
+    vector<numvector<double, 5>> uMeanMy;
 
     // p polynoms
 
@@ -39,31 +40,40 @@ void LimiterWENOS::limitTog(vector<numvector<double, 5 * nShapes>>& alpha)
 
     for (int iCell : troubledCells)
     {
-
-
         // find neighbours
 
         shared_ptr<Cell> cell = indicator.mesh.cells[iCell];
 
-        vector<shared_ptr<Cell>> neibCellsX = cell->findNeighbourCellsX();
-        vector<shared_ptr<Cell>> neibCellsY = cell->findNeighbourCellsY();
-
-        //cout << "coeffs right neighbour = " << alpha[neibCellsX[1]->number] << endl;
 
         vector<shared_ptr<Cell>> cells = { cell };
-
-
-        cells.insert(cells.end(), neibCellsX.begin(), neibCellsX.end());
-        cells.insert(cells.end(), neibCellsY.begin(), neibCellsY.end());
+        cells.insert(cells.end(), cell->neibCells.begin(), cell->neibCells.end());
 
         int nCells = cells.size();
 
         // get mean values
 
         uMean.resize(nCells);
+        uMeanMy.resize(nCells);
 
         for (size_t k = 0; k < nCells; ++k)
-            uMean[k] = cells[k]->reconstructSolution(cells[0]->getCellCenter());
+        {
+            function<numvector<double, 5>(const Point&)> f = \
+                [&](const Point& r)
+                {
+                    numvector<double, 5> sum (0.0);
+
+                    for (int i = 0; i < 5; ++i)
+                        sum[i] += cells[k]->phi[0](r) * alpha[k][i*nShapes] + \
+                                  cells[k]->phi[1](r) * alpha[k][i*nShapes + 1] + \
+                                  cells[k]->phi[2](r) * alpha[k][i*nShapes + 2];
+
+
+                    return sum;
+                };
+
+            uMean[k]   = cells[0]->integrate(f) * (1.0 / cells[0]->getArea());
+            uMeanMy[k] = cells[k]->integrate(f) * (1.0 / cells[k]->getArea());
+        }
 
         // get coeffs for polynoms p
 
@@ -79,7 +89,7 @@ void LimiterWENOS::limitTog(vector<numvector<double, 5 * nShapes>>& alpha)
 
         for (size_t k = 0; k < nCells; ++k)
             for (int i = 0; i < 5; ++i)
-                p[k][i*nShapes] = - uMean[k][i] + uMean[0][i] + cells[k]->reconstructSolution(cells[k]->getCellCenter(),i);
+                p[k][i*nShapes] = - uMean[k][i] + uMean[0][i] + uMeanMy[k][i];
 
         // get linear weights
 
@@ -96,26 +106,26 @@ void LimiterWENOS::limitTog(vector<numvector<double, 5 * nShapes>>& alpha)
         wTilde.resize(nCells);
         w.resize(nCells);
 
-//        for (size_t k = 0; k < nCells; ++k)
-//            for (int j = 0; j < 5; ++j)
-//            {
-//                beta[k][j] =  (cells[0]->h().x() * cells[0]-> h().y()) *(sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
-//                wTilde[k][j] = gamma[k] * (1.0 / sqr(beta[k][j] + 1e-6));
-//            }
+        for (size_t k = 0; k < nCells; ++k)
+            for (int j = 0; j < 5; ++j)
+            {
+                beta[k][j] =  sqrt(cells[0]->getArea()) * sqrt(cells[k]->getArea()) * (sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
+                wTilde[k][j] = gamma[k] * (1.0 / sqr(beta[k][j] + 1e-6));
+            }
 
 
 
-//        wSum = {0.0, 0.0, 0.0, 0.0, 0.0};
+        wSum = {0.0, 0.0, 0.0, 0.0, 0.0};
 
-//        for (int j = 0; j < 5; ++j)
-//            for (size_t k = 0; k < nCells; ++k)
-//                wSum[j] += wTilde[k][j];
+        for (int j = 0; j < 5; ++j)
+            for (size_t k = 0; k < nCells; ++k)
+                wSum[j] += wTilde[k][j];
 
 //        //cout << wSum << endl;
 
-//        for (size_t k = 0; k < nCells; ++k)
-//            for (int j = 0; j < 5; ++j)
-//                w[k][j] = wTilde[k][j] / wSum[j];
+        for (size_t k = 0; k < nCells; ++k)
+            for (int j = 0; j < 5; ++j)
+                w[k][j] = wTilde[k][j] / wSum[j];
 
 //        cout << "----\n num tr cell = " << iCell << endl;
 

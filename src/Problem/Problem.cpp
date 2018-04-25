@@ -58,7 +58,7 @@ void Problem::setInitialConditions()
 
     function<double(const Point& r)> initV = [](const Point& r) \
     {
-        return 1e-3;
+        return 0.0;
     //    return (r.y() < 0.5) ? 0.0 : 0.0;
     //    return ((r.x() + r.y()) < 0.5) ? 0.0 : 0.0;
     //    return (r.x() < 0.5) ? 0.75 : 0.0;
