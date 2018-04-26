@@ -30,14 +30,29 @@ numvector<double,3>  massFlux(const Edge& edge, const Cell& cell)
         f[0] = rotate(cell.reconstructSolution(n0), n)[1];
         f[1] = rotate(cell.reconstructSolution(n1), n)[1];
 
+        if (debugFlux)
+        {
+            cout << "before rotation: \n";
+            cout << cell.reconstructSolution(n0) << endl;
+            cout << cell.reconstructSolution(n1) << endl;
+            cout << neib.reconstructSolution(n0) << endl;
+            cout << neib.reconstructSolution(n1) << endl;
+            cout << "f = " << f[0] << " " << f[1] << endl;
+        }
+
         // 4 variants of flux integral (only through the part of edge with inward flux)
         // we have linear functions -> use trapezia formulae for integration
 
 
         // no entrance
         if ((f[0] >= -threshold) && (f[1] >= -threshold))
+        {
+            if (debugFlux)
+            {
+                cout << "no entrance\n";
+            }
             return { 0.0, 0.0, 0.0 };
-
+        }
         double h = 0.0;
         double intRho = 0.0;
         double intE = 0.0;
@@ -65,8 +80,11 @@ numvector<double,3>  massFlux(const Edge& edge, const Cell& cell)
             {
                 cout << "\n----\nu0 < 0 int \n -- \n";
                 cout << "h = " << h << endl;
+                cout << "nZero = " << nZero << endl;
                 cout << "mySol zero rho = "   << cell.reconstructSolution(nZero, 0) << endl;
                 cout << "neibSol zero rho = " << neib.reconstructSolution(nZero, 0) << endl;
+                cout << "mySol n1 rho = "   << cell.reconstructSolution(n1, 0) << endl;
+                cout << "neibSol n1 rho = " << neib.reconstructSolution(n1, 0) << endl;
                 cout << "mySol zero e = "     << cell.reconstructSolution(nZero, 4) << endl;
                 cout << "neibSol zero e = "   << neib.reconstructSolution(nZero, 4) << endl;
                 cout << "mySol n0 rho = "     << cell.reconstructSolution(n0, 0) << endl;
@@ -98,6 +116,7 @@ numvector<double,3>  massFlux(const Edge& edge, const Cell& cell)
             {
                 cout << "\n----\nu0 > 0, u1 < 0 int \n -- \n";
                 cout << "h = " << h << endl;
+                cout << "nZero = " << nZero << endl;
                 cout << "mySol zero rho = "   << cell.reconstructSolution(nZero, 0) << endl;
                 cout << "neibSol zero rho = " << neib.reconstructSolution(nZero, 0) << endl;
                 cout << "mySol zero e = "     << cell.reconstructSolution(nZero, 4) << endl;
@@ -128,12 +147,26 @@ numvector<double,3>  massFlux(const Edge& edge, const Cell& cell)
         n = edge.n;
 
         //get normal velocity component in nodes of edge
-        f[0] = rotate(cell.reconstructSolution(edge.nodes[0], 1), n)[1];
-        f[1] = rotate(cell.reconstructSolution(edge.nodes[1], 1), n)[1];
+        f[0] = rotate(cell.reconstructSolution(edge.nodes[0]), n)[1];
+        f[1] = rotate(cell.reconstructSolution(edge.nodes[1]), n)[1];
+
+        if (debugFlux)
+        {
+            cout << "before rotation: \n";
+            cout << cell.reconstructSolution(n0) << endl;
+            cout << cell.reconstructSolution(n1) << endl;
+            cout << "f = " << f[0] << " " << f[1] << endl;
+        }
 
 
         if ((f[0] >= -threshold) && (f[1] >= -threshold))
+        {
+            if (debugFlux)
+            {
+                cout << "no entrance\n";
+            }
             return { 0.0, 0.0, 0.0 };
+        }
 
         double h = 0.0;
         double intRho = 0.0;
@@ -161,6 +194,7 @@ numvector<double,3>  massFlux(const Edge& edge, const Cell& cell)
             {
                 cout << "\n----\nu0 < 0 bound \n -- \n";
                 cout << "h = " << h << endl;
+                cout << "nZero = " << nZero << endl;
                 cout << "mySol zero rho = "   << cell.reconstructSolution(nZero, 0) << endl;
                 cout << "neibSol zero rho = " << edgeBound.bc->applyBoundary(cell.reconstructSolution(nZero))[0] << endl;
                 cout << "mySol zero e = "     << cell.reconstructSolution(nZero, 4) << endl;
@@ -195,6 +229,7 @@ numvector<double,3>  massFlux(const Edge& edge, const Cell& cell)
                 cout << "\n----\nu0 > 0, u1 < 0 bound\n -- \n";
 
                 cout << "h = " << h << endl;
+                cout << "nZero = " << nZero << endl;
                 cout << "mySol zero rho = "   << cell.reconstructSolution(nZero, 0) << endl;
                 cout << "neibSol zero rho = " << edgeBound.bc->applyBoundary(cell.reconstructSolution(nZero))[0] << endl;
                 cout << "mySol zero e = "     << cell.reconstructSolution(nZero, 4) << endl;
@@ -239,22 +274,28 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
 //        else
 //            debugFlux = false;
 
+//        if (cell->number == 50 || cell->number == 51)
+//            debugFlux = true;
+//        else
+//            debugFlux = false;
+
         // check negative rho values
 
-//        for (const shared_ptr<Point> node : cell->nodes)
-//        {
-//            if (cell->reconstructSolution(node,0) < 0.0 || cell->reconstructSolution(node,4) < 0.0)
-//            {
-//                rhoNeg = true;
-//                break;
-//            }
-//        }
+        for (const shared_ptr<Point> node : cell->nodes)
+        {
+            if (cell->reconstructSolution(node,0) < 0.0 || cell->reconstructSolution(node,4) < 0.0)
+            {
+                rhoNeg = true;
+                break;
+            }
+        }
 
-//        if (rhoNeg)
-//        {
-//            troubledCells.push_back(cell->number);
-//            continue;
-//        }
+        if (rhoNeg)
+        {
+            troubledCells.push_back(cell->number);
+            rhoNeg = false;
+            continue;
+        }
 
 
 
@@ -292,12 +333,12 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
             troubledCells.push_back(cell->number);
 	}
 
-    cout << "\ntroubled cells: " ;
+//    cout << "\ntroubled cells: " ;
 
-    for (int iCell : troubledCells)
-        cout << iCell << ' ';
+//    for (int iCell : troubledCells)
+//        cout << iCell << ' ';
 
-    cout << endl;
+//    cout << endl;
 
     return troubledCells;
 }

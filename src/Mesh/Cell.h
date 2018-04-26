@@ -164,6 +164,9 @@ public:
     //- Solve SLAE in case of non-orthogonal functions
     numvector<double, 5 * nShapes> correctNonOrtho(const numvector<double, 5 * nShapes>& rhs) const;
 
+    //- Reconstruct SLAE RHS after limitation in case of non-orthogonal functions
+    numvector<double, 5 * nShapes> correctPrevIter(const numvector<double, 5 * nShapes>& rhs) const;
+
     //- Calculate \int_{cell} F(U) \nabla \phi_x + G(U) \nabla \phi_y
     numvector<double, 5 * nShapes> cellIntegral();
 

@@ -39,7 +39,8 @@ void TimeControl::updateTimeStep()
 
         tauNew = *min_element(newTauLocal.begin(),newTauLocal.end());
         tauOld = tauNew;
+        fill(massFlux.begin(), massFlux.end(), 0.0);
     }
 
-    fill(massFlux.begin(), massFlux.end(), 0.0);
+
 }

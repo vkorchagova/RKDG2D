@@ -76,12 +76,6 @@ vector<numvector<double, 5 * nShapes>> Solver::assembleRHS(const std::vector<num
     for (size_t i = 0; i < mesh.edges.size(); ++i)
         mesh.edges[i]->getLocalFluxes(flux);
 
-//    for (int i = 0; i < nEdgesInt; ++i)
-//        mesh.edgesInternal[i]->getLocalFluxes(flux);
-
-//    for (int i = 0; i < nEdgesBou; ++i)
-//        mesh.edgesBoundary[i]->getLocalFluxes(flux);
-
 
     vector<numvector<double, 5 * nShapes>> rhs(mesh.nCells);
 
@@ -98,10 +92,22 @@ vector<numvector<double, 5 * nShapes>> Solver::assembleRHS(const std::vector<num
     return rhs;
 }
 
-void Solver::correctNonOrtho(std::vector<numvector<double, 5 * nShapes>> &alpha) const
+vector<numvector<double, 5 * nShapes>> Solver::correctNonOrtho(std::vector<numvector<double, 5 * nShapes>> &alpha) const
 {
-    //problem.setAlpha(alpha);
+    vector<numvector<double, 5 * nShapes>> res = alpha;
 
     for (int i = 0; i < mesh.nCells; ++i)
-        alpha[i] = mesh.cells[i]->correctNonOrtho(alpha[i]);
+        res[i] = mesh.cells[i]->correctNonOrtho(alpha[i]);
+
+    return res;
+}
+
+vector<numvector<double, 5 * nShapes>> Solver::correctPrevIter(std::vector<numvector<double, 5 * nShapes>> &alpha) const
+{
+    vector<numvector<double, 5 * nShapes>> res = alpha;
+
+    for (int i = 0; i < mesh.nCells; ++i)
+        res[i] = mesh.cells[i]->correctPrevIter(alpha[i]);
+
+    return res;
 }

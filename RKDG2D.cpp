@@ -38,7 +38,7 @@ int main(int argc, char** argv)
 
 
     double Co = 0.1;
-    double tEnd = 0.002;
+    double tEnd = 0.2;
 
     double initDeltaT = 1e-3;
     double maxDeltaT = 1.0;
@@ -85,12 +85,12 @@ int main(int argc, char** argv)
         mkdir("alphaCoeffs", S_IRWXU | S_IRGRP | S_IROTH);
     #endif
 
+    cout << "---------\nt = " << 0 << endl;
+
     // Set initial conditions
     solver.setInitialConditions();
 
     limiter.limit(solver.alphaPrev);
-
-    cout << "---------\nt = " << 0 << endl;
 
     ofstream output;
     output.open("alphaCoeffs/0.000000");
@@ -99,17 +99,11 @@ int main(int argc, char** argv)
 
     output.close();
 
-//    for (const shared_ptr<Cell> cell : mesh.cells)
-//    {
-//        cout << "neibs for cell #" << cell-> number << ": ";
-//        for (const shared_ptr<Cell> neib : cell->neibCells)
-//            cout << neib->number << ' ';
-//        cout << endl;
-//    }
-
    // time step
 
     double tau = initDeltaT;
+
+    vector<numvector<double, 5*nShapes>> lhs = solver.alphaPrev; // coeffs
 
 
     // run Runge --- Kutta 2 TVD
@@ -134,22 +128,22 @@ int main(int argc, char** argv)
        cout << "---------\nt = " << t << endl;
        cout << "tau = " << tau << endl;
 
-       k1 = solver.assembleRHS(solver.alphaPrev);
+       k1 = solver.assembleRHS(lhs);
 
        solver.alphaNext = solver.alphaPrev + k1 * tau;
-       solver.correctNonOrtho(solver.alphaNext);
+       lhs = solver.correctNonOrtho(solver.alphaNext);
 
-       limiter.limit(solver.alphaNext);
+       limiter.limit(lhs);
 
 
-       k2 = solver.assembleRHS(solver.alphaNext);
+       k2 = solver.assembleRHS(lhs);
 
        solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
-       solver.correctNonOrtho(solver.alphaNext);
+       lhs = solver.correctNonOrtho(solver.alphaNext);
 
        //cout << "before limiting" << solver.alphaNext[49] << endl;
 
-       limiter.limit(solver.alphaNext);
+       limiter.limit(lhs);
 
        //cout << "after limiting" << solver.alphaNext[49] << endl;
 
@@ -161,12 +155,13 @@ int main(int argc, char** argv)
            ofstream output;
            output.open(fileName);
 
-           solver.write(output,solver.alphaNext);
+           solver.write(output,lhs);
 
            output.close();
        }
 
-       solver.alphaPrev = solver.alphaNext;
+       // get limited "lhs"
+       solver.alphaPrev = solver.correctPrevIter(lhs);
 
        iT++;
 

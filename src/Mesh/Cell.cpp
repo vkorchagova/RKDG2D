@@ -471,20 +471,8 @@ numvector<double, 5 * nShapes> Cell::correctNonOrtho(const numvector<double, 5 *
 {
     numvector<double, 5 * nShapes> alphaCorr;
 
-//    vector<vector<double>> slae(nShapes);
-
-//    for (int i = 0; i < nShapes; ++i)
-//        slae[i].resize(nShapes+1);
-
     for (int iSol = 0; iSol < 5; ++iSol)
     {
-        // prepare data for gaussian solver
-//        for (int i = 0; i < nShapes; ++i)
-//        {
-//            for (int j = 0; j < nShapes; ++j)
-//                slae[i][j] = gramian[i][j];
-//            slae[i][nShapes] = rhs[i + iSol*nShapes];
-//        }
 
         // solve slae
         vector<double> solution(nShapes); //for 3 ff!!!
@@ -500,5 +488,22 @@ numvector<double, 5 * nShapes> Cell::correctNonOrtho(const numvector<double, 5 *
     }
 
     return alphaCorr;
+}
+
+numvector<double, 5 * nShapes> Cell::correctPrevIter(const numvector<double, 5 * nShapes>& alphaCorr) const
+{
+    numvector<double, 5 * nShapes> rhs;
+
+    for (int iSol = 0; iSol < 5; ++iSol)
+    {
+        for (int i = 0; i < nShapes; ++i)
+            rhs[i + iSol*nShapes] = 0.0;
+
+        for (int i = 0; i < nShapes; ++i)
+            for (int j = 0; j < nShapes; ++j)
+                rhs[i + iSol*nShapes] += gramian[i][j] * alphaCorr[j + iSol*nShapes];
+    }
+
+    return rhs;
 }
 
