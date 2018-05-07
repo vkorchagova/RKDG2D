@@ -371,9 +371,7 @@ numvector<double, 5 * nShapes> Cell::projection(std::function<numvector<double,5
         }// for p
     }
 
-    correctNonOrtho(alpha);
-
-    return alpha;
+    return correctNonOrtho(alpha);
 
 } // end projection
 
@@ -501,7 +499,7 @@ numvector<double, 5 * nShapes> Cell::correctPrevIter(const numvector<double, 5 *
 
         for (int i = 0; i < nShapes; ++i)
             for (int j = 0; j < nShapes; ++j)
-                rhs[i + iSol*nShapes] += gramian[i][j] * alphaCorr[j + iSol*nShapes];
+                rhs[i + iSol*nShapes] += gramian[i][j] * alphaCorr[iSol*nShapes + j];
     }
 
     return rhs;

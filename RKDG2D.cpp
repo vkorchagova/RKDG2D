@@ -40,10 +40,10 @@ int main(int argc, char** argv)
     double Co = 0.1;
     double tEnd = 0.2;
 
-    double initDeltaT = 1e-3;
+    double initDeltaT = 1e-4;
     double maxDeltaT = 1.0;
     double maxTauGrowth = 1.2;
-    bool isDynamicTimeStep = false;
+    bool isDynamicTimeStep = true;
 
     int freqWrite = 1;
 
@@ -75,7 +75,7 @@ int main(int argc, char** argv)
     IndicatorKXRCF indicator(mesh, problem);
 
     // Initialize limiter
-    LimiterFinDiff limiter(indicator, problem);
+    LimiterWENOS limiter(indicator, problem);
 
     // ---------------
 
@@ -161,7 +161,8 @@ int main(int argc, char** argv)
        }
 
        // get limited "lhs"
-       solver.alphaPrev = solver.correctPrevIter(lhs);
+       solver.alphaNext = solver.correctPrevIter(lhs);
+       solver.alphaPrev = solver.alphaNext;
 
        iT++;
 

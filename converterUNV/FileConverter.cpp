@@ -398,7 +398,7 @@ void FileConverter::importUNV ()
     {
         num = readTag();
 
-//        cout << num << endl;
+        cout << num << endl;
 
         switch (num)
         {
