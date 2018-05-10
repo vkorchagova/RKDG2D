@@ -35,7 +35,7 @@ public:
     EdgeBoundary() : Edge() {}
 
     //- Construct using two nodes
-    EdgeBoundary(const Point& p1, const Point& p2) : Edge(p1, p2) { neibCells.reserve(nNeighbourCells); }
+    EdgeBoundary(const Node& p1, const Node& p2) : Edge(p1, p2) { neibCells.reserve(nNeighbourCells); }
 
     //- Destructor
     virtual ~EdgeBoundary() = default;

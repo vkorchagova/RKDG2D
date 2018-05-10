@@ -5,10 +5,10 @@ using namespace std;
 
 // ------------------ Constructors & Destructor ----------------
 
-Edge::Edge(const Point& p1, const Point& p2)
+Edge::Edge(const Node &p1, const Node &p2)
 {
-    nodes[0] = make_shared<Point>(p1);
-    nodes[1] = make_shared<Point>(p2);
+    nodes[0] = make_shared<Node>(p1);
+    nodes[1] = make_shared<Node>(p2);
 
     Point c = 0.5 * (p2 + p1);
     Point m = 0.5 * (p2 - p1);

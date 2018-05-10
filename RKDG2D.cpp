@@ -93,9 +93,35 @@ int main(int argc, char** argv)
     limiter.limit(solver.alphaPrev);
 
     ofstream output;
-    output.open("alphaCoeffs/0.000000");
+    output.open("alphaCoeffs/0.000000.vtk");
 
-    solver.write(output,solver.alphaPrev);
+    mesh.exportMeshVTK(output);
+
+    output << "CELL_DATA " << mesh.nCells << endl;
+
+    output << "FIELD rho 1" << endl;
+    output << "rho" << " 1" << " " << mesh.nCells << " float" << endl;
+
+    for (int i = 0; i < mesh.nCells; ++i)
+       output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),0) << endl;
+
+    output << "FIELD rhoU 1" << endl;
+    output << "rhoU " << " 3" << " " << mesh.nCells << " float" << endl;
+
+    for (int i = 0; i < mesh.nCells; ++i)
+    {
+       output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),1) << ' ';
+       output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),2) << ' ';
+       output << 0.0 << endl;
+    }
+
+    output << "FIELD e 1" << endl;
+    output << "e" << " 1" << " " << mesh.nCells << " float" << endl;
+
+    for (int i = 0; i < mesh.nCells; ++i)
+       output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),4) << endl;
+
+    output << "POINT_DATA " << mesh.nodes.size() << endl;
 
     output.close();
 
@@ -153,9 +179,35 @@ int main(int argc, char** argv)
            string fileName = "alphaCoeffs/" + to_string(t);
 
            ofstream output;
-           output.open(fileName);
+           output.open(fileName + ".vtk");
 
-           solver.write(output,lhs);
+           mesh.exportMeshVTK(output);
+
+           output << "CELL_DATA " << mesh.nCells << endl;
+
+           output << "FIELD rho 1" << endl;
+           output << "cellscalar" << " 1" << " " << mesh.nCells << " float" << endl;
+
+           for (int i = 0; i < mesh.nCells; ++i)
+              output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),0) << endl;
+
+           output << "FIELD rhoU 1" << endl;
+           output << "rhoU " << " 3" << " " << mesh.nCells << " float" << endl;
+
+           for (int i = 0; i < mesh.nCells; ++i)
+           {
+              output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),1) << ' ';
+              output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),2) << ' ';
+              output << 0.0 << endl;
+           }
+
+           output << "FIELD e 1" << endl;
+           output << "e" << " 1" << " " << mesh.nCells << " float" << endl;
+
+           for (int i = 0; i < mesh.nCells; ++i)
+              output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),4) << endl;
+
+           output << "POINT_DATA " << mesh.nodes.size() << endl;
 
            output.close();
        }

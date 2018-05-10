@@ -68,7 +68,7 @@ public:
     int nEntities;
 
     //- Nodes in cell
-    std::vector<std::shared_ptr<Point>> nodes;
+    std::vector<std::shared_ptr<Node>> nodes;
 
     //- Edges in cell
     std::vector<std::shared_ptr<Edge>> edges;
@@ -117,7 +117,7 @@ public:
     Cell(const Problem& prb) : problem(prb) {}
 
     //- Construct cell using vectors of nodes and edges
-    Cell(const std::vector<std::shared_ptr<Point> > &nodes, const std::vector<std::shared_ptr<Edge> > &edges, const Problem& prb);
+    Cell(const std::vector<std::shared_ptr<Node> > &nodes, const std::vector<std::shared_ptr<Edge> > &edges, const Problem& prb);
 
     //- Destructor
     ~Cell() {}

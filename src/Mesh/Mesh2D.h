@@ -36,7 +36,7 @@ public:
     int nBoundEdges;
 
     //- Coordinates of nodes (x,y)
-    std::vector<Point> nodes;
+    std::vector<Node> nodes;
 
     //- Internal edges (node1, node2)
     //std::vector<std::shared_ptr<EdgeInternal>> edgesInternal;
@@ -66,6 +66,9 @@ public:
 
     //- Export arbitrary 2D mesh in custom RKDG format like .msh
     void exportMesh() const;
+
+    //- Export VTK
+    void exportMeshVTK(std::ostream& writer) const;
 
 };// end Mesh 2D
 

@@ -29,7 +29,7 @@ public:
     EdgeInternal() : Edge() {}
 
     //- Construct using two nodes
-    EdgeInternal(const Point& p1, const Point& p2) : Edge(p1, p2) { neibCells.reserve(nNeighbourCells); }
+    EdgeInternal(const Node& p1, const Node& p2) : Edge(p1, p2) { neibCells.reserve(nNeighbourCells); }
 
     //- Destructor
     virtual ~EdgeInternal() = default;

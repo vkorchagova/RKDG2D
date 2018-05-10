@@ -13,11 +13,6 @@ class Point : public numvector<double, 2>
 
 public:
 
-    //- Number of node
-    int number;
-
-public:
-
     //- Default constructor
     Point(double val = 0.0) : numvector(val) {}
 
@@ -38,5 +33,16 @@ public:
     const double& y() const { return r[1]; }
     double& y() { return r[1]; }
 };
+
+class Node : public Point
+{
+
+public:
+    int number;
+
+    Node(const Point& p, int num) : Point(p), number(num ) {}
+
+};
+
 
 #endif // POINT_H

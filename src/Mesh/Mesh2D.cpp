@@ -196,7 +196,7 @@ void Mesh2D::importMesh(string fileName, const Problem& prb)
             for (int i = 0; i < nNodes; ++i)
             {
                 reader >> x >> y;
-                nodes.emplace_back(Point({x,y}));
+                nodes.emplace_back(Node(Point({x,y}),i));
             }
 
             do
@@ -256,7 +256,7 @@ void Mesh2D::importMesh(string fileName, const Problem& prb)
                 reader >> nEdgesInCell;
 
                 //cout << nEdgesInCell << endl;
-                vector<shared_ptr<Point>> curNodes;
+                vector<shared_ptr<Node>> curNodes;
                 vector<shared_ptr<Edge>> curEdges;
 
                 curNodes.reserve(nEdgesInCell);
@@ -265,7 +265,7 @@ void Mesh2D::importMesh(string fileName, const Problem& prb)
                 for (int j = 0; j < nEdgesInCell; ++j)
                 {
                     reader >> entity;
-                    curNodes.push_back(make_shared<Point>(nodes[entity-1]));
+                    curNodes.push_back(make_shared<Node>(nodes[entity-1]));
                 }
 
                 for (int j = 0; j < nEdgesInCell; ++j)
@@ -401,3 +401,58 @@ void Mesh2D::importMesh(string fileName, const Problem& prb)
 
     reader.close();
 } // end importMesh
+
+void Mesh2D::exportMeshVTK(ostream& writer) const
+{
+    //writer.open("mesh2D.vtk");
+
+    int nNodes = nodes.size();
+
+    writer << "# vtk DataFile Version 2.0" << endl;
+    writer << "RKDG 2D data" << endl;
+    writer << "ASCII" << endl;
+
+    writer << "DATASET POLYDATA" << endl;
+
+    writer << "POINTS " << nNodes << " float" << endl;
+
+    // write coordinates of nodes
+    for (int i = 0; i < nNodes; ++i)
+        writer << nodes[i].x() << ' ' << nodes[i].y() << ' ' << "0" << endl;
+
+    //get size of polygon list
+
+    int polySize = 0;
+
+    for (int i = 0; i < nCells; ++i)
+        polySize += cells[i]->nEntities;
+
+    polySize += nCells;
+
+    writer << "POLYGONS " << nCells << ' ' << polySize << endl;
+
+
+    // write cells using numbers of nodes
+    for (const shared_ptr<Cell> cell : cells)
+    {
+        writer << cell->nEntities << ' ';
+
+        for (const shared_ptr<Node> node : cell->nodes)
+            writer << node->number << ' ';
+
+        writer << endl;
+    }
+
+    //cout << "num(-1) = " << cells[cells.size()-1]->edges[2]->nodes[0]->number << endl;
+    //cout << "x(-1) = " << cells[cells.size()-1]->edges[2]->nodes[0]->x() << endl;
+    //cout << "&num(-1) = " << &(cells[cells.size()-1]->edges[2]->nodes[0]->number) << endl;
+
+
+    //writer << "CELL_DATA " << nCells << endl;
+    //writer << "POINT_DATA " << nNodes << endl;
+
+
+    //cout << "Mesh export OK" << endl;
+
+    //writer.close();
+}

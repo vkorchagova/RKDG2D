@@ -24,7 +24,7 @@ public:
     EdgeBoundaryDiagProjection() : EdgeBoundary()  {}
 
     //- Construct using two nodes
-    EdgeBoundaryDiagProjection(const Point& p1, const Point& p2) : EdgeBoundary(p1, p2) {}
+    EdgeBoundaryDiagProjection(const Node& p1, const Node& p2) : EdgeBoundary(p1, p2) {}
 
     //- Destructor
     virtual ~EdgeBoundaryDiagProjection() = default;

@@ -6,7 +6,7 @@ using namespace std;
 
 // ------------------ Constructors & Destructor ----------------
 
-Cell::Cell(const std::vector<std::shared_ptr<Point> > &defNodes, const vector<std::shared_ptr<Edge>> &defEdges, const Problem& prb) : problem(prb)
+Cell::Cell(const std::vector<std::shared_ptr<Node> > &defNodes, const vector<std::shared_ptr<Edge>> &defEdges, const Problem& prb) : problem(prb)
 {
     nodes = defNodes;
     edges = defEdges;
