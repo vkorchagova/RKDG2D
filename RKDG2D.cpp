@@ -38,12 +38,12 @@ int main(int argc, char** argv)
 
 
     double Co = 0.1;
-    double tEnd = 0.2;
+    double tEnd = 0.5;
 
     double initDeltaT = 1e-4;
     double maxDeltaT = 1.0;
     double maxTauGrowth = 1.2;
-    bool isDynamicTimeStep = true;
+    bool isDynamicTimeStep = false;
 
     int freqWrite = 1;
 
@@ -63,7 +63,7 @@ int main(int argc, char** argv)
     problem.setBoundaryConditions(mesh.patches);
 
     // Initialize flux
-    FluxLLF numFlux(problem);
+    FluxHLLC numFlux(problem);
 
     // Initialize solver
     Solver solver(mesh, problem, numFlux);
@@ -75,7 +75,7 @@ int main(int argc, char** argv)
     IndicatorKXRCF indicator(mesh, problem);
 
     // Initialize limiter
-    LimiterWENOS limiter(indicator, problem);
+    LimiterFinDiff limiter(indicator, problem);
 
     // ---------------
 
@@ -93,7 +93,7 @@ int main(int argc, char** argv)
     limiter.limit(solver.alphaPrev);
 
     ofstream output;
-    output.open("alphaCoeffs/0.000000.vtk");
+    output.open("alphaCoeffs/sol_0.000000.vtk");
 
     mesh.exportMeshVTK(output);
 
@@ -176,7 +176,7 @@ int main(int argc, char** argv)
        if (iT % freqWrite == 0)
        {
            //string fileName = "alphaCoeffs/" + to_string((long double)t);
-           string fileName = "alphaCoeffs/" + to_string(t);
+           string fileName = "alphaCoeffs/sol_" + to_string(t);
 
            ofstream output;
            output.open(fileName + ".vtk");
@@ -186,7 +186,7 @@ int main(int argc, char** argv)
            output << "CELL_DATA " << mesh.nCells << endl;
 
            output << "FIELD rho 1" << endl;
-           output << "cellscalar" << " 1" << " " << mesh.nCells << " float" << endl;
+           output << "rho" << " 1" << " " << mesh.nCells << " float" << endl;
 
            for (int i = 0; i < mesh.nCells; ++i)
               output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),0) << endl;
