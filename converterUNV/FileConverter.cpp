@@ -159,7 +159,7 @@ void FileConverter::readElements()
                 getline(reader, str);
                 elementNodeNumbers = parseStringInt(str);
 
-                edgesBoundary.push_back(elementNodeNumbers);
+                edges.push_back(elementNodeNumbers);
 
                 break;
             }
@@ -248,33 +248,14 @@ void FileConverter::getElementEdges(const std::vector<int>& nodeNumbers)
 
     //- useful internal functions
 
-    function<bool(int,int)> checkForBoundaryEdges = [&](int iNode1, int iNode2)
+    function<bool(int,int)> checkForExistingEdges = [&](int iNode1, int iNode2)
     {
-        int nBoundEdges = edgesBoundary.size();
-
-        for (int j = 0; j < nBoundEdges; ++j)
-        { // if this edge is exists and boundary
-            if ((iNode1 == edgesBoundary[j][0] && iNode2 == edgesBoundary[j][1]) ||\
-                (iNode1 == edgesBoundary[j][1] && iNode2 == edgesBoundary[j][0]))
+        for (size_t j = 0; j < edges.size(); ++j)
+        { // if this edge is exists and internal
+            if ((iNode1 == edges[j][0] && iNode2 == edges[j][1]) ||\
+                (iNode1 == edges[j][1] && iNode2 == edges[j][0]))
             {
                 elementEdges.push_back(j+1);
-                return true;
-            }
-        }
-
-        return false;
-    };
-
-    function<bool(int,int)> checkForInternalEdges = [&](int iNode1, int iNode2)
-    {
-        int nInternalEdges = edgesInternal.size();
-
-        for (int j = 0; j < nInternalEdges; ++j)
-        { // if this edge is exists and internal
-            if ((iNode1 == edgesInternal[j][0] && iNode2 == edgesInternal[j][1]) ||\
-                (iNode1 == edgesInternal[j][1] && iNode2 == edgesInternal[j][0]))
-            {
-                elementEdges.push_back(j+edgesBoundary.size()+1);
                 return true;
             }
         }
@@ -284,23 +265,21 @@ void FileConverter::getElementEdges(const std::vector<int>& nodeNumbers)
     function<void(int,int)> createNewEdge = [&](int iNode1, int iNode2)
     {
         vector<int> newEdge = {iNode1,iNode2};
-        edgesInternal.push_back(newEdge);
-        elementEdges.push_back(edgesBoundary.size() + edgesInternal.size());
+        edges.push_back(newEdge);
+        elementEdges.push_back(edges.size());
     };
 
     //- end of useful internal functions
 
     for (int i = 0; i < n-1; ++i)
     {
-        if (!(checkForBoundaryEdges(nodeNumbers[i],nodeNumbers[i+1]) || \
-              checkForInternalEdges(nodeNumbers[i],nodeNumbers[i+1])))
+        if (!checkForExistingEdges(nodeNumbers[i],nodeNumbers[i+1]))
         {
            createNewEdge(nodeNumbers[i],nodeNumbers[i+1]);
         }
     }
 
-    if (!(checkForBoundaryEdges(nodeNumbers[n-1],nodeNumbers[0]) || \
-          checkForInternalEdges(nodeNumbers[n-1],nodeNumbers[0])))
+    if (!checkForExistingEdges(nodeNumbers[n-1],nodeNumbers[0]))
     {
        createNewEdge(nodeNumbers[n-1],nodeNumbers[0]);
     }
@@ -330,10 +309,9 @@ void FileConverter::getCellCenter(const vector<int> &nodeNumbers)
 
 void FileConverter::setAdjointCells()
 {
-    int nBEdges = edgesBoundary.size();
-    int nIEdges = edgesInternal.size();
+    int nEdges = edges.size();
 
-    adjEdgeCells.resize(nBEdges + nIEdges);
+    adjEdgeCells.resize(nEdges);
 
     for (size_t iCell = 0; iCell < cellsAsEdges.size(); ++iCell)
         for (int iEdge : cellsAsEdges[iCell])
@@ -343,33 +321,13 @@ void FileConverter::setAdjointCells()
 
 void FileConverter::getEgdeNormals()
 {
-    edgeNormals.reserve(edgesBoundary.size() + edgesInternal.size());
+    edgeNormals.reserve(edges.size());
 
-    for (size_t i = 0; i < edgesBoundary.size(); ++i)
+    for (size_t i = 0; i < edges.size(); ++i)
     {
-        vector<int> edge = edgesBoundary[i];
+        vector<int> edge = edges[i];
         vector<double> edgeV = {nodes[edge[1]-1][0] - nodes[edge[0]-1][0], nodes[edge[1]-1][1] - nodes[edge[0]-1][1]};
         vector<double> centerV = {cellCenters[adjEdgeCells[i][0]-1][0] - nodes[edge[0]-1][0], cellCenters[adjEdgeCells[i][0]-1][1] - nodes[edge[0]-1][1]};
-        vector<double> n = {edgeV[1], -edgeV[0]};
-        if (n[0]*centerV[0] + n[1]*centerV[1] > 0)
-        {
-            n[0] *= -1;
-            n[1] *= -1;
-        }
-
-        double ilen = 1.0/sqrt(n[0]*n[0] + n[1]*n[1]);
-
-        n[0] *= ilen;
-        n[1] *= ilen;
-
-        edgeNormals.push_back(n);
-    }
-
-    for (size_t i = 0; i < edgesInternal.size(); ++i)
-    {
-        vector<int> edge = edgesInternal[i];
-        vector<double> edgeV = {nodes[edge[1]-1][0] - nodes[edge[0]-1][0], nodes[edge[1]-1][1] - nodes[edge[0]-1][1]};
-        vector<double> centerV = {cellCenters[adjEdgeCells[i+edgesBoundary.size()][0]-1][0] - nodes[edge[0]-1][0], cellCenters[adjEdgeCells[i+edgesBoundary.size()][0]-1][1] - nodes[edge[0]-1][1]};
         vector<double> n = {edgeV[1], -edgeV[0]};
         if (n[0]*centerV[0] + n[1]*centerV[1] > 0)
         {
@@ -511,16 +469,18 @@ void FileConverter::exportRKDG()
     writer << "$EndNodes\n";
 
     // --------------------------------------
+    int nBoundEdges = 0;
+
+    for (int i = 0; i < patchNames.size(); ++i)
+        nBoundEdges += patchEdgeGroups[i].size();
 
     writer << "$Edges\n";
-    writer << edgesBoundary.size() << endl;
-    writer << edgesBoundary.size() + edgesInternal.size() << endl;
+    writer << nBoundEdges << endl;
+    writer << edges.size() << endl;
 
-    for (size_t i = 0; i < edgesBoundary.size(); ++i)
-        writer << edgesBoundary[i][0] << ' ' << edgesBoundary[i][1] << endl;
+    for (size_t i = 0; i < edges.size(); ++i)
+        writer << abs (int(adjEdgeCells[i].size() - 2)) << ' ' << edges[i][0] << ' ' << edges[i][1] << endl;
 
-    for (size_t i = 0; i < edgesInternal.size(); ++i)
-        writer << edgesInternal[i][0] << ' ' << edgesInternal[i][1] << endl;
 
     writer << "$EndEdges\n";
 
@@ -543,21 +503,23 @@ void FileConverter::exportRKDG()
 
     // --------------------------------------
 
-    writer << "$CellCenters\n";
-    writer << cellsAsEdges.size() << endl;
+//    writer << "$CellCenters\n";
+//    writer << cellsAsEdges.size() << endl;
 
-    for (size_t i = 0; i < cellsAsEdges.size(); ++i)
-        writer << cellCenters[i][0] << ' ' << cellCenters[i][1] << endl;
+//    for (size_t i = 0; i < cellsAsEdges.size(); ++i)
+//        writer << cellCenters[i][0] << ' ' << cellCenters[i][1] << endl;
 
-    writer << "$EndCellCenters\n";
+//    writer << "$EndCellCenters\n";
 
     // --------------------------------------
 
     writer << "$AdjointCellsForEdges\n";
-    writer << edgesBoundary.size() + edgesInternal.size() << endl;
+    writer << edges.size() << endl;
 
     for (size_t i = 0; i < adjEdgeCells.size(); ++i)
     {
+        writer << adjEdgeCells[i].size() << ' ' ;
+
         for (size_t j = 0; j < adjEdgeCells[i].size(); ++j)
             writer << adjEdgeCells[i][j] << ' ' ;
         writer << endl;
@@ -568,7 +530,7 @@ void FileConverter::exportRKDG()
     // --------------------------------------
 
     writer << "$EdgeNormals\n";
-    writer << edgesBoundary.size() + edgesInternal.size() << endl;
+    writer << edges.size() << endl;
 
     for (size_t i = 0; i < edgeNormals.size(); ++i)
         writer << edgeNormals[i][0] << ' ' << edgeNormals[i][1] << endl;

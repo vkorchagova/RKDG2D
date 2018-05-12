@@ -56,8 +56,7 @@ private:
     std::vector<std::vector<double>> nodes;
 
     //- edges = numbers of nodes
-    std::vector<std::vector<int>> edgesBoundary;
-    std::vector<std::vector<int>> edgesInternal;
+    std::vector<std::vector<int>> edges;
 
     //- cells = numbers of edges
     std::vector<std::vector<int>> cellsAsEdges;

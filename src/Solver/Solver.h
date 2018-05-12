@@ -65,7 +65,10 @@ public:
     //// Other methods
 
     //- Output for coeffs
-    void write(std::ostream& writer, const std::vector<numvector<double,5*nShapes>>& coeffs) const;
+    void write(std::string fileName, const std::vector<numvector<double,5*nShapes>>& coeffs) const;
+
+    //- Output for VTK solution
+    void writeSolutionVTK(std::string fileName) const;
 };
 
 #endif // SOLVER_H
