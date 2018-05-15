@@ -465,6 +465,16 @@ double Cell::getNormQ(int numSol) const
     return *max_element(rhoGP.begin(), rhoGP.end());
 }
 
+double Cell::getNormQp() const
+{
+    vector<double> pGP(nGP);
+
+    for (int i = 0; i < nGP; ++i)
+        pGP[i] = problem.getPressure(reconstructSolution(gPoints2D[i]));
+
+    return *max_element(pGP.begin(), pGP.end());
+}
+
 numvector<double, 5 * nShapes> Cell::correctNonOrtho(const numvector<double, 5 * nShapes>& rhs) const
 {
     numvector<double, 5 * nShapes> alphaCorr;

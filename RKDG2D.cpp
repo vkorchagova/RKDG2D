@@ -37,9 +37,11 @@ int main(int argc, char** argv)
 {    
     // Time parameters
 
+    double tStart = 0.1870;
+    double tEnd = 0.1880;
+    bool defCoeffs = true;
 
     double Co = 0.1;
-    double tEnd = 0.5;
 
     double initDeltaT = 5e-4;
     double maxDeltaT = 1.0;
@@ -64,7 +66,7 @@ int main(int argc, char** argv)
     problem.setBoundaryConditions(mesh.patches);
 
     // Initialize flux
-    FluxLLF numFlux(problem);
+    FluxHLL numFlux(problem);
 
     // Initialize solver
     Solver solver(mesh, problem, numFlux);
@@ -73,7 +75,7 @@ int main(int argc, char** argv)
     TimeControl dynamicTimeController(mesh,Co,maxDeltaT,maxTauGrowth,initDeltaT,isDynamicTimeStep);
 
     // Initialize indicator
-    IndicatorKXRCF indicator(mesh, problem);
+    IndicatorEverywhere indicator(mesh, problem);
 
     // Initialize limiter
     LimiterFinDiff limiter(indicator, problem);
@@ -87,14 +89,22 @@ int main(int argc, char** argv)
         mkdir("alphaCoeffs", S_IRWXU | S_IRGRP | S_IROTH);
     #endif
 
-    cout << "---------\nt = " << 0 << endl;
+    cout << "---------\nt = " << tStart << endl;
 
     // Set initial conditions
-    solver.setInitialConditions();
 
-    limiter.limit(solver.alphaPrev);
+    if (defCoeffs)
+    {
+        solver.setDefinedCoefficients("alphaCoeffs/" + to_string(tStart));
+    }
+    else
+    {
+        solver.setInitialConditions();
+        limiter.limit(solver.alphaPrev);
+        solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(tStart));
+    }
 
-    solver.writeSolutionVTK("alphaCoeffs/sol_0.000000");
+
 
 
    // time step
@@ -117,7 +127,7 @@ int main(int argc, char** argv)
 
     int iT = 1; //iteration number
 
-    for (double t = tau; t <= tEnd + 0.5*tau; t += tau)
+    for (double t = tStart + tau; t <= tEnd + 0.5*tau; t += tau)
     {
        t1 = clock();
 
@@ -133,6 +143,9 @@ int main(int argc, char** argv)
 
        limiter.limit(lhs);
 
+       solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(t)+"RK1");
+       solver.write("alphaCoeffs/" + to_string(t)+"RK1",lhs);
+
 
        k2 = solver.assembleRHS(lhs);
 
@@ -144,15 +157,16 @@ int main(int argc, char** argv)
        limiter.limit(lhs);
 
        //cout << "after limiting" << solver.alphaNext[49] << endl;
+       solver.write("alphaCoeffs/" + to_string(t)+"RK2bl",lhs);
 
        if (iT % freqWrite == 0)
        {
            //string fileName = "alphaCoeffs/" + to_string((long double)t);
            solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(t));
+           solver.write("alphaCoeffs/" + to_string(t),lhs);
        }
 
-       if (t > 0.438 && t < 0.440)
-           solver.write("alphaCoeffs/" + to_string(t),lhs);
+
 
        // get limited "lhs"
        solver.alphaNext = solver.correctPrevIter(lhs);

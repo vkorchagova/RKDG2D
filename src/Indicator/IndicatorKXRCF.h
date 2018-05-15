@@ -6,6 +6,9 @@
 class IndicatorKXRCF : public Indicator
 {
 
+    //- Get mass fluxes
+    numvector<double, 4> massFlux(const Edge& edge, const Cell& cell) const;
+
 public:
 
     //- Constructor
@@ -14,6 +17,8 @@ public:
     
     //- Check discontinuities
     virtual std::vector<int> checkDiscontinuities() const override;
+
+
 };
 
 

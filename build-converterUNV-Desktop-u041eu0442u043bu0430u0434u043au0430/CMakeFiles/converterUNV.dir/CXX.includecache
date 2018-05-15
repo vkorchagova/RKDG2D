@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/Darksy/Documents/GitHub/RKDG2D/converterUNV/FileConverter.cpp
+FileConverter.h
+C:/Users/Darksy/Documents/GitHub/RKDG2D/converterUNV/FileConverter.h
+functional
+-
+math.h
+-
+
+C:/Users/Darksy/Documents/GitHub/RKDG2D/converterUNV/FileConverter.h
+iostream
+-
+fstream
+-
+sstream
+-
+vector
+-
+string
+-
+
+C:/Users/Darksy/Documents/GitHub/RKDG2D/converterUNV/main.cpp
+iostream
+-
+FileConverter.h
+C:/Users/Darksy/Documents/GitHub/RKDG2D/converterUNV/FileConverter.h
+

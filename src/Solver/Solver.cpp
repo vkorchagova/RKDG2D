@@ -82,14 +82,35 @@ void Solver::setInitialConditions()
         alphaPrev[k] = problem.alpha[k];
     }
 
-//    ofstream writer;
-//    writer.open("alphaCoeffs/0.000000");
-
-//    write(writer, problem.alpha);
-
-//    writer.close();
-
 } // end setInitialConditions
+
+void Solver::setDefinedCoefficients(string fileName)
+{
+    ifstream reader;
+    reader.open(fileName);
+
+    if (!reader.is_open())
+    {
+        cout << "File " << fileName << " is not found\n";
+        exit(0);
+    }
+
+    int nCells = mesh.nCells;
+
+    problem.alpha.resize(nCells);
+
+    numvector<double, 5*nShapes> rhs;
+
+    for (int k = 0; k < nCells; ++k)
+    {
+        for (int j = 0; j < 5*nShapes; ++j)
+            reader >> problem.alpha[k][j];
+
+        alphaPrev[k] = problem.alpha[k];
+    }
+
+    reader.close();
+}
 
 void Solver::setMeshPointerForDiagBC()
 {

@@ -47,6 +47,9 @@ public:
     //- Calculate coeffs with initial conditions
     void setInitialConditions();
 
+    //- Run case from define set of coefficients
+    void setDefinedCoefficients(std::string fileName);
+
     //- Set mesh pointer in case of DiagProject BC
     void setMeshPointerForDiagBC();
 

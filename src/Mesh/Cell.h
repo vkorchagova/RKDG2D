@@ -185,6 +185,9 @@ public:
     
     //- Get norm of solution for indicators
     double getNormQ(int numSol) const;
+
+    //- Get norm of pressure for indicators
+    double getNormQp () const;
 };
 
 #endif // CELL_H
