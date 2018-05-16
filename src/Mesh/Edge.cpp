@@ -32,6 +32,7 @@ Edge::Edge(const Node &p1, const Node &p2)
     }
     else if (nShapes == 3 || nShapes == 1)
     {
+        // pure Gauss
         nGP = 2;
 
         const double isqrt3 = 0.57735026918962576;
@@ -41,6 +42,16 @@ Edge::Edge(const Node &p1, const Node &p2)
 
         // weights for gauss integration
         gWeights = { 1.0, 1.0 };
+
+        // Gauss --- Lobatto
+//        nGP = 3;
+
+//        gPoints.push_back( c - m );
+//        gPoints.push_back( c );
+//        gPoints.push_back( c + m );
+
+//        gWeights = { 1.0/3.0, 4.0/3.0, 1.0/3.0 };
+
     }
     else
     {

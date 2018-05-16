@@ -27,33 +27,36 @@ Problem::~Problem()
 void Problem::setInitialConditions()
 {
     // Function for initial condition
-    double rho0 = 0.5;
-    //double e0 = rho0  / cpcv / (cpcv - 1.0) ;
-    double e0 = 0.125;
+    //double rho0 = 0.5;
+
+    double rho0 = 1.0;
+    double e0 = rho0  / cpcv / (cpcv - 1.0) ;
+    //double e0 = 0.125;
+
     double v0 = 0.0;
 
     function<double(const Point& r)> initRho = [=](const Point& r) \
     {
-        return rho0;
+    //    return rho0;
     //    return 1.0;
  //       return rho0 + 1e-6*exp( - 40.0*sqr(r.x() )- 40.0*sqr(r.y() ));
      //  return rho0 + 1e-6 * exp( -2.0 * sqr(r.x() - 4.0) - 2.0 * sqr(r.y() - 4.0));
     //    return (r.y() < 0.5) ? 1.0 : 0.125;
     //   return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.125;
     //    return (r.x() < 0.5) ? 1.0 : 0.125;
-    //    return (r.x() < 0) ? 1.0 : 0.125;
+        return (r.x() < 0) ? 1.0 : 0.125;
     //   return (r.y() < 1.0 && r.x() < 1.0 && r.y() > 2.0 && r.x() > 2.0) ? 0.0 : 1.0;
     //return (r.y() < 0.5) ? r.y() + 0.01 : r.y() + 0.51;
     };
 
     function<double(const Point& r)> initP = [=](const Point& r) \
     {
-       return (initRho(r)) / cpcv;
+    //   return (initRho(r)) / cpcv;
     //    return (initRho(r));
     //    return (r.y() < 0.5) ? 1.0 : 0.1;
     //    return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.1;
     //    return (r.x() < 0.5) ? 1.0 : 0.1;
-    //    return (r.x() < 0) ? 1.0 : 0.1;
+        return (r.x() < 0) ? 1.0 : 0.1;
     };
 
 
@@ -67,8 +70,8 @@ void Problem::setInitialConditions()
     //return r.y();
     };
 
-    //init = [=](const Point& r) { return numvector<double, 5> { initRho(r), 0.0, initV(r), 0.0, initP(r) / (cpcv - 1.0) }; };
-    init = [=](const Point& r) { return numvector<double, 5> { initRho(r), initV(r), 0.0, 0.0, e0 }; };
+    init = [=](const Point& r) { return numvector<double, 5> { initRho(r), 0.0, initV(r), 0.0, initP(r) / (cpcv - 1.0) }; };
+    //init = [=](const Point& r) { return numvector<double, 5> { initRho(r), initV(r), 0.0, 0.0, e0 }; };
 }
 
 void Problem::setBoundaryConditions(const std::vector<Patch>& patches)
@@ -82,8 +85,9 @@ void Problem::setBoundaryConditions(const std::vector<Patch>& patches)
 
 
     // boundary conditions: bottom/top/left/right
-    //vector<shared_ptr<Boundary>> bc = {bOpen, bOpen, bOpen, bOpen};
-    vector<shared_ptr<Boundary>> bc = {bConst, bOpen, bSlip, bSlip};
+    //vector<shared_ptr<Boundary>> bc = {bSlip, bSlip, bSlip, bSlip};
+    vector<shared_ptr<Boundary>> bc = {bOpen, bOpen, bOpen, bOpen};
+    //vector<shared_ptr<Boundary>> bc = {bConst, bOpen, bSlip, bSlip};
     //vector<shared_ptr<Boundary>> bc = {bConst, bConst, bConst, bConst};
     //vector<shared_ptr<Boundary>> bc = {bSlip};
 
@@ -114,7 +118,9 @@ double Problem::getPressure(const numvector<double, 5>& sol) const
 
     double magRhoU2 = sqr(sol[1]) + sqr(sol[2]) + sqr(sol[3]);
 
-    return (cpcv - 1.0)*(sol[4] - 0.5*magRhoU2 / sol[0]);
+    double p = (cpcv - 1.0)*(sol[4] - 0.5*magRhoU2 / sol[0]);
+
+    return p;
 } // end getPressure
 
 double Problem::c(const numvector<double, 5>& sol) const

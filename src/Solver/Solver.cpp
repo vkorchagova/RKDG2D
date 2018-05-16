@@ -10,8 +10,10 @@ Solver::Solver( Mesh2D& msh, Problem &prb, Flux& flx) : mesh(msh),problem(prb),f
 }
 
 
-void Solver::write(ostream& writer, const vector<numvector<double,5*nShapes>>& coeffs) const
+void Solver::write(string fileName, const vector<numvector<double,5*nShapes>>& coeffs) const
 {
+    ofstream writer;
+    writer.open(fileName);
     writer.precision(16);
 
     for (size_t k = 0; k < coeffs.size(); ++k)
@@ -21,7 +23,49 @@ void Solver::write(ostream& writer, const vector<numvector<double,5*nShapes>>& c
 
         writer << endl;
     }
+    writer.close();
+
 } //end write
+
+void Solver::writeSolutionVTK(string fileName) const
+{
+    ofstream output;
+    output.open(fileName + ".vtk");
+
+    mesh.exportMeshVTK(output);
+
+    output << "CELL_DATA " << mesh.nCells << endl;
+
+    output << "SCALARS rho double" << endl;
+    output << "LOOKUP_TABLE default" << endl;
+    //output << "rho" << " 1" << " " << mesh.nCells << " float" << endl;
+
+    for (int i = 0; i < mesh.nCells; ++i)
+       output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),0) << endl;
+
+    output << "SCALARS e double" << endl;
+    output << "LOOKUP_TABLE default" << endl;
+    //output << "e" << " 1" << " " << mesh.nCells << " float" << endl;
+
+    for (int i = 0; i < mesh.nCells; ++i)
+       output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),4) << endl;
+
+    output << "VECTORS rhoU double" << endl;
+    //output << "rhoU " << " 3" << " " << mesh.nCells << " float" << endl;
+
+    for (int i = 0; i < mesh.nCells; ++i)
+    {
+       output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),1) << ' ';
+       output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),2) << ' ';
+       output << 0.0 << endl;
+    }
+
+    output << "POINT_DATA " << mesh.nodes.size() << endl;
+
+    output.close();
+
+}
+
 
 void Solver::setInitialConditions()
 {
@@ -38,14 +82,35 @@ void Solver::setInitialConditions()
         alphaPrev[k] = problem.alpha[k];
     }
 
-//    ofstream writer;
-//    writer.open("alphaCoeffs/0.000000");
-
-//    write(writer, problem.alpha);
-
-//    writer.close();
-
 } // end setInitialConditions
+
+void Solver::setDefinedCoefficients(string fileName)
+{
+    ifstream reader;
+    reader.open(fileName);
+
+    if (!reader.is_open())
+    {
+        cout << "File " << fileName << " is not found\n";
+        exit(0);
+    }
+
+    int nCells = mesh.nCells;
+
+    problem.alpha.resize(nCells);
+
+    numvector<double, 5*nShapes> rhs;
+
+    for (int k = 0; k < nCells; ++k)
+    {
+        for (int j = 0; j < 5*nShapes; ++j)
+            reader >> problem.alpha[k][j];
+
+        alphaPrev[k] = problem.alpha[k];
+    }
+
+    reader.close();
+}
 
 void Solver::setMeshPointerForDiagBC()
 {

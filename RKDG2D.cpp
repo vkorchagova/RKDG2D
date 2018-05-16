@@ -32,15 +32,17 @@
 using namespace std;
 
 
+
 int main(int argc, char** argv)
 {    
     // Time parameters
 
+    double tStart = 0.0;
+    double tEnd = 0.2;
+    bool defCoeffs = 0;
 
+    double initDeltaT = 5e-4;
     double Co = 0.1;
-    double tEnd = 0.5;
-
-    double initDeltaT = 1e-4;
     double maxDeltaT = 1.0;
     double maxTauGrowth = 1.2;
     bool isDynamicTimeStep = false;
@@ -63,7 +65,9 @@ int main(int argc, char** argv)
     problem.setBoundaryConditions(mesh.patches);
 
     // Initialize flux
+
     FluxHLLC numFlux(problem);
+
 
     // Initialize solver
     Solver solver(mesh, problem, numFlux);
@@ -81,49 +85,27 @@ int main(int argc, char** argv)
 
     #if !defined(__linux__)
         _mkdir("alphaCoeffs");
+
     #else
         mkdir("alphaCoeffs", S_IRWXU | S_IRGRP | S_IROTH);
     #endif
 
-    cout << "---------\nt = " << 0 << endl;
+    cout << "---------\nt = " << tStart << endl;
 
     // Set initial conditions
-    solver.setInitialConditions();
-
-    limiter.limit(solver.alphaPrev);
-
-    ofstream output;
-    output.open("alphaCoeffs/sol_0.000000.vtk");
-
-    mesh.exportMeshVTK(output);
-
-    output << "CELL_DATA " << mesh.nCells << endl;
-
-    output << "FIELD rho 1" << endl;
-    output << "rho" << " 1" << " " << mesh.nCells << " float" << endl;
-
-    for (int i = 0; i < mesh.nCells; ++i)
-       output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),0) << endl;
-
-    output << "FIELD rhoU 1" << endl;
-    output << "rhoU " << " 3" << " " << mesh.nCells << " float" << endl;
-
-    for (int i = 0; i < mesh.nCells; ++i)
+    if (defCoeffs)
     {
-       output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),1) << ' ';
-       output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),2) << ' ';
-       output << 0.0 << endl;
+        solver.setDefinedCoefficients("alphaCoeffs/" + to_string(tStart));
+    }
+    else
+    {
+        solver.setInitialConditions();
+        limiter.limit(solver.alphaPrev);
+        solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(tStart));
     }
 
-    output << "FIELD e 1" << endl;
-    output << "e" << " 1" << " " << mesh.nCells << " float" << endl;
 
-    for (int i = 0; i < mesh.nCells; ++i)
-       output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),4) << endl;
 
-    output << "POINT_DATA " << mesh.nodes.size() << endl;
-
-    output.close();
 
    // time step
 
@@ -145,7 +127,7 @@ int main(int argc, char** argv)
 
     int iT = 1; //iteration number
 
-    for (double t = tau; t <= tEnd + 0.5*tau; t += tau)
+    for (double t = tStart + tau; t <= tEnd + 0.5*tau; t += tau)
     {
        t1 = clock();
 
@@ -161,6 +143,9 @@ int main(int argc, char** argv)
 
        limiter.limit(lhs);
 
+//       solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(t)+"RK1");
+//       solver.write("alphaCoeffs/" + to_string(t)+"RK1",lhs);
+
 
        k2 = solver.assembleRHS(lhs);
 
@@ -169,48 +154,23 @@ int main(int argc, char** argv)
 
        //cout << "before limiting" << solver.alphaNext[49] << endl;
 
+       //solver.write("alphaCoeffs/" + to_string(t) + "blRK2",lhs);
+
        limiter.limit(lhs);
 
        //cout << "after limiting" << solver.alphaNext[49] << endl;
+//       solver.write("alphaCoeffs/" + to_string(t)+"RK2bl",lhs);
 
        if (iT % freqWrite == 0)
        {
            //string fileName = "alphaCoeffs/" + to_string((long double)t);
-           string fileName = "alphaCoeffs/sol_" + to_string(t);
 
-           ofstream output;
-           output.open(fileName + ".vtk");
-
-           mesh.exportMeshVTK(output);
-
-           output << "CELL_DATA " << mesh.nCells << endl;
-
-           output << "FIELD rho 1" << endl;
-           output << "rho" << " 1" << " " << mesh.nCells << " float" << endl;
-
-           for (int i = 0; i < mesh.nCells; ++i)
-              output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),0) << endl;
-
-           output << "FIELD rhoU 1" << endl;
-           output << "rhoU " << " 3" << " " << mesh.nCells << " float" << endl;
-
-           for (int i = 0; i < mesh.nCells; ++i)
-           {
-              output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),1) << ' ';
-              output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),2) << ' ';
-              output << 0.0 << endl;
-           }
-
-           output << "FIELD e 1" << endl;
-           output << "e" << " 1" << " " << mesh.nCells << " float" << endl;
-
-           for (int i = 0; i < mesh.nCells; ++i)
-              output << mesh.cells[i]->reconstructSolution(mesh.cells[i]->getCellCenter(),4) << endl;
-
-           output << "POINT_DATA " << mesh.nodes.size() << endl;
-
-           output.close();
+           //solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(t));
+           solver.write("alphaCoeffs/" + to_string(t),lhs);
        }
+
+
+
 
        // get limited "lhs"
        solver.alphaNext = solver.correctPrevIter(lhs);

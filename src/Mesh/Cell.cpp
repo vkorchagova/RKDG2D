@@ -159,6 +159,7 @@ void Cell::setGaussPoints()
     {
         if (nEntities == 4)
         {
+            // pure Gauss
             nGP = 4;
 
             double isqrt3 = 0.57735026918962576;
@@ -168,6 +169,25 @@ void Cell::setGaussPoints()
                     gPoints2D.push_back(localToGlobal(Point({ i * isqrt3, j * isqrt3 })));
 
             gWeights2D = { 1.0, 1.0, 1.0, 1.0 };
+
+            // Gauss --- Lobatto
+
+//            nGP = 9;
+
+//            for (int i = -1; i <= 1; i++)
+//                for (int j = -1; j <= 1; j++)
+//                    gPoints2D.push_back(localToGlobal(Point({ i, j })));
+
+//            const double frac43 = 1.3333333333333333;
+//            const double frac13 = 0.3333333333333333;
+
+//            vector <double> gWeights1D = { frac13, frac43, frac13 };
+
+//            for (int i = 0; i <= 2; ++i)
+//                for (int j = 0; j <= 2; ++j)
+//                    gWeights2D.push_back(gWeights1D[i] * gWeights1D[j]);
+
+
         }
         else if (nEntities == 3)
         {
@@ -463,6 +483,16 @@ double Cell::getNormQ(int numSol) const
         rhoGP[i] = reconstructSolution(gPoints2D[i], numSol);
     
     return *max_element(rhoGP.begin(), rhoGP.end());
+}
+
+double Cell::getNormQp() const
+{
+    vector<double> pGP(nGP);
+
+    for (int i = 0; i < nGP; ++i)
+        pGP[i] = problem.getPressure(reconstructSolution(gPoints2D[i]));
+
+    return *max_element(pGP.begin(), pGP.end());
 }
 
 numvector<double, 5 * nShapes> Cell::correctNonOrtho(const numvector<double, 5 * nShapes>& rhs) const

@@ -250,6 +250,7 @@ void FileConverter::getElementEdges(const std::vector<int>& nodeNumbers)
 
     function<bool(int,int)> checkForExistingEdges = [&](int iNode1, int iNode2)
     {
+
         int nExistingEdges = edges.size();
 
         for (int j = 0; j < nExistingEdges; ++j)
@@ -275,12 +276,17 @@ void FileConverter::getElementEdges(const std::vector<int>& nodeNumbers)
     //- end of useful internal functions
 
     for (int i = 0; i < n-1; ++i)
+    {
         if (!checkForExistingEdges(nodeNumbers[i],nodeNumbers[i+1]))
-            createNewEdge(nodeNumbers[i],nodeNumbers[i+1]);
-
+        {
+           createNewEdge(nodeNumbers[i],nodeNumbers[i+1]);
+        }
+    }
 
     if (!checkForExistingEdges(nodeNumbers[n-1],nodeNumbers[0]))
-        createNewEdge(nodeNumbers[n-1],nodeNumbers[0]);
+    {
+       createNewEdge(nodeNumbers[n-1],nodeNumbers[0]);
+    }
 
 
     cellsAsEdges.push_back(elementEdges);
@@ -340,7 +346,6 @@ void FileConverter::getEgdeNormals()
 
         edgeNormals.push_back(n);
     }
-
 } // End getEgdeNormals
 
 
@@ -476,18 +481,12 @@ void FileConverter::exportRKDG()
         nEdgesBound += patchEdgeGroups.size();
 
     writer << "$Edges\n";
+
     writer << nEdgesBound << endl;
     writer << edges.size() << endl;
 
     for (size_t i = 0; i < edges.size(); ++i)
-    {
-        if (adjEdgeCells[i].size() == 1)
-            writer << 1 << ' ';
-        else
-            writer << 0 << ' ';
-
-        writer << edges[i][0] << ' ' << edges[i][1] << endl;
-    }
+        writer << abs (int(adjEdgeCells[i].size() - 2)) << ' ' << edges[i][0] << ' ' << edges[i][1] << endl;
 
     writer << "$EndEdges\n";
 
@@ -526,6 +525,7 @@ void FileConverter::exportRKDG()
     for (size_t i = 0; i < adjEdgeCells.size(); ++i)
     {
         writer << adjEdgeCells[i].size() << ' ';
+
         for (size_t j = 0; j < adjEdgeCells[i].size(); ++j)
             writer << adjEdgeCells[i][j] << ' ' ;
         writer << endl;

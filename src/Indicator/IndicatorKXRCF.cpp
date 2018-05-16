@@ -4,7 +4,9 @@ using namespace std;
 
 bool debugFlux;
 
-numvector<double,3>  massFlux(const Edge& edge, const Cell& cell)
+const double threshold = 1e-12;
+
+numvector<double, 4> IndicatorKXRCF::massFlux(const Edge& edge, const Cell& cell) const
 {
     double f[2];
 
@@ -13,7 +15,7 @@ numvector<double,3>  massFlux(const Edge& edge, const Cell& cell)
     Point n0 = *edge.nodes[0];
     Point n1 = *edge.nodes[1];
 
-    double threshold = 1e-10;
+
         
     try // find internal edges
 	{
@@ -29,16 +31,6 @@ numvector<double,3>  massFlux(const Edge& edge, const Cell& cell)
         //get normal velocity component in nodes of edge
         f[0] = rotate(cell.reconstructSolution(n0), n)[1];
         f[1] = rotate(cell.reconstructSolution(n1), n)[1];
-
-        if (debugFlux)
-        {
-            cout << "before rotation: \n";
-            cout << cell.reconstructSolution(n0) << endl;
-            cout << cell.reconstructSolution(n1) << endl;
-            cout << neib.reconstructSolution(n0) << endl;
-            cout << neib.reconstructSolution(n1) << endl;
-            cout << "f = " << f[0] << " " << f[1] << endl;
-        }
 
         // 4 variants of flux integral (only through the part of edge with inward flux)
         // we have linear functions -> use trapezia formulae for integration
@@ -56,6 +48,7 @@ numvector<double,3>  massFlux(const Edge& edge, const Cell& cell)
         double h = 0.0;
         double intRho = 0.0;
         double intE = 0.0;
+        double intP = 0.0;
 
         //entrance at n[0]
         if (f[0] < -threshold)
@@ -74,6 +67,10 @@ numvector<double,3>  massFlux(const Edge& edge, const Cell& cell)
             intE = 0.5*h*(
                         cell.reconstructSolution(n0, 4) + cell.reconstructSolution(nZero, 4) -
                         neib.reconstructSolution(n0, 4) - neib.reconstructSolution(nZero, 4)
+                  );
+            intP = 0.5*h*(
+                        problem.getPressure(cell.reconstructSolution(n0)) + problem.getPressure(cell.reconstructSolution(nZero)) -
+                        problem.getPressure(neib.reconstructSolution(n0)) - problem.getPressure(neib.reconstructSolution(nZero))
                   );
 
             if (debugFlux)
@@ -112,6 +109,11 @@ numvector<double,3>  massFlux(const Edge& edge, const Cell& cell)
                         neib.reconstructSolution(n1, 4) - neib.reconstructSolution(nZero, 4)
                   );
 
+            intP = 0.5*h*(
+                        problem.getPressure(cell.reconstructSolution(n1)) + problem.getPressure(cell.reconstructSolution(nZero)) -
+                        problem.getPressure(neib.reconstructSolution(n1)) - problem.getPressure(neib.reconstructSolution(nZero))
+                  );
+
             if (debugFlux)
             {
                 cout << "\n----\nu0 > 0, u1 < 0 int \n -- \n";
@@ -135,6 +137,7 @@ numvector<double,3>  massFlux(const Edge& edge, const Cell& cell)
         {
             intRho,
             intE,
+            intP,
             h
         };
 
@@ -150,14 +153,6 @@ numvector<double,3>  massFlux(const Edge& edge, const Cell& cell)
         f[0] = rotate(cell.reconstructSolution(edge.nodes[0]), n)[1];
         f[1] = rotate(cell.reconstructSolution(edge.nodes[1]), n)[1];
 
-        if (debugFlux)
-        {
-            cout << "before rotation: \n";
-            cout << cell.reconstructSolution(n0) << endl;
-            cout << cell.reconstructSolution(n1) << endl;
-            cout << "f = " << f[0] << " " << f[1] << endl;
-        }
-
 
         if ((f[0] >= -threshold) && (f[1] >= -threshold))
         {
@@ -171,6 +166,7 @@ numvector<double,3>  massFlux(const Edge& edge, const Cell& cell)
         double h = 0.0;
         double intRho = 0.0;
         double intE = 0.0;
+        double intP = 0.0;
 
         if (f[0] < -threshold)
 		{
@@ -189,6 +185,12 @@ numvector<double,3>  massFlux(const Edge& edge, const Cell& cell)
                         cell.reconstructSolution(n0, 4)    - edgeBound.bc->applyBoundary(cell.reconstructSolution(n0))[4] +
                         cell.reconstructSolution(nZero, 4) - edgeBound.bc->applyBoundary(cell.reconstructSolution(nZero))[4]
                   );
+
+            intP = 0.5*h*(
+                        problem.getPressure(cell.reconstructSolution(n0))    - problem.getPressure(edgeBound.bc->applyBoundary(cell.reconstructSolution(n0))) +
+                        problem.getPressure(cell.reconstructSolution(nZero)) - problem.getPressure(edgeBound.bc->applyBoundary(cell.reconstructSolution(nZero)))
+                  );
+
 
             if (debugFlux)
             {
@@ -224,6 +226,11 @@ numvector<double,3>  massFlux(const Edge& edge, const Cell& cell)
                         cell.reconstructSolution(nZero, 4) - edgeBound.bc->applyBoundary(cell.reconstructSolution(nZero))[4]
                   );
 
+            intP = 0.5*h*(
+                        problem.getPressure(cell.reconstructSolution(n1))    - problem.getPressure(edgeBound.bc->applyBoundary(cell.reconstructSolution(n1))) +
+                        problem.getPressure(cell.reconstructSolution(nZero)) - problem.getPressure(edgeBound.bc->applyBoundary(cell.reconstructSolution(nZero)))
+                  );
+
             if (debugFlux)
             {
                 cout << "\n----\nu0 > 0, u1 < 0 bound\n -- \n";
@@ -248,6 +255,7 @@ numvector<double,3>  massFlux(const Edge& edge, const Cell& cell)
         {
             intRho,
             intE,
+            intP,
             h
         };
     } // end catch
@@ -263,7 +271,8 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
 
     double indicatorRho = 0.0;
     double indicatorE = 0.0;
-    bool rhoNeg = false;
+    double indicatorP = 0.0;
+    bool negScalar = false;
 
 //    cout << "\n========\nRun KXRCF\n--------\n";
     
@@ -274,7 +283,7 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
 //        else
 //            debugFlux = false;
 
-//        if (cell->number == 50 || cell->number == 51)
+//        if (cell->number == 190 || cell->number == 206)
 //            debugFlux = true;
 //        else
 //            debugFlux = false;
@@ -283,17 +292,17 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
 
         for (const shared_ptr<Point> node : cell->nodes)
         {
-            if (cell->reconstructSolution(node,0) < 0.0 || cell->reconstructSolution(node,4) < 0.0)
+            if (cell->reconstructSolution(node,0) < threshold || cell->reconstructSolution(node,4) < threshold)
             {
-                rhoNeg = true;
+                negScalar = true;
                 break;
             }
         }
 
-        if (rhoNeg)
+        if (negScalar)
         {
             troubledCells.push_back(cell->number);
-            rhoNeg = false;
+            negScalar = false;
             continue;
         }
 
@@ -305,9 +314,10 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
 		// get norm Q_j
         double normQrho = cell->getNormQ(0);
         double normQe = cell->getNormQ(4);
+        double normQp = cell->getNormQp();
 
 		// get momentum in cell nodes
-        numvector<double,3> integral = {0.0, 0.0, 0.0}; // rho|e|length
+        numvector<double, 4> integral = {0.0, 0.0, 0.0, 0.0}; // rho|e|p|length
 
         for (const shared_ptr<Edge> edge : cell->edges)
         {
@@ -315,8 +325,9 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
         }
 
 
-        indicatorRho = fabs(integral[0]) / max((h*integral[2]*normQrho), 1e-10);
-        indicatorE   = fabs(integral[1]) / max((h*integral[2]*normQe), 1e-10);
+        indicatorRho = fabs(integral[0]) / max((h*integral[3]*normQrho), threshold);
+        indicatorE   = fabs(integral[1]) / max((h*integral[3]*normQe), threshold);
+        indicatorP   = fabs(integral[2]) / max((h*integral[3]*normQp), threshold);
 
         if (debugFlux)
         {

@@ -19,7 +19,7 @@ numvector<double, 5> FluxHLLC::getFStar(const numvector<double, 5>& sol, const n
     numvector<double, 5> D = { 0.0, 1.0, 0.0, 0.0, SStar};
 
     // var 2
-    //return ( SStar * (sol*SK - fK) + D * pK ) * (1.0 / (SK - SStar));
+    return ( SStar * (sol*SK - fK) + D * pK * SK ) * (1.0 / (SK - SStar));
 
     // var 1
     return ( SStar * (sol*SK - fK) + D * SK * (pK + rhoL * cK * (SStar - sol[1] / sol[0])) ) * (1.0 / (SK - SStar));
@@ -30,15 +30,20 @@ numvector<double,5> FluxHLLC::evaluate( const numvector<double, 5>& solLeft, con
     numvector<double, 5> fluxL = problem.fluxF(solLeft);
     numvector<double, 5> fluxR = problem.fluxF(solRight);
 
+//    if (fabs (fluxL[2]) > 1e-6 || fabs (fluxR[2]) > 1e-6)
+//        cout << fluxL[2] << ' ' << fluxR[2] << endl;
+
     numvector<double, 5> S = problem.lambdaF(solLeft,solRight);
 
     double SL = min(S[0],S[4]);
     double SR = max(S[0],S[4]);
 
-    if (SL >= 0.0)
+    numvector<double, 5> res(0.0);
+
+    if (SL > 0.0)
         return inverseRotate(fluxL, n);
 
-    if (SR <= 0.0)
+    if (SR < 0.0)
         return inverseRotate(fluxR, n);
 
     double pLeft = problem.getPressure(solLeft);
@@ -50,15 +55,21 @@ numvector<double,5> FluxHLLC::evaluate( const numvector<double, 5>& solLeft, con
     double sStar = (pRight - pLeft + solLeft[1] * cLeft - solRight[1] * cRight) / \
                    (solLeft[0] * cLeft - solRight[0] * cRight);
 
-//    if (sStar >= 0.0)
-//        return inverseRotate(fluxL, n) + SL * inverseRotate(getUStar(solLeft,pLeft,SL,cLeft,sStar) - solLeft, n);
+    if (sStar > 0.0)
+        res = inverseRotate(fluxL + (getUStar(solLeft,pLeft,SL,cLeft,sStar) - solLeft) * SL, n);
+    else
+        res = inverseRotate(fluxR + (getUStar(solRight,pRight,SR,cRight,sStar) - solRight) * SR, n);
 
-//    return inverseRotate(fluxL, n) + SR * inverseRotate(getUStar(solRight,pRight,SR,cRight,sStar) - solRight, n);
+//    return res;
 
-    if (sStar >= 0.0)
-        return inverseRotate(getFStar(solLeft,fluxL,solLeft[0],pLeft,SL,cLeft,sStar),n);
+//    // var 1
 
-    return inverseRotate(getFStar(solRight,fluxR,solLeft[0],pRight,SR,cRight,sStar),n);
+//    if (sStar > 0.0)
+//        return inverseRotate(getFStar(solLeft,fluxL,solLeft[0],pLeft,SL,cLeft,sStar),n);
+
+//    return inverseRotate(getFStar(solRight,fluxR,solLeft[0],pRight,SR,cRight,sStar),n);
+
+    // var 2
 
     double pLR = 0.5 * (pLeft + pRight + solLeft[0] * cLeft * (sStar - solLeft[1] / solLeft[0]) + \
                                          solRight[0] * cRight * (sStar - solRight[1] / solRight[0]));

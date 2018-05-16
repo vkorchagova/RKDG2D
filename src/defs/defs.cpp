@@ -4,7 +4,7 @@ using namespace std;
 
 numvector<double, 5> inverseRotate(const numvector<double, 5>& sol, const Point& n)
 {
-    return { sol[0], n.x() * sol[1] - n.y() * sol[2], n.y() * sol[1] + n.x() * sol[2], sol[3], sol[4] };
+    return { sol[0], n.x() * sol[1] - n.y() * sol[2],  n.y() * sol[1] + n.x() * sol[2], sol[3], sol[4] };
 }
 
 numvector<double, 5> rotate(const numvector<double, 5>& sol, const Point& n)

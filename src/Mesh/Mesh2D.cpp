@@ -217,15 +217,14 @@ void Mesh2D::importMesh(string fileName, const Problem& prb)
             reader >> nBoundEdges >> nEdges;
 
             edges.reserve(nEdges);
-            //edgesInternal.reserve(nInternalEdges);
-
-            bool isBound = false;
+            bool onBoundary = false;
 
             for (int i = 0; i < nEdges; ++i)
             {
-                reader >> isBound;
+                reader >> onBoundary;
                 reader >> node1 >> node2;
-                if (isBound)
+
+                if (onBoundary)
                     edges.emplace_back(make_shared<EdgeBoundary>(nodes[node1-1], nodes[node2-1]));
                 else
                     edges.emplace_back(make_shared<EdgeInternal>(nodes[node1-1], nodes[node2-1]));
@@ -313,15 +312,15 @@ void Mesh2D::importMesh(string fileName, const Problem& prb)
                 exit(0);
             }
 
-
             for (int i = 0; i < nEdges; ++i)
             {
-                reader >> nAdj;
-                for (int j = 0; j < nAdj; ++j)
-                {
+               reader >> nAdj;
+
+               for (int j = 0; j < nAdj; ++j)
+               {
                     reader >> adjCell;
                     edges[i]->neibCells.push_back(cells[adjCell - 1]);
-                }
+               }
             }
 
             do
