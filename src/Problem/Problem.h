@@ -42,7 +42,7 @@ public:
 public:
 
     //- Constructor
-    Problem (const Time& t);
+    Problem (std::string caseName, const Time& t);
 
     //- Destructor
     ~Problem();
@@ -51,9 +51,9 @@ public:
     void setAlpha(const std::vector<numvector<double, 5 * nShapes> >& a);
 
     //- Set initial conditions as functions
-    void setInitialConditions();
+    void setInitialConditions(std::string caseName);
 
-    void setBoundaryConditions(const std::vector<Patch> &patches);
+    void setBoundaryConditions(std::string caseName, const std::vector<Patch> &patches);
 
     //- Calculate pressure using conservative variables
     double getPressure(const numvector<double,5>& sol) const;
@@ -66,6 +66,12 @@ public:
 
     //- Eigenvalues for X direction ( Roe )
     numvector<double, 5> lambdaF_Roe(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const;
+
+    //- Eigenvalues for X direction ( Einfeldt )
+    numvector<double, 5> lambdaF_Einfeldt(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const;
+
+    //- Eigenvalues for X direction ( Toro, pressure-based )
+    numvector<double, 5> lambdaF_Toro(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const;
 
     //- Eigenvalues for X direction ( semisum )
     numvector<double, 5> lambdaF_semisum(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const;
@@ -81,6 +87,12 @@ public:
 
     //- Calculate fluxes in y direction
     numvector<double, 5> fluxG(const numvector<double, 5>& sol) const;
+
+    //- Left  eigenvectors
+    std::pair<numvector<numvector<double, 5>, 5>, numvector<numvector<double, 5>, 5>> getL(const numvector<double, 5>& sol) const;
+
+    //- Right eigenvectors
+    std::pair<numvector<numvector<double, 5>, 5>, numvector<numvector<double, 5>, 5>> getR(const numvector<double, 5>& sol) const;
 
 };// end Problem
 

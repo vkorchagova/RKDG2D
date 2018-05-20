@@ -15,6 +15,8 @@ numvector<double, 4> IndicatorKXRCF::massFlux(const Edge& edge, const Cell& cell
     Point n0 = *edge.nodes[0];
     Point n1 = *edge.nodes[1];
 
+    numvector<double, 5>  solOne, solTwo;
+
 
         
     try // find internal edges
@@ -26,11 +28,16 @@ numvector<double, 4> IndicatorKXRCF::massFlux(const Edge& edge, const Cell& cell
         Cell& neib = (&cell == edge.neibCells[0].get()) ? *edge.neibCells[1] : *edge.neibCells[0];
 
         // correct normal position: outside related to considered cell
-        n = ((n0 - cell.getCellCenter())*edge.n >= threshold) ? edge.n : Point(-edge.n);
+        n = ((n0 - cell.getCellCenter())*edge.n > 0.0) ? edge.n : Point(-edge.n);
 
-        //get normal velocity component in nodes of edge
-        f[0] = rotate(cell.reconstructSolution(n0), n)[1];
-        f[1] = rotate(cell.reconstructSolution(n1), n)[1];
+        // get normal velocity component in nodes of edge... averaged by Roe!
+        solOne = rotate(cell.reconstructSolution(n0), n);
+        solTwo = rotate(neib.reconstructSolution(n0), n);
+        f[0] = solOne[1] / sqrt(solOne[0]) + solTwo[1] / sqrt(solTwo[0]);
+
+        solOne = rotate(cell.reconstructSolution(n1), n);
+        solTwo = rotate(neib.reconstructSolution(n1), n);
+        f[1] = solOne[1] / sqrt(solOne[0]) + solTwo[1] / sqrt(solTwo[0]);
 
         // 4 variants of flux integral (only through the part of edge with inward flux)
         // we have linear functions -> use trapezia formulae for integration
@@ -43,7 +50,7 @@ numvector<double, 4> IndicatorKXRCF::massFlux(const Edge& edge, const Cell& cell
             {
                 cout << "no entrance\n";
             }
-            return { 0.0, 0.0, 0.0 };
+            return { 0.0, 0.0, 0.0, 0.0 };
         }
         double h = 0.0;
         double intRho = 0.0;
@@ -54,7 +61,7 @@ numvector<double, 4> IndicatorKXRCF::massFlux(const Edge& edge, const Cell& cell
         if (f[0] < -threshold)
 		{
             Point nZero = (f[1] <= -threshold) ? \
-                           *edge.nodes[1] : \
+                           n1 : \
                            Point({ (f[1] * n0.x() - f[0] * n1.x())/ (f[1] - f[0]), (f[1] * n0.y() - f[0] * n1.y())/ (f[1] - f[0])});
 
             h = (nZero - n0).length();
@@ -149,9 +156,16 @@ numvector<double, 4> IndicatorKXRCF::massFlux(const Edge& edge, const Cell& cell
 
         n = edge.n;
 
-        //get normal velocity component in nodes of edge
-        f[0] = rotate(cell.reconstructSolution(edge.nodes[0]), n)[1];
-        f[1] = rotate(cell.reconstructSolution(edge.nodes[1]), n)[1];
+        // get normal velocity component in nodes of edge ... averaged by Roe!
+        solOne = rotate(cell.reconstructSolution(n0), n);
+        solTwo = rotate(edgeBound.bc->applyBoundary(cell.reconstructSolution(n0)), n);
+        f[0] = solOne[1] / sqrt(solOne[0]) + solTwo[1] / sqrt(solTwo[0]);
+
+        solOne = rotate(cell.reconstructSolution(n1), n);
+        solTwo = rotate(edgeBound.bc->applyBoundary(cell.reconstructSolution(n1)), n);
+        f[1] = solOne[1] / sqrt(solOne[0]) + solTwo[1] / sqrt(solTwo[0]);
+
+
 
 
         if ((f[0] >= -threshold) && (f[1] >= -threshold))
@@ -160,7 +174,7 @@ numvector<double, 4> IndicatorKXRCF::massFlux(const Edge& edge, const Cell& cell
             {
                 cout << "no entrance\n";
             }
-            return { 0.0, 0.0, 0.0 };
+            return { 0.0, 0.0, 0.0, 0.0 };
         }
 
         double h = 0.0;
@@ -171,7 +185,7 @@ numvector<double, 4> IndicatorKXRCF::massFlux(const Edge& edge, const Cell& cell
         if (f[0] < -threshold)
 		{
             Point nZero = (f[1] <= -threshold) ? \
-                           *edge.nodes[1] : \
+                           n1 : \
                            Point({ (f[1] * n0.x() - f[0] * n1.x())/ (f[1] - f[0]), (f[1] * n0.y() - f[0] * n1.y())/ (f[1] - f[0])});
 
             h = (nZero - n0).length();
@@ -288,7 +302,7 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
 //        else
 //            debugFlux = false;
 
-        // check negative rho values
+        // check negative rho/E values
 
         for (const shared_ptr<Point> node : cell->nodes)
         {
@@ -340,8 +354,11 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
             cout << "cell #" << cell->number <<": indicatorRho = " << indicatorRho << ", indicatorE = " << indicatorE << "\n===============\n";
         }
 
-        if (indicatorRho > 1.0 || indicatorE > 1.0)
+        if (indicatorRho > 1.0)
             troubledCells.push_back(cell->number);
+
+//        if (indicatorRho > 1.0)
+//            cout << "cell #" << cell->number << ", ind = " << indicatorRho << endl;
 	}
 
 //    cout << "\ntroubled cells: " ;

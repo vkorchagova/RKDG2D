@@ -146,7 +146,7 @@ public:
 
     /// RKDG methods
 
-    //- Reconstruct solution
+    //- Reconstruct solution (get coeffs from problem)
     numvector<double, 5> reconstructSolution(const Point& point) const;
     double reconstructSolution(const Point& point, int numSol) const;
 
@@ -155,8 +155,23 @@ public:
     double reconstructSolution(const std::shared_ptr<Point> point, int numSol) const
         { return reconstructSolution(*point, numSol); }
 
+    //- Reconstruct solution using given coeffs
+    numvector<double, 5> reconstructSolution(const Point& point, const numvector<double, 5*nShapes>& alpha) const;
+    double reconstructSolution(const Point& point, const numvector<double, 5*nShapes>& alpha, int numSol) const;
+
+    numvector<double, 5> reconstructSolution(const std::shared_ptr<Point> point, const numvector<double, 5*nShapes>& alpha) const
+        { return reconstructSolution(*point, alpha); }
+    double reconstructSolution(const std::shared_ptr<Point> point, const numvector<double, 5*nShapes>& alpha, int numSol) const
+        { return reconstructSolution(*point, alpha, numSol); }
+
+    //- Reconstruct coefficients using Riemann invariants
+    numvector<double, 5 * nShapes> reconstructCoefficients(const std::pair<numvector<double, 5 * nShapes>, numvector<double, 5 * nShapes>>& rI) const;
+
     //- Get coefficients of projection of function foo onto cell basis
     numvector<double, 5 * nShapes> projection(std::function<numvector<double,5>(const Point& point)>& init) const;
+
+    //- Get Riemann invariants using actual solution on cell
+    std::pair<numvector<double, 5 * nShapes>, numvector<double, 5 * nShapes>> getRiemannInvariants();
 
     //- Calculate Gramian matrix
     void setGramian();

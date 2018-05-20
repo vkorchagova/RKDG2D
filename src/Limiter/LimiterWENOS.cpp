@@ -59,12 +59,15 @@ void LimiterWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
 
         for (size_t k = 0; k < nCells; ++k)
             for (int i = 0; i < 5; ++i)
-                for (int j = 1; j < nShapes; ++j)
+                for (int j = 0; j < nShapes; ++j)
                     p[k][i*nShapes + j] *= cells[k]->offsetPhi[j];
+
 
         for (size_t k = 0; k < nCells; ++k)
             for (int i = 0; i < 5; ++i)
-                p[k][i*nShapes] = - uMean[k][i] + uMean[0][i] + cells[k]->reconstructSolution(cells[k]->getCellCenter(),i);
+                p[k][i*nShapes] += - uMean[k][i] + uMean[0][i];
+
+
 
         // get linear weights
 

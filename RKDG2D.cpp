@@ -27,6 +27,7 @@
 #include "LimiterFinDiff.h"
 #include "LimiterMUSCL.h"
 #include "LimiterWENOS.h"
+#include "LimiterRiemannWENOS.h"
 
 
 using namespace std;
@@ -35,17 +36,23 @@ using namespace std;
 
 int main(int argc, char** argv)
 {    
+    // Problem
+
+    string caseName = "Woodward";
+
     // Time parameters
 
     double tStart = 0.0;
-    double tEnd = 0.2;
+    double tEnd = 0.012;
     bool defCoeffs = 0;
 
-    double initDeltaT = 5e-4;
+    double initDeltaT = 1e-4;
+
+    bool isDynamicTimeStep = false;
     double Co = 0.1;
     double maxDeltaT = 1.0;
     double maxTauGrowth = 1.2;
-    bool isDynamicTimeStep = false;
+
 
     int freqWrite = 1;
 
@@ -56,18 +63,16 @@ int main(int argc, char** argv)
     Time time;
 
     // Initialize problem
-    Problem problem(time);
+    Problem problem(caseName,time);
 
     // Initialize mesh
     Mesh2D mesh("../RKDG2D/mesh2D",problem);
 
     // Set BC
-    problem.setBoundaryConditions(mesh.patches);
+    problem.setBoundaryConditions(caseName, mesh.patches);
 
     // Initialize flux
-
     FluxHLLC numFlux(problem);
-
 
     // Initialize solver
     Solver solver(mesh, problem, numFlux);
@@ -79,7 +84,7 @@ int main(int argc, char** argv)
     IndicatorKXRCF indicator(mesh, problem);
 
     // Initialize limiter
-    LimiterFinDiff limiter(indicator, problem);
+    LimiterWENOS limiter(indicator, problem);
 
     // ---------------
 
@@ -100,7 +105,7 @@ int main(int argc, char** argv)
     else
     {
         solver.setInitialConditions();
-        limiter.limit(solver.alphaPrev);
+        //limiter.limit(solver.alphaPrev);
         solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(tStart));
     }
 
@@ -116,10 +121,11 @@ int main(int argc, char** argv)
 
     // run Runge --- Kutta 2 TVD
 
-    vector<numvector<double, 5*nShapes>> k1, k2;
+    vector<numvector<double, 5*nShapes>> k1, k2, k3;
 
     k1.resize(mesh.nCells);
     k2.resize(mesh.nCells);
+    k3.resize(mesh.nCells);
 
     clock_t t1, t2, t00;
 
@@ -142,21 +148,37 @@ int main(int argc, char** argv)
        lhs = solver.correctNonOrtho(solver.alphaNext);
 
        limiter.limit(lhs);
+       // get limited "lhs"
+       solver.alphaNext = solver.correctPrevIter(lhs);
 
 //       solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(t)+"RK1");
-//       solver.write("alphaCoeffs/" + to_string(t)+"RK1",lhs);
+       //solver.write("alphaCoeffs/" + to_string(t)+"RK1",lhs);
 
 
        k2 = solver.assembleRHS(lhs);
 
-       solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
+       //solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
+       solver.alphaNext = solver.alphaPrev*0.75 + solver.alphaNext*0.25 + k2*0.25*tau;
        lhs = solver.correctNonOrtho(solver.alphaNext);
+
 
        //cout << "before limiting" << solver.alphaNext[49] << endl;
 
        //solver.write("alphaCoeffs/" + to_string(t) + "blRK2",lhs);
 
        limiter.limit(lhs);
+       // get limited "lhs"
+       solver.alphaNext = solver.correctPrevIter(lhs);
+
+       k3 = solver.assembleRHS(lhs);
+       double i13 = 0.3333333333333333;
+
+       solver.alphaNext = solver.alphaPrev*i13 + solver.alphaNext*2*i13 + k3*2*i13*tau;
+       lhs = solver.correctNonOrtho(solver.alphaNext);
+
+       limiter.limit(lhs);
+       // get limited "lhs"
+       solver.alphaNext = solver.correctPrevIter(lhs);
 
        //cout << "after limiting" << solver.alphaNext[49] << endl;
 //       solver.write("alphaCoeffs/" + to_string(t)+"RK2bl",lhs);
@@ -169,11 +191,27 @@ int main(int argc, char** argv)
            solver.write("alphaCoeffs/" + to_string(t),lhs);
        }
 
+       // check energy conservation
+
+       double totalEnergy = 0.0;
+
+       for (const shared_ptr<Cell> cell : mesh.cells)
+       {
+           function<double(const Point&)> en = [&](const Point& x)
+           {
+               return cell->reconstructSolution(x,4);
+           };
+
+           totalEnergy += cell->integrate(en);
+       }
+
+       cout.precision(16);
+       cout << "total energy = " << totalEnergy << endl;
 
 
 
-       // get limited "lhs"
-       solver.alphaNext = solver.correctPrevIter(lhs);
+
+
        solver.alphaPrev = solver.alphaNext;
 
        iT++;

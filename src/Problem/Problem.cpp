@@ -9,9 +9,9 @@ using namespace std;
 // ------------------ Constructors & Destructors ----------------
 
 //Problem::Problem(const std::vector<numvector<double, 5 * nShapes> > &al) : alpha(al)
-Problem::Problem(const Time& t) : time(t)
+Problem::Problem(string caseName, const Time& t) : time(t)
 {
-    setInitialConditions();
+    setInitialConditions(caseName);
 } // end constructor by mesh
 
 Problem::~Problem()
@@ -24,72 +24,113 @@ Problem::~Problem()
 
 // ------------------ Public class methods --------------------
 
-void Problem::setInitialConditions()
+
+
+void Problem::setInitialConditions(string caseName)
 {
     // Function for initial condition
     //double rho0 = 0.5;
 
-    double rho0 = 1.0;
-    double e0 = rho0  / cpcv / (cpcv - 1.0) ;
-    //double e0 = 0.125;
+    function<double(const Point& r)> initRho;
+    function<double(const Point& r)> initP;
+    function<double(const Point& r)> initU;
+    function<double(const Point& r)> initV;
 
-    double v0 = 0.0;
-
-    function<double(const Point& r)> initRho = [=](const Point& r) \
+    if (caseName == "SodX")
     {
-    //    return rho0;
-    //    return 1.0;
- //       return rho0 + 1e-6*exp( - 40.0*sqr(r.x() )- 40.0*sqr(r.y() ));
-     //  return rho0 + 1e-6 * exp( -2.0 * sqr(r.x() - 4.0) - 2.0 * sqr(r.y() - 4.0));
-    //    return (r.y() < 0.5) ? 1.0 : 0.125;
-    //   return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.125;
-    //    return (r.x() < 0.5) ? 1.0 : 0.125;
-        return (r.x() < 0) ? 1.0 : 0.125;
-    //   return (r.y() < 1.0 && r.x() < 1.0 && r.y() > 2.0 && r.x() > 2.0) ? 0.0 : 1.0;
-    //return (r.y() < 0.5) ? r.y() + 0.01 : r.y() + 0.51;
-    };
-
-    function<double(const Point& r)> initP = [=](const Point& r) \
+        initRho = [](const Point& r) { return (r.x() < 0.0) ? 1.0 : 0.125; };
+        initP   = [](const Point& r) { return (r.x() < 0.0) ? 1.0 : 0.1;  };
+        initU   = [](const Point& r) { return (r.x() < 0.0) ? 0.0 : 0.0; };
+        initV   = [](const Point& r) { return 0.0; };
+    }
+    else if (caseName == "SodY")
     {
-    //   return (initRho(r)) / cpcv;
-    //    return (initRho(r));
-    //    return (r.y() < 0.5) ? 1.0 : 0.1;
-    //    return ((r.x() + r.y()) < 1.01) ? 1.0 : 0.1;
-    //    return (r.x() < 0.5) ? 1.0 : 0.1;
-        return (r.x() < 0) ? 1.0 : 0.1;
-    };
-
-
-    function<double(const Point& r)> initV = [](const Point& r) \
+        initRho = [](const Point& r) { return (r.x() < 0) ? 1.0 : 0.125; };
+        initP   = [](const Point& r) { return (r.x() < 0) ? 1.0 : 0.1;  };
+        initV   = [](const Point& r) { return (r.x() < 0) ? 0.75 : 0.0; };
+        initU   = [](const Point& r) { return 0.0; };
+    }
+    else if (caseName == "SodDiag")
     {
-        return 0.0;
-    //    return (r.y() < 0.5) ? 0.0 : 0.0;
-    //    return ((r.x() + r.y()) < 0.5) ? 0.0 : 0.0;
-    //    return (r.x() < 0.5) ? 0.75 : 0.0;
-    //return 0.001 * exp( -2.0 * pow(r.x() - 4.0, 2) - 2.0 * pow(r.y() - 4.0, 2));
-    //return r.y();
-    };
+        initRho = [](const Point& r) { return ((r.x() + r.y()) < 1.0) ? 1.0 : 0.125; };
+        initP   = [](const Point& r) { return ((r.x() + r.y()) < 1.0) ? 1.0 : 0.1;  };
+        initV   = [](const Point& r) { return 0.0; };
+        initU   = [](const Point& r) { return 0.0; };
+    }
 
-    init = [=](const Point& r) { return numvector<double, 5> { initRho(r), 0.0, initV(r), 0.0, initP(r) / (cpcv - 1.0) }; };
-    //init = [=](const Point& r) { return numvector<double, 5> { initRho(r), initV(r), 0.0, 0.0, e0 }; };
+    else if (caseName == "Woodward")
+    {
+        initRho = [](const Point& r) { return 1.0; };
+        initP   = [](const Point& r) { return (r.x() <= -0.4) ? 1000.0 : ((r.x() >= 0.4) ? 100.0 : 0.01);  };
+        initV   = [](const Point& r) { return 0.0; };
+        initU   = [](const Point& r) { return 0.0; };
+    }
+    else if (caseName == "123")
+    {
+        initRho = [](const Point& r) { return 1.0; };
+        initP   = [](const Point& r) { return 0.4;  };
+        initU   = [](const Point& r) { return (r.x() < 0) ? -2.0 : 2.0; };
+        initV   = [](const Point& r) { return 0.0; };
+    }
+    else if (caseName == "forwardStep")
+    {
+        initRho = [](const Point& r) { return 0.5; };
+        initP   = [&](const Point& r) { return 0.125 * (cpcv - 1.0);  };
+        initU   = [](const Point& r) { return 0.0; };
+        initV   = [](const Point& r) { return 0.0; };
+    }
+    else if (caseName == "acousticPulse")
+    {
+        initRho = [](const Point& r) { return 1.0 + 1e-6*exp( - 40.0*sqr(r.x() )- 40.0*sqr(r.y() )); };
+        initP   = [&](const Point& r) { return initRho(r) / cpcv;  };
+        initU   = [](const Point& r) { return 0.0; };
+        initV   = [](const Point& r) { return 0.0; };
+    }
+    else
+    {
+        cout << "Problem " << caseName << " not found\n";
+        exit(0);
+    }
+
+    init = [=](const Point& r)
+    {
+        return numvector<double, 5> { initRho(r), initU(r), initV(r), 0.0, initP(r) / (cpcv - 1.0) };
+    };
 }
 
-void Problem::setBoundaryConditions(const std::vector<Patch>& patches)
+void Problem::setBoundaryConditions(string caseName, const std::vector<Patch>& patches)
 {
-    shared_ptr<BoundarySlip> bSlip = make_shared<BoundarySlip>();
-    shared_ptr<BoundaryOpen> bOpen = make_shared<BoundaryOpen>();
-    shared_ptr<BoundarySine> bSine = make_shared<BoundarySine>(1e-3,0.5,time,*this);
-    //shared_ptr<BoundaryConstant> bConst = make_shared<BoundaryConstant>(numvector<double,5>({1.0, 0.0, 0.0, 0.0, 1.0 / cpcv / (cpcv - 1.0)}));
-    shared_ptr<BoundaryConstant> bConst = \
-            make_shared<BoundaryConstant>(numvector<double,5>({1.0, -3.0, 0.0, 0.0, 6.286}));
+    // shared_ptr<BoundarySine> bSine = make_shared<BoundarySine>(1e-3,0.5,time,*this);
 
+    vector<shared_ptr<Boundary>> bc = {};
 
-    // boundary conditions: bottom/top/left/right
-    //vector<shared_ptr<Boundary>> bc = {bSlip, bSlip, bSlip, bSlip};
-    vector<shared_ptr<Boundary>> bc = {bOpen, bOpen, bOpen, bOpen};
-    //vector<shared_ptr<Boundary>> bc = {bConst, bOpen, bSlip, bSlip};
-    //vector<shared_ptr<Boundary>> bc = {bConst, bConst, bConst, bConst};
-    //vector<shared_ptr<Boundary>> bc = {bSlip};
+    if (caseName == "SodX" || \
+        caseName == "SodY" || \
+        caseName == "SodDiag" || \
+        caseName == "Woodward" || \
+        caseName == "acousticPulse")
+    {
+        shared_ptr<BoundaryOpen> bOpen = make_shared<BoundaryOpen>();
+        shared_ptr<BoundarySlip> bSlip = make_shared<BoundarySlip>();
+
+        bc = {bSlip, bSlip, bSlip, bSlip};
+        //bc = {bOpen, bOpen, bOpen, bOpen};
+    }
+    else if (caseName == "forwardStep")
+    {
+        shared_ptr<BoundaryOpen> bOpen = make_shared<BoundaryOpen>();
+        shared_ptr<BoundarySlip> bSlip = make_shared<BoundarySlip>();
+        shared_ptr<BoundaryConstant> bConst = \
+                make_shared<BoundaryConstant>(numvector<double,5>({1.0, -3.0, 0.0, 0.0, 6.286}));
+
+        bc = {bConst, bOpen, bSlip, bSlip};
+    }
+    else
+    {
+        cout << "Problem " << caseName << " not found\n";
+        exit(0);
+    }
+
 
     for (int i = 0; i < patches.size(); ++i)
         for (int j = 0; j < patches[i].edgeGroup.size(); ++j)
@@ -152,6 +193,54 @@ numvector<double, 5> Problem::lambdaF_Roe(const numvector<double, 5>& solOne, co
 
 }
 
+numvector<double, 5> Problem::lambdaF_Einfeldt(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const
+{
+    double cLeft  = c(solOne);
+    double cRight = c(solTwo);
+
+    double uLeft = solOne[1] / solOne[0];
+    double uRight = solTwo[1] / solTwo[0];
+
+    double sqrtRhoLeft = sqrt(solOne[0]);
+    double sqrtRhoRight = sqrt(solTwo[0]);
+    double sumSqrtRho = sqrtRhoLeft + sqrtRhoRight;
+
+    double eta2 = 0.5 * sqrtRhoLeft * sqrtRhoRight / sqr(sqrtRhoLeft + sqrtRhoRight);
+    double u_av =  ( solOne[1] / sqrtRhoLeft + solTwo[1] / sqrtRhoRight ) / sumSqrtRho;
+    double c_av = sqrt( (sqrtRhoLeft * sqr(cLeft) + sqrtRhoRight * sqr(cRight)) / sumSqrtRho +\
+                        eta2 * sqr(uRight - uLeft));
+
+    return {u_av - c_av, u_av, u_av, u_av, u_av + c_av};
+
+}
+
+numvector<double, 5> Problem::lambdaF_Toro(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const
+{
+    double uLeft = solOne[1] / solOne[0];
+    double uRight = solTwo[1] / solTwo[0];
+
+    double cLeft  = c(solOne);
+    double cRight = c(solTwo);
+
+    double pLeft = getPressure(solOne);
+    double pRight = getPressure(solTwo);
+
+    double pvrs = 0.5 * (pLeft + pRight) + \
+            0.125 * (uLeft - uRight) * (solOne[0] + solTwo[0]) * (cLeft + cRight);
+
+    double pStar = max(0.0, pvrs);
+
+    double qLeft = pStar > pLeft ? \
+                    sqrt( 1.0 + 0.5 * (cpcv + 1.0) * (pStar / pLeft - 1.0) / cpcv) : \
+                    1.0;
+
+    double qRight = pStar > pRight ? \
+                    sqrt( 1.0 + 0.5 * (cpcv + 1.0) * (pStar / pRight - 1.0) / cpcv) : \
+                    1.0;
+
+    return {uLeft - qLeft * cLeft, uLeft, uLeft, uLeft, uRight + qRight * cRight};
+}
+
 numvector<double, 5> Problem::lambdaF_semisum(const numvector<double, 5>& solOne, const numvector<double, 5>& solTwo) const
 {
     double u = 0.5*(solOne[1] / solOne[0] + solTwo[1] / solTwo[0]);
@@ -183,6 +272,78 @@ numvector<double, 5> Problem::fluxG(const numvector<double, 5>& sol) const
     return { sol[2], v*sol[1], v*sol[2] + p, v*sol[3], (sol[4] + p)*v };
 } // end fluxG
 
+
+pair<numvector<numvector<double, 5>, 5>, numvector<numvector<double, 5>, 5>> Problem::getL(const numvector<double, 5>& sol) const
+{
+    double cS = c(sol);
+    double rho = sol[0];
+    double u = sol[1] / rho;
+    double v = sol[2] / rho;
+
+    double B1 = (cpcv - 1.0) / sqr(cS);
+    double B2 = 0.5 * B1 * (sqr(u) + sqr(v));
+
+    pair<numvector<numvector<double, 5>, 5>, numvector<numvector<double, 5>, 5>> res;
+
+    res.first =
+    {
+        // Lx //again -v, -1
+        { 0.5 * (B2 + u/cS), -0.5 * (B1 * u + 1.0/cS), -0.5 * B1 * v,  0.0, 0.5 * B1},
+        {                -v,                      0.0,           1.0,  0.0,      0.0},
+        {               0.0,                      0.0,           0.0,  1.0,      0.0},
+        {          1.0 - B2,                   B1 * u,        B1 * v,  0.0,      -B1},
+        { 0.5 * (B2 - u/cS), -0.5 * (B1 * u - 1.0/cS), -0.5 * B1 * v,  0.0, 0.5 * B1}
+    };
+
+    res.second =
+    {
+        // Ly
+        { 0.5 * (B2 + v/cS), -0.5 * (B1 * u), -0.5 * (B1 * v + 1.0/cS),  0.0, 0.5 * B1},
+        {                -u,             1.0,                      0.0,  0.0,      0.0},
+        {               0.0,             0.0,                      0.0,  1.0,      0.0},
+        {          1.0 - B2,          B1 * u,                   B1 * v,  0.0,      -B1},
+        { 0.5 * (B2 - v/cS), -0.5 * (B1 * u), -0.5 * (B1 * v - 1.0/cS),  0.0, 0.5 * B1}
+    };
+
+    return res;
+}
+
+
+pair<numvector<numvector<double, 5>, 5>, numvector<numvector<double, 5>, 5>> Problem::getR(const numvector<double, 5>& sol) const
+{
+    double cS = c(sol);
+    double rho = sol[0];
+    double u = sol[1] / rho;
+    double v = sol[2] / rho;
+    double p = getPressure(sol);
+
+    double H = (sol[4] + p) / rho;
+    double magU2 = 0.5 * (sqr(u) + sqr(v));
+
+    pair<numvector<numvector<double, 5>, 5>, numvector<numvector<double, 5>, 5>> res;
+
+    res.first =
+    {
+        // Rx  // OK, but -1 and -v???
+        {        1.0,  0.0,  0.0,   1.0,        1.0 },
+        {     u - cS,  0.0,  0.0,     u,     u + cS },
+        {          v,  1.0,  0.0,     v,          v },
+        {        0.0,  0.0,  1.0,   0.0,        0.0 },
+        { H - cS * u,    v,  0.0, magU2, H + cS * u }
+    };
+
+    res.second =
+    {
+        // Ry
+        {        1.0,  0.0,  0.0,   1.0,        1.0 },
+        {          u,  1.0,  0.0,     u,          u },
+        {     v - cS,  0.0,  0.0,     v,     v + cS },
+        {        0.0,  0.0,  1.0,   0.0,        0.0 },
+        { H - cS * v,    u,  0.0, magU2, H + cS * v },
+    };
+
+    return res;
+}
 
 
 
