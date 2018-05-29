@@ -143,10 +143,10 @@ void FileConverter::readElements()
 
         elementProperties = parseStringInt(str);
 
-        elementType = elementProperties[1];
-
         if (elementProperties[0] == -1)
             break;
+
+        elementType = elementProperties[1];
 
         //cout << "elemType = " << elementType << endl;
 

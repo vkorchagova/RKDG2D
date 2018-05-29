@@ -52,7 +52,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = C:\Users\vkorchagova\Documents\GitHub\RKDG2D\converterUNV
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e"
+CMAKE_BINARY_DIR = C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -81,9 +81,9 @@ rebuild_cache\fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e\CMakeFiles" "C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e\CMakeFiles\progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430\CMakeFiles C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430\CMakeFiles\progress.marks
 	$(MAKE) -f CMakeFiles\Makefile2 /nologo -$(MAKEFLAGS) all
-	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e\CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430\CMakeFiles 0
 .PHONY : all
 
 # The main clean target

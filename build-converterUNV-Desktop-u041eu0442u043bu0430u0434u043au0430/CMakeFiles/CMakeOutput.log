@@ -10,7 +10,7 @@ The output was:
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.exe"
 
-The C compiler identification is GNU, found in "C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/3.11.1/CompilerIdC/a.exe"
+The C compiler identification is GNU, found in "C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430/CMakeFiles/3.11.1/CompilerIdC/a.exe"
 
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
 Compiler: C:/Qt/Tools/mingw530_32/bin/g++.exe 
@@ -23,34 +23,34 @@ The output was:
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.exe"
 
-The CXX compiler identification is GNU, found in "C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/3.11.1/CompilerIdCXX/a.exe"
+The CXX compiler identification is GNU, found in "C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430/CMakeFiles/3.11.1/CompilerIdCXX/a.exe"
 
 Determining if the C compiler works passed with the following output:
-Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp
+Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_2da36\fast"
+Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_707a1\fast"
 jom: parallel job execution disabled for Makefile
-	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_2da36.dir\build.make /nologo -L CMakeFiles\cmTC_2da36.dir\build
-Building C object CMakeFiles/cmTC_2da36.dir/testCCompiler.c.obj
-	C:\Qt\Tools\mingw530_32\bin\gcc.exe    -o CMakeFiles\cmTC_2da36.dir\testCCompiler.c.obj   -c "C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e\CMakeFiles\CMakeTmp\testCCompiler.c"
-Linking C executable cmTC_2da36.exe
-	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_2da36.dir/objects.a
-	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_2da36.dir/objects.a @CMakeFiles\cmTC_2da36.dir\objects1.rsp
-	C:\Qt\Tools\mingw530_32\bin\gcc.exe      -Wl,--whole-archive CMakeFiles\cmTC_2da36.dir/objects.a -Wl,--no-whole-archive  -o cmTC_2da36.exe -Wl,--out-implib,libcmTC_2da36.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_2da36.dir\linklibs.rsp
+	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_707a1.dir\build.make /nologo -L CMakeFiles\cmTC_707a1.dir\build
+Building C object CMakeFiles/cmTC_707a1.dir/testCCompiler.c.obj
+	C:\Qt\Tools\mingw530_32\bin\gcc.exe    -o CMakeFiles\cmTC_707a1.dir\testCCompiler.c.obj   -c C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430\CMakeFiles\CMakeTmp\testCCompiler.c
+Linking C executable cmTC_707a1.exe
+	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_707a1.dir/objects.a
+	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_707a1.dir/objects.a @CMakeFiles\cmTC_707a1.dir\objects1.rsp
+	C:\Qt\Tools\mingw530_32\bin\gcc.exe      -Wl,--whole-archive CMakeFiles\cmTC_707a1.dir/objects.a -Wl,--no-whole-archive  -o cmTC_707a1.exe -Wl,--out-implib,libcmTC_707a1.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_707a1.dir\linklibs.rsp
 
 
 Detecting C compiler ABI info compiled with the following output:
-Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp
+Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_0c81b\fast"
+Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_02aac\fast"
 jom: parallel job execution disabled for Makefile
-	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_0c81b.dir\build.make /nologo -L CMakeFiles\cmTC_0c81b.dir\build
-Building C object CMakeFiles/cmTC_0c81b.dir/CMakeCCompilerABI.c.obj
-	C:\Qt\Tools\mingw530_32\bin\gcc.exe    -o CMakeFiles\cmTC_0c81b.dir\CMakeCCompilerABI.c.obj   -c "C:\Program Files\CMake\share\cmake-3.11\Modules\CMakeCCompilerABI.c"
-Linking C executable cmTC_0c81b.exe
-	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_0c81b.dir/objects.a
-	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_0c81b.dir/objects.a @CMakeFiles\cmTC_0c81b.dir\objects1.rsp
-	C:\Qt\Tools\mingw530_32\bin\gcc.exe     -v -Wl,--whole-archive CMakeFiles\cmTC_0c81b.dir/objects.a -Wl,--no-whole-archive  -o cmTC_0c81b.exe -Wl,--out-implib,libcmTC_0c81b.dll.a -Wl,--major-image-version,0,--minor-image-version,0
+	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_02aac.dir\build.make /nologo -L CMakeFiles\cmTC_02aac.dir\build
+Building C object CMakeFiles/cmTC_02aac.dir/CMakeCCompilerABI.c.obj
+	C:\Qt\Tools\mingw530_32\bin\gcc.exe    -o CMakeFiles\cmTC_02aac.dir\CMakeCCompilerABI.c.obj   -c "C:\Program Files\CMake\share\cmake-3.11\Modules\CMakeCCompilerABI.c"
+Linking C executable cmTC_02aac.exe
+	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_02aac.dir/objects.a
+	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_02aac.dir/objects.a @CMakeFiles\cmTC_02aac.dir\objects1.rsp
+	C:\Qt\Tools\mingw530_32\bin\gcc.exe     -v -Wl,--whole-archive CMakeFiles\cmTC_02aac.dir/objects.a -Wl,--no-whole-archive  -o cmTC_02aac.exe -Wl,--out-implib,libcmTC_02aac.dll.a -Wl,--major-image-version,0,--minor-image-version,0
 Using built-in specs.
 COLLECT_GCC=C:\Qt\Tools\mingw530_32\bin\gcc.exe
 COLLECT_LTO_WRAPPER=C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/lto-wrapper.exe
@@ -60,23 +60,23 @@ Thread model: posix
 gcc version 5.3.0 (i686-posix-dwarf-rev0, Built by MinGW-W64 project) 
 COMPILER_PATH=C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/;C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/;C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/bin/
 LIBRARY_PATH=C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/;C:/Qt/Tools/mingw530_32/bin/../lib/gcc/;C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/../lib/;C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../lib/;C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/;C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_0c81b.exe' '-mtune=generic' '-march=i686'
- C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/collect2.exe -plugin C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/liblto_plugin-0.dll -plugin-opt=C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\VKORCH~1\AppData\Local\Temp\cc1SFd2U.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-liconv -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt --sysroot=C:/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32 -m i386pe -Bdynamic -o cmTC_0c81b.exe C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/../lib/crt2.o C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/crtbegin.o -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0 -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/../lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../.. --whole-archive CMakeFiles\cmTC_0c81b.dir/objects.a --no-whole-archive --out-implib libcmTC_0c81b.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -liconv -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/crtend.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_02aac.exe' '-mtune=generic' '-march=i686'
+ C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/collect2.exe -plugin C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/liblto_plugin-0.dll -plugin-opt=C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\VKORCH~1\AppData\Local\Temp\ccisXaJC.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-liconv -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt --sysroot=C:/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32 -m i386pe -Bdynamic -o cmTC_02aac.exe C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/../lib/crt2.o C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/crtbegin.o -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0 -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/../lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../.. --whole-archive CMakeFiles\cmTC_02aac.dir/objects.a --no-whole-archive --out-implib libcmTC_02aac.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -liconv -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/crtend.o
 
 
 Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld\.exe|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_0c81b\fast"]
+  ignore line: [Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_02aac\fast"]
   ignore line: [jom: parallel job execution disabled for Makefile]
-  ignore line: [	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_0c81b.dir\build.make /nologo -L CMakeFiles\cmTC_0c81b.dir\build]
-  ignore line: [Building C object CMakeFiles/cmTC_0c81b.dir/CMakeCCompilerABI.c.obj]
-  ignore line: [	C:\Qt\Tools\mingw530_32\bin\gcc.exe    -o CMakeFiles\cmTC_0c81b.dir\CMakeCCompilerABI.c.obj   -c "C:\Program Files\CMake\share\cmake-3.11\Modules\CMakeCCompilerABI.c"]
-  ignore line: [Linking C executable cmTC_0c81b.exe]
-  ignore line: [	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_0c81b.dir/objects.a]
-  ignore line: [	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_0c81b.dir/objects.a @CMakeFiles\cmTC_0c81b.dir\objects1.rsp]
-  ignore line: [	C:\Qt\Tools\mingw530_32\bin\gcc.exe     -v -Wl,--whole-archive CMakeFiles\cmTC_0c81b.dir/objects.a -Wl,--no-whole-archive  -o cmTC_0c81b.exe -Wl,--out-implib,libcmTC_0c81b.dll.a -Wl,--major-image-version,0,--minor-image-version,0]
+  ignore line: [	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_02aac.dir\build.make /nologo -L CMakeFiles\cmTC_02aac.dir\build]
+  ignore line: [Building C object CMakeFiles/cmTC_02aac.dir/CMakeCCompilerABI.c.obj]
+  ignore line: [	C:\Qt\Tools\mingw530_32\bin\gcc.exe    -o CMakeFiles\cmTC_02aac.dir\CMakeCCompilerABI.c.obj   -c "C:\Program Files\CMake\share\cmake-3.11\Modules\CMakeCCompilerABI.c"]
+  ignore line: [Linking C executable cmTC_02aac.exe]
+  ignore line: [	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_02aac.dir/objects.a]
+  ignore line: [	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_02aac.dir/objects.a @CMakeFiles\cmTC_02aac.dir\objects1.rsp]
+  ignore line: [	C:\Qt\Tools\mingw530_32\bin\gcc.exe     -v -Wl,--whole-archive CMakeFiles\cmTC_02aac.dir/objects.a -Wl,--no-whole-archive  -o cmTC_02aac.exe -Wl,--out-implib,libcmTC_02aac.dll.a -Wl,--major-image-version,0,--minor-image-version,0]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=C:\Qt\Tools\mingw530_32\bin\gcc.exe]
   ignore line: [COLLECT_LTO_WRAPPER=C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/lto-wrapper.exe]
@@ -93,13 +93,13 @@ Parsed C implicit link information from above output:
   ignore line: [C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../lib/]
   ignore line: [C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/]
   ignore line: [C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_0c81b.exe' '-mtune=generic' '-march=i686']
-  link line: [ C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/collect2.exe -plugin C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/liblto_plugin-0.dll -plugin-opt=C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\VKORCH~1\AppData\Local\Temp\cc1SFd2U.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-liconv -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt --sysroot=C:/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32 -m i386pe -Bdynamic -o cmTC_0c81b.exe C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/../lib/crt2.o C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/crtbegin.o -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0 -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/../lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../.. --whole-archive CMakeFiles\cmTC_0c81b.dir/objects.a --no-whole-archive --out-implib libcmTC_0c81b.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -liconv -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/crtend.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_02aac.exe' '-mtune=generic' '-march=i686']
+  link line: [ C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/collect2.exe -plugin C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/liblto_plugin-0.dll -plugin-opt=C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\VKORCH~1\AppData\Local\Temp\ccisXaJC.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-liconv -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt --sysroot=C:/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32 -m i386pe -Bdynamic -o cmTC_02aac.exe C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/../lib/crt2.o C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/crtbegin.o -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0 -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/../lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../.. --whole-archive CMakeFiles\cmTC_02aac.dir/objects.a --no-whole-archive --out-implib libcmTC_02aac.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -liconv -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/crtend.o]
     arg [C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/collect2.exe] ==> ignore
     arg [-plugin] ==> ignore
     arg [C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/liblto_plugin-0.dll] ==> ignore
     arg [-plugin-opt=C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/lto-wrapper.exe] ==> ignore
-    arg [-plugin-opt=-fresolution=C:\Users\VKORCH~1\AppData\Local\Temp\cc1SFd2U.res] ==> ignore
+    arg [-plugin-opt=-fresolution=C:\Users\VKORCH~1\AppData\Local\Temp\ccisXaJC.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_eh] ==> ignore
@@ -123,7 +123,7 @@ Parsed C implicit link information from above output:
     arg [i386pe] ==> ignore
     arg [-Bdynamic] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_0c81b.exe] ==> ignore
+    arg [cmTC_02aac.exe] ==> ignore
     arg [C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/../lib/crt2.o] ==> ignore
     arg [C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/crtbegin.o] ==> ignore
     arg [-LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0] ==> dir [C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0]
@@ -133,10 +133,10 @@ Parsed C implicit link information from above output:
     arg [-LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib] ==> dir [C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib]
     arg [-LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../..] ==> dir [C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../..]
     arg [--whole-archive] ==> ignore
-    arg [CMakeFiles\cmTC_0c81b.dir/objects.a] ==> ignore
+    arg [CMakeFiles\cmTC_02aac.dir/objects.a] ==> ignore
     arg [--no-whole-archive] ==> ignore
     arg [--out-implib] ==> ignore
-    arg [libcmTC_0c81b.dll.a] ==> ignore
+    arg [libcmTC_02aac.dll.a] ==> ignore
     arg [--major-image-version] ==> ignore
     arg [0] ==> ignore
     arg [--minor-image-version] ==> ignore
@@ -178,17 +178,17 @@ Parsed C implicit link information from above output:
 
 
 Detecting C [-std=c11] compiler features compiled with the following output:
-Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp
+Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_4fb23\fast"
+Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_1ed80\fast"
 jom: parallel job execution disabled for Makefile
-	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_4fb23.dir\build.make /nologo -L CMakeFiles\cmTC_4fb23.dir\build
-Building C object CMakeFiles/cmTC_4fb23.dir/feature_tests.c.obj
-	C:\Qt\Tools\mingw530_32\bin\gcc.exe   -std=c11 -o CMakeFiles\cmTC_4fb23.dir\feature_tests.c.obj   -c "C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e\CMakeFiles\feature_tests.c"
-Linking C executable cmTC_4fb23.exe
-	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_4fb23.dir/objects.a
-	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_4fb23.dir/objects.a @CMakeFiles\cmTC_4fb23.dir\objects1.rsp
-	C:\Qt\Tools\mingw530_32\bin\gcc.exe      -Wl,--whole-archive CMakeFiles\cmTC_4fb23.dir/objects.a -Wl,--no-whole-archive  -o cmTC_4fb23.exe -Wl,--out-implib,libcmTC_4fb23.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_4fb23.dir\linklibs.rsp
+	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_1ed80.dir\build.make /nologo -L CMakeFiles\cmTC_1ed80.dir\build
+Building C object CMakeFiles/cmTC_1ed80.dir/feature_tests.c.obj
+	C:\Qt\Tools\mingw530_32\bin\gcc.exe   -std=c11 -o CMakeFiles\cmTC_1ed80.dir\feature_tests.c.obj   -c C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430\CMakeFiles\feature_tests.c
+Linking C executable cmTC_1ed80.exe
+	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_1ed80.dir/objects.a
+	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_1ed80.dir/objects.a @CMakeFiles\cmTC_1ed80.dir\objects1.rsp
+	C:\Qt\Tools\mingw530_32\bin\gcc.exe      -Wl,--whole-archive CMakeFiles\cmTC_1ed80.dir/objects.a -Wl,--no-whole-archive  -o cmTC_1ed80.exe -Wl,--out-implib,libcmTC_1ed80.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_1ed80.dir\linklibs.rsp
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -198,17 +198,17 @@ Linking C executable cmTC_4fb23.exe
 
 
 Detecting C [-std=c99] compiler features compiled with the following output:
-Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp
+Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_3e3d8\fast"
+Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_22ef1\fast"
 jom: parallel job execution disabled for Makefile
-	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_3e3d8.dir\build.make /nologo -L CMakeFiles\cmTC_3e3d8.dir\build
-Building C object CMakeFiles/cmTC_3e3d8.dir/feature_tests.c.obj
-	C:\Qt\Tools\mingw530_32\bin\gcc.exe   -std=c99 -o CMakeFiles\cmTC_3e3d8.dir\feature_tests.c.obj   -c "C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e\CMakeFiles\feature_tests.c"
-Linking C executable cmTC_3e3d8.exe
-	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_3e3d8.dir/objects.a
-	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_3e3d8.dir/objects.a @CMakeFiles\cmTC_3e3d8.dir\objects1.rsp
-	C:\Qt\Tools\mingw530_32\bin\gcc.exe      -Wl,--whole-archive CMakeFiles\cmTC_3e3d8.dir/objects.a -Wl,--no-whole-archive  -o cmTC_3e3d8.exe -Wl,--out-implib,libcmTC_3e3d8.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_3e3d8.dir\linklibs.rsp
+	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_22ef1.dir\build.make /nologo -L CMakeFiles\cmTC_22ef1.dir\build
+Building C object CMakeFiles/cmTC_22ef1.dir/feature_tests.c.obj
+	C:\Qt\Tools\mingw530_32\bin\gcc.exe   -std=c99 -o CMakeFiles\cmTC_22ef1.dir\feature_tests.c.obj   -c C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430\CMakeFiles\feature_tests.c
+Linking C executable cmTC_22ef1.exe
+	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_22ef1.dir/objects.a
+	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_22ef1.dir/objects.a @CMakeFiles\cmTC_22ef1.dir\objects1.rsp
+	C:\Qt\Tools\mingw530_32\bin\gcc.exe      -Wl,--whole-archive CMakeFiles\cmTC_22ef1.dir/objects.a -Wl,--no-whole-archive  -o cmTC_22ef1.exe -Wl,--out-implib,libcmTC_22ef1.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_22ef1.dir\linklibs.rsp
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -218,17 +218,17 @@ Linking C executable cmTC_3e3d8.exe
 
 
 Detecting C [-std=c90] compiler features compiled with the following output:
-Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp
+Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_a57d0\fast"
+Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_3725c\fast"
 jom: parallel job execution disabled for Makefile
-	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_a57d0.dir\build.make /nologo -L CMakeFiles\cmTC_a57d0.dir\build
-Building C object CMakeFiles/cmTC_a57d0.dir/feature_tests.c.obj
-	C:\Qt\Tools\mingw530_32\bin\gcc.exe   -std=c90 -o CMakeFiles\cmTC_a57d0.dir\feature_tests.c.obj   -c "C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e\CMakeFiles\feature_tests.c"
-Linking C executable cmTC_a57d0.exe
-	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_a57d0.dir/objects.a
-	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_a57d0.dir/objects.a @CMakeFiles\cmTC_a57d0.dir\objects1.rsp
-	C:\Qt\Tools\mingw530_32\bin\gcc.exe      -Wl,--whole-archive CMakeFiles\cmTC_a57d0.dir/objects.a -Wl,--no-whole-archive  -o cmTC_a57d0.exe -Wl,--out-implib,libcmTC_a57d0.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_a57d0.dir\linklibs.rsp
+	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_3725c.dir\build.make /nologo -L CMakeFiles\cmTC_3725c.dir\build
+Building C object CMakeFiles/cmTC_3725c.dir/feature_tests.c.obj
+	C:\Qt\Tools\mingw530_32\bin\gcc.exe   -std=c90 -o CMakeFiles\cmTC_3725c.dir\feature_tests.c.obj   -c C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430\CMakeFiles\feature_tests.c
+Linking C executable cmTC_3725c.exe
+	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_3725c.dir/objects.a
+	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_3725c.dir/objects.a @CMakeFiles\cmTC_3725c.dir\objects1.rsp
+	C:\Qt\Tools\mingw530_32\bin\gcc.exe      -Wl,--whole-archive CMakeFiles\cmTC_3725c.dir/objects.a -Wl,--no-whole-archive  -o cmTC_3725c.exe -Wl,--out-implib,libcmTC_3725c.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_3725c.dir\linklibs.rsp
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -236,31 +236,31 @@ Linking C executable cmTC_a57d0.exe
     Feature record: C_FEATURE:0c_static_assert
     Feature record: C_FEATURE:0c_variadic_macros
 Determining if the CXX compiler works passed with the following output:
-Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp
+Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_c2537\fast"
+Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_30d6b\fast"
 jom: parallel job execution disabled for Makefile
-	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_c2537.dir\build.make /nologo -L CMakeFiles\cmTC_c2537.dir\build
-Building CXX object CMakeFiles/cmTC_c2537.dir/testCXXCompiler.cxx.obj
-	C:\Qt\Tools\mingw530_32\bin\g++.exe     -o CMakeFiles\cmTC_c2537.dir\testCXXCompiler.cxx.obj -c "C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e\CMakeFiles\CMakeTmp\testCXXCompiler.cxx"
-Linking CXX executable cmTC_c2537.exe
-	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_c2537.dir/objects.a
-	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_c2537.dir/objects.a @CMakeFiles\cmTC_c2537.dir\objects1.rsp
-	C:\Qt\Tools\mingw530_32\bin\g++.exe      -Wl,--whole-archive CMakeFiles\cmTC_c2537.dir/objects.a -Wl,--no-whole-archive  -o cmTC_c2537.exe -Wl,--out-implib,libcmTC_c2537.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_c2537.dir\linklibs.rsp
+	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_30d6b.dir\build.make /nologo -L CMakeFiles\cmTC_30d6b.dir\build
+Building CXX object CMakeFiles/cmTC_30d6b.dir/testCXXCompiler.cxx.obj
+	C:\Qt\Tools\mingw530_32\bin\g++.exe     -o CMakeFiles\cmTC_30d6b.dir\testCXXCompiler.cxx.obj -c C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430\CMakeFiles\CMakeTmp\testCXXCompiler.cxx
+Linking CXX executable cmTC_30d6b.exe
+	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_30d6b.dir/objects.a
+	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_30d6b.dir/objects.a @CMakeFiles\cmTC_30d6b.dir\objects1.rsp
+	C:\Qt\Tools\mingw530_32\bin\g++.exe      -Wl,--whole-archive CMakeFiles\cmTC_30d6b.dir/objects.a -Wl,--no-whole-archive  -o cmTC_30d6b.exe -Wl,--out-implib,libcmTC_30d6b.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_30d6b.dir\linklibs.rsp
 
 
 Detecting CXX compiler ABI info compiled with the following output:
-Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp
+Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_b7b8b\fast"
+Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_83371\fast"
 jom: parallel job execution disabled for Makefile
-	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_b7b8b.dir\build.make /nologo -L CMakeFiles\cmTC_b7b8b.dir\build
-Building CXX object CMakeFiles/cmTC_b7b8b.dir/CMakeCXXCompilerABI.cpp.obj
-	C:\Qt\Tools\mingw530_32\bin\g++.exe     -o CMakeFiles\cmTC_b7b8b.dir\CMakeCXXCompilerABI.cpp.obj -c "C:\Program Files\CMake\share\cmake-3.11\Modules\CMakeCXXCompilerABI.cpp"
-Linking CXX executable cmTC_b7b8b.exe
-	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_b7b8b.dir/objects.a
-	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_b7b8b.dir/objects.a @CMakeFiles\cmTC_b7b8b.dir\objects1.rsp
-	C:\Qt\Tools\mingw530_32\bin\g++.exe     -v -Wl,--whole-archive CMakeFiles\cmTC_b7b8b.dir/objects.a -Wl,--no-whole-archive  -o cmTC_b7b8b.exe -Wl,--out-implib,libcmTC_b7b8b.dll.a -Wl,--major-image-version,0,--minor-image-version,0
+	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_83371.dir\build.make /nologo -L CMakeFiles\cmTC_83371.dir\build
+Building CXX object CMakeFiles/cmTC_83371.dir/CMakeCXXCompilerABI.cpp.obj
+	C:\Qt\Tools\mingw530_32\bin\g++.exe     -o CMakeFiles\cmTC_83371.dir\CMakeCXXCompilerABI.cpp.obj -c "C:\Program Files\CMake\share\cmake-3.11\Modules\CMakeCXXCompilerABI.cpp"
+Linking CXX executable cmTC_83371.exe
+	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_83371.dir/objects.a
+	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_83371.dir/objects.a @CMakeFiles\cmTC_83371.dir\objects1.rsp
+	C:\Qt\Tools\mingw530_32\bin\g++.exe     -v -Wl,--whole-archive CMakeFiles\cmTC_83371.dir/objects.a -Wl,--no-whole-archive  -o cmTC_83371.exe -Wl,--out-implib,libcmTC_83371.dll.a -Wl,--major-image-version,0,--minor-image-version,0
 Using built-in specs.
 COLLECT_GCC=C:\Qt\Tools\mingw530_32\bin\g++.exe
 COLLECT_LTO_WRAPPER=C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/lto-wrapper.exe
@@ -270,23 +270,23 @@ Thread model: posix
 gcc version 5.3.0 (i686-posix-dwarf-rev0, Built by MinGW-W64 project) 
 COMPILER_PATH=C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/;C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/;C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/bin/
 LIBRARY_PATH=C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/;C:/Qt/Tools/mingw530_32/bin/../lib/gcc/;C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/../lib/;C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../lib/;C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/;C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_b7b8b.exe' '-shared-libgcc' '-mtune=generic' '-march=i686'
- C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/collect2.exe -plugin C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/liblto_plugin-0.dll -plugin-opt=C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\VKORCH~1\AppData\Local\Temp\cclZ43Cf.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-liconv -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt --sysroot=C:/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32 -m i386pe -Bdynamic -u ___register_frame_info -u ___deregister_frame_info -o cmTC_b7b8b.exe C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/../lib/crt2.o C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/crtbegin.o -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0 -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/../lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../.. --whole-archive CMakeFiles\cmTC_b7b8b.dir/objects.a --no-whole-archive --out-implib libcmTC_b7b8b.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -liconv -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/crtend.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_83371.exe' '-shared-libgcc' '-mtune=generic' '-march=i686'
+ C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/collect2.exe -plugin C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/liblto_plugin-0.dll -plugin-opt=C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\VKORCH~1\AppData\Local\Temp\ccGEXZXk.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-liconv -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt --sysroot=C:/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32 -m i386pe -Bdynamic -u ___register_frame_info -u ___deregister_frame_info -o cmTC_83371.exe C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/../lib/crt2.o C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/crtbegin.o -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0 -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/../lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../.. --whole-archive CMakeFiles\cmTC_83371.dir/objects.a --no-whole-archive --out-implib libcmTC_83371.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -liconv -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/crtend.o
 
 
 Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld\.exe|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_b7b8b\fast"]
+  ignore line: [Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_83371\fast"]
   ignore line: [jom: parallel job execution disabled for Makefile]
-  ignore line: [	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_b7b8b.dir\build.make /nologo -L CMakeFiles\cmTC_b7b8b.dir\build]
-  ignore line: [Building CXX object CMakeFiles/cmTC_b7b8b.dir/CMakeCXXCompilerABI.cpp.obj]
-  ignore line: [	C:\Qt\Tools\mingw530_32\bin\g++.exe     -o CMakeFiles\cmTC_b7b8b.dir\CMakeCXXCompilerABI.cpp.obj -c "C:\Program Files\CMake\share\cmake-3.11\Modules\CMakeCXXCompilerABI.cpp"]
-  ignore line: [Linking CXX executable cmTC_b7b8b.exe]
-  ignore line: [	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_b7b8b.dir/objects.a]
-  ignore line: [	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_b7b8b.dir/objects.a @CMakeFiles\cmTC_b7b8b.dir\objects1.rsp]
-  ignore line: [	C:\Qt\Tools\mingw530_32\bin\g++.exe     -v -Wl,--whole-archive CMakeFiles\cmTC_b7b8b.dir/objects.a -Wl,--no-whole-archive  -o cmTC_b7b8b.exe -Wl,--out-implib,libcmTC_b7b8b.dll.a -Wl,--major-image-version,0,--minor-image-version,0]
+  ignore line: [	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_83371.dir\build.make /nologo -L CMakeFiles\cmTC_83371.dir\build]
+  ignore line: [Building CXX object CMakeFiles/cmTC_83371.dir/CMakeCXXCompilerABI.cpp.obj]
+  ignore line: [	C:\Qt\Tools\mingw530_32\bin\g++.exe     -o CMakeFiles\cmTC_83371.dir\CMakeCXXCompilerABI.cpp.obj -c "C:\Program Files\CMake\share\cmake-3.11\Modules\CMakeCXXCompilerABI.cpp"]
+  ignore line: [Linking CXX executable cmTC_83371.exe]
+  ignore line: [	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_83371.dir/objects.a]
+  ignore line: [	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_83371.dir/objects.a @CMakeFiles\cmTC_83371.dir\objects1.rsp]
+  ignore line: [	C:\Qt\Tools\mingw530_32\bin\g++.exe     -v -Wl,--whole-archive CMakeFiles\cmTC_83371.dir/objects.a -Wl,--no-whole-archive  -o cmTC_83371.exe -Wl,--out-implib,libcmTC_83371.dll.a -Wl,--major-image-version,0,--minor-image-version,0]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=C:\Qt\Tools\mingw530_32\bin\g++.exe]
   ignore line: [COLLECT_LTO_WRAPPER=C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/lto-wrapper.exe]
@@ -303,13 +303,13 @@ Parsed CXX implicit link information from above output:
   ignore line: [C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../lib/]
   ignore line: [C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/]
   ignore line: [C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_b7b8b.exe' '-shared-libgcc' '-mtune=generic' '-march=i686']
-  link line: [ C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/collect2.exe -plugin C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/liblto_plugin-0.dll -plugin-opt=C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\VKORCH~1\AppData\Local\Temp\cclZ43Cf.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-liconv -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt --sysroot=C:/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32 -m i386pe -Bdynamic -u ___register_frame_info -u ___deregister_frame_info -o cmTC_b7b8b.exe C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/../lib/crt2.o C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/crtbegin.o -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0 -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/../lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../.. --whole-archive CMakeFiles\cmTC_b7b8b.dir/objects.a --no-whole-archive --out-implib libcmTC_b7b8b.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -liconv -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/crtend.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_83371.exe' '-shared-libgcc' '-mtune=generic' '-march=i686']
+  link line: [ C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/collect2.exe -plugin C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/liblto_plugin-0.dll -plugin-opt=C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\VKORCH~1\AppData\Local\Temp\ccGEXZXk.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-liconv -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt --sysroot=C:/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32 -m i386pe -Bdynamic -u ___register_frame_info -u ___deregister_frame_info -o cmTC_83371.exe C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/../lib/crt2.o C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/crtbegin.o -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0 -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/../lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib -LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../.. --whole-archive CMakeFiles\cmTC_83371.dir/objects.a --no-whole-archive --out-implib libcmTC_83371.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -liconv -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/crtend.o]
     arg [C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/collect2.exe] ==> ignore
     arg [-plugin] ==> ignore
     arg [C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/liblto_plugin-0.dll] ==> ignore
     arg [-plugin-opt=C:/Qt/Tools/mingw530_32/bin/../libexec/gcc/i686-w64-mingw32/5.3.0/lto-wrapper.exe] ==> ignore
-    arg [-plugin-opt=-fresolution=C:\Users\VKORCH~1\AppData\Local\Temp\cclZ43Cf.res] ==> ignore
+    arg [-plugin-opt=-fresolution=C:\Users\VKORCH~1\AppData\Local\Temp\ccGEXZXk.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
@@ -337,7 +337,7 @@ Parsed CXX implicit link information from above output:
     arg [-u] ==> ignore
     arg [___deregister_frame_info] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_b7b8b.exe] ==> ignore
+    arg [cmTC_83371.exe] ==> ignore
     arg [C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib/../lib/crt2.o] ==> ignore
     arg [C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/crtbegin.o] ==> ignore
     arg [-LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0] ==> dir [C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0]
@@ -347,10 +347,10 @@ Parsed CXX implicit link information from above output:
     arg [-LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib] ==> dir [C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../../../i686-w64-mingw32/lib]
     arg [-LC:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../..] ==> dir [C:/Qt/Tools/mingw530_32/bin/../lib/gcc/i686-w64-mingw32/5.3.0/../../..]
     arg [--whole-archive] ==> ignore
-    arg [CMakeFiles\cmTC_b7b8b.dir/objects.a] ==> ignore
+    arg [CMakeFiles\cmTC_83371.dir/objects.a] ==> ignore
     arg [--no-whole-archive] ==> ignore
     arg [--out-implib] ==> ignore
-    arg [libcmTC_b7b8b.dll.a] ==> ignore
+    arg [libcmTC_83371.dll.a] ==> ignore
     arg [--major-image-version] ==> ignore
     arg [0] ==> ignore
     arg [--minor-image-version] ==> ignore
@@ -391,17 +391,17 @@ Parsed CXX implicit link information from above output:
 
 
 Detecting CXX [-std=c++1z] compiler features compiled with the following output:
-Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp
+Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_f5ebc\fast"
+Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_263fa\fast"
 jom: parallel job execution disabled for Makefile
-	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_f5ebc.dir\build.make /nologo -L CMakeFiles\cmTC_f5ebc.dir\build
-Building CXX object CMakeFiles/cmTC_f5ebc.dir/feature_tests.cxx.obj
-	C:\Qt\Tools\mingw530_32\bin\g++.exe    -std=c++1z -o CMakeFiles\cmTC_f5ebc.dir\feature_tests.cxx.obj -c "C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e\CMakeFiles\feature_tests.cxx"
-Linking CXX executable cmTC_f5ebc.exe
-	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_f5ebc.dir/objects.a
-	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_f5ebc.dir/objects.a @CMakeFiles\cmTC_f5ebc.dir\objects1.rsp
-	C:\Qt\Tools\mingw530_32\bin\g++.exe      -Wl,--whole-archive CMakeFiles\cmTC_f5ebc.dir/objects.a -Wl,--no-whole-archive  -o cmTC_f5ebc.exe -Wl,--out-implib,libcmTC_f5ebc.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_f5ebc.dir\linklibs.rsp
+	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_263fa.dir\build.make /nologo -L CMakeFiles\cmTC_263fa.dir\build
+Building CXX object CMakeFiles/cmTC_263fa.dir/feature_tests.cxx.obj
+	C:\Qt\Tools\mingw530_32\bin\g++.exe    -std=c++1z -o CMakeFiles\cmTC_263fa.dir\feature_tests.cxx.obj -c C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430\CMakeFiles\feature_tests.cxx
+Linking CXX executable cmTC_263fa.exe
+	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_263fa.dir/objects.a
+	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_263fa.dir/objects.a @CMakeFiles\cmTC_263fa.dir\objects1.rsp
+	C:\Qt\Tools\mingw530_32\bin\g++.exe      -Wl,--whole-archive CMakeFiles\cmTC_263fa.dir/objects.a -Wl,--no-whole-archive  -o cmTC_263fa.exe -Wl,--out-implib,libcmTC_263fa.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_263fa.dir\linklibs.rsp
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -464,17 +464,17 @@ Linking CXX executable cmTC_f5ebc.exe
 
 
 Detecting CXX [-std=c++14] compiler features compiled with the following output:
-Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp
+Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_37929\fast"
+Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_873f0\fast"
 jom: parallel job execution disabled for Makefile
-	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_37929.dir\build.make /nologo -L CMakeFiles\cmTC_37929.dir\build
-Building CXX object CMakeFiles/cmTC_37929.dir/feature_tests.cxx.obj
-	C:\Qt\Tools\mingw530_32\bin\g++.exe    -std=c++14 -o CMakeFiles\cmTC_37929.dir\feature_tests.cxx.obj -c "C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e\CMakeFiles\feature_tests.cxx"
-Linking CXX executable cmTC_37929.exe
-	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_37929.dir/objects.a
-	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_37929.dir/objects.a @CMakeFiles\cmTC_37929.dir\objects1.rsp
-	C:\Qt\Tools\mingw530_32\bin\g++.exe      -Wl,--whole-archive CMakeFiles\cmTC_37929.dir/objects.a -Wl,--no-whole-archive  -o cmTC_37929.exe -Wl,--out-implib,libcmTC_37929.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_37929.dir\linklibs.rsp
+	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_873f0.dir\build.make /nologo -L CMakeFiles\cmTC_873f0.dir\build
+Building CXX object CMakeFiles/cmTC_873f0.dir/feature_tests.cxx.obj
+	C:\Qt\Tools\mingw530_32\bin\g++.exe    -std=c++14 -o CMakeFiles\cmTC_873f0.dir\feature_tests.cxx.obj -c C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430\CMakeFiles\feature_tests.cxx
+Linking CXX executable cmTC_873f0.exe
+	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_873f0.dir/objects.a
+	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_873f0.dir/objects.a @CMakeFiles\cmTC_873f0.dir\objects1.rsp
+	C:\Qt\Tools\mingw530_32\bin\g++.exe      -Wl,--whole-archive CMakeFiles\cmTC_873f0.dir/objects.a -Wl,--no-whole-archive  -o cmTC_873f0.exe -Wl,--out-implib,libcmTC_873f0.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_873f0.dir\linklibs.rsp
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -537,17 +537,17 @@ Linking CXX executable cmTC_37929.exe
 
 
 Detecting CXX [-std=c++11] compiler features compiled with the following output:
-Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp
+Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_556f6\fast"
+Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_ca389\fast"
 jom: parallel job execution disabled for Makefile
-	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_556f6.dir\build.make /nologo -L CMakeFiles\cmTC_556f6.dir\build
-Building CXX object CMakeFiles/cmTC_556f6.dir/feature_tests.cxx.obj
-	C:\Qt\Tools\mingw530_32\bin\g++.exe    -std=c++11 -o CMakeFiles\cmTC_556f6.dir\feature_tests.cxx.obj -c "C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e\CMakeFiles\feature_tests.cxx"
-Linking CXX executable cmTC_556f6.exe
-	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_556f6.dir/objects.a
-	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_556f6.dir/objects.a @CMakeFiles\cmTC_556f6.dir\objects1.rsp
-	C:\Qt\Tools\mingw530_32\bin\g++.exe      -Wl,--whole-archive CMakeFiles\cmTC_556f6.dir/objects.a -Wl,--no-whole-archive  -o cmTC_556f6.exe -Wl,--out-implib,libcmTC_556f6.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_556f6.dir\linklibs.rsp
+	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_ca389.dir\build.make /nologo -L CMakeFiles\cmTC_ca389.dir\build
+Building CXX object CMakeFiles/cmTC_ca389.dir/feature_tests.cxx.obj
+	C:\Qt\Tools\mingw530_32\bin\g++.exe    -std=c++11 -o CMakeFiles\cmTC_ca389.dir\feature_tests.cxx.obj -c C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430\CMakeFiles\feature_tests.cxx
+Linking CXX executable cmTC_ca389.exe
+	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_ca389.dir/objects.a
+	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_ca389.dir/objects.a @CMakeFiles\cmTC_ca389.dir\objects1.rsp
+	C:\Qt\Tools\mingw530_32\bin\g++.exe      -Wl,--whole-archive CMakeFiles\cmTC_ca389.dir/objects.a -Wl,--no-whole-archive  -o cmTC_ca389.exe -Wl,--out-implib,libcmTC_ca389.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_ca389.dir\linklibs.rsp
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
@@ -610,17 +610,17 @@ Linking CXX executable cmTC_556f6.exe
 
 
 Detecting CXX [-std=c++98] compiler features compiled with the following output:
-Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp
+Change Dir: C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_88c93\fast"
+Run Build Command:"C:/Qt/Tools/QtCreator/bin/jom.exe" "/NOLOGO" "cmTC_c29d5\fast"
 jom: parallel job execution disabled for Makefile
-	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_88c93.dir\build.make /nologo -L CMakeFiles\cmTC_88c93.dir\build
-Building CXX object CMakeFiles/cmTC_88c93.dir/feature_tests.cxx.obj
-	C:\Qt\Tools\mingw530_32\bin\g++.exe    -std=c++98 -o CMakeFiles\cmTC_88c93.dir\feature_tests.cxx.obj -c "C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e\CMakeFiles\feature_tests.cxx"
-Linking CXX executable cmTC_88c93.exe
-	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_88c93.dir/objects.a
-	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_88c93.dir/objects.a @CMakeFiles\cmTC_88c93.dir\objects1.rsp
-	C:\Qt\Tools\mingw530_32\bin\g++.exe      -Wl,--whole-archive CMakeFiles\cmTC_88c93.dir/objects.a -Wl,--no-whole-archive  -o cmTC_88c93.exe -Wl,--out-implib,libcmTC_88c93.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_88c93.dir\linklibs.rsp
+	C:\Qt\Tools\QtCreator\bin\jom.exe -f CMakeFiles\cmTC_c29d5.dir\build.make /nologo -L CMakeFiles\cmTC_c29d5.dir\build
+Building CXX object CMakeFiles/cmTC_c29d5.dir/feature_tests.cxx.obj
+	C:\Qt\Tools\mingw530_32\bin\g++.exe    -std=c++98 -o CMakeFiles\cmTC_c29d5.dir\feature_tests.cxx.obj -c C:\Users\vkorchagova\Documents\GitHub\RKDG2D\build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430\CMakeFiles\feature_tests.cxx
+Linking CXX executable cmTC_c29d5.exe
+	"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_c29d5.dir/objects.a
+	C:\Qt\Tools\mingw530_32\bin\ar.exe cr CMakeFiles\cmTC_c29d5.dir/objects.a @CMakeFiles\cmTC_c29d5.dir\objects1.rsp
+	C:\Qt\Tools\mingw530_32\bin\g++.exe      -Wl,--whole-archive CMakeFiles\cmTC_c29d5.dir/objects.a -Wl,--no-whole-archive  -o cmTC_c29d5.exe -Wl,--out-implib,libcmTC_c29d5.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_c29d5.dir\linklibs.rsp
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers

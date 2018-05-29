@@ -108,6 +108,7 @@ void Problem::setBoundaryConditions(string caseName, const std::vector<Patch>& p
         caseName == "SodY" || \
         caseName == "SodDiag" || \
         caseName == "Woodward" || \
+        caseName == "123" || \
         caseName == "acousticPulse")
     {
         shared_ptr<BoundaryOpen> bOpen = make_shared<BoundaryOpen>();
@@ -166,7 +167,12 @@ double Problem::getPressure(const numvector<double, 5>& sol) const
 
 double Problem::c(const numvector<double, 5>& sol) const
 {
-    return sqrt( cpcv * getPressure(sol) / sol[0]);
+    double c2 = cpcv * getPressure(sol) / sol[0];
+
+//    if (c2 < 0)
+//        cout << "!!!!" << endl;
+
+    return sqrt( c2 );
 } // end c for cell
 
 
@@ -182,12 +188,18 @@ numvector<double, 5> Problem::lambdaF_Roe(const numvector<double, 5>& solOne, co
 {
     double sqrtRhoLeft = sqrt(solOne[0]);
     double sqrtRhoRight = sqrt(solTwo[0]);
+
+
+
     double sumSqrtRho = sqrtRhoLeft + sqrtRhoRight;
 
     double u_av = ( solOne[1] / sqrtRhoLeft + solTwo[1] / sqrtRhoRight ) / sumSqrtRho;
     double h_av = ( (solOne[4] + getPressure(solOne)) / sqrtRhoLeft + (solTwo[4] + getPressure(solTwo)) / sqrtRhoRight ) / sumSqrtRho;
 
     double c_av = sqrt( (cpcv - 1) * (h_av - 0.5 * sqr(u_av)) );
+
+//    if (getPressure(solOne) < 0 || getPressure(solTwo) < 0)
+//        cout << "kkk";
 
     return {u_av - c_av, u_av, u_av, u_av, u_av + c_av};
 

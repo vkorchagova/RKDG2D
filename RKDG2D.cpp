@@ -38,15 +38,15 @@ int main(int argc, char** argv)
 {    
     // Problem
 
-    string caseName = "Woodward";
+    string caseName = "forwardStep";
 
     // Time parameters
 
     double tStart = 0.0;
-    double tEnd = 0.012;
-    bool defCoeffs = 0;
+    double tEnd = 4.0;
+    bool defCoeffs = false;
 
-    double initDeltaT = 1e-4;
+    double initDeltaT = 1.25e-4;
 
     bool isDynamicTimeStep = false;
     double Co = 0.1;
@@ -54,7 +54,7 @@ int main(int argc, char** argv)
     double maxTauGrowth = 1.2;
 
 
-    int freqWrite = 1;
+    int freqWrite = 80;
 
 
     // ---------------
@@ -187,7 +187,7 @@ int main(int argc, char** argv)
        {
            //string fileName = "alphaCoeffs/" + to_string((long double)t);
 
-           //solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(t));
+           solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(t));
            solver.write("alphaCoeffs/" + to_string(t),lhs);
        }
 

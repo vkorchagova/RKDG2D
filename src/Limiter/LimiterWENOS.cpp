@@ -9,7 +9,7 @@ void LimiterWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
     vector<int> troubledCells = indicator.checkDiscontinuities();
 
     vector<double> gamma;
-    double g = 0.001;
+    double g = 0.1;
 
     // smoothness indicators
 
@@ -150,5 +150,42 @@ void LimiterWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
         problem.setAlpha(alpha);
 
     }
+
+    // check for negative energy after limitation
+
+    for (const shared_ptr<Cell> cell : indicator.mesh.cells)
+        for (const shared_ptr<Point> node : cell->nodes)
+        {
+            if (cell->reconstructSolution(node,0) < 0 || cell->reconstructSolution(node,4) < 0 || problem.getPressure(cell->reconstructSolution(node)) < 0)
+            {
+                //cout << "negative values after limitation in cell #" << cell->number << endl;
+                //cout << cell->reconstructSolution(node) << endl;
+                //cout << problem.getPressure(cell->reconstructSolution(node)) << endl;
+                for (int j = 0; j < 5; ++j)
+                {
+                    alpha[cell->number][j*nShapes + 1] = 0.0;
+                    alpha[cell->number][j*nShapes + 2] = 0.0;
+                }
+            }
+        }
+
+
+//    for (const shared_ptr<Cell> cell : indicator.mesh.cells)
+//        for (const shared_ptr<Point> node : cell->nodes)
+//        {
+//            if (cell->reconstructSolution(node,0) < 0 || cell->reconstructSolution(node,4) < 0 || problem.getPressure(cell->reconstructSolution(node)) < 0)
+//            {
+//                cout << "negative values after limitation in cell #" << cell->number << endl;
+//                //cout << cell->reconstructSolution(node) << endl;
+//                //cout << problem.getPressure(cell->reconstructSolution(node)) << endl;
+//                for (int j = 0; j < 5; ++j)
+//                {
+//                    alpha[cell->number][j*nShapes + 1] = 0.0;
+//                    alpha[cell->number][j*nShapes + 2] = 0.0;
+//                }
+//            }
+//        }
+
+    problem.setAlpha(alpha);
 
 }

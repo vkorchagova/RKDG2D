@@ -304,21 +304,21 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
 
         // check negative rho/E values
 
-        for (const shared_ptr<Point> node : cell->nodes)
-        {
-            if (cell->reconstructSolution(node,0) < threshold || cell->reconstructSolution(node,4) < threshold)
-            {
-                negScalar = true;
-                break;
-            }
-        }
+//        for (const shared_ptr<Point> node : cell->nodes)
+//        {
+//            if (cell->reconstructSolution(node,0) < threshold || cell->reconstructSolution(node,4) < threshold)
+//            {
+//                negScalar = true;
+//                break;
+//            }
+//        }
 
-        if (negScalar)
-        {
-            troubledCells.push_back(cell->number);
-            negScalar = false;
-            continue;
-        }
+//        if (negScalar)
+//        {
+//            troubledCells.push_back(cell->number);
+//            negScalar = false;
+//            continue;
+//        }
 
 
 
@@ -346,7 +346,6 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
         if (debugFlux)
         {
             cout << "integralRho = " << fabs(integral[0]) << ", integralE = " << fabs(integral[1]) << ", len = " << integral[2] << endl;
-
         }
 
         if (debugFlux)
@@ -354,7 +353,7 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
             cout << "cell #" << cell->number <<": indicatorRho = " << indicatorRho << ", indicatorE = " << indicatorE << "\n===============\n";
         }
 
-        if (indicatorRho > 1.0)
+        if (indicatorRho > 1.0 || indicatorE > 1.0)
             troubledCells.push_back(cell->number);
 
 //        if (indicatorRho > 1.0)
