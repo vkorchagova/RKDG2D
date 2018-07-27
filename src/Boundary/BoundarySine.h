@@ -10,6 +10,9 @@ class Problem;
 
 class BoundarySine : public Boundary
 {
+
+protected:
+
     //- Amplitude
     double a_;
 
@@ -34,7 +37,7 @@ public:
     void setRefValue(const numvector<double,5>& u0) {u0_ = u0;}
 
     //- Apply boundary condition
-    virtual numvector<double, 5> applyBoundary(const numvector<double, 5>& solLeft = {0.0, 0.0, 0.0, 0.0, 0.0}) const override;
+    virtual numvector<double, 5> applyBoundary(const numvector<double, 5>& solLeft = {0.0, 0.0, 0.0, 0.0, 0.0}, const Point& n = Point({0.0,0.0})) const override;
 
 };
 

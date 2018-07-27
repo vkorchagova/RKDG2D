@@ -12,9 +12,11 @@ Mesh2D::Mesh2D(string fileName, const Problem& prb)
 {
     importMesh(fileName,prb);
 
+    nEntitiesTotal = 0;
 
     for (int i = 0; i < nCells; ++i)
     {
+        nEntitiesTotal += cells[i]->nEntities;
         cells[i]->number = i;
         cells[i]->setArea();
         cells[i]->setGaussPoints();
@@ -431,6 +433,57 @@ void Mesh2D::exportMeshVTK(ostream& writer) const
 
         for (const shared_ptr<Node> node : cell->nodes)
             writer << node->number << ' ';
+
+        writer << endl;
+    }
+
+    //cout << "num(-1) = " << cells[cells.size()-1]->edges[2]->nodes[0]->number << endl;
+    //cout << "x(-1) = " << cells[cells.size()-1]->edges[2]->nodes[0]->x() << endl;
+    //cout << "&num(-1) = " << &(cells[cells.size()-1]->edges[2]->nodes[0]->number) << endl;
+
+
+    //writer << "CELL_DATA " << nCells << endl;
+    //writer << "POINT_DATA " << nNodes << endl;
+
+
+    //cout << "Mesh export OK" << endl;
+
+    //writer.close();
+}
+
+void Mesh2D::exportMeshVTK_polyvertices(ostream& writer) const
+{
+    //writer.open("mesh2D.vtk");
+
+    writer << "# vtk DataFile Version 2.0" << endl;
+    writer << "RKDG 2D data" << endl;
+    writer << "ASCII" << endl;
+
+    writer << "DATASET POLYDATA" << endl;
+
+    writer << "POINTS " << nEntitiesTotal << " float" << endl;
+
+    // write coordinates of nodes
+    for (int i = 0; i < nCells; ++i)
+        for (int j = 0; j < cells[i]->nEntities; ++j)
+            writer << cells[i]->nodes[j]->x() << ' ' << cells[i]->nodes[j]->y() << ' ' << "0" << endl;
+
+    //get size of polygon list
+
+    writer << "POLYGONS " << nCells << ' ' << nCells +  nEntitiesTotal << endl;
+
+
+    // write cells using numbers of nodes
+    int numPolyVertex = 0;
+    for (const shared_ptr<Cell> cell : cells)
+    {
+        writer << cell->nEntities << ' ';
+
+        for (const shared_ptr<Node> node : cell->nodes)
+        {
+            writer << numPolyVertex << ' ';
+            numPolyVertex++;
+        }
 
         writer << endl;
     }

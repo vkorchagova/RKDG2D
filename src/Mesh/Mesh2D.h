@@ -35,6 +35,8 @@ public:
     int nEdges;
     int nBoundEdges;
 
+    int nEntitiesTotal;
+
     //- Coordinates of nodes (x,y)
     std::vector<Node> nodes;
 
@@ -69,6 +71,7 @@ public:
 
     //- Export VTK
     void exportMeshVTK(std::ostream& writer) const;
+    void exportMeshVTK_polyvertices(std::ostream& writer) const;
 
 };// end Mesh 2D
 

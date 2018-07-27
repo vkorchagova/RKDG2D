@@ -1,5 +1,5 @@
-//- RKDG 2D v.0.1
-//  Structured rectangular mesh
+//- RKDG 2D v.0.2
+//  Unstructured 2D mesh
 
 #if !defined(__linux__)
 #include <direct.h>
@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include <omp.h>
 
 #include "defs.h"
 #include "TimeClass.h"
@@ -38,24 +39,24 @@ int main(int argc, char** argv)
 {    
     // Problem
 
-    string caseName = "forwardStep";
+    string caseName = "monopole";
+
+    omp_set_num_threads(1);
 
     // Time parameters
 
     double tStart = 0.0;
-    double tEnd = 4.0;
-    bool defCoeffs = false;
+    double tEnd = 0.005;
 
-    double initDeltaT = 1.25e-4;
+    double outputInterval = 0.005;
+    double initDeltaT = 5e-3;
 
-    bool isDynamicTimeStep = false;
-    double Co = 0.1;
+    bool   defCoeffs = false; // true if alpha coefficients for start time are defined
+
+    bool   isDynamicTimeStep = false;
+    double Co = 0.5;
     double maxDeltaT = 1.0;
-    double maxTauGrowth = 1.2;
-
-
-    int freqWrite = 80;
-
+    double maxTauGrowth = 1.1;
 
     // ---------------
 
@@ -66,7 +67,7 @@ int main(int argc, char** argv)
     Problem problem(caseName,time);
 
     // Initialize mesh
-    Mesh2D mesh("../RKDG2D/mesh2D",problem);
+    Mesh2D mesh("mesh2D",problem);
 
     // Set BC
     problem.setBoundaryConditions(caseName, mesh.patches);
@@ -81,10 +82,10 @@ int main(int argc, char** argv)
     TimeControl dynamicTimeController(mesh,Co,maxDeltaT,maxTauGrowth,initDeltaT,isDynamicTimeStep);
 
     // Initialize indicator
-    IndicatorKXRCF indicator(mesh, problem);
+    IndicatorNowhere indicator(mesh, problem);
 
     // Initialize limiter
-    LimiterWENOS limiter(indicator, problem);
+    LimiterRiemannWENOS limiter(indicator, problem);
 
     // ---------------
 
@@ -105,21 +106,19 @@ int main(int argc, char** argv)
     else
     {
         solver.setInitialConditions();
-        //limiter.limit(solver.alphaPrev);
+        limiter.limit(solver.alphaPrev);
         solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(tStart));
     }
 
 
-
-
-   // time step
+    // time step
 
     double tau = initDeltaT;
 
     vector<numvector<double, 5*nShapes>> lhs = solver.alphaPrev; // coeffs
+    //vector<numvector<double, 5*nShapes>> lhsPrev = lhs;
 
-
-    // run Runge --- Kutta 2 TVD
+    // run Runge --- Kutta 3 TVD
 
     vector<numvector<double, 5*nShapes>> k1, k2, k3;
 
@@ -127,18 +126,20 @@ int main(int argc, char** argv)
     k2.resize(mesh.nCells);
     k3.resize(mesh.nCells);
 
-    clock_t t1, t2, t00;
+    double t1, t2, t00;
 
-    t00 = clock();
+    t00 = omp_get_wtime();
 
     int iT = 1; //iteration number
+    int nOutputSteps = 1;
 
     for (double t = tStart + tau; t <= tEnd + 0.5*tau; t += tau)
     {
-       t1 = clock();
+       t1 = omp_get_wtime();
 
        time.updateTime(t);
 
+       cout.precision(6);
        cout << "---------\nt = " << t << endl;
        cout << "tau = " << tau << endl;
 
@@ -148,11 +149,25 @@ int main(int argc, char** argv)
        lhs = solver.correctNonOrtho(solver.alphaNext);
 
        limiter.limit(lhs);
-       // get limited "lhs"
        solver.alphaNext = solver.correctPrevIter(lhs);
 
 //       solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(t)+"RK1");
        //solver.write("alphaCoeffs/" + to_string(t)+"RK1",lhs);
+
+//       double totalEnergy = 0.0;
+
+//       for (const shared_ptr<Cell> cell : mesh.cells)
+//       {
+
+//           function<double(const Point&)> eTotal = [&](const Point& x)
+//           {
+//               return cell->reconstructSolution(x,4);
+//           };
+
+//           totalEnergy += cell->integrate(eTotal);
+//       }
+//       cout.precision(16);
+//       cout << "total energy = " << totalEnergy << endl;
 
 
        k2 = solver.assembleRHS(lhs);
@@ -161,14 +176,23 @@ int main(int argc, char** argv)
        solver.alphaNext = solver.alphaPrev*0.75 + solver.alphaNext*0.25 + k2*0.25*tau;
        lhs = solver.correctNonOrtho(solver.alphaNext);
 
-
-       //cout << "before limiting" << solver.alphaNext[49] << endl;
-
-       //solver.write("alphaCoeffs/" + to_string(t) + "blRK2",lhs);
-
        limiter.limit(lhs);
-       // get limited "lhs"
        solver.alphaNext = solver.correctPrevIter(lhs);
+
+//       totalEnergy = 0.0;
+
+//       for (const shared_ptr<Cell> cell : mesh.cells)
+//       {
+
+//           function<double(const Point&)> eTotal = [&](const Point& x)
+//           {
+//               return cell->reconstructSolution(x,4);
+//           };
+
+//           totalEnergy += cell->integrate(eTotal);
+//       }
+//       cout.precision(16);
+//       cout << "total energy = " << totalEnergy << endl;
 
        k3 = solver.assembleRHS(lhs);
        double i13 = 0.3333333333333333;
@@ -177,55 +201,91 @@ int main(int argc, char** argv)
        lhs = solver.correctNonOrtho(solver.alphaNext);
 
        limiter.limit(lhs);
-       // get limited "lhs"
        solver.alphaNext = solver.correctPrevIter(lhs);
 
-       //cout << "after limiting" << solver.alphaNext[49] << endl;
-//       solver.write("alphaCoeffs/" + to_string(t)+"RK2bl",lhs);
-
-       if (iT % freqWrite == 0)
-       {
-           //string fileName = "alphaCoeffs/" + to_string((long double)t);
-
-           solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(t));
-           solver.write("alphaCoeffs/" + to_string(t),lhs);
-       }
 
        // check energy conservation
-
        double totalEnergy = 0.0;
 
-       for (const shared_ptr<Cell> cell : mesh.cells)
+#pragma omp parallel for 
+       //for (const shared_ptr<Cell> cell : mesh.cells)
+       for ( size_t i = 0; i < mesh.cells.size(); ++i )
        {
-           function<double(const Point&)> en = [&](const Point& x)
+          const shared_ptr<Cell> cell = mesh.cells[i];
+           function<double(const Point&)> eTotal = [&](const Point& x)
            {
                return cell->reconstructSolution(x,4);
            };
 
-           totalEnergy += cell->integrate(en);
+           totalEnergy += cell->integrate(eTotal);
        }
-
        cout.precision(16);
        cout << "total energy = " << totalEnergy << endl;
 
+       //cout << "after limiting" << solver.alphaNext[49] << endl;
+//       solver.write("alphaCoeffs/" + to_string(t)+"RK2bl",lhs);
+
+       //if (iT % freqWrite == 0)
+       // if (fabs(t - nOutputSteps * outputInterval) < 1e-10)
+       // {
+       //     //string fileName = "alphaCoeffs/" + to_string((long double)t);
+
+       //     solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(t));
+       //     solver.write("alphaCoeffs/" + to_string(t),lhs);
+       //     nOutputSteps++;
+       // }
+
+
+
+       // check local internal energy balance
+
+//       double internalEnergyB = 0.0;
+
+//       {
+//           const shared_ptr<Cell> cell = mesh.cells[50];
+
+//           function<double(const Point&)> eIn = [&](const Point& x)
+//           {
+//               numvector<double, 5> solPrev  = cell->reconstructSolution(x, lhsPrev[50]);
+//               numvector<double, 5> solNext  = cell->reconstructSolution(x, lhs[50]);
+
+//               double eInPrev = solPrev[4] - 0.5 * (sqr(solPrev[1]) + sqr(solPrev[2]) / solPrev[0]);
+//               double eInNext = solNext[4] - 0.5 * (sqr(solNext[1]) + sqr(solNext[2]) / solNext[0]);
+
+//               double ux = lhsPrev[cell->number][1 * nShapes + 1] * cell->offsetPhi[1] / solPrev[0];
+//               double vy = lhsPrev[cell->number][2 * nShapes + 2] * cell->offsetPhi[2] / solPrev[0];
+//               double pDivU = problem.getPressure(solPrev) * (ux + vy);
+
+//               return eInNext - eInPrev - pDivU;
+//           };
+
+//          internalEnergyB = cell->integrate(eIn);
+//       }
+
+
+
+
+       //cout << "internal energy balance = " << internalEnergyB << endl;
 
 
 
 
        solver.alphaPrev = solver.alphaNext;
+       //lhsPrev = lhs;
 
-       iT++;
-
-       t2 = clock();
+       //iT++; 
 
        dynamicTimeController.updateTimeStep();
 
+       //tau = min(nOutputSteps * outputInterval - t, dynamicTimeController.getNewTau());
        tau = dynamicTimeController.getNewTau();
 
-       cout << "step time: " << (float)(t2 - t1) / CLOCKS_PER_SEC << endl;
+       t2 = omp_get_wtime();
+
+       cout << "step time: " << t2 - t1 << endl;
     }
 
-    cout << "=========\nElapsed time = " << (float)(t2 - t00) / CLOCKS_PER_SEC << endl;
+    cout << "=========\nElapsed time = " << t2 - t00 << endl;
     cout << "---------\nEND \n";
 
     //cin.get();

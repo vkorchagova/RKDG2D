@@ -353,7 +353,7 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
             cout << "cell #" << cell->number <<": indicatorRho = " << indicatorRho << ", indicatorE = " << indicatorE << "\n===============\n";
         }
 
-        if (indicatorRho > 1.0 || indicatorE > 1.0)
+        if (indicatorRho > 1.0 || indicatorE > 1.0 || indicatorP > 1.0)
             troubledCells.push_back(cell->number);
 
 //        if (indicatorRho > 1.0)

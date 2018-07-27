@@ -20,17 +20,28 @@ void TimeControl::updateTimeStep()
         vector<double> newTauLocal;
         newTauLocal.reserve(mesh.nCells);
 
-        for (const shared_ptr<Edge> edge : mesh.edges)
-            edge->getMaxUL();
-
-        for (const shared_ptr<Cell> cell : mesh.cells)
+#pragma omp parallel for
+        for (size_t i = 0; i < mesh.edges.size(); ++i)
         {
+            const shared_ptr<Edge> edge = mesh.edges[i];
+            edge->getMaxUL();
+        }
+
+//        for (const shared_ptr<Edge> edge : mesh.edges)
+//            edge->getMaxUL();
+
+#pragma omp parallel for
+        //for (const shared_ptr<Cell> cell : mesh.cells)
+        for (size_t i = 0; i < mesh.cells.size(); ++i)
+        {
+            const shared_ptr<Cell> cell = mesh.cells[i];
+
             double uSum = 0.0;
 
             for (const shared_ptr<Edge> edge : cell->edges)
                 uSum += edge->maxUL();
 
-            factCo = 0.5 * tauOld * uSum / cell->getArea();
+            factCo = tauOld * uSum / cell->getArea();
             relTau = CoNum / (factCo + 1e-6); //1e-6 is technical small number
             relTau = min(relTau, maxTauGrowth);
             tauNew = min(relTau * tauOld, maxTau);
@@ -38,6 +49,7 @@ void TimeControl::updateTimeStep()
         }
 
         tauNew = *min_element(newTauLocal.begin(),newTauLocal.end());
+
         tauOld = tauNew;
         fill(massFlux.begin(), massFlux.end(), 0.0);
     }

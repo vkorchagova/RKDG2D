@@ -16,6 +16,9 @@ protected:
     //- Problem
     Problem& problem;
 
+    //- Number of limitation steps
+    static const int nIter = 2;
+
 public:
 
     //- Construct by indicator and problem

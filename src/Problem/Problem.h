@@ -8,6 +8,7 @@
 #include "BoundarySlip.h"
 #include "BoundaryOpen.h"
 #include "BoundarySine.h"
+#include "BoundarySineDir.h"
 #include "BoundaryConstant.h"
 #include "defs.h"
 
@@ -24,7 +25,7 @@ class Problem
 public:
 
     //- Heat capacity ratio
-    const double cpcv = 1.4;
+    double cpcv;
 
     //- Function for initial conditions
     std::function<numvector<double, 5>(const Point& r)> init;
@@ -90,9 +91,11 @@ public:
 
     //- Left  eigenvectors
     std::pair<numvector<numvector<double, 5>, 5>, numvector<numvector<double, 5>, 5>> getL(const numvector<double, 5>& sol) const;
+    numvector<numvector<double, 5>, 5> getL(const numvector<double, 5>& sol, const Point& n) const;
 
     //- Right eigenvectors
     std::pair<numvector<numvector<double, 5>, 5>, numvector<numvector<double, 5>, 5>> getR(const numvector<double, 5>& sol) const;
+    numvector<numvector<double, 5>, 5> getR(const numvector<double, 5>& sol, const Point& n) const;
 
 };// end Problem
 

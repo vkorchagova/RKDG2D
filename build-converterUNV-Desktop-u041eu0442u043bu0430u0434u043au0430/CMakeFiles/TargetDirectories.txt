@@ -1,3 +1,0 @@
-C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430/CMakeFiles/converterUNV.dir
-C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430/CMakeFiles/edit_cache.dir
-C:/Users/vkorchagova/Documents/GitHub/RKDG2D/build-converterUNV-Desktop-u041eu0442u043bu0430u0434u043au0430/CMakeFiles/rebuild_cache.dir

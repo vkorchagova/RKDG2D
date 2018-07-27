@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/v.korchagova/Документы/BMSTU/RKDG/RKDG2D_parallel/converterUNV/FileConverter.cpp
+FileConverter.h
+/home/v.korchagova/Документы/BMSTU/RKDG/RKDG2D_parallel/converterUNV/FileConverter.h
+functional
+-
+math.h
+-
+
+/home/v.korchagova/Документы/BMSTU/RKDG/RKDG2D_parallel/converterUNV/FileConverter.h
+iostream
+-
+fstream
+-
+sstream
+-
+vector
+-
+string
+-
+
+/home/v.korchagova/Документы/BMSTU/RKDG/RKDG2D_parallel/converterUNV/main.cpp
+iostream
+-
+FileConverter.h
+/home/v.korchagova/Документы/BMSTU/RKDG/RKDG2D_parallel/converterUNV/FileConverter.h
+
