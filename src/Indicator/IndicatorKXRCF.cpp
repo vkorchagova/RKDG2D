@@ -1,10 +1,13 @@
 #include "IndicatorKXRCF.h"
+#include <omp.h>
 
 using namespace std;
 
-bool debugFlux;
+bool debugFlux = false;
 
 const double threshold = 1e-12;
+
+#pragma omp threadprivate(debugFlux)
 
 numvector<double, 4> IndicatorKXRCF::massFlux(const Edge& edge, const Cell& cell) const
 {
@@ -48,6 +51,7 @@ numvector<double, 4> IndicatorKXRCF::massFlux(const Edge& edge, const Cell& cell
         {
             if (debugFlux)
             {
+//#pragma omp master
                 cout << "no entrance\n";
             }
             return { 0.0, 0.0, 0.0, 0.0 };
@@ -82,6 +86,7 @@ numvector<double, 4> IndicatorKXRCF::massFlux(const Edge& edge, const Cell& cell
 
             if (debugFlux)
             {
+//#pragma omp master
                 cout << "\n----\nu0 < 0 int \n -- \n";
                 cout << "h = " << h << endl;
                 cout << "nZero = " << nZero << endl;
@@ -123,6 +128,7 @@ numvector<double, 4> IndicatorKXRCF::massFlux(const Edge& edge, const Cell& cell
 
             if (debugFlux)
             {
+//#pragma omp master
                 cout << "\n----\nu0 > 0, u1 < 0 int \n -- \n";
                 cout << "h = " << h << endl;
                 cout << "nZero = " << nZero << endl;
@@ -172,6 +178,7 @@ numvector<double, 4> IndicatorKXRCF::massFlux(const Edge& edge, const Cell& cell
         {
             if (debugFlux)
             {
+//#pragma omp master
                 cout << "no entrance\n";
             }
             return { 0.0, 0.0, 0.0, 0.0 };
@@ -208,6 +215,7 @@ numvector<double, 4> IndicatorKXRCF::massFlux(const Edge& edge, const Cell& cell
 
             if (debugFlux)
             {
+//#pragma omp master
                 cout << "\n----\nu0 < 0 bound \n -- \n";
                 cout << "h = " << h << endl;
                 cout << "nZero = " << nZero << endl;
@@ -247,6 +255,7 @@ numvector<double, 4> IndicatorKXRCF::massFlux(const Edge& edge, const Cell& cell
 
             if (debugFlux)
             {
+//#pragma omp master
                 cout << "\n----\nu0 > 0, u1 < 0 bound\n -- \n";
 
                 cout << "h = " << h << endl;
@@ -275,6 +284,22 @@ numvector<double, 4> IndicatorKXRCF::massFlux(const Edge& edge, const Cell& cell
     } // end catch
 }
 
+bool checkNegativeScalar(const Cell& cell)
+{
+    bool negScalar = false;
+    
+    for (int i = 0; i < cell.nEntities; ++i)
+    {
+        //const shared_ptr<Point> node = cell.nodes[i];
+        if (cell.reconstructSolution(cell.nodes[i],0) < threshold || cell.reconstructSolution(cell.nodes[i],4) < threshold)
+        {
+            negScalar = true;
+            break;
+        }
+    }
+    
+    return negScalar;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -282,16 +307,24 @@ numvector<double, 4> IndicatorKXRCF::massFlux(const Edge& edge, const Cell& cell
 vector<int> IndicatorKXRCF::checkDiscontinuities() const
 {
     vector<int> troubledCells;
-
+    troubledCells.reserve(mesh.nCells);
+    
     double indicatorRho = 0.0;
     double indicatorE = 0.0;
     double indicatorP = 0.0;
     bool negScalar = false;
 
+
 //    cout << "\n========\nRun KXRCF\n--------\n";
-    
-    for (const shared_ptr<Cell> cell : mesh.cells)
-	{
+#pragma omp parallel for \
+shared(mesh, troubledCells, cout) \
+firstprivate(indicatorRho, indicatorE, indicatorP, negScalar) \
+default (none)
+    for (int i = 0; i < mesh.nCells; ++i)
+    //for (const shared_ptr<Cell> cell : mesh.cells)
+    {
+        
+        const shared_ptr<Cell> cell = mesh.cells[i];
 //        if (cell->number == 90 || cell->number == 148 || cell->number == 1026 || cell->number == 1468)
 //            debugFlux = true;
 //        else
@@ -304,23 +337,19 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
 
         // check negative rho/E values
 
-//        for (const shared_ptr<Point> node : cell->nodes)
-//        {
-//            if (cell->reconstructSolution(node,0) < threshold || cell->reconstructSolution(node,4) < threshold)
-//            {
-//                negScalar = true;
-//                break;
-//            }
-//        }
+        //for (const shared_ptr<Point> node : cell->nodes)
+        
+        negScalar = checkNegativeScalar(*cell);
 
-//        if (negScalar)
-//        {
-//            troubledCells.push_back(cell->number);
-//            negScalar = false;
-//            continue;
-//        }
-
-
+        if (negScalar)
+        {
+            //cout << "true neg scalar on tthreasd " << omp_get_thread_num() << endl;
+            negScalar = false;
+            troubledCells.emplace_back(cell->number);
+            
+        }
+        else
+        {
 
         // get ~ radius of circumscribed circle in cell[i]
         double h = sqrt(0.5*cell->getArea());
@@ -331,13 +360,19 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
         double normQp = cell->getNormQp();
 
 		// get momentum in cell nodes
-        numvector<double, 4> integral = {0.0, 0.0, 0.0, 0.0}; // rho|e|p|length
+        //numvector<double, 4> integral = {0.0, 0.0, 0.0, 0.0}; // rho|e|p|length
+        numvector<double, 4> integral; // rho|e|p|length
+        integral[0] = 0.0;
+        integral[1] = 0.0;
+        integral[2] = 0.0;
+        integral[3] = 0.0;
 
-        for (const shared_ptr<Edge> edge : cell->edges)
+        //for (const shared_ptr<Edge> edge : cell->edges0)
+        for (int i = 0; i < cell->nEntities; ++i)
         {
+            const shared_ptr<Edge> edge = cell->edges[i];
             integral += massFlux(*edge, *cell);
         }
-
 
         indicatorRho = fabs(integral[0]) / max((h*integral[3]*normQrho), threshold);
         indicatorE   = fabs(integral[1]) / max((h*integral[3]*normQe), threshold);
@@ -345,20 +380,22 @@ vector<int> IndicatorKXRCF::checkDiscontinuities() const
 
         if (debugFlux)
         {
+//#pragma omp master
             cout << "integralRho = " << fabs(integral[0]) << ", integralE = " << fabs(integral[1]) << ", len = " << integral[2] << endl;
         }
 
         if (debugFlux)
         {
+//#pragma omp master
             cout << "cell #" << cell->number <<": indicatorRho = " << indicatorRho << ", indicatorE = " << indicatorE << "\n===============\n";
         }
 
         if (indicatorRho > 1.0 || indicatorE > 1.0 || indicatorP > 1.0)
-            troubledCells.push_back(cell->number);
-
+            troubledCells.emplace_back(cell->number);
+	}
 //        if (indicatorRho > 1.0)
 //            cout << "cell #" << cell->number << ", ind = " << indicatorRho << endl;
-	}
+    }
 
 //    cout << "\ntroubled cells: " ;
 

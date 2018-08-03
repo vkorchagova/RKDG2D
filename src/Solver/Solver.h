@@ -26,7 +26,7 @@ public:
     Problem& problem;
 
     //- Reference to flux
-    Flux& flux;
+    const Flux& flux;
 
     //- Coeffs for previous time step
     std::vector<numvector<double, 5 * nShapes>> alphaPrev;

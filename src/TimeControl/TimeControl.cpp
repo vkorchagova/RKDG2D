@@ -20,7 +20,9 @@ void TimeControl::updateTimeStep()
         vector<double> newTauLocal;
         newTauLocal.reserve(mesh.nCells);
 
-#pragma omp parallel for
+#pragma omp parallel for \
+shared (mesh) \
+default (none)
         for (size_t i = 0; i < mesh.edges.size(); ++i)
         {
             const shared_ptr<Edge> edge = mesh.edges[i];
@@ -30,7 +32,10 @@ void TimeControl::updateTimeStep()
 //        for (const shared_ptr<Edge> edge : mesh.edges)
 //            edge->getMaxUL();
 
-#pragma omp parallel for
+#pragma omp parallel for \
+shared (mesh, newTauLocal) \
+private (factCo, relTau) \
+default (none)
         //for (const shared_ptr<Cell> cell : mesh.cells)
         for (size_t i = 0; i < mesh.cells.size(); ++i)
         {

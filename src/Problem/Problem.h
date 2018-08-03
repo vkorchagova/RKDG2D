@@ -33,7 +33,7 @@ public:
     //- Parameters on infinity
     numvector<double, 5> infty;
 
-    //- Coeffs
+    //- Link to coeffs
     std::vector<numvector<double, 5 * nShapes>> alpha;
     //const std::vector<numvector<double, 5 * nShapes>>& alpha;
 
@@ -44,6 +44,7 @@ public:
 
     //- Constructor
     Problem (std::string caseName, const Time& t);
+    //Problem (std::string caseName, const Time& t, std::vector<numvector<double, 5 * nShapes>>& a);
 
     //- Destructor
     ~Problem();

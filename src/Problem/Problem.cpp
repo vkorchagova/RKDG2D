@@ -1,5 +1,6 @@
 #include "Problem.h"
 #include <iostream>
+#include <omp.h>
 
 #include "Patch.h"
 #include "EdgeBoundary.h"
@@ -113,7 +114,7 @@ void Problem::setInitialConditions(string caseName)
         cpcv = 1.4;
 
         initRho = [](const Point& r) { return 1.0 + 1e-6*exp( - 40.0*sqr(r.x() )- 40.0*sqr(r.y() )); };
-        initP   = [&](const Point& r) { return initRho(r) / cpcv;  };
+        initP   = [=](const Point& r) { return pow(initRho(r), cpcv);  };
         initU   = [](const Point& r) { return 0.0; };
         initV   = [](const Point& r) { return 0.0; };
     }
@@ -158,8 +159,8 @@ void Problem::setBoundaryConditions(string caseName, const std::vector<Patch>& p
         shared_ptr<BoundarySlip> bSlip = make_shared<BoundarySlip>();
 
         //bc = {bOpen, bOpen};
-        bc = {bSlip, bSlip};
-        //bc = {bSlip, bSlip, bSlip, bSlip};
+        //bc = {bSlip, bSlip};
+        bc = {bSlip, bSlip, bSlip};
         //bc = {bOpen, bOpen, bOpen, bOpen};
     }
     else if (caseName == "forwardStep")
@@ -220,18 +221,27 @@ void Problem::setBoundaryConditions(string caseName, const std::vector<Patch>& p
 
 void Problem::setAlpha(const std::vector<numvector<double, 5 * nShapes> >& a)
 {
-    alpha = a;
+
+    size_t n = a.size();
+    
+#pragma omp parallel for \
+shared(n, alpha, a) \
+default(none)
+    for (size_t i = 0; i < n; ++i)
+        alpha[i] = a[i];
+//#pragma parallel reduction(=:alpha)
+//    alpha = a;
 }
 
 double Problem::getPressure(const numvector<double, 5>& sol) const
 {
     // uncomment for LEE
-   numvector<double,5> initfun = init(Point({0.0,0.0}));
+//   //numvector<double,5> initfun = init(Point({0.0,0.0}));
 
-   double rho0 = initfun[0];
-   double p0 = initfun[4] * (cpcv - 1);
+//   double rho0 = 1.0;//initfun[0];
+//   double p0 = 1.0;//initfun[4] * (cpcv - 1);
 
-   return p0 * pow(sol[0] / rho0 , cpcv);
+//   return p0 * pow(sol[0] / rho0 , cpcv);
 
     // end uncomment for LEE
 

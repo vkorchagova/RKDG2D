@@ -1,3 +1,0 @@
-/home/v.korchagova/Документы/BMSTU/RKDG/RKDG2D_parallel/converterUNV/build/CMakeFiles/rebuild_cache.dir
-/home/v.korchagova/Документы/BMSTU/RKDG/RKDG2D_parallel/converterUNV/build/CMakeFiles/converterUNV.dir
-/home/v.korchagova/Документы/BMSTU/RKDG/RKDG2D_parallel/converterUNV/build/CMakeFiles/edit_cache.dir

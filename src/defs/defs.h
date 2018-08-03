@@ -22,6 +22,7 @@ numvector<double, 5> rotate(const numvector<double, 5>& sol, const Point& n);
 //- rotate coordinate system counter-clockwise
 numvector<double, 5> inverseRotate(const numvector<double, 5>& sol, const Point& n);
 
+//std::vector<numvector<double, dim>> operator = (const std::vector<numvector<double, dim>>& a);
 
 //- vector<numvector> * alpha
 std::vector<numvector<double, dim>> operator * (const std::vector<numvector<double, dim>>& a, const double b);

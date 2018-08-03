@@ -81,13 +81,19 @@ Edge::Edge(const Node &p1, const Node &p2)
 numvector<double, 5 * nShapes> Edge::boundaryIntegral(const std::shared_ptr<Cell> &cell) const
 {
     numvector<double, 5 * nShapes> res (0.0);
+    double gW = 0.0;
 
     double sign = (cell == neibCells[0]) ? 1.0 : -1.0;
 
     for (int i = 0; i < nGP; ++i)
+    {
+        gW = gWeights[i];
+        
         for (int q = 0; q < nShapes; ++q)
             for (int p = 0; p < 5; ++p)
-                res[p*nShapes + q] += localFluxes[i][p] * ( gWeights[i] * cell->phi[q](gPoints[i]) );
+                res[p*nShapes + q] += localFluxes[i][p] * ( gW * cell->phi[q](gPoints[i]) );
+    
+    }
 
     return res * J * sign;
 }

@@ -167,6 +167,7 @@ public:
     //- Reconstruct coefficients using Riemann invariants
     numvector<double, 5 * nShapes> reconstructCoefficients(const std::pair<numvector<double, 5 * nShapes>, numvector<double, 5 * nShapes>>& rI) const;
     numvector<double, 5 * nShapes> reconstructCoefficients(const numvector<double, 5 * nShapes>& rI, const Point& n) const;
+    numvector<double, 5 * nShapes> reconstructCoefficients(const numvector<double, 5 * nShapes>& rI, const Point& n, const numvector<numvector<double, 5>, 5>& L) const;
 
     //- Get coefficients of projection of function foo onto cell basis
     numvector<double, 5 * nShapes> projection(std::function<numvector<double,5>(const Point& point)>& init) const;
@@ -174,6 +175,7 @@ public:
     //- Get Riemann invariants using actual solution on cell
     std::pair<numvector<double, 5 * nShapes>, numvector<double, 5 * nShapes>> getRiemannInvariants();
     numvector<double, 5 * nShapes> getRiemannInvariants(const Point& n);
+    numvector<double, 5 * nShapes> getRiemannInvariants(const Point& n, const numvector<numvector<double, 5>, 5>& R);
 
     //- Calculate Gramian matrix
     void setGramian();

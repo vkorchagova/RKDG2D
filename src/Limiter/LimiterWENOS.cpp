@@ -1,10 +1,23 @@
 #include "LimiterWENOS.h"
+#include <omp.h>
 
 using namespace std;
 
 void LimiterWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
 {
+    double ts = omp_get_wtime();
+    int n = alpha.size();
+    
     problem.setAlpha(alpha);
+    
+    vector<numvector<double, 5 * nShapes>> alphaNew(n);
+
+#pragma omp parallel for \
+shared(n, alphaNew, alpha) \
+default(none)
+    for (int i = 0; i < n; ++i)
+        alphaNew[i] = alpha[i];
+    
     // troubled cells
 
     vector<int> troubledCells;
@@ -35,14 +48,18 @@ void LimiterWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
     vector<numvector<double, 5 * nShapes>> p;
 
 
-    for (int iLim = 0; iLim < nIter; ++iLim)
-    {
-        troubledCells = indicator.checkDiscontinuities();
+    troubledCells = indicator.checkDiscontinuities();
 
         // limit solution in troubled cells
+#pragma omp parallel for \
+shared(g, alpha, alphaNew, troubledCells) \
+private(uMean, beta, gamma, w, wTilde, wSum, p) \
+default(none)
         for (size_t i = 0; i < troubledCells.size(); ++i)
         //for (int iCell : troubledCells)
         {
+
+
             int iCell = troubledCells[i];
 
             shared_ptr<Cell> cell = indicator.mesh.cells[iCell];
@@ -98,13 +115,19 @@ void LimiterWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
             for (size_t k = 0; k < nCells; ++k)
                 for (int j = 0; j < 5; ++j)
                 {
-                    beta[k][j] =  cells[0]->getArea() * (sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
+                    beta[k][j] =  cells[0]->getArea()  * (sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
                     wTilde[k][j] = gamma[k] * (1.0 / sqr(beta[k][j] + 1e-6));
                 }
 
 
 
-            wSum = {0.0, 0.0, 0.0, 0.0, 0.0};
+            //wSum = {0.0, 0.0, 0.0, 0.0, 0.0};
+            wSum[0] = 0.0;
+	    wSum[1] = 0.0;
+	    wSum[2] = 0.0;
+	    wSum[3] = 0.0;
+	    wSum[4] = 0.0;
+
 
             for (int j = 0; j < 5; ++j)
                 for (size_t k = 0; k < nCells; ++k)
@@ -156,14 +179,19 @@ void LimiterWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
                 return sum;
             };
 
-            alpha[iCell] = cells[0]->projection(foo);
-
-            problem.setAlpha(alpha);
+            alphaNew[iCell] = cells[0]->projection(foo);
         }
-    }
 
+    alpha = alphaNew;
 
-    for (const shared_ptr<Cell> cell : indicator.mesh.cells)
+#pragma omp parallel for \
+shared(alpha, troubledCells, indicator, cout) \
+default(none)
+    for (size_t i = 0; i < troubledCells.size(); ++i)
+    {
+    //for (const shared_ptr<Cell> cell : indicator.mesh.cells)
+        const shared_ptr<Cell> cell = indicator.mesh.cells[troubledCells[i]];
+    
         for (const shared_ptr<Point> node : cell->nodes)
         {
             numvector<double, 5> res = cell->reconstructSolution(node);
@@ -181,6 +209,13 @@ void LimiterWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
                 }
             }
         }
+        
+    }
 
-    problem.setAlpha(alpha);
+    //problem.setAlpha(alphaNew);
+    
+    
+    double te = omp_get_wtime();
+    
+    //cout << "WENOS limiter " << te - ts << endl; 
 }

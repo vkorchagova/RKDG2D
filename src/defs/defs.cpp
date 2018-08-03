@@ -20,6 +20,7 @@ vector<numvector<double, dim>> operator * (const vector<numvector<double, dim>>&
 
     vector<numvector<double, dim>> m(a);
 
+#pragma omp simd
     for (size_t cell = 0; cell < dimx; ++cell)
     for (size_t val = 0; val < dimy; ++val)
         m[cell][val] *= b;
@@ -27,13 +28,16 @@ vector<numvector<double, dim>> operator * (const vector<numvector<double, dim>>&
     return m;
 };
 
+
+
 vector<numvector<double, dim>> operator + (const vector<numvector<double, dim>>& b, const vector<numvector<double, dim>>& a)
 {
     size_t dimx = a.size();
     size_t dimy = dim;
 
     vector<numvector<double, dim>> m(a);
-
+    
+#pragma omp simd
     for (size_t cell = 0; cell < dimx; ++cell)
     for (size_t val = 0; val < dimy; ++val)
         m[cell][val] = a[cell][val] + b[cell][val];
@@ -47,104 +51,11 @@ void sum (const vector<numvector<double, dim>>& a, const vector<numvector<double
     size_t dimx = a.size();
     size_t dimy = dim;
 
+#pragma omp simd
     for (size_t cell = 0; cell < dimx; ++cell)
     for (size_t val = 0; val < dimy; ++val)
         res[cell][val] = a[cell][val] + b[cell][val];
 };
-
-// return LU-factorization of matrix (+ transform of rhs)
-
-vector<vector<double> > forwardGauss(const vector<vector<double> >& data, const bool partChoice)
-{
-    int n = data.size();
-
-    vector<vector<double> > LU = data;
-
-    for (int i = 0; i < n; ++i) //for all rows
-    {
-        if (partChoice)
-        {
-            int maxI = maxAbsPosition(LU,i);
-            ChangeRows(LU,i,maxI);
-        }
-
-        if (fabs(LU[i][i]) < 1e-12)
-        {
-            cout << "Bad matrix: element " << i << " in diag = " << LU[i][i] << endl;
-            exit(0);
-        }
-
-        for (int k = i+1; k < n; ++k) //just see elements lower than matrix diag
-        {
-            double c = LU[k][i]/LU[i][i];
-
-            for (int j = i; j < n; ++j)
-            {
-                LU[k][j] = LU[k][j] - c*LU[i][j];
-            }
-
-            //for right part
-            LU[k][n] = LU[k][n] - c*LU[i][n];
-        }
-    }
-
-    return LU;
-}
-
-vector<double > reverseGauss(const vector<vector<double> >& data)
-{
-    int n = data.size();
-
-    vector<double> solution(n,0);
-
-    for (int i = n-1; i >=0 ; --i)
-    {
-        solution[i] = data[i][n] / data[i][i];
-
-        for (int j = n-1; j > i; --j)
-        {
-            solution[i] -= solution[j]*data[i][j]/data[i][i];
-        }
-    }
-
-    return solution;
-}
-
-int maxAbsPosition(const vector<vector<double > >& data, const int i)
-{
-    int n = data.size();
-
-    int maxI = i;
-    double maxAbs = 0;
-
-    for (int k = i+1; k < n; ++k)
-    {
-        if (maxAbs < fabs(data[k][i]))
-        {
-            maxAbs = fabs(data[k][i]);
-            maxI = k;
-        }
-    }
-
-    return maxI;
-}
-
-void ChangeRows(vector<vector<double > >& data, const int p, const int q)
-{
-    if (p == q)
-    {
-        return;
-    }
-
-    int n = data[p].size();
-
-    for (int j = 0; j < n; ++j)
-    {
-        data[p][j] -= data[q][j];
-        data[q][j] += data[p][j];
-        data[p][j] = data[q][j] - data[p][j];
-    }
-}
 
 
 //-----------------------------------------------------------------------------------------
@@ -171,7 +82,7 @@ vector<vector<double>>& operator += (vector<vector<double>>& a, const vector<vec
 	size_t dimx = a.size();
 	size_t dimy = a[0].size();
 
-
+#pragma omp simd
     for (size_t cell = 0; cell < dimx; ++cell)
     for (size_t val = 0; val < dimy; ++val)
         a[cell][val] += b[cell][val];
@@ -184,7 +95,7 @@ vector<vector<double>>& operator -= (vector<vector<double>>& a, const vector<vec
 	size_t dimx = a.size();
 	size_t dimy = a[0].size();
 
-
+#pragma omp simd
 	for (size_t cell = 0; cell < dimx; ++cell)
 	for (size_t val = 0; val < dimy; ++val)
 		a[cell][val] -= b[cell][val];
@@ -197,6 +108,7 @@ vector<vector<double>>& operator *= (vector<vector<double>>& a, const double b)
 	size_t dimx = a.size();
 	size_t dimy = a[0].size();
 
+#pragma omp simd
     for (size_t cell = 0; cell < dimx; ++cell)
     for (size_t val = 0; val < dimy; ++val)
         a[cell][val] *= b;
@@ -224,7 +136,7 @@ vector<vector<double>> operator * (const vector<vector<double>>& a, const double
 	size_t dimy = a[0].size();
 
 	vector<vector<double>> m(a);
-
+#pragma omp simd
 	for (size_t cell = 0; cell < dimx; ++cell)
 	for (size_t val = 0; val < dimy; ++val)
 		m[cell][val] *= b;
@@ -253,6 +165,7 @@ vector<double>& operator *= (vector<double>& a, const double b)
 {
 	size_t dimx = a.size();
 
+#pragma omp simd
 	for (size_t cell = 0; cell < dimx; ++cell)
 		a[cell] *= b;
 	return a;
@@ -261,7 +174,7 @@ vector<double>& operator *= (vector<double>& a, const double b)
 vector<double>& operator += (vector<double>& a, const vector<double>& b)
 {
 	size_t dimx = a.size();
-
+#pragma omp simd
 	for (size_t cell = 0; cell < dimx; ++cell)
 		a[cell] += b[cell];
 	return a;
@@ -270,7 +183,7 @@ vector<double>& operator += (vector<double>& a, const vector<double>& b)
 vector<double>& operator -= (vector<double>& a, const vector<double>& b)
 {
 	size_t dimx = a.size();
-
+#pragma omp simd
 	for (size_t cell = 0; cell < dimx; ++cell)
 		a[cell] -= b[cell];
 	return a;
@@ -281,7 +194,7 @@ vector<double> operator * (const vector<double>& a, const double b)
 	size_t dimx = a.size();
 
 	vector<double> m(a);
-
+#pragma omp simd
 	for (size_t cell = 0; cell < dimx; ++cell)
 		m[cell] *= b;
 	return m;
@@ -305,6 +218,8 @@ void prodMatrVec(const vector<vector<double>>& A, \
     vector<double>& c)
 {
 	size_t dim = A.size();
+
+#pragma omp simd
 	for (size_t row = 0; row < dim; ++row)
     {
         c[row] = 0.0;

@@ -65,6 +65,7 @@ public:
 	{
 		for (int i = 0; i < n; ++i)
 			r[i] = vec.r[i];
+			
 		return *this;
 	}//operator=
 
@@ -78,6 +79,8 @@ public:
 	double operator* (const numvector<T, n>& y) const 
 	{
 		T res = 0;
+		
+#pragma omp simd
 		for (int j = 0; j < n; ++j)
 			res += r[j] * y[j];
 		return res;

@@ -1,5 +1,6 @@
 #include "Solver.h"
 #include <iostream>
+#include <omp.h>
 
 using namespace std;
 
@@ -7,6 +8,7 @@ Solver::Solver( Mesh2D& msh, Problem &prb, Flux& flx) : mesh(msh),problem(prb),f
 {
     alphaPrev.resize(mesh.nCells);
     alphaNext.resize(mesh.nCells);
+    problem.alpha.resize(mesh.nCells);
 }
 
 
@@ -39,40 +41,40 @@ void Solver::writeSolutionVTK(string fileName) const
 
     output << "CELL_DATA " << mesh.nCells << endl;
 
-//    output << "SCALARS rho double" << endl;
-//    output << "LOOKUP_TABLE default" << endl;
+    output << "SCALARS rho double" << endl;
+    output << "LOOKUP_TABLE default" << endl;
 
-//    for (const shared_ptr<Cell> cell : mesh.cells)
-//        output << cell->reconstructSolution(cell->getCellCenter(), 0) << endl;
+    for (const shared_ptr<Cell> cell : mesh.cells)
+        output << cell->reconstructSolution(cell->getCellCenter(), 0) << endl;
 
-//    output << "SCALARS e double" << endl;
-//    output << "LOOKUP_TABLE default" << endl;
+    output << "SCALARS e double" << endl;
+    output << "LOOKUP_TABLE default" << endl;
 
-//    for (const shared_ptr<Cell> cell : mesh.cells)
-//        output << cell->reconstructSolution(cell->getCellCenter(), 4) << endl;
+    for (const shared_ptr<Cell> cell : mesh.cells)
+        output << cell->reconstructSolution(cell->getCellCenter(), 4) << endl;
 
-//    output << "SCALARS p double" << endl;
-//    output << "LOOKUP_TABLE default" << endl;
+    output << "SCALARS p double" << endl;
+    output << "LOOKUP_TABLE default" << endl;
 
-//    for (const shared_ptr<Cell> cell : mesh.cells)
-//        output << problem.getPressure(cell->reconstructSolution(cell->getCellCenter())) << endl;
+    for (const shared_ptr<Cell> cell : mesh.cells)
+        output << problem.getPressure(cell->reconstructSolution(cell->getCellCenter())) << endl;
 
 
-//    output << "VECTORS U double" << endl;
+    output << "VECTORS U double" << endl;
 
-//    for (const shared_ptr<Cell> cell : mesh.cells)
-//    {
-//        double rho = cell->reconstructSolution(cell->getCellCenter(), 0);
-//        output << cell->reconstructSolution(cell->getCellCenter(), 1) / rho << endl;
-//        output << cell->reconstructSolution(cell->getCellCenter(), 2) / rho << endl;
-//        output << 0.0 << endl;
-//    }
+    for (const shared_ptr<Cell> cell : mesh.cells)
+    {
+        double rho = cell->reconstructSolution(cell->getCellCenter(), 0);
+        output << cell->reconstructSolution(cell->getCellCenter(), 1) / rho << endl;
+        output << cell->reconstructSolution(cell->getCellCenter(), 2) / rho << endl;
+        output << 0.0 << endl;
+    }
 
 
     // get point data
 
     output << "POINT_DATA " << mesh.nEntitiesTotal << endl;
-
+/*
     output << "SCALARS rho double" << endl;
     output << "LOOKUP_TABLE default" << endl;
 
@@ -106,7 +108,7 @@ void Solver::writeSolutionVTK(string fileName) const
             output << 0.0 << endl;
         }
 
-
+*/
     output.close();
 }
 
@@ -117,7 +119,7 @@ void Solver::setInitialConditions()
 {
     int nCells = mesh.nCells;
 
-    problem.alpha.resize(nCells);
+    //problem.alpha.resize(nCells);
 
     numvector<double, 5*nShapes> rhs;
 
@@ -125,9 +127,10 @@ void Solver::setInitialConditions()
     for (int k = 0; k < nCells; ++k)
     {
         rhs = mesh.cells[k]->projection(problem.init);
-        problem.alpha[k] = mesh.cells[k]->correctNonOrtho(rhs);
-        alphaPrev[k] = problem.alpha[k];
+        alphaPrev[k] = mesh.cells[k]->correctNonOrtho(rhs);
     }
+    
+    cout << "OK"<<endl;
 
 } // end setInitialConditions
 
@@ -144,16 +147,16 @@ void Solver::setDefinedCoefficients(string fileName)
 
     int nCells = mesh.nCells;
 
-    problem.alpha.resize(nCells);
+    //problem.alpha.resize(nCells);
 
     numvector<double, 5*nShapes> rhs;
 
     for (int k = 0; k < nCells; ++k)
     {
         for (int j = 0; j < 5*nShapes; ++j)
-            reader >> problem.alpha[k][j];
+            reader >> alphaPrev[k][j];//problem.alpha[k][j];
 
-        alphaPrev[k] = problem.alpha[k];
+        //alphaPrev[k] = problem.alpha[k];
     }
 
     reader.close();
@@ -176,53 +179,96 @@ void Solver::setMeshPointerForDiagBC()
 
 vector<numvector<double, 5 * nShapes>> Solver::assembleRHS(const std::vector<numvector<double, 5 * nShapes> > &alpha)
 {
+    double ts0 = 0;
+    double te0 = 0;
+
+    ts0 = omp_get_wtime();
+
     problem.setAlpha(alpha);
 
-    //int nEdgesInt = mesh.edgesInternal.size();
-    //int nEdgesBou = mesh.edgesBoundary.size();
+    te0 = omp_get_wtime();
+    
+    //cout << "set alpha " << te0 - ts0 << endl;
 
     int nCells = mesh.cells.size();
-
+    
+    ts0 = omp_get_wtime();
+    
     // compute fluxes in gauss points on edges
-#pragma omp parallel for 
+#pragma omp parallel for \
+shared (mesh) \
+default(none)
     for (size_t i = 0; i < mesh.edges.size(); ++i)
         mesh.edges[i]->getLocalFluxes(flux);
 
+    te0 = omp_get_wtime();
+    
+    //cout << "get fluxes " << te0 - ts0 << endl;
+
+    ts0 = omp_get_wtime();
 
     vector<numvector<double, 5 * nShapes>> rhs(mesh.nCells);
 
-#pragma omp parallel for
+#pragma omp parallel for \
+shared (nCells, rhs, mesh) \
+default(none)
     for (int k = 0; k < nCells; ++k) // for all cells
     {
         // compute internal integral
         rhs[k] = mesh.cells[k]->cellIntegral();
 
         // compute boundary integrals
+#pragma omp simd
         for (int i = 0; i < mesh.cells[k]->nEntities; ++i)
             rhs[k] -= mesh.cells[k]->edges[i]->boundaryIntegral(mesh.cells[k]);
     }
+
+    te0 = omp_get_wtime();
+    
+    //cout << "get rhs " << te0 - ts0 << endl;
+
 
     return rhs;
 }
 
 vector<numvector<double, 5 * nShapes>> Solver::correctNonOrtho(std::vector<numvector<double, 5 * nShapes>> &alpha) const
 {
-    vector<numvector<double, 5 * nShapes>> res = alpha;
+    double ts0 = omp_get_wtime();
+    int n = alpha.size();
+    
+    vector<numvector<double, 5 * nShapes>> res;
+    res.resize(n);
 
-#pragma omp parallel for
+#pragma omp parallel for \
+shared (mesh, res, alpha) \
+default(none)
     for (int i = 0; i < mesh.nCells; ++i)
         res[i] = mesh.cells[i]->correctNonOrtho(alpha[i]);
+
+    double te0 = omp_get_wtime();
+    
+    //cout << "correct non ortho " << te0 - ts0 << endl;
 
     return res;
 }
 
 vector<numvector<double, 5 * nShapes>> Solver::correctPrevIter(std::vector<numvector<double, 5 * nShapes>> &alpha) const
 {
+
+    double ts0 = omp_get_wtime();
+
     vector<numvector<double, 5 * nShapes>> res = alpha;
 
-#pragma omp parallel for
+#pragma omp parallel for \
+shared (mesh, res, alpha) \
+default(none)
     for (int i = 0; i < mesh.nCells; ++i)
         res[i] = mesh.cells[i]->correctPrevIter(alpha[i]);
+
+    double te0 = omp_get_wtime();
+    
+    //cout << "correct prev iter " << te0 - ts0 << endl;
+
 
     return res;
 }

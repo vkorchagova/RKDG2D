@@ -25,8 +25,8 @@ bool Cell::insideCell(const Point& point) const
 //    bool yCond = (center.y() - 0.5*step.y() - epsilon) < point.y()  && (center.y() + 0.5*step.y() + epsilon) > point.y();
 
 
-    bool xCond = (center.x()  - epsilon) < point.x()  && (center.x() + epsilon) > point.x();
-    bool yCond = (center.y()  - epsilon) < point.y()  && (center.y() +  epsilon) > point.y();
+    bool xCond = (center.x() - epsilon) < point.x() && (center.x() + epsilon) > point.x();
+    bool yCond = (center.y() - epsilon) < point.y() && (center.y() + epsilon) > point.y();
 
 
     if (xCond && yCond)
@@ -352,11 +352,17 @@ vector<shared_ptr<Cell>> Cell::findNeighbourCellsY() const
 numvector<double, 5> Cell::reconstructSolution(const Point& point ) const
 {
     numvector<double, 5> sol(0.0);
+    vector<double> phip(nShapes);
+
+#pragma omp simd
+    for (int j = 0; j < nShapes; ++j)
+        phip[j] = phi[j](point);
 
     for (int i = 0; i < 5; ++i)
     {
+#pragma omp simd
         for (int j = 0; j < nShapes; ++j)
-            sol[i] += phi[j](point) * problem.alpha[number][i * nShapes + j];
+            sol[i] += phip[j] * problem.alpha[number][i * nShapes + j];
     }
 
     return sol;
@@ -367,7 +373,8 @@ numvector<double, 5> Cell::reconstructSolution(const Point& point ) const
 double Cell::reconstructSolution(const Point& point, int numSol ) const
 {
     double sol(0.0);
-    
+
+#pragma omp simd    
     for (int j = 0; j < nShapes; ++j)
         sol += phi[j](point) * problem.alpha[number][numSol * nShapes + j];
 
@@ -377,11 +384,18 @@ double Cell::reconstructSolution(const Point& point, int numSol ) const
 numvector<double, 5> Cell::reconstructSolution(const Point& point, const numvector<double, 5*nShapes>& alpha ) const
 {
     numvector<double, 5> sol(0.0);
+    vector<double> phip(nShapes);
 
+#pragma omp simd
+    for (int j = 0; j < nShapes; ++j)
+        phip[j] = phi[j](point);
+        
     for (int i = 0; i < 5; ++i)
     {
+    
+#pragma omp simd
         for (int j = 0; j < nShapes; ++j)
-            sol[i] += phi[j](point) * alpha[i * nShapes + j];
+            sol[i] += phip[j] * alpha[i * nShapes + j];
     }
 
     return sol;
@@ -392,6 +406,7 @@ double Cell::reconstructSolution(const Point& point, const numvector<double, 5*n
 {
     double sol(0.0);
 
+#pragma omp simd
     for (int j = 0; j < nShapes; ++j)
         sol += phi[j](point) * alpha[numSol * nShapes + j];
 
@@ -459,18 +474,23 @@ numvector<double, 5 * nShapes> Cell::cellIntegral()
     numvector<double, 5> sol;
     numvector<double, 5> resV;
     numvector<double, 5 * nShapes> res (0.0);
+    double gW = 0.0;
+    Point nablaPhi;
 
     for (int i = 0; i < nGP; ++i)
     {
         sol = reconstructSolution(gPoints2D[i]);
+        gW = gWeights2D[i];
 
         for (int q = 0; q < nShapes; ++q)
         {
-            resV = problem.fluxF(sol) * gradPhi[q](gPoints2D[i])[0] + \
-                   problem.fluxG(sol) * gradPhi[q](gPoints2D[i])[1];
+    	    nablaPhi = gradPhi[q](gPoints2D[i]);
+        
+            resV = problem.fluxF(sol) * nablaPhi[0] + \
+                   problem.fluxG(sol) * nablaPhi[1];
 
             for (int p = 0; p < 5; ++p)
-                res[p * nShapes + q] += resV[p] * gWeights2D[i] * J[i];
+                res[p * nShapes + q] += resV[p] * gW * J[i];
         }
     }
 
@@ -524,12 +544,13 @@ numvector<double, 5 * nShapes> Cell::correctNonOrtho(const numvector<double, 5 *
 {
     numvector<double, 5 * nShapes> alphaCorr;
 
+    vector<double> solution(nShapes); //for 3 ff!!!
+
     for (int iSol = 0; iSol < 5; ++iSol)
     {
 
         // solve slae
-        vector<double> solution(nShapes); //for 3 ff!!!
-
+        
         solution[0] = rhs[iSol*nShapes] / gramian[0][0];
 
         if (nShapes == 3)
@@ -555,6 +576,8 @@ numvector<double, 5 * nShapes> Cell::correctPrevIter(const numvector<double, 5 *
     for (int iSol = 0; iSol < 5; ++iSol)
     {
         for (int i = 0; i < nShapes; ++i)
+
+#pragma omp simd
             for (int j = 0; j < nShapes; ++j)
                 rhs[i + iSol*nShapes] += gramian[i][j] * alphaCorr[iSol*nShapes + j];
     }
@@ -565,12 +588,6 @@ numvector<double, 5 * nShapes> Cell::correctPrevIter(const numvector<double, 5 *
 pair<numvector<double, 5 * nShapes>, numvector<double, 5 * nShapes>> Cell::getRiemannInvariants()
 {
     pair<numvector<double, 5 * nShapes>, numvector<double, 5 * nShapes>> res (0,0);
-
-//    for (int i = 0; i < 5*nShapes; ++i)
-//    {
-//        res.first[i] = 0.0;
-//        res.second[i] = 0.0;
-//    }
 
     numvector<double, 5> solMean = reconstructSolution(getCellCenter());
 
@@ -594,6 +611,18 @@ numvector<double, 5 * nShapes> Cell::getRiemannInvariants(const Point& n)
     numvector<double, 5> solMean = reconstructSolution(getCellCenter());
 
     numvector<numvector<double, 5>, 5> L = problem.getL(solMean, n);
+
+    for (int iSol = 0; iSol < 5; ++iSol )
+        for (int jSol = 0; jSol < 5; ++jSol )
+            for (int j = 0; j < nShapes; ++j )
+                res[iSol * nShapes + j] +=  L[iSol][jSol] * problem.alpha[number][jSol * nShapes + j];
+
+    return res;
+}
+
+numvector<double, 5 * nShapes> Cell::getRiemannInvariants(const Point& n, const numvector<numvector<double, 5>, 5>& L )
+{
+    numvector<double, 5 * nShapes> res (0.0);
 
     for (int iSol = 0; iSol < 5; ++iSol )
         for (int jSol = 0; jSol < 5; ++jSol )
@@ -633,6 +662,19 @@ numvector<double, 5 * nShapes> Cell::reconstructCoefficients(const numvector<dou
     numvector<double, 5> solMean = reconstructSolution(getCellCenter());
 
     numvector<numvector<double, 5>, 5> R = problem.getR(solMean, n);
+
+    for (int iSol = 0; iSol < 5; ++iSol )
+        for (int jSol = 0; jSol < 5; ++jSol )
+            for (int j = 0; j < nShapes; ++j )
+                res[iSol * nShapes + j] += R[iSol][jSol] * rI[jSol * nShapes + j];
+
+    return res;
+
+}
+
+numvector<double, 5 * nShapes> Cell::reconstructCoefficients(const numvector<double, 5 * nShapes>& rI, const Point& n, const numvector<numvector<double, 5>, 5>& R) const
+{
+    numvector<double, 5 * nShapes> res (0);
 
     for (int iSol = 0; iSol < 5; ++iSol )
         for (int jSol = 0; jSol < 5; ++jSol )

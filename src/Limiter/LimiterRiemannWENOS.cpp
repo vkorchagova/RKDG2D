@@ -144,6 +144,16 @@ numvector<double, 5 * nShapes> limitP(const vector<shared_ptr<Cell>>& cells, con
 void LimiterRiemannWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
 {
     problem.setAlpha(alpha);
+    int n = alpha.size();
+    
+    vector<numvector<double, 5 * nShapes>> alphaNew(n);
+    
+#pragma omp parallel for \
+shared(n, alphaNew, alpha) \
+default(none)
+    for (int i = 0; i < n; ++i)
+        alphaNew[i] = alpha[i];
+                    
 
     vector<int> troubledCells = indicator.checkDiscontinuities();
 
@@ -154,8 +164,15 @@ void LimiterRiemannWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
 
     // limit solution in troubled cells
 
-    for (int iCell : troubledCells)
+#pragma omp parallel for \
+shared(alpha, alphaNew, troubledCells) \
+private(p, pInv) \
+default(none)
+    for (size_t i = 0; i < troubledCells.size(); ++i)
+    //for (int iCell : troubledCells)
     {
+        int iCell = troubledCells[i];
+        
         shared_ptr<Cell> cell = indicator.mesh.cells[iCell];
 
         // construct list of cells: cell + neighbours
@@ -173,24 +190,34 @@ void LimiterRiemannWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
 
         for (int k = 0; k < nCells; ++k)
             p[k] = alpha[cells[k]->number];
+            
+        numvector<double, 5> solMean = cell->reconstructSolution(cell->getCellCenter());
+           
+               
+               
 
         // get pNew polynoms using each edge normal
         for (const shared_ptr<Edge> e : cells[0]->edges)
         {
+
+            
             if (e->neibCells.size() == 2)
             {
                 // correct normal direction: outside related to troubled cell
                 Point n = (( *e->nodes[0] - cell->getCellCenter()) * e->n > 0.0) ? e->n : Point(-e->n);
 
+                numvector<numvector<double, 5>, 5>  L = problem.getL(solMean, n);
+                numvector<numvector<double, 5>, 5>  R = problem.getR(solMean, n);
+
                 // get Riemann invariants along this direction
                 for (size_t k = 0; k < cells.size(); ++k)
-                    pInv[k] = cells[k]->getRiemannInvariants(n);
+                    pInv[k] = cells[k]->getRiemannInvariants(n, L);
 
                 // limit Riemann invariants
                 numvector <double, 5*nShapes> pLim = limitP(cells, pInv);
 
                 // project limited solution to conservative variables
-                pNew.push_back( cell->reconstructCoefficients(pLim, n) );
+                pNew.push_back( cell->reconstructCoefficients(pLim, n, R) );
             }
         }
 
@@ -218,13 +245,20 @@ void LimiterRiemannWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
             return sum;
         };
 
-        numvector<double, 5*nShapes> newAlpha = cell->projection(foo);
-        alpha[cell->number] = newAlpha;
-        problem.setAlpha(alpha);
+        alphaNew[cell->number] = cell->projection(foo);
 
     }
-
-    for (const shared_ptr<Cell> cell : indicator.mesh.cells)
+    
+    alpha = alphaNew;
+    
+#pragma omp parallel for \
+shared(alpha, troubledCells, indicator, cout) \
+default(none)
+    for (size_t i = 0; i < troubledCells.size(); ++i)
+    {
+//    for (const shared_ptr<Cell> cell : indicator.mesh.cells)
+        const shared_ptr<Cell> cell = indicator.mesh.cells[troubledCells[i]];
+        
         for (const shared_ptr<Point> node : cell->nodes)
         {
             numvector<double, 5> res = cell->reconstructSolution(node);
@@ -242,8 +276,7 @@ void LimiterRiemannWENOS::limit(vector<numvector<double, 5 * nShapes>>& alpha)
                 }
             }
         }
-
-    problem.setAlpha(alpha);
+    }
 }
 
 
