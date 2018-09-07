@@ -291,7 +291,11 @@ bool checkNegativeScalar(const Cell& cell)
     for (int i = 0; i < cell.nEntities; ++i)
     {
         //const shared_ptr<Point> node = cell.nodes[i];
-        if (cell.reconstructSolution(cell.nodes[i],0) < threshold || cell.reconstructSolution(cell.nodes[i],4) < threshold)
+	numvector<double, 5> sol = cell.reconstructSolution(cell.nodes[i]);
+        
+        if (sol[0] < threshold || \
+            sol[4] < threshold || \
+            cell.problem.getPressure(sol) < threshold)
         {
             negScalar = true;
             break;
@@ -301,12 +305,16 @@ bool checkNegativeScalar(const Cell& cell)
     return negScalar;
 }
 
+
+                                                
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 vector<int> IndicatorKXRCF::checkDiscontinuities() const
 {
     vector<int> troubledCells;
+    
     troubledCells.reserve(mesh.nCells);
     
     double indicatorRho = 0.0;
@@ -403,6 +411,23 @@ default (none)
 //        cout << iCell << ' ';
 
 //    cout << endl;
+
+
+//    vector<int> isTroubled(mesh.nCells);
+
+//    for (int iCell : troubledCells)
+//        isTroubled[iCell] = 1;
+
+//    ofstream writer;
+//    writer.open("troubledCells");
+
+//    writer << "SCALARS isTroubled int" << endl;
+//    writer << "LOOKUP_TABLE default" << endl;
+
+//    for(int i = 0; i < mesh.nCells; ++i)
+//        writer << isTroubled[i] << endl;
+    
+//    writer.close();
 
     return troubledCells;
 }

@@ -16,17 +16,23 @@ public:
     //- Problem
     const Problem& problem;
     
+    //- List of troubed cells
+    std::vector<int> tCells;
+    
 public:
 
     //- Constructor
-    Indicator(const Mesh2D& msh, const Problem& prb) : mesh(msh), problem(prb) {}
+    Indicator(const Mesh2D& msh, const Problem& prb);
 
     //- Destructor
     virtual ~Indicator() {}
     
     //- Check discontinuities
     virtual std::vector<int> checkDiscontinuities() const = 0;
-
+    
+    //- Write troubled cells in VTK format
+    //void writeTroubledCellsVTK();
+    
 };
 
 

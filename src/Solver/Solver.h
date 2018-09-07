@@ -13,6 +13,7 @@
 #include "Mesh2D.h"
 #include "Problem.h"
 #include "Flux.h"
+#include "Indicator.h"
 
 class Solver
 {
@@ -27,6 +28,9 @@ public:
 
     //- Reference to flux
     const Flux& flux;
+    
+    //- Reference to indicator
+    //Indicator& indicator;
 
     //- Coeffs for previous time step
     std::vector<numvector<double, 5 * nShapes>> alphaPrev;

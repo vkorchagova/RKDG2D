@@ -70,6 +70,7 @@ void Solver::writeSolutionVTK(string fileName) const
         output << 0.0 << endl;
     }
 
+    //indicator.writeTroubledCellsVTK();
 
     // get point data
 

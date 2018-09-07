@@ -6,6 +6,9 @@ class Time
 {
     //- Current time
     double runTime_;
+    
+    //- Current time step
+    double tau;
 
 
 public:

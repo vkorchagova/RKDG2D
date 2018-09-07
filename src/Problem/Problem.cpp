@@ -41,23 +41,24 @@ void Problem::setInitialConditions(string caseName)
     {
         cpcv = 1.4;
 
-        initRho = [](const Point& r) { return (r.x() < 0.0) ? 1.0 : 0.125; };
-        initP   = [](const Point& r) { return (r.x() < 0.0) ? 1.0 : 0.1;  };
-        initU   = [](const Point& r) { return (r.x() < 0.0) ? 0.0 : 0.0; };
+        initRho = [](const Point& r) { return (r.x() < 0) ? 1.0 : 0.125; };
+        initP   = [](const Point& r) { return (r.x() < 0) ? 1.0 : 0.1;  };
+        initU   = [](const Point& r) { return (r.x() < 0) ? 0.0 : 0.0; };
         initV   = [](const Point& r) { return 0.0; };
     }
     else if (caseName == "SodY")
     {
         cpcv = 1.4;
 
-        initRho = [](const Point& r) { return (r.x() < 0) ? 1.0 : 0.125; };
-        initP   = [](const Point& r) { return (r.x() < 0) ? 1.0 : 0.1;  };
-        initV   = [](const Point& r) { return (r.x() < 0) ? 0.75 : 0.0; };
+        initRho = [](const Point& r) { return (r.y() < 0) ? 1.0 : 0.125; };
+        initP   = [](const Point& r) { return (r.y() < 0) ? 1.0 : 0.1;  };
+        initV   = [](const Point& r) { return (r.y() < 0) ? 0.75 : 0.0; };
         initU   = [](const Point& r) { return 0.0; };
     }
     else if (caseName == "SodDiag")
     {
         cpcv = 1.4;
+        
 
         initRho = [](const Point& r) { return ((r.x() + r.y()) < 1.0) ? 1.0 : 0.125; };
         initP   = [](const Point& r) { return ((r.x() + r.y()) < 1.0) ? 1.0 : 0.1;  };
@@ -81,6 +82,15 @@ void Problem::setInitialConditions(string caseName)
         initP   = [](const Point& r) { return (r.x() <= -0.4) ? 1000.0 : ((r.x() >= 0.4) ? 100.0 : 0.01);  };
         initV   = [](const Point& r) { return 0.0; };
         initU   = [](const Point& r) { return 0.0; };
+    }
+    else if (caseName == "BlastCircle")
+    {
+	cpcv = 1.4;
+    
+	initRho = [](const Point& r) { return 1.0; };
+	initP = [](const Point& r) { return (r.length() < 0.1) ? 10.0 : 0.1; };
+	initU = [](const Point& r) { return 0.0; };
+	initV = [](const Point& r) { return 0.0; };
     }
     else if (caseName == "Noh")
     {
@@ -107,6 +117,15 @@ void Problem::setInitialConditions(string caseName)
         initRho = [](const Point& r) { return 1.0; };
         initP   = [&](const Point& r) { return 1.0 / cpcv;  };
         initU   = [](const Point& r) { return 3.0; };
+        initV   = [](const Point& r) { return 0.0; };
+    }
+    else if (caseName == "doubleMach")
+    {
+        cpcv = 1.4;
+
+        initRho = [](const Point& r) { return (r.x() < 0.15) ? 8.0 : 1.4; };
+        initP   = [](const Point& r) { return (r.x() < 0.15) ? 116.518 : 1.0;  };
+        initU   = [](const Point& r) { return (r.x() < 0.15) ? 8.25 : 0.0; };
         initV   = [](const Point& r) { return 0.0; };
     }
     else if (caseName == "acousticPulse")
@@ -137,7 +156,15 @@ void Problem::setInitialConditions(string caseName)
 
     init = [=](const Point& r)
     {
-        return numvector<double, 5> { initRho(r), initU(r), initV(r), 0.0, initP(r) / (cpcv - 1.0) + 0.5 * initRho(r) * (sqr(initU(r)) + sqr(initV(r)))};
+        return numvector<double, 5> \
+        { \
+            initRho(r), \
+            initRho(r)*initU(r), \
+            initRho(r)*initV(r), \
+            0.0, 
+            initP(r) / (cpcv - 1.0) + \
+                0.5 * initRho(r) * (sqr(initU(r)) + sqr(initV(r))) \
+        };
     };
 }
 
@@ -151,6 +178,7 @@ void Problem::setBoundaryConditions(string caseName, const std::vector<Patch>& p
         caseName == "SodY" || \
         caseName == "SodDiag" || \
         caseName == "Woodward" || \
+        caseName == "BlastCircle" || \
         caseName == "Noh" || \
         caseName == "123" || \
         caseName == "acousticPulse")
@@ -168,9 +196,20 @@ void Problem::setBoundaryConditions(string caseName, const std::vector<Patch>& p
         shared_ptr<BoundaryOpen> bOpen = make_shared<BoundaryOpen>();
         shared_ptr<BoundarySlip> bSlip = make_shared<BoundarySlip>();
         shared_ptr<BoundaryConstant> bConst = \
-                make_shared<BoundaryConstant>(numvector<double,5>({1.0, -3.0, 0.0, 0.0, 6.286}));
+                make_shared<BoundaryConstant>( \
+                numvector<double, 5>({1.0, -3.0, 0.0, 0.0, 6.286}));
 
         bc = {bConst, bOpen, bSlip, bSlip};
+    }    
+    else if (caseName == "doubleMach")
+    {
+        shared_ptr<BoundaryOpen> bOpen = make_shared<BoundaryOpen>();
+        shared_ptr<BoundarySlip> bSlip = make_shared<BoundarySlip>();
+        shared_ptr<BoundaryConstant> bConst = 
+                make_shared<BoundaryConstant>( \
+                numvector<double, 5>({8.0, -8.25*8.0, 0.0, 0.0, 563.545}));
+
+        bc = {bConst, bOpen, bSlip};
     }
     else if (caseName == "SodCircle")
     {

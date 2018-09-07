@@ -18,6 +18,8 @@
 #include <time.h>
 #include "Mesh2D.h"
 #include "Solver.h"
+//#include "RungeKutta.h"
+#include "Adams.h"
 #include "FluxLLF.h"
 #include "FluxHLL.h"
 #include "FluxHLLC.h"
@@ -39,7 +41,7 @@ int main(int argc, char** argv)
 {    
     // Problem
 
-    string caseName = "SodCircle";
+    string caseName = "monopole";
 
     omp_set_num_threads(atoi(argv[1]));
 
@@ -50,17 +52,20 @@ int main(int argc, char** argv)
     // Time parameters
 
     double tStart = 0.0;
-    double tEnd = 0.25;
+    double tEnd = 0.5;
 
-    double outputInterval = 0.25;
+    double outputInterval = 0.5;
     double initDeltaT = 1e-3;
 
     bool   defCoeffs = false; // true if alpha coefficients for start time are defined
+    int    nOutputSteps = 1;
 
-    bool   isDynamicTimeStep = true;
+    bool   isDynamicTimeStep = false;
     double Co = 0.5;
     double maxDeltaT = 1.0;
     double maxTauGrowth = 1.1;
+
+    int    ddtOrder = 2;
 
     // ---------------
 
@@ -82,14 +87,17 @@ int main(int argc, char** argv)
     // Initialize solver
     Solver solver(mesh, problem, numFlux);
 
-    // Initialize time controller
-    TimeControl dynamicTimeController(mesh,Co,maxDeltaT,maxTauGrowth,initDeltaT,isDynamicTimeStep);
-
     // Initialize indicator
-    IndicatorKXRCF indicator(mesh, problem);
+    IndicatorNowhere indicator(mesh, problem);
 
     // Initialize limiter
     LimiterRiemannWENOS limiter(indicator, problem);
+
+    // Initialize time step controller
+    TimeControl dynamicTimeController(mesh,Co,maxDeltaT,maxTauGrowth,initDeltaT,isDynamicTimeStep);
+
+    // Initialize ddt loper
+    Adams timeLooper(ddtOrder, solver, limiter, time);
 
     // ---------------
 
@@ -111,8 +119,9 @@ int main(int argc, char** argv)
     {
         solver.setInitialConditions();
         limiter.limit(solver.alphaPrev);
-        //solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(tStart));
+//        solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(tStart));
     }
+
 
 
     // time step
@@ -122,59 +131,26 @@ int main(int argc, char** argv)
     vector<numvector<double, 5*nShapes>> lhs = solver.alphaPrev; // coeffs
     //vector<numvector<double, 5*nShapes>> lhsPrev = lhs;
 
-    // run Runge --- Kutta 3 TVD
-
-    vector<numvector<double, 5*nShapes>> k1, k2, k3;
-
-    k1.resize(mesh.nCells);
-    k2.resize(mesh.nCells);
-    k3.resize(mesh.nCells);
+    // run time loop
 
     double t1, t2, t00;
 
     t00 = omp_get_wtime();
 
     int iT = 1; //iteration number
-    int nOutputSteps = 1;
 
-    for (double t = tStart + tau; t <= tEnd + 0.5*tau; t += tau)
+
+    for (double t = tStart; t < tEnd; t += tau)
     {
+       time.updateTime(t);
        t1 = omp_get_wtime();
 
-       time.updateTime(t);
-
        cout.precision(6);
-       cout << "---------\nt = " << t << endl;
+       cout << "---------\nt = " << t + tau << endl;
        cout << "tau = " << tau << endl;
 
-       k1 = solver.assembleRHS(lhs);
-
-       solver.alphaNext = solver.alphaPrev + k1 * tau;
-       
-       lhs = solver.correctNonOrtho(solver.alphaNext);
-       
-       limiter.limit(lhs);
-       solver.alphaNext = solver.correctPrevIter(lhs);
-       k2 = solver.assembleRHS(lhs);
-
-       //solver.alphaNext = solver.alphaPrev + (k1 + k2) * 0.5 * tau;
-       solver.alphaNext = solver.alphaPrev*0.75 + solver.alphaNext*0.25 + k2*0.25*tau;
-       lhs = solver.correctNonOrtho(solver.alphaNext);
-
-       limiter.limit(lhs);
-       solver.alphaNext = solver.correctPrevIter(lhs);
-
-
-       k3 = solver.assembleRHS(lhs);
-       double i13 = 0.3333333333333333;
-
-       solver.alphaNext = solver.alphaPrev*i13 + solver.alphaNext*2*i13 + k3*2*i13*tau;
-       lhs = solver.correctNonOrtho(solver.alphaNext);
-
-       limiter.limit(lhs);
-       solver.alphaNext = solver.correctPrevIter(lhs);
-
-
+       solver.alphaNext = timeLooper.update(solver.alphaPrev, tau);
+       //time.updateTime(t);
        // check energy conservation
        double totalEnergy = 0.0;
 
@@ -196,9 +172,6 @@ int main(int argc, char** argv)
 
        //cout << "after limiting" << solver.alphaNext[49] << endl;
 //       solver.write("alphaCoeffs/" + to_string(t)+"RK2bl",lhs);
-
-
-
 
 
        // check local internal energy balance
@@ -236,23 +209,23 @@ int main(int argc, char** argv)
         cout << "step time: " << t2 - t1 << endl;
 
 
-        if (fabs(t - nOutputSteps * outputInterval) < 1e-10)
+        if (fabs(t + tau - nOutputSteps * outputInterval) < 1e-10)
         {
             //string fileName = "alphaCoeffs/" + to_string((long double)t);
 
-            solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(t));
-            solver.write("alphaCoeffs/" + to_string(t),lhs);
+            solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(t+tau));
+            solver.write("alphaCoeffs/" + to_string(t+tau),lhs);
             nOutputSteps++;
         }
 
        solver.alphaPrev = solver.alphaNext;
        //lhsPrev = lhs;
 
-       //iT++; 
+       //iT++;
 
        dynamicTimeController.updateTimeStep();
 
-       tau = min(nOutputSteps * outputInterval - t, dynamicTimeController.getNewTau());
+       tau = min(nOutputSteps * outputInterval - t - tau, dynamicTimeController.getNewTau());
        //tau = dynamicTimeController.getNewTau();
 
     }

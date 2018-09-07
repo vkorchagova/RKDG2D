@@ -115,7 +115,7 @@ default(none)
             for (size_t k = 0; k < nCells; ++k)
                 for (int j = 0; j < 5; ++j)
                 {
-                    beta[k][j] =  cells[0]->getArea()  * (sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
+                    beta[k][j] =  cells[0]->getArea() * cells[k]->getArea()  * (sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
                     wTilde[k][j] = gamma[k] * (1.0 / sqr(beta[k][j] + 1e-6));
                 }
 
