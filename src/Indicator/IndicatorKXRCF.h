@@ -3,24 +3,25 @@
 
 #include "Indicator.h"
 
+///
+/// KXRCF indicator
+///
+/// Check troubled cells by algorithm of Krivodonova et al.
+///
+
 class IndicatorKXRCF : public Indicator
 {
 
-    //- Get mass fluxes
+    /// Get mass fluxes through each edge
     numvector<double, 4> massFlux(const Edge& edge, const Cell& cell) const;
 
 public:
 
-    //- Constructor
+    /// Constructor
     IndicatorKXRCF (const Mesh2D& msh, const Problem& prb): Indicator (msh, prb) {}
     
-    
-    //- Check discontinuities
+    /// Check discontinuities
     virtual std::vector<int> checkDiscontinuities() const override;
-
-
 };
 
-
-
-#endif
+#endif // INDICATORKXRCF_H

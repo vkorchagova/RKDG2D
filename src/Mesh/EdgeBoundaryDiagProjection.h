@@ -9,38 +9,38 @@ class Mesh2D;
 
 class EdgeBoundaryDiagProjection : public EdgeBoundary
 {
-    //- Get projection of the defined point onto diagonal (only for uniform meshes!!!)
+    /// Get projection of the defined point onto diagonal (only for uniform meshes!!!)
     Point getDiagProjection(const Point &p) const;
 
-    //- Pointer to mesh
+    /// Pointer to mesh
     const Mesh2D* mesh;
 
-    //- Get number of cell in diagonal where given point placed
+    /// Get number of cell in diagonal where given point placed
     int getNumDiagCell(const Point& p);
 
 public:
 
-    //- Default constructor
+    /// Default constructor
     EdgeBoundaryDiagProjection() : EdgeBoundary()  {}
 
-    //- Construct using two nodes
+    /// Construct using two nodes
     EdgeBoundaryDiagProjection(const Node& p1, const Node& p2) : EdgeBoundary(p1, p2) {}
 
-    //- Destructor
+    /// Destructor
     virtual ~EdgeBoundaryDiagProjection() = default;
 
     //// RKDG methods
 
-    //- Set BC function
+    /// Set BC function
     virtual void setBoundary(const std::shared_ptr<Boundary>& bound) override {}
 
-    //- Set mesh pointer
+    /// Set mesh pointer
     void setMeshPointer(const Mesh2D& msh) { mesh = &msh; }
 
-    //- Calculate local fluxes in gauss points
+    /// Calculate local fluxes in gauss points
     virtual void getLocalFluxes(const Flux& flux) override;
 
-    //- Compute max speed on edge
+    /// Compute max speed on edge
     virtual void getMaxUL() override {}
 
 };

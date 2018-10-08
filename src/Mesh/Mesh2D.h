@@ -12,65 +12,68 @@
 #include <fstream>
 #include <memory>
 
+///
+/// Two-dimensional mesh
+///
 
 class Mesh2D
 {
 
 private:
 
-    //- File ofstream for mesh export
+    /// File ofstream for mesh export
     mutable std::ofstream writer;
 
-    //- File ifstream for mesh import
+    /// File ifstream for mesh import
     mutable std::ifstream reader;
 
-    //- Find neighbours for given cell
+    /// Find neighbours for given cell
     void findNeighbourCells (const std::shared_ptr<Cell>& cell) const;
 
 public:
 
-    //- Number of cells
+    /// Number of cells
     int nCells;
 
+    /// Number of edges
     int nEdges;
+
+    /// Number of edges on boundary of flow domain
     int nBoundEdges;
 
+    /// Sum of entities in each cell (need for VTK writer)
     int nEntitiesTotal;
 
-    //- Coordinates of nodes (x,y)
+    /// Coordinates of nodes (x,y)
     std::vector<Node> nodes;
 
-    //- Internal edges (node1, node2)
-    //std::vector<std::shared_ptr<EdgeInternal>> edgesInternal;
-
-    //- Boundary edges
-    //std::vector<std::shared_ptr<EdgeBoundary>> edgesBoundary;
-
-    //- Edges
+    /// Edges
     std::vector<std::shared_ptr<Edge>> edges;
 
-    //- Mesh cells (edge1, ..., edgek counterclockwise)
+    /// Mesh cells (edge_1, ..., edge_k counterclockwise)
     std::vector<std::shared_ptr<Cell>> cells;
 
-    //- Groups of boundary edges
+    /// Groups of boundary edges
     std::vector<Patch> patches;
 
 public:
 
-    //- Construct mesh by import from UNV file
+    /// Construct mesh by import from UNV file
     Mesh2D(std::string fileName, const Problem& prb);
 
-    //- Destructor
+    /// Destructor
     ~Mesh2D();
 
-    //- Import mesh
+    /// Import mesh
     void importMesh(std::string fileName, const Problem &prb);
 
-    //- Export arbitrary 2D mesh in custom RKDG format like .msh
+    /// Export arbitrary 2D mesh in custom RKDG format like .msh
     void exportMesh() const;
 
-    //- Export VTK
+    /// Export VTK only with cell centers
     void exportMeshVTK(std::ostream& writer) const;
+
+    /// Export VTK with nodes and cell centers
     void exportMeshVTK_polyvertices(std::ostream& writer) const;
 
 };// end Mesh 2D

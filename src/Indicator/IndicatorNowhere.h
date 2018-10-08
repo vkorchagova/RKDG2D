@@ -3,13 +3,19 @@
 
 #include "Indicator.h"
 
+///
+/// Optimistic indicator
+///
+/// Sets no one cell is troubled
+///
+
 class IndicatorNowhere : public Indicator
 {
 public:
-    //- Constructor
+    /// Constructor
     IndicatorNowhere (const Mesh2D& msh, const Problem& prb): Indicator(msh, prb) {}
 
-    //- Check discontinuities
+    /// Check discontinuities
     virtual std::vector<int> checkDiscontinuities() const override;
 };
 

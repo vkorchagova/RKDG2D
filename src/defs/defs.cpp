@@ -58,7 +58,7 @@ void sum (const vector<numvector<double, dim>>& a, const vector<numvector<double
 };
 
 
-//-----------------------------------------------------------------------------------------
+///----------------------------------------------------------------------------------------
 
 //Прибавление к одному тройному массиву другого тройного массива
 vector<vector<vector<double>>>& operator += (vector<vector<vector<double>>>& a, const vector<vector<vector<double>>>& b)

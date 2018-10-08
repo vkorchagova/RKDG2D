@@ -65,7 +65,7 @@ Edge::Edge(const Node &p1, const Node &p2)
     
     length = (p2 - p1).length();
 
-    //- jacobian
+    /// jacobian
     J = 0.5 * length ;
 }
 

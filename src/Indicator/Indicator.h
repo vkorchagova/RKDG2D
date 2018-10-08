@@ -5,37 +5,34 @@
 #include "Mesh2D.h"
 #include "numvector.h"
 
+///
+/// Abstract class for troubled cell indicators
+///
 
 class Indicator
 {
 public:
 
-    //- Mesh
+    /// Constant reference to mesh
     const Mesh2D& mesh;
 
-    //- Problem
+    /// Constant reference to problem
     const Problem& problem;
     
-    //- List of troubed cells
+    /// List of troubled cells
     std::vector<int> tCells;
     
 public:
 
-    //- Constructor
+    /// Constructor
     Indicator(const Mesh2D& msh, const Problem& prb);
 
-    //- Destructor
+    /// Destructor
     virtual ~Indicator() {}
     
-    //- Check discontinuities
+    /// Check discontinuities
     virtual std::vector<int> checkDiscontinuities() const = 0;
-    
-    //- Write troubled cells in VTK format
-    //void writeTroubledCellsVTK();
     
 };
 
-
-
-
-#endif
+#endif // INDICATOR_H

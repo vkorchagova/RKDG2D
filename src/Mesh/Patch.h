@@ -1,7 +1,3 @@
-/// -----------------------------------
-/// Patch class of egde boundary groups
-/// -----------------------------------
-
 #ifndef PATCH_H
 #define PATCH_H
 
@@ -9,23 +5,27 @@
 #include <vector>
 #include "EdgeBoundary.h"
 
+///
+/// Group og edges on the flow domain boundary where some boundary condition should be applied
+///
+
 class Patch
 {
 
 public:
 
-    //- Name of patch
+    /// Name of patch
     std::string patchName;
 
-    //- List of edges in the patch
+    /// List of edges on the patch
     std::vector<std::shared_ptr<EdgeBoundary>> edgeGroup;
 
 public:
 
-    //- Default constructor
+    /// Default constructor
     Patch() {}
 
-    //- Destructor
+    /// Destructor
     ~Patch() {}
 };
 
