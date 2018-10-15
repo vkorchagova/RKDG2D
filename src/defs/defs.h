@@ -12,7 +12,7 @@
 
 
 //- Number of basis functions
-const int nShapes = 3;
+const int nShapes = 1;
 
 const int dim = 5 * nShapes;
 

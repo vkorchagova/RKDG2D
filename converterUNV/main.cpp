@@ -9,7 +9,7 @@ using namespace std;
 
 int main()
 {
-    FileConverter converter("..//..//meshCollection//sixCircles.unv","..//mesh2D");
+    FileConverter converter("..//..//..//..//meshCollection//sodRectTriag100.unv","..//mesh2D");
 
     converter.importUNV();
     converter.exportRKDG();
