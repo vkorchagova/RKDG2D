@@ -8,15 +8,15 @@ numvector<double, 5> getAlphaL(shared_ptr<Cell>& cell, numvector<double, 5>& mI,
     numvector<double, 5> y = 0.0;
     numvector<double, 5> yMin = 1e9;
     
-    cout << "------" << endl;
-    cout << "Cell No = " << cell->number << endl;
-    
-    for (int i = 0; i < cell->nGP; ++i)
+    //cout << "------" << endl;
+    //cout << "Cell No = " << cell->number << endl;
+    for (int e = 0; e < cell->nEntities; ++e)
+    for (int i = 0; i < cell->edges[e]->nGP; ++i)
     {
-        numvector<double, 5> pU   = cell->reconstructSolution(cell->gPoints2D[i]);
+        numvector<double, 5> pU   = cell->reconstructSolution(cell->edges[e]->gPoints[i]);
         numvector<double, 5> diff = pU - uMean;
         
-        cout << "pU - uMean = " << diff << endl;
+    //    cout << "pU - uMean = " << diff << endl;
         
         for (int i = 0; i < 5; ++i)
         {
@@ -35,7 +35,7 @@ numvector<double, 5> getAlphaL(shared_ptr<Cell>& cell, numvector<double, 5>& mI,
         }
     }
     
-    cout << "yMin = " << yMin << endl;
+    //cout << "yMin = " << yMin << endl;
 
     return yMin;
 }

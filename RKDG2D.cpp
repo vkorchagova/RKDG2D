@@ -56,9 +56,9 @@ int main(int argc, char** argv)
 
     double tStart = 0.0;
 
-    double tEnd = 1e-3;
+    double tEnd = 0.2;
 
-    double outputInterval = 1e-3;
+    double outputInterval = 0.2;
     double initDeltaT = 1e-3;
 
     bool   defCoeffs = false; // true if alpha coefficients for start time are defined
@@ -92,10 +92,10 @@ int main(int argc, char** argv)
     Solver solver(mesh, problem, numFlux);
 
     // Initialize indicator
-    IndicatorKXRCF indicator(mesh, problem);
+    IndicatorEverywhere indicator(mesh, problem);
 
     // Initialize limiter
-    LimiterBJ limiter(indicator, problem);
+    LimiterWENOS limiter(indicator, problem);
 
     // Initialize time step controller
     TimeControl dynamicTimeController(mesh,Co,maxDeltaT,maxTauGrowth,initDeltaT,isDynamicTimeStep);
