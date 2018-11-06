@@ -11,26 +11,34 @@
 #include "Point.h"
 
 
-/// Number of basis functions
-const int nShapes = 3;
+//- Number of basis functions
+const int nShapes = 1;
 
-/// Number of solution coeffs in one mesh cell
 const int dim = 5 * nShapes;
 
-/// rotate coordinate system clockwise
+//- rotate coordinate system clockwise
 numvector<double, 5> rotate(const numvector<double, 5>& sol, const Point& n);
 
-/// rotate coordinate system counter-clockwise
+//- rotate coordinate system counter-clockwise
 numvector<double, 5> inverseRotate(const numvector<double, 5>& sol, const Point& n);
 
+//std::vector<numvector<double, dim>> operator = (const std::vector<numvector<double, dim>>& a);
 
-/// vector<numvector> * alpha
+//- vector<numvector> * alpha
 std::vector<numvector<double, dim>> operator * (const std::vector<numvector<double, dim>>& a, const double b);
 
-/// Sum of two vector<numvector>s
+//- Sum of two vector<numvector>s
 std::vector<numvector<double, dim>> operator + (const std::vector<numvector<double, dim>>& b, const std::vector<numvector<double, dim>>& a);
 
+// return LU-factorization of matrix (+ transform of rhs)
 
+std::vector<std::vector<double> > forwardGauss(const std::vector<std::vector<double>>& data, bool partChoice = true);
+
+std::vector<double > reverseGauss(const std::vector<std::vector<double>>& data);
+
+int maxAbsPosition(const std::vector<std::vector<double>>& data, int i);
+
+void ChangeRows(std::vector<std::vector<double>>& data, int p, int q);
 
 namespace std
 {

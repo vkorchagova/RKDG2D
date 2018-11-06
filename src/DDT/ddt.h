@@ -1,3 +1,5 @@
+// Time derivative implementation
+
 #include <vector>
 #include "numvector.h"
 #include "defs.h"
@@ -5,38 +7,32 @@
 #include "Limiter.h"
 #include "TimeClass.h"
 
-///
-/// Abstract class for explicit methods of ODE system solution
-///
-
 class DDT
 {
 
 protected:
 
-    /// Reference to solver
+    //- Reference to solver
     Solver& solver;
 
-    /// Reference to limiter
+    //- Reference to limiter
     Limiter& limiter;
 
-    /// Reference to time
+    //- Reference to time
     Time& time;
 
-    /// Order of accuracy
+    //- Order of accuracy
     int order;
+
+    //- Number of RK steps
+    int nSteps;
 
 public:
 
-    /// Constructor
+    //- Constructor
     DDT(int o, Solver& s, Limiter& l, Time& t) : order(o), solver(s), limiter(l), time(t) {};
 
-    /// Update time step
-    ///
-    /// @param  yOld    solution coefficients in all mesh cells from previous time point
-    /// @param  tau     time step
-    ///
-    /// @return solution coefficients in all mesh cells for current time point 
+    //- update time step
     virtual std::vector<numvector<double, 5*nShapes>> update\
         (std::vector<numvector<double, 5*nShapes>> yOld, double tau) = 0;
 

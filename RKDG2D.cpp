@@ -43,7 +43,8 @@ int main(int argc, char** argv)
 {    
     // Problem
 
-    string caseName = "SodCircle";
+
+    string caseName = "SodX";
 
     omp_set_num_threads(atoi(argv[1]));
 
@@ -54,6 +55,7 @@ int main(int argc, char** argv)
     // Time parameters
 
     double tStart = 0.0;
+
     double tEnd = 1e-3;
 
     double outputInterval = 1e-3;
@@ -62,7 +64,7 @@ int main(int argc, char** argv)
     bool   defCoeffs = false; // true if alpha coefficients for start time are defined
     int    nOutputSteps = 1;
 
-    bool   isDynamicTimeStep = false;
+    bool   isDynamicTimeStep = true;
     double Co = 0.5;
     double maxDeltaT = 1.0;
     double maxTauGrowth = 1.1;
@@ -144,7 +146,10 @@ int main(int argc, char** argv)
     int iT = 1; //iteration number
 
 
-    for (double t = tStart; t < tEnd; t += tau)
+    //for (double t = tStart; t < tEnd; t += tau)
+
+    double t = tStart;
+    do
     {
        time.updateTime(t);
        t1 = omp_get_wtime();
@@ -211,15 +216,19 @@ int main(int argc, char** argv)
         t2 = omp_get_wtime();
 
         cout << "step time: " << t2 - t1 << endl;
+        cout << t << endl;
+        
+        t += tau;
 
 
-        if (fabs(t + tau - nOutputSteps * outputInterval) < 1e-10)
+        if (fabs(t - nOutputSteps * outputInterval) < 1e-10)
         {
             //string fileName = "alphaCoeffs/" + to_string((long double)t);
 
-            solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(t+tau));
-            solver.write("alphaCoeffs/" + to_string(t+tau),lhs);
+            solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(t));
+            solver.write("alphaCoeffs/" + to_string(t),lhs);
             nOutputSteps++;
+            continue;
         }
 
        solver.alphaPrev = solver.alphaNext;
@@ -228,11 +237,11 @@ int main(int argc, char** argv)
        //iT++;
 
        dynamicTimeController.updateTimeStep();
-
-       tau = min(nOutputSteps * outputInterval - t - tau, dynamicTimeController.getNewTau());
-       //tau = dynamicTimeController.getNewTau();
-
-    }
+       
+       tau = min(nOutputSteps * outputInterval - t, dynamicTimeController.getNewTau());
+       
+       
+    } while (t < tEnd);
 
     cout << "=========\nElapsed time = " << t2 - t00 << endl;
     cout << "---------\nEND \n";

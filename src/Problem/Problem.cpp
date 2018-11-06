@@ -187,8 +187,9 @@ void Problem::setBoundaryConditions(string caseName, const std::vector<Patch>& p
         shared_ptr<BoundarySlip> bSlip = make_shared<BoundarySlip>();
 
         //bc = {bOpen, bOpen};
-        //bc = {bSlip, bSlip};
+
         bc = {bSlip, bSlip, bSlip, bSlip};
+
         //bc = {bOpen, bOpen, bOpen, bOpen};
     }
     else if (caseName == "forwardStep")

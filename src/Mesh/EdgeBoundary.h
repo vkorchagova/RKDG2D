@@ -1,45 +1,54 @@
-#ifndef EDGEBOUNDARY_H
-#define EDGEBOUNDARY_H
-
-#include "Edge.h"
-#include "Boundary.h"
-
-/// Abstract EdgeBoundary class
+/// ------------------------------
+/// EdgeBoundary
+/// ------------------------------
+/// Base class: Edge
+///
+/// Abstract class
 ///
 /// Parameters:
 /// -   one neighbour cell
 ///
 /// Methods:
 /// -   get local fluxes (public)
+/// -   apply boundary condition (private, pure virtual)
+/// ------------------------------
+
+
+#ifndef EDGEBOUNDARY_H
+#define EDGEBOUNDARY_H
+
+#include "Edge.h"
+#include "Boundary.h"
 
 class EdgeBoundary : public Edge
 {
-    //- geometric variables
+    /// geometric variables
 
-    /// number of neighbour cells
     static const int nNeighbourCells = 1;
 
 public:
 
-    /// Boundary condition
+    //- Boundary condition
     std::shared_ptr<Boundary> bc;
 
-    /// Default constructor
+    //- Default constructor
     EdgeBoundary() : Edge() {}
 
-    /// Construct using two nodes
+    //- Construct using two nodes
     EdgeBoundary(const Node& p1, const Node& p2) : Edge(p1, p2) { neibCells.reserve(nNeighbourCells); }
 
-    /// Destructor
+    //- Destructor
     virtual ~EdgeBoundary() = default;
 
-    /// Set boundary condition
+    // virtual void setMeshPointer(const Mesh2D& msh) {};
+
+    //- Set boundary condition
     void setBoundary(const std::shared_ptr<Boundary>& bound) {bc = bound;}
 
-    /// Calculate local fluxes in gauss points
+    //- Calculate local fluxes in gauss points
     virtual void getLocalFluxes(const Flux& flux) override;
 
-    /// Compute max speed on edge
+    //- Compute max speed on edge
     virtual void getMaxUL() override;
 };
 

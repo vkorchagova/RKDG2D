@@ -1,27 +1,25 @@
 #ifndef TIMECLASS_H
 #define TIMECLASS_H
 
-/// Time object
-///
 
 class Time
 {
-    /// Current time
+    //- Current time
     double runTime_;
     
-    /// Current time step
+    //- Current time step
     double tau;
 
 
 public:
 
-    /// Default constructor
+    //- Default constructor
     Time(){}
 
-    /// Set time
+    //- Set time
     void updateTime (double t) {runTime_ = t;}
 
-    /// Get time
+    //- Get time
     double runTime() const {return runTime_;}
 };
 
