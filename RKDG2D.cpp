@@ -26,10 +26,12 @@
 #include "IndicatorNowhere.h"
 #include "IndicatorEverywhere.h"
 #include "IndicatorKXRCF.h"
-#include "IndicatorHarten.h"
+//#include "IndicatorHarten.h"
 #include "LimiterFinDiff.h"
-#include "LimiterMUSCL.h"
+//#include "LimiterMUSCL.h"
 #include "LimiterWENOS.h"
+#include "LimiterBJ.h"
+
 #include "LimiterRiemannWENOS.h"
 
 
@@ -41,7 +43,7 @@ int main(int argc, char** argv)
 {    
     // Problem
 
-    string caseName = "monopole";
+    string caseName = "SodCircle";
 
     omp_set_num_threads(atoi(argv[1]));
 
@@ -52,9 +54,9 @@ int main(int argc, char** argv)
     // Time parameters
 
     double tStart = 0.0;
-    double tEnd = 0.5;
+    double tEnd = 1e-3;
 
-    double outputInterval = 0.5;
+    double outputInterval = 1e-3;
     double initDeltaT = 1e-3;
 
     bool   defCoeffs = false; // true if alpha coefficients for start time are defined
@@ -88,16 +90,16 @@ int main(int argc, char** argv)
     Solver solver(mesh, problem, numFlux);
 
     // Initialize indicator
-    IndicatorNowhere indicator(mesh, problem);
+    IndicatorKXRCF indicator(mesh, problem);
 
     // Initialize limiter
-    LimiterRiemannWENOS limiter(indicator, problem);
+    LimiterBJ limiter(indicator, problem);
 
     // Initialize time step controller
     TimeControl dynamicTimeController(mesh,Co,maxDeltaT,maxTauGrowth,initDeltaT,isDynamicTimeStep);
 
     // Initialize ddt loper
-    Adams timeLooper(ddtOrder, solver, limiter, time);
+    RungeKutta timeLooper(ddtOrder, solver, limiter, time);
 
     // ---------------
 
@@ -119,7 +121,9 @@ int main(int argc, char** argv)
     {
         solver.setInitialConditions();
         limiter.limit(solver.alphaPrev);
-//        solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(tStart));
+        //solver.write("alphaCoeffs/" + to_string(tStart),lhs);
+        solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(tStart));
+        
     }
 
 

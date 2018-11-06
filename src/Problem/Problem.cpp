@@ -69,8 +69,8 @@ void Problem::setInitialConditions(string caseName)
     {
         cpcv = 1.4;
 
-        initRho = [](const Point& r) { return (r.length() <= 0.4) ? 1.0 : 0.125; };
-        initP   = [](const Point& r) { return (r.length() <= 0.4) ? 1.0 : 0.1;  };
+        initRho = [](const Point& r) { return (r.length() <= 0.1) ? 1.0 : 0.125; };
+        initP   = [](const Point& r) { return (r.length() <= 0.1) ? 1.0 : 0.1;  };
         initV   = [](const Point& r) { return 0.0; };
         initU   = [](const Point& r) { return 0.0; };
     }
@@ -161,7 +161,7 @@ void Problem::setInitialConditions(string caseName)
             initRho(r), \
             initRho(r)*initU(r), \
             initRho(r)*initV(r), \
-            0.0, 
+            0.0, \
             initP(r) / (cpcv - 1.0) + \
                 0.5 * initRho(r) * (sqr(initU(r)) + sqr(initV(r))) \
         };
@@ -188,7 +188,7 @@ void Problem::setBoundaryConditions(string caseName, const std::vector<Patch>& p
 
         //bc = {bOpen, bOpen};
         //bc = {bSlip, bSlip};
-        bc = {bSlip, bSlip, bSlip};
+        bc = {bSlip, bSlip, bSlip, bSlip};
         //bc = {bOpen, bOpen, bOpen, bOpen};
     }
     else if (caseName == "forwardStep")
