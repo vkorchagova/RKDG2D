@@ -1,13 +1,22 @@
-#ifndef FILECONVERTER_H
-#define FILECONVERTER_H
+#ifndef DECOMPOSERUNV_H
+#define DECOMPOSERUNV_H
 
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <vector>
 #include <string>
+#include <algorithm>
 
-/// Mesh converter from Ideas UNV format to RKDG2D format
+/// Mesh Ideas UNV decomposer based on METIS program
+///
+/// Result of partition writes to sequence of files looks like
+///     mesh2D.0
+///     mesh2D.1
+///     ...
+///
+/// File format for output is the special format for RKDG code
+/// - see more after class definition
 ///
 /// IDEAS UNV mesh: the sequence of blocks like:
 ///     -1
@@ -16,15 +25,16 @@
 /// content of section
 ///     -1
 ///
-/// RKDG mesh: the sequence of blocks looks like .msh format
-/// See more after class definition
+/// More about METIS:
+///     http://glaros.dtc.umn.edu/gkhome/metis/metis/overview
+///
 
 
 //- Boundary between UNV sections
 const std::string SEPARATOR("    -1");
 
 
-class FileConverter
+class DecomposerUNV
 {
 
 private:
@@ -61,6 +71,9 @@ private:
 
     //- patch edge groups
     std::vector<std::vector<int>> patchEdgeGroups;
+    
+    //- partition to subregions
+    std::vector<int> partition;
 
 
     /// Methods
@@ -96,43 +109,58 @@ private:
 public:
 
     //- Constructor
-    FileConverter(std::string unvMeshFile, std::string rkdgMeshFile);
+    DecomposerUNV(std::string unvMeshFile, std::string rkdgMeshFile);
 
     //- Destructor
-    ~FileConverter();
+    ~DecomposerUNV();
 
     //- Import UNV mesh
     void importUNV ();
 
     //- Export RKDG mesh
     void exportRKDG();
+    
+    //- Export mesh elements for METIS utility
+    void exportMETIS() const;
+    
+    //- Read results of partition
+    void importPartition(std::string metisPartFile);
+    
+    //- Export VTK visualisation
+    void exportVTK() const;
+    
+    //- Export part of mesh
+    void exportPartMeshRKDG(int numDom) const;
+    
 };
 
 
-#endif // FILECONVERTER_H
+#endif // DECOMPOSERUNV_H
 
-/// RKDG mesh format
-/// ----------------
+/// RKDG mesh format for decomposed mesh
+/// ------------------------------------
+///
+/// Each number are related to appropriate part of mesh
 ///
 /// $Nodes
 ///     number_of_nodes
-///     x y
+///     global_number x y
 ///     ...
 /// $EndNodes
 /// $Edges //at first - boundary edges, after - internal
 ///     number_of_boundary_edges
 ///     total_number_of_edges
-///     is_edge_on_boundary node_1 node_2
+///     global_number is_edge_on_boundary node_1 node_2
 ///     ...
 /// $EndEdges
 /// $Cells
 ///     number_of_cells
-///     number_of_edges_in_cell node1 node2 ... edge1 edge2 ... // number_of_nodes = number_of_edges
+///     global_number number_of_edges_in_cell node1 node2 ... edge1 edge2 ... // number_of_nodes = number_of_edges
 ///     ...
 /// $EndCells
 /// $AdjointCellsForEdges
 ///     total_number_of_edges
-///     number_of_adj_cells cell1 cell2 (or only cell1)
+///     cell1 cell2
 ///     ...
 /// $EndAdjointCellsForEdges
 /// $EdgeNormals
