@@ -27,7 +27,6 @@
 ///
 /// More about METIS:
 ///     http://glaros.dtc.umn.edu/gkhome/metis/metis/overview
-///
 
 
 //- Boundary between UNV sections
@@ -53,8 +52,13 @@ private:
     //- edges = numbers of nodes
     std::vector<int> edges;
     
+    //- number of nodes
     int nNodes;
+    
+    //- number of edges
     int nEdges;
+    
+    //- number of cells
     int nCells;
 
     //- cells = numbers of edges
@@ -109,10 +113,16 @@ private:
     //- Find ajoint cells for each edge
     void setAdjointCells();
     
+    //- Auxiliary functions to get all edges in mesh
+    //  UNV format gives explicitly only edges on geometric boundaries for flow domain.
+    //  Therefore it is needed to restore all other edges
+    //  The most convenient way to do it during the analysis --- which edges belongs to mesh cells
+    
+    //- check if edge has been restored in total array of edges in mesh reader
     int checkForExistingEdges (int iNode1, int iNode2) const;
     
+    //- make new edge
     void createNewEdge (int iNode1, int iNode2);
-    
 
 
 public:
@@ -167,6 +177,11 @@ public:
 ///     global_number number_of_edges_in_cell node1 node2 ... edge1 edge2 ... // number_of_nodes = number_of_edges
 ///     ...
 /// $EndCells
+/// $AlienCells
+///     number_of_cells
+///     global_number number_of_edges_in_cell node1 node2 ... edge1 edge2 ... number_of_processor_subdomain_for_alien_cell
+///     ...
+/// $EndAlienCells
 /// $AdjointCellsForEdges
 ///     total_number_of_edges
 ///     cell1 cell2
