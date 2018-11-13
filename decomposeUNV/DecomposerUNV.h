@@ -51,7 +51,11 @@ private:
     std::vector<std::vector<double>> nodes;
 
     //- edges = numbers of nodes
-    std::vector<std::vector<int>> edges;
+    std::vector<int> edges;
+    
+    int nNodes;
+    int nEdges;
+    int nCells;
 
     //- cells = numbers of edges
     std::vector<std::vector<int>> cellsAsEdges;
@@ -100,10 +104,15 @@ private:
     void getCellCenter(const std::vector<int>& nodes);
 
     //- Find normal vectors for edges
-    void getEgdeNormals();
+    void getEdgeNormals();
 
     //- Find ajoint cells for each edge
     void setAdjointCells();
+    
+    int checkForExistingEdges (int iNode1, int iNode2) const;
+    
+    void createNewEdge (int iNode1, int iNode2);
+    
 
 
 public:

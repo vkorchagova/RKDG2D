@@ -2,6 +2,7 @@
 
 #include <functional>
 #include <math.h>
+#include <ctime>
 
 using namespace std;
 
@@ -53,7 +54,10 @@ DecomposerUNV::DecomposerUNV(std::string unvMeshFile, std::string rkdgMeshFile)
         exit(0);
     }
 
-    //TODO: check if file format correct
+    //TODO: check if file format is correct
+    
+    nNodes = 0;
+    nEdges = 0;
 }
 
 DecomposerUNV::~DecomposerUNV()
@@ -122,6 +126,8 @@ void DecomposerUNV::readNodes()
         nodes.push_back(nodeCoord);
 
     } while (str != SEPARATOR);
+    
+    nNodes = nodes.size();
 
     cout << "OK\n";
 }  // End readNodes
@@ -161,7 +167,9 @@ void DecomposerUNV::readElements()
                 getline(reader, str);
                 elementNodeNumbers = parseStringInt(str);
 
-                edges.push_back(elementNodeNumbers);
+                edges.push_back(elementNodeNumbers[0]);
+                edges.push_back(elementNodeNumbers[1]);
+                nEdges++;
 
                 break;
             }
@@ -186,6 +194,7 @@ void DecomposerUNV::readElements()
 
     } while (str != SEPARATOR);
 
+    nCells = cellsAsEdges.size();
     cout << "OK\n";
 
 }  // End readElements
@@ -243,58 +252,74 @@ void DecomposerUNV::readPatches()
 }  // End readPatches
 
 
+int DecomposerUNV::checkForExistingEdges (int iNode1, int iNode2) const
+{
+    //int nExistingEdges = edges.size();
+    int pos = 0;
+    for (int j = 0; j < nEdges; ++j)
+    { // if this edge is exists
+        pos = 2 * j;
+        if ((iNode1 == edges[pos] && iNode2 == edges[pos + 1]) ||\
+            (iNode2 == edges[pos] && iNode1 == edges[pos + 1]))
+        {
+            return j + 1;
+            //elementEdges.push_back(j+1);
+            //return true;
+        }
+    }
+    
+    return -1;
+};
+
+void DecomposerUNV::createNewEdge (int iNode1, int iNode2)
+{
+    //vector<int> newEdge = {iNode1,iNode2};
+    edges.push_back(iNode1);
+    edges.push_back(iNode2);
+    nEdges += 1;
+};
+
+
 void DecomposerUNV::getElementEdges(const std::vector<int>& nodeNumbers)
 {
     int n = nodeNumbers.size();
 
     vector<int> elementEdges;
     elementEdges.reserve(n);
-
-    //- useful internal functions
-
-    function<bool(int,int)> checkForExistingEdges = [&](int iNode1, int iNode2)
-    {
-
-        int nExistingEdges = edges.size();
-
-        for (int j = 0; j < nExistingEdges; ++j)
-        { // if this edge is exists
-            if ((iNode1 == edges[j][0] && iNode2 == edges[j][1]) ||\
-                (iNode1 == edges[j][1] && iNode2 == edges[j][0]))
-            {
-                elementEdges.push_back(j+1);
-                return true;
-            }
-        }
-
-        return false;
-    };
-
-    function<void(int,int)> createNewEdge = [&](int iNode1, int iNode2)
-    {
-        vector<int> newEdge = {iNode1,iNode2};
-        edges.push_back(newEdge);
-        elementEdges.push_back(edges.size());
-    };
+    
 
     //- end of useful internal functions
+    
+    int iEdge = -1;
 
-    for (int i = 0; i < n-1; ++i)
+    for (int i = 0; i < n - 1; ++i)
     {
-        if (!checkForExistingEdges(nodeNumbers[i],nodeNumbers[i+1]))
+        iEdge = checkForExistingEdges(nodeNumbers[i],nodeNumbers[i + 1]);
+        
+        if (iEdge != -1)
         {
-           createNewEdge(nodeNumbers[i],nodeNumbers[i+1]);
+            elementEdges.push_back(iEdge);
+        }
+        else
+        {
+            createNewEdge(nodeNumbers[i],nodeNumbers[i + 1]);
+            elementEdges.push_back(nEdges);
         }
     }
-
-    if (!checkForExistingEdges(nodeNumbers[n-1],nodeNumbers[0]))
+    
+    iEdge = checkForExistingEdges(nodeNumbers[n - 1],nodeNumbers[0]);
+    
+    if (iEdge != -1)
+        elementEdges.push_back(iEdge);
+    else
     {
-       createNewEdge(nodeNumbers[n-1],nodeNumbers[0]);
+        createNewEdge(nodeNumbers[n - 1],nodeNumbers[0]);
+        elementEdges.push_back(nEdges);
     }
-
-
+    
     cellsAsEdges.push_back(elementEdges);
 
+    //cout << "nedgs = " << nEdges << endl;
 } // End getElementEdges
 
 
@@ -304,12 +329,12 @@ void DecomposerUNV::getCellCenter(const vector<int> &nodeNumbers)
 
     for (int iNode : nodeNumbers )
     {
-        center[0] += nodes[iNode-1][0];
-        center[1] += nodes[iNode-1][1];
+        center[0] += nodes[iNode - 1][0];
+        center[1] += nodes[iNode - 1][1];
     }
 
-    center[0] *= 1.0/nodeNumbers.size();
-    center[1] *= 1.0/nodeNumbers.size();
+    center[0] /= double(nodeNumbers.size());
+    center[1] /= double(nodeNumbers.size());
 
     cellCenters.push_back(center);
 
@@ -318,28 +343,44 @@ void DecomposerUNV::getCellCenter(const vector<int> &nodeNumbers)
 
 void DecomposerUNV::setAdjointCells()
 {
-    int nEdges = edges.size();
-
+    //int nEdges = edges.size();
     adjEdgeCells.resize(nEdges);
-
-    for (size_t iCell = 0; iCell < cellsAsEdges.size(); ++iCell)
+    
+    for (size_t iCell = 0; iCell < nCells; ++iCell)
         for (int iEdge : cellsAsEdges[iCell])
-            adjEdgeCells[iEdge-1].push_back(iCell+1);
+            adjEdgeCells[iEdge - 1].push_back(iCell + 1);
 
 } // End setAdjointCells
 
 
-void DecomposerUNV::getEgdeNormals()
+void DecomposerUNV::getEdgeNormals()
 {
     edgeNormals.reserve(edges.size());
+    
+    vector<double> edgeV(2);
+    vector<double> node1(2); // | fast access to nodes of considered edge
+    vector<double> node2(2); // |
+    vector<double> centerFirstAdjCell(2);
+    vector<double> centerV(2);
 
-    for (size_t i = 0; i < edges.size(); ++i)
+
+    for (size_t i = 0; i < nEdges; i++)
     {
-        vector<int> edge = edges[i];
-        vector<double> edgeV = {nodes[edge[1]-1][0] - nodes[edge[0]-1][0], nodes[edge[1]-1][1] - nodes[edge[0]-1][1]};
-        vector<double> centerV = {cellCenters[adjEdgeCells[i][0]-1][0] - nodes[edge[0]-1][0], cellCenters[adjEdgeCells[i][0]-1][1] - nodes[edge[0]-1][1]};
-        vector<double> n = {edgeV[1], -edgeV[0]};
-        if (n[0]*centerV[0] + n[1]*centerV[1] > 0)
+        //vector<int> edge = edges[i];
+        node1 = nodes[ edges[2*i + 1] - 1];
+        node2 = nodes[ edges[2*i] - 1];
+        
+        edgeV[0] = node1[0] - node2[0];
+        edgeV[1] = node1[1] - node2[1];
+        
+        centerFirstAdjCell = cellCenters[adjEdgeCells[i][0] - 1];
+        
+        centerV[0] = centerFirstAdjCell[0] - node2[0];
+        centerV[1] = centerFirstAdjCell[1] - node2[1];
+        
+        vector<double> n = { edgeV[1], -edgeV[0]};
+        
+        if (n[0]*centerV[0] + n[1]*centerV[1] > 0.0)
         {
             n[0] *= -1;
             n[1] *= -1;
@@ -352,7 +393,7 @@ void DecomposerUNV::getEgdeNormals()
 
         edgeNormals.push_back(n);
     }
-} // End getEgdeNormals
+} // End getEdgeNormals
 
 
 // ------------------------------ Public methods ------------------------------
@@ -392,10 +433,32 @@ void DecomposerUNV::importUNV ()
             }
             case 2412:
             {
-                cout << "Processing elements (boundary edges + cells) ... ";
+                cout << "Read elements (boundary edges + cells) ... ";
+                clock_t to,te;
+                to = clock();
                 readElements();
+                te = clock();
+                
+                cout << "OK" << endl;
+                cout << "time = " << float(te - to) / CLOCKS_PER_SEC << endl;
+                
+                cout << "Processing adjoint cells for each edge ... ";
+                
+                to = clock();
                 setAdjointCells();
-                getEgdeNormals();
+                te = clock();
+                
+                cout << "OK" << endl;
+                cout << "time = " << float(te - to) / CLOCKS_PER_SEC << endl;
+                
+                cout << "Processing normals ... ";
+                to = clock();
+                getEdgeNormals();
+                te = clock();
+                
+                cout << "OK" << endl;
+                cout << "time = " << float(te - to) / CLOCKS_PER_SEC << endl;
+                ;
 
                 break;
             }
@@ -429,9 +492,9 @@ void DecomposerUNV::exportRKDG()
     // --------------------------------------
 
     writer << "$Nodes\n";
-    writer << nodes.size() << endl;
+    writer << nNodes << endl;
 
-    for (int i = 0; i < nodes.size(); ++i)
+    for (int i = 0; i < nNodes; ++i)
         writer << nodes[i][0] << ' ' << nodes[i][1] << endl;
 
     writer << "$EndNodes\n";
@@ -446,19 +509,19 @@ void DecomposerUNV::exportRKDG()
     writer << "$Edges\n";
 
     writer << nEdgesBound << endl;
-    writer << edges.size() << endl;
+    writer << nEdges << endl;
 
-    for (size_t i = 0; i < edges.size(); ++i)
-        writer << abs (int(adjEdgeCells[i].size() - 2)) << ' ' << edges[i][0] << ' ' << edges[i][1] << endl;
+    for (size_t i = 0; i < nEdges; ++i)
+        writer << abs (int(adjEdgeCells[i].size() - 2)) << ' ' << edges[2*i] << ' ' << edges[2*i + 1] << endl;
 
     writer << "$EndEdges\n";
 
     // --------------------------------------
 
     writer << "$Cells\n";
-    writer << cellsAsEdges.size() << endl;
+    writer << nCells << endl;
 
-    for (size_t i = 0; i < cellsAsEdges.size(); ++i)
+    for (size_t i = 0; i < nCells; ++i)
     {
         writer << cellsAsEdges[i].size() << ' ';
         for (size_t j = 0; j < cellsAsNodes[i].size(); ++j)
@@ -483,9 +546,9 @@ void DecomposerUNV::exportRKDG()
     // --------------------------------------
 
     writer << "$AdjointCellsForEdges\n";
-    writer << edges.size() << endl;
+    writer << nEdges << endl;
 
-    for (size_t i = 0; i < adjEdgeCells.size(); ++i)
+    for (size_t i = 0; i < nEdges; ++i)
     {
         writer << adjEdgeCells[i].size() << ' ';
 
@@ -499,9 +562,9 @@ void DecomposerUNV::exportRKDG()
     // --------------------------------------
 
     writer << "$EdgeNormals\n";
-    writer << edges.size() << endl;
+    writer << nEdges << endl;
 
-    for (size_t i = 0; i < edgeNormals.size(); ++i)
+    for (size_t i = 0; i < nEdges; ++i)
         writer << edgeNormals[i][0] << ' ' << edgeNormals[i][1] << endl;
 
     writer << "$EndEdgeNormals\n";
@@ -529,9 +592,10 @@ void DecomposerUNV::exportRKDG()
 void DecomposerUNV::exportMETIS() const
 {
     ofstream writerMETIS("meshMETIS");
-    int n = cellsAsNodes.size();
-    writerMETIS << n << endl;
-    for (size_t i = 0; i < n; ++i)
+    
+    writerMETIS << nCells << endl;
+    
+    for (size_t i = 0; i < nCells; ++i)
     {
         for (size_t j = 0; j < cellsAsNodes[i].size(); ++j)
              writerMETIS << cellsAsNodes[i][j] << ' ';
@@ -548,10 +612,9 @@ void DecomposerUNV::importPartition(std::string metisPartFile)
     
     int buffer = 0;
     
-    partition.reserve(cellsAsNodes.size());
+    partition.reserve(nCells);
     
-    //while (metisReader.peek() != EOF)
-    for (int i = 0; i < cellsAsNodes.size(); ++i)
+    for (int i = 0; i < nCells; ++i)
     {
         metisReader >> buffer;
         partition.emplace_back(buffer);
@@ -560,53 +623,65 @@ void DecomposerUNV::importPartition(std::string metisPartFile)
     metisReader.close();
 }
 
-void DecomposerUNV::exportPartMeshRKDG(int numDom) const
+void DecomposerUNV::exportPartMeshRKDG(int nDom) const
 {
-    cout << "Exporting domain #" << numDom << "... ";
+    cout << "Exporting domain #" << nDom << "... ";
+    
+    
     
     // step 0: preparation
-    string fileName = "mesh2D." + to_string(numDom);
+    string fileName = "mesh2D." + to_string(nDom);
     ofstream writerPart(fileName.c_str());
     
-    vector<bool> isWritten;
+    vector<bool> isWrittenN;
+    vector<bool> isWrittenE;
     vector<int> nodesInDom;
     vector<int> edgesInDom;
     vector<vector<int>> patchGroupsInDom;
+    
+    vector<int> alienCells;
+    vector<int> alienCellsDom;
+    
+    clock_t ts, te;
+    
+    ts = clock();
     
     // step 1: read numbers of cells in domain
     vector<int> cellsInDom;
     
     for (int i = 0; i < partition.size(); ++i)
     {
-        if (partition[i] == numDom)
+        if (partition[i] == nDom)
             cellsInDom.push_back(i);
     }
     
-    // step 2: get coordinates of nodes
-    isWritten.resize(nodes.size());
-    fill(isWritten.begin(),isWritten.end(),false);
+    
+    // step 2: prepare info 
+    isWrittenN.resize(nNodes);
+    fill(isWrittenN.begin(),isWrittenN.end(),false);
+    isWrittenE.resize(nEdges);
+    fill(isWrittenE.begin(),isWrittenE.end(),false);
     
     for (const int num : cellsInDom)
+    {
+        // get coordinates of nodes
         for (const int nNode : cellsAsNodes[num])
-            if (!isWritten[nNode])
+            if (!isWrittenN[nNode-1])
             {
                 nodesInDom.push_back(nNode-1);
-                isWritten[nNode] = true;
+                isWrittenN[nNode-1] = true;
             }
-    
-    //step 3: get edges: global_num node_1_global node_2_global
-    isWritten.resize(edges.size());
-    fill(isWritten.begin(),isWritten.end(),false);
-    
-    for (const int num : cellsInDom)
+
+        // get edges
         for (const int nEdge : cellsAsEdges[num])
-            if (!isWritten[nEdge])
+            if (!isWrittenE[nEdge-1])
             {
                 edgesInDom.push_back(nEdge-1);
-                isWritten[nEdge] = true;
+                isWrittenE[nEdge-1] = true;
             }
-            
-    //step 4: get patches
+    }
+    
+    //step 3: get patches
     patchGroupsInDom.resize(patchEdgeGroups.size());
     vector<int>::iterator founded;
     
@@ -614,14 +689,62 @@ void DecomposerUNV::exportPartMeshRKDG(int numDom) const
     {
         for (int iEdge : patchEdgeGroups[iPatch])
         {
-            founded = std::find(edgesInDom.begin(),edgesInDom.end(),iEdge);
+            founded = std::find(edgesInDom.begin(),edgesInDom.end(),iEdge - 1);
 
             if (founded != edgesInDom.end())
-                patchGroupsInDom[iPatch].push_back(iEdge-1);
+                patchGroupsInDom[iPatch].push_back(iEdge - 1);
         }
     }
     
-    //step 5: write file
+    int nRealCells = cellsInDom.size();
+    
+    
+    //step 4: get alien cells
+    for (int nEdge : edgesInDom)
+    {
+        for (int cell : adjEdgeCells[nEdge])
+        {
+            if (partition[cell-1] != nDom && find(alienCells.begin(), alienCells.end(), cell - 1) == alienCells.end())
+            {
+                alienCells.push_back(cell - 1);
+                alienCellsDom.push_back(partition[cell - 1]);
+            }
+        }
+    }
+    
+    //step 5: add nodes and edges for alien cells to vectors of nodes and edges
+    //for (const int num : alienCells)
+    for (int i = 0; i < alienCells.size(); ++i)
+    {
+        int num = alienCells[i];
+        // get coordinates of nodes
+        for (const int nNode : cellsAsNodes[num])
+        {
+            if (!isWrittenN[nNode-1])
+            {
+                nodesInDom.push_back(nNode-1);
+                isWrittenN[nNode-1] = true;
+            }
+        }
+
+        // get edges
+        for (const int nEdge : cellsAsEdges[num])
+            if (!isWrittenE[nEdge-1])
+            {
+                edgesInDom.push_back(nEdge-1);
+                isWrittenE[nEdge-1] = true;
+            }
+    }
+    
+    
+    int nAlienCells = alienCells.size();
+    
+    te = clock();
+    
+    cout.precision(8);
+    cout << "\n=========\n time = " << (float)(te - ts) / CLOCKS_PER_SEC << endl;
+    
+    //step last: write file
     
     writerPart.precision(16);
     int globalNum = -1;
@@ -644,7 +767,7 @@ void DecomposerUNV::exportPartMeshRKDG(int numDom) const
     int nEdgesBound = 0;
 
     for (int i = 0; i < patchNames.size(); ++i)
-        nEdgesBound += patchGroupsInDom.size();
+        nEdgesBound += patchGroupsInDom[i].size();
 
     writerPart << "$Edges\n";
 
@@ -654,7 +777,7 @@ void DecomposerUNV::exportPartMeshRKDG(int numDom) const
     for (size_t i = 0; i < edgesInDom.size(); ++i)
     {
         globalNum = edgesInDom[i];
-        writerPart << abs (int(adjEdgeCells[globalNum].size() - 2)) << ' ' << edges[globalNum][0] << ' ' << edges[globalNum][1] << endl;
+        writerPart << abs (int(adjEdgeCells[globalNum].size() - 2)) << ' ' << edges[2*globalNum] << ' ' << edges[2*globalNum + 1] << endl;
     }
 
     writerPart << "$EndEdges\n";
@@ -662,13 +785,13 @@ void DecomposerUNV::exportPartMeshRKDG(int numDom) const
     // --------------------------------------
 
     writerPart << "$Cells\n";
-    writerPart << cellsInDom.size() << endl;
+    writerPart << nRealCells << endl;
 
-    for (size_t i = 0; i < cellsInDom.size(); ++i)
+    for (size_t i = 0; i < nRealCells; ++i)
     {
         globalNum = cellsInDom[i];
         writerPart << globalNum << ' ';
-        writerPart << cellsInDom.size() << ' ';
+        writerPart << cellsAsNodes[globalNum].size() << ' ';
         for (size_t j = 0; j < cellsAsNodes[globalNum].size(); ++j)
              writerPart << cellsAsNodes[globalNum][j] << ' ';
         for (size_t j = 0; j < cellsAsEdges[globalNum].size(); ++j)
@@ -677,6 +800,28 @@ void DecomposerUNV::exportPartMeshRKDG(int numDom) const
     }
 
     writerPart << "$EndCells\n";
+    
+    // --------------------------------------
+
+    writerPart << "$AlienCells\n";
+    writerPart << nAlienCells << endl;
+
+    for (int i = 0; i < nAlienCells; ++i)
+    {
+        globalNum = alienCells[i];
+        writerPart << globalNum << ' ';
+        writerPart << cellsAsNodes[globalNum].size() << ' ';
+        for (size_t j = 0; j < cellsAsNodes[globalNum].size(); ++j)
+             writerPart << cellsAsNodes[globalNum][j] << ' ';
+        for (size_t j = 0; j < cellsAsEdges[globalNum].size(); ++j)
+             writerPart << cellsAsEdges[globalNum][j] << ' ';
+             
+        writerPart << alienCellsDom[i] << ' ';
+        
+        writerPart << endl;
+    }
+
+    writerPart << "$EndAlienCells\n";
 
     // --------------------------------------
 
@@ -779,6 +924,12 @@ void DecomposerUNV::exportVTK() const
 
     for (int i = 0; i < partition.size(); ++i)
         writerVTK << partition[i] << endl;
+        
+    writerVTK << "SCALARS cell_numeration int" << endl;
+    writerVTK << "LOOKUP_TABLE default" << endl;
+
+    for (int i = 0; i < nCells; ++i)
+        writerVTK << i << endl;
 
 
     cout << "Mesh export OK" << endl;
