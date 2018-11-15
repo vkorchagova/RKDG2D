@@ -34,7 +34,8 @@ public:
     int nGP;
 
     //- Gauss points
-
+    std::vector<Point> gPoints2D;
+    
 private: //- geometric variables
 
     //- Gauss weights

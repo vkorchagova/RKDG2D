@@ -5,18 +5,18 @@ using namespace std;
 
 numvector<double, 5> getAlphaL(shared_ptr<Cell>& cell, numvector<double, 5>& mI, numvector<double, 5>& MI, numvector<double, 5>& uMean)
 {
-    numvector<double, 5> y = 0.0;
-    numvector<double, 5> yMin = 1e9;
+    numvector<double, 5> y = {0.0, 0.0, 0.0, 0.0, 0.0};
+    numvector<double, 5> yMin = {1e9, 1e9, 1e9, 1e9, 1e9};
     
-    cout << "------" << endl;
-    cout << "Cell No = " << cell->number << endl;
+    //cout << "------" << endl;
+//    cout << "Cell No = " << cell->number << endl;
     
     for (int i = 0; i < cell->nGP; ++i)
     {
         numvector<double, 5> pU   = cell->reconstructSolution(cell->gPoints2D[i]);
         numvector<double, 5> diff = pU - uMean;
         
-        cout << "pU - uMean = " << diff << endl;
+        //cout << "pU - uMean = " << diff << endl;
         
         for (int i = 0; i < 5; ++i)
         {
@@ -30,12 +30,12 @@ numvector<double, 5> getAlphaL(shared_ptr<Cell>& cell, numvector<double, 5>& mI,
             yMin[i] = y[i] < yMin[i] ? y[i] : yMin[i];
             yMin[i] = yMin[i] > 1.0 ? 1.0 : yMin[i];
             
-            if (yMin[i] < 0)
-                cout << "yMin < 0 --- so strange!" << endl;
+            //if (yMin[i] < 0)
+            //    cout << "yMin < 0 --- so strange!" << endl;
         }
     }
     
-    cout << "yMin = " << yMin << endl;
+    //cout << "yMin = " << yMin << endl;
 
     return yMin;
 }
@@ -64,16 +64,16 @@ default(none)
 
 
         // limit solution in troubled cells
-#pragma omp parallel for \
-shared(alpha, alphaNew,numSol) \
-private(uMean) \
-default(none)
+//#pragma omp parallel for \
+//shared(alpha, alphaNew,numSol) \
+//private(uMean) \
+//default(none)
         //for (size_t i = 0; i < troubledCells.size(); ++i)
         //for (int iCell : troubledCells)
         for (int iCell = 0; iCell < indicator.mesh.nCells; ++iCell)
         {
-            numvector<double, 5> mI =  1e9;
-            numvector<double, 5> MI = -1e9;
+            numvector<double, 5> mI = {1e9, 1e9, 1e9, 1e9, 1e9};
+            numvector<double, 5> MI =  {-1e9, -1e9, -1e9, -1e9, -1e9};
 
             //int iCell = troubledCells[i];
 

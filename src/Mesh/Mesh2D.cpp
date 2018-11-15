@@ -219,6 +219,7 @@ void Mesh2D::importMesh(string fileName, const Problem& prb)
             reader >> nBoundEdges >> nEdges;
 
             edges.reserve(nEdges);
+            nBoundEdges = 0;
             bool onBoundary = false;
 
             for (int i = 0; i < nEdges; ++i)
@@ -227,7 +228,11 @@ void Mesh2D::importMesh(string fileName, const Problem& prb)
                 reader >> node1 >> node2;
 
                 if (onBoundary)
+                {
+                    nBoundEdges += 1;
                     edges.emplace_back(make_shared<EdgeBoundary>(nodes[node1-1], nodes[node2-1]));
+                    
+                }
                 else
                     edges.emplace_back(make_shared<EdgeInternal>(nodes[node1-1], nodes[node2-1]));
             }

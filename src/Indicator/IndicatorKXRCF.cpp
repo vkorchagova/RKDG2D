@@ -31,7 +31,7 @@ numvector<double, 4> IndicatorKXRCF::massFlux(const Edge& edge, const Cell& cell
         Cell& neib = (&cell == edge.neibCells[0].get()) ? *edge.neibCells[1] : *edge.neibCells[0];
 
         // correct normal position: outside related to considered cell
-        n = ((n0 - cell.getCellCenter())*edge.n > 0.0) ? edge.n : Point(-edge.n);
+        n = ((n0 - cell.getCellCenter()) * edge.n > 0.0) ? edge.n : Point(-edge.n);
 
         // get normal velocity component in nodes of edge... averaged by Roe!
         solOne = rotate(cell.reconstructSolution(n0), n);

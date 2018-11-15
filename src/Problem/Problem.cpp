@@ -146,6 +146,24 @@ void Problem::setInitialConditions(string caseName)
         initU   = [](const Point& r) { return 0.0; };
         initV   = [](const Point& r) { return 0.0; };
     }
+    else if (caseName == "nozzle")
+    {
+        cpcv = 1.2;
+        
+        const double R0 = 8.314459848;
+        double M = 19;  // g / mol
+        double p = 1e5; // Pa
+        double T = 292; // K
+        
+        double R = R0 / M; // J / kg / K
+
+        initRho = [&](const Point& r) { return p / R / T; };
+        initP   = [&](const Point& r) { return p;  };
+        initU   = [](const Point& r) { return 0.0; };
+        initV   = [](const Point& r) { return 0.0; };
+        
+        cout << "IC OK" << endl;
+    }
     else
     {
         cpcv = 1.4;
@@ -242,6 +260,16 @@ void Problem::setBoundaryConditions(string caseName, const std::vector<Patch>& p
 
         bc = {bSine, bConst};
     }
+    else if (caseName == "nozzle")
+    {
+        shared_ptr<BoundaryOpen> bOpen = make_shared<BoundaryOpen>();
+        shared_ptr<BoundarySlip> bSlip = make_shared<BoundarySlip>();
+        
+        shared_ptr<BoundaryNozzleInlet> bInlet = \
+                make_shared<BoundaryNozzleInlet> (1e6,3200,19,*this,init(Point({0.0,0.0})));
+
+        bc = {bSlip, bSlip, bOpen, bSlip, bOpen};
+    }
     else
     {
         cout << "Problem " << caseName << " not found\n";
@@ -253,8 +281,11 @@ void Problem::setBoundaryConditions(string caseName, const std::vector<Patch>& p
         for (int j = 0; j < patches[i].edgeGroup.size(); ++j)
             patches[i].edgeGroup[j]->setBoundary(bc[i]);
 
+        
     for (int i = 0; i < patches.size(); ++i)
         cout << "Patch #" << i << ": type = " << bc[i]->type << endl;
+    
+    cout << "BC OK" << endl;
 }
 
 //// RKDG methods

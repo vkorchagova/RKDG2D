@@ -44,7 +44,7 @@ int main(int argc, char** argv)
     // Problem
 
 
-    string caseName = "SodX";
+    string caseName = "nozzle";
 
     omp_set_num_threads(atoi(argv[1]));
 
@@ -56,20 +56,20 @@ int main(int argc, char** argv)
 
     double tStart = 0.0;
 
-    double tEnd = 1e-3;
+    double tEnd = 2e-3;
 
-    double outputInterval = 1e-3;
-    double initDeltaT = 1e-3;
+    double outputInterval = 1e-4;
+    double initDeltaT = 1e-8;
 
     bool   defCoeffs = false; // true if alpha coefficients for start time are defined
     int    nOutputSteps = 1;
 
     bool   isDynamicTimeStep = true;
-    double Co = 0.5;
+    double Co = 0.4;
     double maxDeltaT = 1.0;
     double maxTauGrowth = 1.1;
 
-    int    ddtOrder = 2;
+    int    ddtOrder = 3;
 
     // ---------------
 
@@ -84,9 +84,11 @@ int main(int argc, char** argv)
 
     // Set BC
     problem.setBoundaryConditions(caseName, mesh.patches);
+    
+    cout << "main bc ok " << endl;
 
     // Initialize flux
-    FluxHLLC numFlux(problem);
+    FluxHLL numFlux(problem);
 
     // Initialize solver
     Solver solver(mesh, problem, numFlux);
@@ -95,7 +97,7 @@ int main(int argc, char** argv)
     IndicatorKXRCF indicator(mesh, problem);
 
     // Initialize limiter
-    LimiterBJ limiter(indicator, problem);
+    LimiterRiemannWENOS limiter(indicator, problem);
 
     // Initialize time step controller
     TimeControl dynamicTimeController(mesh,Co,maxDeltaT,maxTauGrowth,initDeltaT,isDynamicTimeStep);
@@ -122,6 +124,7 @@ int main(int argc, char** argv)
     else
     {
         solver.setInitialConditions();
+        cout << "init OK" << endl;
         limiter.limit(solver.alphaPrev);
         //solver.write("alphaCoeffs/" + to_string(tStart),lhs);
         solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(tStart));

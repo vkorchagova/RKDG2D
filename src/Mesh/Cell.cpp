@@ -453,7 +453,7 @@ double Cell::integrate( const std::function<double(const Point &)>& f) const
 
 numvector<double, 5> Cell::integrate( const std::function<numvector<double, 5>(const Point &)>& f) const
 {
-    numvector<double, 5> res = 0.0;
+    numvector<double, 5> res (0.0);
 
     for (int i = 0; i < nGP; ++i)
     {
