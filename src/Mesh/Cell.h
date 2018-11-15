@@ -29,14 +29,13 @@ class Cell
 
 public:
 
+    //- geometric variables
 
     //- Number of Gauss points
     int nGP;
 
     //- Gauss points
     std::vector<Point> gPoints2D;
-    
-private: //- geometric variables
 
     //- Gauss weights
     std::vector<double> gWeights2D;
