@@ -1,0 +1,77 @@
+#ifndef MESH_H
+#define MESH_H
+
+#include "numvector.h"
+#include "Params.h"
+#include "defs.h"
+//#include "Point.h"
+#include "Edge.h"
+#include "Patch.h"
+#include "Cell.h"
+
+#include <vector>
+#include <fstream>
+#include <memory>
+
+
+class Mesh
+{
+
+private:
+
+    //- File ofstream for mesh export
+    mutable std::ofstream writer;
+    //- File ifstream for mesh import
+    mutable std::ifstream reader;
+
+    //- Find neighbours for given cell
+    void findNeighbourCells (const std::unique_ptr<Cell>& cell) const;
+
+public:	
+
+	/*___MESH___*/
+
+	//- Number of the nodes
+	int nNodes;
+	//- Numbers of the cells
+	int nCells, nCellsIn, nCellsBound;
+	//- Numbers of the edges
+	int nEdges, nEdgesIn, nEdgesBound;
+	//- Number of boundary parts and the array of the numbers of edges inside each of them.
+	int nPatches; 
+	// ??? Нужно?
+	std::vector<int> nPatchesElems;
+
+	//- Nodes of the mesh
+	std::vector<TPoint> Nodes;
+    //- Edges
+	//std::vector<std::unique_ptr<TEdge>> edges;
+	std::vector<TEdge> edges;
+	//- Mesh cells (edge1, ..., edgek) CCW
+	//std::vector<std::unique_ptr<TCell>> cells;
+	std::vector<TCell> cells;
+	//- Groups of boundary edges
+    std::vector<TPatch> patches;
+
+	//???????????????????????????????????
+	// Cell centers
+	std::vector<TPoint> CellCenters;
+	// Cell areas
+	std::vector<double> CellAreas;
+
+
+    //- Construct mesh by import from UNV file
+    Mesh();
+    //- Destructor
+    ~Mesh();
+
+    //- Export arbitrary mesh in custom RKDG format like .msh
+    void exportMesh() const;
+    //- Export VTK
+    void exportMeshVTK(std::ostream& writer) const;
+    void exportMeshVTK_polyvertices(std::ostream& writer) const;
+
+};// end Mesh
+
+#endif // MESH_H
+

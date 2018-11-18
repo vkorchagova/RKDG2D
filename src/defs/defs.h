@@ -3,87 +3,88 @@
 
 #include <vector>
 #include <iostream>
+#include <iomanip>
+#include <fstream>
 #include <cstring>
 #include <cmath>
 #include <functional>
 
 #include "numvector.h"
+#include "Params.h"
 #include "Point.h"
 
+///
+/// Redefinition of the dimensions
+///
 
-//- Number of basis functions
-const int nShapes = 3;
+// Coeffs vector size
+const int dimS = PhysDim * nShapes;
 
-const int dim = 5 * nShapes;
+// Solution vector size
+const int dimPh = PhysDim;
+
 
 //- rotate coordinate system clockwise
-numvector<double, 5> rotate(const numvector<double, 5>& sol, const Point& n);
+numvector<double, dimPh> rotate(const numvector<double, dimPh>& sol, const Point& n);
 
 //- rotate coordinate system counter-clockwise
-numvector<double, 5> inverseRotate(const numvector<double, 5>& sol, const Point& n);
-
-//std::vector<numvector<double, dim>> operator = (const std::vector<numvector<double, dim>>& a);
-
-//- vector<numvector> * alpha
-std::vector<numvector<double, dim>> operator * (const std::vector<numvector<double, dim>>& a, const double b);
-
-//- Sum of two vector<numvector>s
-std::vector<numvector<double, dim>> operator + (const std::vector<numvector<double, dim>>& b, const std::vector<numvector<double, dim>>& a);
-
-// return LU-factorization of matrix (+ transform of rhs)
-
-std::vector<std::vector<double> > forwardGauss(const std::vector<std::vector<double>>& data, bool partChoice = true);
-
-std::vector<double > reverseGauss(const std::vector<std::vector<double>>& data);
-
-int maxAbsPosition(const std::vector<std::vector<double>>& data, int i);
-
-void ChangeRows(std::vector<std::vector<double>>& data, int p, int q);
-
-namespace std
-{
-// ---------------------------------------------
-
-//Прибавление к одному тройному массиву другого тройного массива
-vector<vector<vector<double>>>& operator += (vector<vector<vector<double>>>& a, const vector<vector<vector<double>>>& b);
-
-//Прибавление к одному двумерному массиву другого двумерного массива
-vector<vector<double>>& operator += (vector<vector<double>>& a, const vector<vector<double>>& b);
-
-//Вычитание из одного двумерного массива другого двумерного массива
-vector<vector<double>>& operator -= (vector<vector<double>>& a, const vector<vector<double>>& b);
-
-//Домножение трехмерного массива на число
-vector<vector<vector<double>>>& operator *= (vector<vector<vector<double>>>& a, const double b);
-vector<vector<vector<double>>> operator * (const vector<vector<vector<double>>>& a, const double b);
-
-//Домножение двумерного массива на число
-vector<vector<double>>& operator *= (vector<vector<double>>& a, const double b);
-vector<vector<double>> operator * (const vector<vector<double>>& a, const double b);
-
-//Домножение вектора на число
-vector<double>& operator *= (vector<double>& a, const double b);
-vector<double> operator * (const vector<double>& a, const double b);
-vector<double> operator / (const vector<double>& a, const double b);
-
-//Прибавление к одному вектору второго
-vector<double>& operator += (vector<double>& a, const vector<double>& b);
-
-//Вычитание из одного вектора второго
-vector<double>& operator -= (vector<double>& a, const vector<double>& b);
+numvector<double, dimPh> inverseRotate(const numvector<double, dimPh>& sol, const Point& n);
 
 
-//Умножение матрицы на вектор
-void prodMatrVec(const vector<vector<double>>& A, \
-    const vector<double>& b, \
-    vector<double>& c);
+///
+/// Overloading of vector<numvector<double,dimPhys * dimShapes>> 
+///
 
-//Умножение матриц из собственных векторов и собств. чисел (для КИР)
-void prodWrAbsLWl(const vector<vector<double>>& Wr, \
-    const vector<vector<double>>& Wl, \
-    const vector<double>& L, \
-    vector<vector<double>>& Prod);
+//- Multiplying of the solution onto the number
+std::vector<numvector<double, dimS>> operator * (const std::vector<numvector<double, dimS>>& a, const double b);
 
-}
+//- Sum of two vector<numvector>'s
+std::vector<numvector<double, dimS>> operator + (const std::vector<numvector<double, dimS>>& b, const std::vector<numvector<double, dimS>>& a);
+
+
+///
+/// Overloading for vector<vector<double>> 
+///
+
+// Overload of vvd += vvd
+std::vector<std::vector<double>>& operator += (std::vector<std::vector<double>>& a, const std::vector<std::vector<double>>& b);
+
+// Overload of vvd -= vvd
+std::vector<std::vector<double>>& operator -= (std::vector<std::vector<double>>& a, const std::vector<std::vector<double>>& b);
+
+// Overload of vvd * double
+std::vector<std::vector<double>>& operator *= (std::vector<std::vector<double>>& a, const double b);
+
+// Overload of double * vvd
+std::vector<std::vector<double>> operator * (const std::vector<std::vector<double>>& a, const double b);
+
+
+///
+/// Overloading for vector<double> 
+///
+
+// Overload of vd *= double
+std::vector<double>& operator *= (std::vector<double>& a, const double b);
+
+std::vector<double> operator * (const std::vector<double>& a, const double b);
+
+// Overload of double * vd
+std::vector<double> operator * (const double b, const std::vector<double>& a);
+
+// Overload of vd / double
+std::vector<double> operator / (const std::vector<double>& a, const double b);
+
+// Overload of vd += vd
+std::vector<double>& operator += (std::vector<double>& a, const std::vector<double>& b);
+
+// Overload of vd + vd
+std::vector<double> operator + (const std::vector<double>& a, const std::vector<double>& b);
+
+// Overload of vd - vd
+std::vector<double> operator - (const std::vector<double>& a, const std::vector<double>& b);
+
+// Overload of vd -= vd
+std::vector<double>& operator -= (std::vector<double>& a, const std::vector<double>& b);
+
 
 #endif

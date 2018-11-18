@@ -1,37 +1,21 @@
-/// ------------------------------
-/// Edge
-/// ------------------------------
-/// Abstract Edge class
-///
-/// Parameters:
-/// -   nodes;
-/// -   Gauss points
-/// -   local fluxes in Gauss poins
-///
-/// Methods:
-/// -   get local fluxes (public, pure virtual)
-/// ------------------------------
-
 #ifndef EDGE_H
 #define EDGE_H
 
 #include "numvector.h"
 #include "defs.h"
-#include "Point.h"
+//#include "Point.h"
 #include "Cell.h"
-#include "Flux.h"
-#include "Boundary.h"
-#include <functional>
+//#include <functional>
 #include <iostream>
+#include <memory>
+
+class Cell;
 
 class Edge
 {
-private:
-
-    //- Lenght of edge
-    double length;
-
 public:
+
+    /// geometric variables
 
     //- Number of gauss points for edge
     int nGP;
@@ -42,64 +26,39 @@ public:
     //- Weights for integration
     std::vector<double> gWeights;
 
+    //- Lenght of edge
+    double length;
+
     //- Jacobian
     double J;
 
-    /// geometric variables
-
-    //- Edge number
-    int number;
 
     //- Two nodes define edge
-    numvector<std::shared_ptr<Node>, 2> nodes;
+    //std::vector<std::unique_ptr<Point>> nodes;
+    std::vector<std::reference_wrapper<Point>> nodes;
 
-    //- Neighbour cells for edge: 2 for internal, 1 for boundary
-    std::vector<std::shared_ptr<Cell>> neibCells;
+    //- Neighbour cells for edge
+    //std::vector<std::unique_ptr<Cell>> neibCells;
+    std::vector<std::reference_wrapper<Cell>> neibCells;
 
     //- Normal to edge
     Point n;
 
-    /// RKDG variables
-
-    //- Local numerical fluxes for edge
-    std::vector<numvector<double, 5>> localFluxes;
-
-    //- Max velocity multiplied with edge length
-    double uMaxL;
-
-public:
-
     //- Default constructor
-    Edge() {}
+    //Edge() {}
+    
+    //- Copy constructor
+    //Edge(const Edge&) = delete;
 
     //- Construct using two nodes
-    Edge(const Node& p1, const Node& p2);
+    //Edge(const Point& p1, const Point& p2);
+    Edge(const std::vector<std::reference_wrapper<Point>> &p);
 
     //- Destructor
     virtual ~Edge() = default;
 
     //- Get length
     double getLength() const { return length; }
-    
-    /// RKDG methods
-    
-    //- Calculate local fluxes for edge
-    virtual void getLocalFluxes(const Flux& flux) = 0;
-
-    //- Set boundary condition --- implemented only for boundary edges
-    virtual void setBoundary(const std::shared_ptr<Boundary>& bound) = 0;
-
-    //- Calculate 1D integral through edge
-    numvector<double, 5 * nShapes> boundaryIntegral(const std::shared_ptr<Cell>& cell) const;
-
-    //- Compute mass flux through edge
-    double getMassFlux(const std::shared_ptr<Cell> &cell) const;
-
-    //- Compute max speed on edge
-    virtual void getMaxUL() = 0;
-
-    //- Return maxUL
-    double maxUL() const {return uMaxL;}
 
 }; // for Edge
 

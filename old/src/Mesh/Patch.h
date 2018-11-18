@@ -7,7 +7,7 @@
 
 #include <string>
 #include <vector>
-#include "Edge.h"
+#include "EdgeBoundary.h"
 
 class Patch
 {
@@ -18,7 +18,9 @@ public:
     std::string patchName;
 
     //- List of edges in the patch
-    std::vector<std::unique_ptr<Edge>> edgeGroup;
+    std::vector<std::shared_ptr<EdgeBoundary>> edgeGroup;
+
+public:
 
     //- Default constructor
     Patch() {}

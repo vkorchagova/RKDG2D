@@ -5,9 +5,10 @@ using namespace std;
 
 // ------------------ Constructors & Destructor ----------------
 
-//Edge::Edge(const Point &p1, const Point &p2)
-Edge::Edge(const vector<reference_wrapper<Point>> &p) : nodes(p)
+Edge::Edge(const Node &p1, const Node &p2)
 {
+    nodes[0] = make_shared<Node>(p1);
+    nodes[1] = make_shared<Node>(p2);
 
     Point c = 0.5 * (p2 + p1);
     Point m = 0.5 * (p2 - p1);
@@ -59,11 +60,55 @@ Edge::Edge(const vector<reference_wrapper<Point>> &p) : nodes(p)
 
         exit(0);
     }
-   
-	// ...
-    length = Length(p[0], p[1]);
+
+    localFluxes.resize(nGP);
+    
+    length = (p2 - p1).length();
 
     //- jacobian
     J = 0.5 * length ;
 }
+
+// ------------------ Private class methods --------------------
+
+
+
+
+// ------------------ Public class methods ---------------------
+
+//// RKDG methods
+
+numvector<double, 5 * nShapes> Edge::boundaryIntegral(const std::shared_ptr<Cell> &cell) const
+{
+    numvector<double, 5 * nShapes> res (0.0);
+    double gW = 0.0;
+
+    double sign = (cell == neibCells[0]) ? 1.0 : -1.0;
+
+    for (int i = 0; i < nGP; ++i)
+    {
+        gW = gWeights[i];
+        
+        for (int q = 0; q < nShapes; ++q)
+            for (int p = 0; p < 5; ++p)
+                res[p*nShapes + q] += localFluxes[i][p] * ( gW * cell->phi[q](gPoints[i]) );
+    
+    }
+
+    return res * J * sign;
+}
+
+
+double Edge::getMassFlux(const std::shared_ptr<Cell> &cell) const
+{
+    double res = 0.0;
+
+    double sign = (cell == neibCells[0]) ? 1.0 : -1.0;
+
+    for (int i = 0; i < nGP; ++i)
+        res += localFluxes[i][0] * gWeights[i] / cell->reconstructSolution(gPoints[i],0);
+
+    return res * J * sign;
+}
+
 

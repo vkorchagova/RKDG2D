@@ -1,0 +1,1252 @@
+[ 14%] Building CXX object CMakeFiles/RKDG2D.dir/src/Mesh/Mesh.cpp.o
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ext/alloc_traits.h:36:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_construct.h:61,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:62,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/alloc_traits.h: In instantiation of 'struct std::allocator_traits<std::allocator<const Point&> >':
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ext/alloc_traits.h:50:10:   required from 'struct __gnu_cxx::__alloc_traits<std::allocator<const Point&> >'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:75:28:   required from 'struct std::_Vector_base<const Point&, std::allocator<const Point&> >'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:214:11:   required from 'class std::vector<const Point&>'
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:56:31:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/alloc_traits.h:372:27: error: forming pointer to reference type 'const Point&'
+       using pointer = _Tp*;
+                           ^
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/alloc_traits.h:375:39: error: forming pointer to reference type 'const Point&'
+       using const_pointer = const _Tp*;
+                                       ^
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_construct.h:61:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:62,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ext/alloc_traits.h: In instantiation of 'struct __gnu_cxx::__alloc_traits<std::allocator<const Point&> >':
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:75:28:   required from 'struct std::_Vector_base<const Point&, std::allocator<const Point&> >'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:214:11:   required from 'class std::vector<const Point&>'
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:56:31:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ext/alloc_traits.h:66:23: error: no members matching '__gnu_cxx::__alloc_traits<std::allocator<const Point&> >::_Base_type {aka std::allocator_traits<std::allocator<const Point&> >}::allocate' in '__gnu_cxx::__alloc_traits<std::allocator<const Point&> >::_Base_type {aka struct std::allocator_traits<std::allocator<const Point&> >}'
+     using _Base_type::allocate;
+                       ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ext/alloc_traits.h:67:23: error: no members matching '__gnu_cxx::__alloc_traits<std::allocator<const Point&> >::_Base_type {aka std::allocator_traits<std::allocator<const Point&> >}::deallocate' in '__gnu_cxx::__alloc_traits<std::allocator<const Point&> >::_Base_type {aka struct std::allocator_traits<std::allocator<const Point&> >}'
+     using _Base_type::deallocate;
+                       ^~~~~~~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/x86_64-pc-linux-gnu/bits/c++allocator.h:33:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/allocator.h:46,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:61,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ext/new_allocator.h: In instantiation of 'class __gnu_cxx::new_allocator<const Point&>':
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/allocator.h:108:11:   required from 'class std::allocator<const Point&>'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:79:14:   required from 'struct std::_Vector_base<const Point&, std::allocator<const Point&> >::_Vector_impl'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:164:20:   required from 'struct std::_Vector_base<const Point&, std::allocator<const Point&> >'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:214:11:   required from 'class std::vector<const Point&>'
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:56:31:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ext/new_allocator.h:63:26: error: forming pointer to reference type 'const Point&'
+       typedef _Tp*       pointer;
+                          ^~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ext/new_allocator.h:64:26: error: forming pointer to reference type 'const Point&'
+       typedef const _Tp* const_pointer;
+                          ^~~~~~~~~~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:61:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/allocator.h: In instantiation of 'class std::allocator<const Point&>':
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:79:14:   required from 'struct std::_Vector_base<const Point&, std::allocator<const Point&> >::_Vector_impl'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:164:20:   required from 'struct std::_Vector_base<const Point&, std::allocator<const Point&> >'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:214:11:   required from 'class std::vector<const Point&>'
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:56:31:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/allocator.h:113:26: error: forming pointer to reference type 'const Point&'
+       typedef _Tp*       pointer;
+                          ^~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/allocator.h:114:26: error: forming pointer to reference type 'const Point&'
+       typedef const _Tp* const_pointer;
+                          ^~~~~~~~~~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:64:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h: In instantiation of 'class std::vector<const Point&>':
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:56:31:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:243:20: error: no members matching 'std::vector<const Point&>::_Base {aka std::_Vector_base<const Point&, std::allocator<const Point&> >}::_M_allocate' in 'std::vector<const Point&>::_Base {aka struct std::_Vector_base<const Point&, std::allocator<const Point&> >}'
+       using _Base::_M_allocate;
+                    ^~~~~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:244:20: error: no members matching 'std::vector<const Point&>::_Base {aka std::_Vector_base<const Point&, std::allocator<const Point&> >}::_M_deallocate' in 'std::vector<const Point&>::_Base {aka struct std::_Vector_base<const Point&, std::allocator<const Point&> >}'
+       using _Base::_M_deallocate;
+                    ^~~~~~~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:891:7: error: forming pointer to reference type 'const Point&'
+       data() _GLIBCXX_NOEXCEPT
+       ^~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:899:7: error: forming pointer to reference type 'const Point&'
+       data() const _GLIBCXX_NOEXCEPT
+       ^~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:932:7: error: 'void std::vector<_Tp, _Alloc>::push_back(std::vector<_Tp, _Alloc>::value_type&&) [with _Tp = const Point&; _Alloc = std::allocator<const Point&>; std::vector<_Tp, _Alloc>::value_type = const Point&]' cannot be overloaded
+       push_back(value_type&& __x)
+       ^~~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:914:7: error: with 'void std::vector<_Tp, _Alloc>::push_back(const value_type&) [with _Tp = const Point&; _Alloc = std::allocator<const Point&>; std::vector<_Tp, _Alloc>::value_type = const Point&]'
+       push_back(const value_type& __x)
+       ^~~~~~~~~
+In file included from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Edge.h:7:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:8,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:60:23: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+     std::vector<const Edge&> edges;
+                       ^~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:60:28: error: template argument 1 is invalid
+     std::vector<const Edge&> edges;
+                            ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:60:28: error: template argument 2 is invalid
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ext/alloc_traits.h:36:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_construct.h:61,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:62,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/alloc_traits.h: In instantiation of 'struct std::allocator_traits<std::allocator<Cell&> >':
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ext/alloc_traits.h:50:10:   required from 'struct __gnu_cxx::__alloc_traits<std::allocator<Cell&> >'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:75:28:   required from 'struct std::_Vector_base<Cell&, std::allocator<Cell&> >'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:214:11:   required from 'class std::vector<Cell&>'
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:67:24:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/alloc_traits.h:372:27: error: forming pointer to reference type 'Cell&'
+       using pointer = _Tp*;
+                           ^
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/alloc_traits.h:375:39: error: forming pointer to reference type 'Cell&'
+       using const_pointer = const _Tp*;
+                                       ^
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_construct.h:61:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:62,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ext/alloc_traits.h: In instantiation of 'struct __gnu_cxx::__alloc_traits<std::allocator<Cell&> >':
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:75:28:   required from 'struct std::_Vector_base<Cell&, std::allocator<Cell&> >'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:214:11:   required from 'class std::vector<Cell&>'
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:67:24:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ext/alloc_traits.h:66:23: error: no members matching '__gnu_cxx::__alloc_traits<std::allocator<Cell&> >::_Base_type {aka std::allocator_traits<std::allocator<Cell&> >}::allocate' in '__gnu_cxx::__alloc_traits<std::allocator<Cell&> >::_Base_type {aka struct std::allocator_traits<std::allocator<Cell&> >}'
+     using _Base_type::allocate;
+                       ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ext/alloc_traits.h:67:23: error: no members matching '__gnu_cxx::__alloc_traits<std::allocator<Cell&> >::_Base_type {aka std::allocator_traits<std::allocator<Cell&> >}::deallocate' in '__gnu_cxx::__alloc_traits<std::allocator<Cell&> >::_Base_type {aka struct std::allocator_traits<std::allocator<Cell&> >}'
+     using _Base_type::deallocate;
+                       ^~~~~~~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/x86_64-pc-linux-gnu/bits/c++allocator.h:33:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/allocator.h:46,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:61,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ext/new_allocator.h: In instantiation of 'class __gnu_cxx::new_allocator<Cell&>':
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/allocator.h:108:11:   required from 'class std::allocator<Cell&>'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:79:14:   required from 'struct std::_Vector_base<Cell&, std::allocator<Cell&> >::_Vector_impl'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:164:20:   required from 'struct std::_Vector_base<Cell&, std::allocator<Cell&> >'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:214:11:   required from 'class std::vector<Cell&>'
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:67:24:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ext/new_allocator.h:63:26: error: forming pointer to reference type 'Cell&'
+       typedef _Tp*       pointer;
+                          ^~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ext/new_allocator.h:64:26: error: forming pointer to reference type 'Cell&'
+       typedef const _Tp* const_pointer;
+                          ^~~~~~~~~~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:61:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/allocator.h: In instantiation of 'class std::allocator<Cell&>':
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:79:14:   required from 'struct std::_Vector_base<Cell&, std::allocator<Cell&> >::_Vector_impl'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:164:20:   required from 'struct std::_Vector_base<Cell&, std::allocator<Cell&> >'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:214:11:   required from 'class std::vector<Cell&>'
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:67:24:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/allocator.h:113:26: error: forming pointer to reference type 'Cell&'
+       typedef _Tp*       pointer;
+                          ^~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/allocator.h:114:26: error: forming pointer to reference type 'Cell&'
+       typedef const _Tp* const_pointer;
+                          ^~~~~~~~~~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:64:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h: In instantiation of 'class std::vector<Cell&>':
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:67:24:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:243:20: error: no members matching 'std::vector<Cell&>::_Base {aka std::_Vector_base<Cell&, std::allocator<Cell&> >}::_M_allocate' in 'std::vector<Cell&>::_Base {aka struct std::_Vector_base<Cell&, std::allocator<Cell&> >}'
+       using _Base::_M_allocate;
+                    ^~~~~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:244:20: error: no members matching 'std::vector<Cell&>::_Base {aka std::_Vector_base<Cell&, std::allocator<Cell&> >}::_M_deallocate' in 'std::vector<Cell&>::_Base {aka struct std::_Vector_base<Cell&, std::allocator<Cell&> >}'
+       using _Base::_M_deallocate;
+                    ^~~~~~~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:891:7: error: forming pointer to reference type 'Cell&'
+       data() _GLIBCXX_NOEXCEPT
+       ^~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:899:7: error: forming pointer to reference type 'Cell&'
+       data() const _GLIBCXX_NOEXCEPT
+       ^~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:932:7: error: 'void std::vector<_Tp, _Alloc>::push_back(std::vector<_Tp, _Alloc>::value_type&&) [with _Tp = Cell&; _Alloc = std::allocator<Cell&>; std::vector<_Tp, _Alloc>::value_type = Cell&]' cannot be overloaded
+       push_back(value_type&& __x)
+       ^~~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:914:7: error: with 'void std::vector<_Tp, _Alloc>::push_back(const value_type&) [with _Tp = Cell&; _Alloc = std::allocator<Cell&>; std::vector<_Tp, _Alloc>::value_type = Cell&]'
+       push_back(const value_type& __x)
+       ^~~~~~~~~
+In file included from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Edge.h:7:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:8,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:93:74: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+     Cell(const std::vector<const Point&> &nodes, const std::vector<const Edge&> &edges);
+                                                                          ^~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:93:79: error: template argument 1 is invalid
+     Cell(const std::vector<const Point&> &nodes, const std::vector<const Edge&> &edges);
+                                                                               ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:93:79: error: template argument 2 is invalid
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:93:74: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+     Cell(const std::vector<const Point&> &nodes, const std::vector<const Edge&> &edges);
+                                                                          ^~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:93:79: error: template argument 1 is invalid
+     Cell(const std::vector<const Point&> &nodes, const std::vector<const Edge&> &edges);
+                                                                               ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:93:79: error: template argument 2 is invalid
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:93:74: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+     Cell(const std::vector<const Point&> &nodes, const std::vector<const Edge&> &edges);
+                                                                          ^~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:93:79: error: template argument 1 is invalid
+     Cell(const std::vector<const Point&> &nodes, const std::vector<const Edge&> &edges);
+                                                                               ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:93:79: error: template argument 2 is invalid
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:93:74: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+     Cell(const std::vector<const Point&> &nodes, const std::vector<const Edge&> &edges);
+                                                                          ^~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:93:79: error: template argument 1 is invalid
+     Cell(const std::vector<const Point&> &nodes, const std::vector<const Edge&> &edges);
+                                                                               ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:93:79: error: template argument 2 is invalid
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:93:74: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+     Cell(const std::vector<const Point&> &nodes, const std::vector<const Edge&> &edges);
+                                                                          ^~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:93:79: error: template argument 1 is invalid
+     Cell(const std::vector<const Point&> &nodes, const std::vector<const Edge&> &edges);
+                                                                               ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:93:79: error: template argument 2 is invalid
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:93:56: error: invalid use of template-name 'std::vector' without an argument list
+     Cell(const std::vector<const Point&> &nodes, const std::vector<const Edge&> &edges);
+                                                        ^~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:64:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:214:11: note: 'template<class _Tp, class _Alloc> class std::vector' declared here
+     class vector : protected _Vector_base<_Tp, _Alloc>
+           ^~~~~~
+In file included from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Edge.h:7:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:8,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:93:67: error: expected ',' or '...' before '<' token
+     Cell(const std::vector<const Point&> &nodes, const std::vector<const Edge&> &edges);
+                                                                   ^
+In file included from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:0:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:46:14: error: 'TPoint' was not declared in this scope
+  std::vector<TPoint> Nodes;
+              ^~~~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:46:20: error: template argument 1 is invalid
+  std::vector<TPoint> Nodes;
+                    ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:46:20: error: template argument 2 is invalid
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:49:14: error: 'TEdge' was not declared in this scope
+  std::vector<TEdge> edges;
+              ^~~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:49:19: error: template argument 1 is invalid
+  std::vector<TEdge> edges;
+                   ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:49:19: error: template argument 2 is invalid
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:52:14: error: 'TCell' was not declared in this scope
+  std::vector<TCell> cells;
+              ^~~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:52:19: error: template argument 1 is invalid
+  std::vector<TCell> cells;
+                   ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:52:19: error: template argument 2 is invalid
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:54:17: error: 'TPatch' was not declared in this scope
+     std::vector<TPatch> patches;
+                 ^~~~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:54:23: error: template argument 1 is invalid
+     std::vector<TPatch> patches;
+                       ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:54:23: error: template argument 2 is invalid
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:58:14: error: 'TPoint' was not declared in this scope
+  std::vector<TPoint> CellCenters;
+              ^~~~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:58:20: error: template argument 1 is invalid
+  std::vector<TPoint> CellCenters;
+                    ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:58:20: error: template argument 2 is invalid
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp: In member function 'void Mesh::findNeighbourCells(const std::unique_ptr<Cell>&) const':
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:24:46: error: 'begin' was not declared in this scope
+     for (const unique_ptr<Edge> edge : cell->edges)
+                                              ^~~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:24:46: note: suggested alternatives:
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:105:37: note:   'std::begin'
+   template<typename _Tp> const _Tp* begin(const valarray<_Tp>&);
+                                     ^~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:105:37: note:   'std::begin'
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:24:46: error: 'end' was not declared in this scope
+     for (const unique_ptr<Edge> edge : cell->edges)
+                                              ^~~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:24:46: note: suggested alternatives:
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:107:37: note:   'std::end'
+   template<typename _Tp> const _Tp* end(const valarray<_Tp>&);
+                                     ^~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:107:37: note:   'std::end'
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:36: error: no match for 'operator==' (operand types are 'Cell' and 'const std::unique_ptr<Cell>')
+             if (edge->neibCells[0] == cell)
+                                     
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_algobase.h:64:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:60,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_pair.h:431:5: note: candidate: template<class _T1, class _T2> constexpr bool std::operator==(const std::pair<_T1, _T2>&, const std::pair<_T1, _T2>&)
+     operator==(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_pair.h:431:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::pair<_T1, _T2>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_algobase.h:67:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:60,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_iterator.h:292:5: note: candidate: template<class _Iterator> bool std::operator==(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_Iterator>&)
+     operator==(const reverse_iterator<_Iterator>& __x,
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_iterator.h:292:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::reverse_iterator<_Iterator>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_algobase.h:67:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:60,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_iterator.h:349:5: note: candidate: template<class _IteratorL, class _IteratorR> bool std::operator==(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_IteratorR>&)
+     operator==(const reverse_iterator<_IteratorL>& __x,
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_iterator.h:349:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::reverse_iterator<_Iterator>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_algobase.h:67:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:60,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_iterator.h:1113:5: note: candidate: template<class _IteratorL, class _IteratorR> bool std::operator==(const std::move_iterator<_IteratorL>&, const std::move_iterator<_IteratorR>&)
+     operator==(const move_iterator<_IteratorL>& __x,
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_iterator.h:1113:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::move_iterator<_IteratorL>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_algobase.h:67:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:60,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_iterator.h:1119:5: note: candidate: template<class _Iterator> bool std::operator==(const std::move_iterator<_IteratorL>&, const std::move_iterator<_IteratorL>&)
+     operator==(const move_iterator<_Iterator>& __x,
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_iterator.h:1119:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::move_iterator<_IteratorL>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:61:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/allocator.h:146:5: note: candidate: template<class _T1, class _T2> bool std::operator==(const std::allocator<_Tp1>&, const std::allocator<_T2>&)
+     operator==(const allocator<_T1>&, const allocator<_T2>&)
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/allocator.h:146:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::allocator<_Tp1>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:61:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/allocator.h:152:5: note: candidate: template<class _Tp> bool std::operator==(const std::allocator<_Tp1>&, const std::allocator<_Tp1>&)
+     operator==(const allocator<_Tp>&, const allocator<_Tp>&)
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/allocator.h:152:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::allocator<_Tp1>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:64:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:1509:5: note: candidate: template<class _Tp, class _Alloc> bool std::operator==(const std::vector<_Tp, _Alloc>&, const std::vector<_Tp, _Alloc>&)
+     operator==(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:1509:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::vector<_Tp, _Alloc>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/set:60:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:15,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_tree.h:328:5: note: candidate: template<class _Val> bool std::operator==(const std::_Rb_tree_iterator<_Tp>&, const std::_Rb_tree_const_iterator<_Val>&)
+     operator==(const _Rb_tree_iterator<_Val>& __x,
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_tree.h:328:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::_Rb_tree_iterator<_Tp>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/set:60:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:15,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_tree.h:1282:5: note: candidate: template<class _Key, class _Val, class _KeyOfValue, class _Compare, class _Alloc> bool std::operator==(const std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>&, const std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>&)
+     operator==(const _Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>& __x,
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_tree.h:1282:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/set:61:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:15,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_set.h:840:5: note: candidate: template<class _Key, class _Compare, class _Alloc> bool std::operator==(const std::set<_Key, _Compare, _Alloc>&, const std::set<_Key, _Compare, _Alloc>&)
+     operator==(const set<_Key, _Compare, _Alloc>& __x,
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_set.h:840:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::set<_Key, _Compare, _Alloc>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/set:62:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:15,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_multiset.h:823:5: note: candidate: template<class _Key, class _Compare, class _Alloc> bool std::operator==(const std::multiset<_Key, _Compare, _Alloc>&, const std::multiset<_Key, _Compare, _Alloc>&)
+     operator==(const multiset<_Key, _Compare, _Alloc>& __x,
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_multiset.h:823:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::multiset<_Key, _Compare, _Alloc>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/iosfwd:40:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ios:38,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ostream:38,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:16,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/postypes.h:216:5: note: candidate: template<class _StateT> bool std::operator==(const std::fpos<_StateT>&, const std::fpos<_StateT>&)
+     operator==(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/postypes.h:216:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::fpos<_StateT>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/string:52:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/locale_classes.h:40,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/ios_base.h:41,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ios:42,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ostream:38,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:16,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/basic_string.h:5050:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)
+     operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/basic_string.h:5050:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/string:52:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/locale_classes.h:40,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/ios_base.h:41,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ios:42,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ostream:38,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:16,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/basic_string.h:5058:5: note: candidate: template<class _CharT> typename __gnu_cxx::__enable_if<std::__is_char<_Tp>::__value, bool>::__type std::operator==(const std::__cxx11::basic_string<_CharT>&, const std::__cxx11::basic_string<_CharT>&)
+     operator==(const basic_string<_CharT>& __lhs,
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/basic_string.h:5058:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::__cxx11::basic_string<_CharT>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/string:52:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/locale_classes.h:40,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/ios_base.h:41,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ios:42,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ostream:38,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:16,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/basic_string.h:5072:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const _CharT*, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)
+     operator==(const _CharT* __lhs,
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/basic_string.h:5072:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   mismatched types 'const _CharT*' and 'Cell'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/string:52:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/locale_classes.h:40,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/ios_base.h:41,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ios:42,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ostream:38,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:16,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/basic_string.h:5084:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const _CharT*)
+     operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/basic_string.h:5084:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/ios_base.h:46:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ios:42,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ostream:38,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:16,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/system_error:284:3: note: candidate: bool std::operator==(const std::error_code&, const std::error_code&)
+   operator==(const error_code& __lhs, const error_code& __rhs) noexcept
+   ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/system_error:284:3: note:   no known conversion for argument 1 from 'Cell' to 'const std::error_code&'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/system_error:289:3: note: candidate: bool std::operator==(const std::error_code&, const std::error_condition&)
+   operator==(const error_code& __lhs, const error_condition& __rhs) noexcept
+   ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/system_error:289:3: note:   no known conversion for argument 1 from 'Cell' to 'const std::error_code&'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/system_error:296:3: note: candidate: bool std::operator==(const std::error_condition&, const std::error_code&)
+   operator==(const error_condition& __lhs, const error_code& __rhs) noexcept
+   ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/system_error:296:3: note:   no known conversion for argument 1 from 'Cell' to 'const std::error_condition&'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/system_error:303:3: note: candidate: bool std::operator==(const std::error_condition&, const std::error_condition&)
+   operator==(const error_condition& __lhs,
+   ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/system_error:303:3: note:   no known conversion for argument 1 from 'Cell' to 'const std::error_condition&'
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/locale_facets.h:48:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/basic_ios.h:37,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ios:44,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/ostream:38,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:16,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/streambuf_iterator.h:204:5: note: candidate: template<class _CharT, class _Traits> bool std::operator==(const std::istreambuf_iterator<_CharT, _Traits>&, const std::istreambuf_iterator<_CharT, _Traits>&)
+     operator==(const istreambuf_iterator<_CharT, _Traits>& __a,
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/streambuf_iterator.h:204:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::istreambuf_iterator<_CharT, _Traits>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/tuple:39:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/unique_ptr.h:37,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/locale_conv.h:41,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/locale:43,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/iomanip:43,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/defs/defs.h:6,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:6,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/array:241:5: note: candidate: template<class _Tp, long unsigned int _Nm> bool std::operator==(const std::array<_Tp, _Nm>&, const std::array<_Tp, _Nm>&)
+     operator==(const array<_Tp, _Nm>& __one, const array<_Tp, _Nm>& __two)
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/array:241:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::array<_Tp, _Nm>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/unique_ptr.h:37:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/locale_conv.h:41,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/locale:43,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/iomanip:43,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/defs/defs.h:6,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:6,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/tuple:1337:5: note: candidate: template<class ... _TElements, class ... _UElements> constexpr bool std::operator==(const std::tuple<_Args1 ...>&, const std::tuple<_Args2 ...>&)
+     operator==(const tuple<_TElements...>& __t,
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/tuple:1337:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::tuple<_Args1 ...>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/locale_conv.h:41:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/locale:43,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/iomanip:43,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/defs/defs.h:6,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:6,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/unique_ptr.h:650:5: note: candidate: template<class _Tp, class _Dp, class _Up, class _Ep> bool std::operator==(const std::unique_ptr<_Tp, _Dp>&, const std::unique_ptr<_Up, _Ep>&)
+     operator==(const unique_ptr<_Tp, _Dp>& __x,
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/unique_ptr.h:650:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::unique_ptr<_Tp, _Dp>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/locale_conv.h:41:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/locale:43,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/iomanip:43,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/defs/defs.h:6,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:6,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/unique_ptr.h:656:5: note: candidate: template<class _Tp, class _Dp> bool std::operator==(const std::unique_ptr<_Tp, _Dp>&, std::nullptr_t)
+     operator==(const unique_ptr<_Tp, _Dp>& __x, nullptr_t) noexcept
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/unique_ptr.h:656:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::unique_ptr<_Tp, _Dp>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/locale_conv.h:41:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/locale:43,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/iomanip:43,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/defs/defs.h:6,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:6,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/unique_ptr.h:661:5: note: candidate: template<class _Tp, class _Dp> bool std::operator==(std::nullptr_t, const std::unique_ptr<_Tp, _Dp>&)
+     operator==(nullptr_t, const unique_ptr<_Tp, _Dp>& __x) noexcept
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/unique_ptr.h:661:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   cannot convert 'edge.std::unique_ptr<_Tp, _Dp>::operator-><Edge, std::default_delete<Edge> >()->Edge::neibCells.std::vector<_Tp, _Alloc>::operator[]<Cell&, std::allocator<Cell&> >(0ul)' (type 'Cell') to type 'std::nullptr_t'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/defs/defs.h:10:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:6,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/functional:2193:5: note: candidate: template<class _Res, class ... _Args> bool std::operator==(const std::function<_Res(_ArgTypes ...)>&, std::nullptr_t)
+     operator==(const function<_Res(_Args...)>& __f, nullptr_t) noexcept
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/functional:2193:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::function<_Res(_ArgTypes ...)>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/defs/defs.h:10:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:6,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/functional:2199:5: note: candidate: template<class _Res, class ... _Args> bool std::operator==(std::nullptr_t, const std::function<_Res(_ArgTypes ...)>&)
+     operator==(nullptr_t, const function<_Res(_Args...)>& __f) noexcept
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/functional:2199:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'const std::unique_ptr<Cell>' is not derived from 'const std::function<_Res(_ArgTypes ...)>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/shared_ptr.h:52:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/memory:82,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:16,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Edge.h:7,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:8,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/shared_ptr_base.h:1186:5: note: candidate: template<class _Tp1, class _Tp2, __gnu_cxx::_Lock_policy _Lp> bool std::operator==(const std::__shared_ptr<_Tp1, _Lp>&, const std::__shared_ptr<_Tp2, _Lp>&)
+     operator==(const __shared_ptr<_Tp1, _Lp>& __a,
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/shared_ptr_base.h:1186:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::__shared_ptr<_Tp1, _Lp>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/shared_ptr.h:52:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/memory:82,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:16,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Edge.h:7,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:8,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/shared_ptr_base.h:1192:5: note: candidate: template<class _Tp, __gnu_cxx::_Lock_policy _Lp> bool std::operator==(const std::__shared_ptr<_Tp, _Lp>&, std::nullptr_t)
+     operator==(const __shared_ptr<_Tp, _Lp>& __a, nullptr_t) noexcept
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/shared_ptr_base.h:1192:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::__shared_ptr<_Tp, _Lp>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/shared_ptr.h:52:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/memory:82,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:16,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Edge.h:7,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:8,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/shared_ptr_base.h:1197:5: note: candidate: template<class _Tp, __gnu_cxx::_Lock_policy _Lp> bool std::operator==(std::nullptr_t, const std::__shared_ptr<_Tp, _Lp>&)
+     operator==(nullptr_t, const __shared_ptr<_Tp, _Lp>& __a) noexcept
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/shared_ptr_base.h:1197:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'const std::unique_ptr<Cell>' is not derived from 'const std::__shared_ptr<_Tp, _Lp>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/memory:82:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:16,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Edge.h:7,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:8,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/shared_ptr.h:336:5: note: candidate: template<class _Tp1, class _Tp2> bool std::operator==(const std::shared_ptr<_Tp1>&, const std::shared_ptr<_Tp2>&)
+     operator==(const shared_ptr<_Tp1>& __a,
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/shared_ptr.h:336:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::shared_ptr<_Tp1>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/memory:82:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:16,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Edge.h:7,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:8,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/shared_ptr.h:342:5: note: candidate: template<class _Tp> bool std::operator==(const std::shared_ptr<_Tp1>&, std::nullptr_t)
+     operator==(const shared_ptr<_Tp>& __a, nullptr_t) noexcept
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/shared_ptr.h:342:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'Cell' is not derived from 'const std::shared_ptr<_Tp1>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/memory:82:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:16,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Edge.h:7,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:8,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/shared_ptr.h:347:5: note: candidate: template<class _Tp> bool std::operator==(std::nullptr_t, const std::shared_ptr<_Tp1>&)
+     operator==(nullptr_t, const shared_ptr<_Tp>& __a) noexcept
+     ^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/shared_ptr.h:347:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:39: note:   'const std::unique_ptr<Cell>' is not derived from 'const std::shared_ptr<_Tp1>'
+             if (edge->neibCells[0] == cell)
+                                       ^~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp: In member function 'void Mesh::exportMesh() const':
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:53:26: error: invalid types 'const int[size_t {aka long unsigned int}]' for array subscript
+         writer << Nodes[i].x << ' ' << Nodes[i].y << endl;
+                          ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:53:47: error: invalid types 'const int[size_t {aka long unsigned int}]' for array subscript
+         writer << Nodes[i].x << ' ' << Nodes[i].y << endl;
+                                               ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:61:15: error: 'nBoundEdges' was not declared in this scope
+     writer << nBoundEdges << endl;
+               ^~~~~~~~~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:65:26: error: invalid types 'const int[size_t {aka long unsigned int}]' for array subscript
+         writer << edges[i]->nodes[0]->number + 1 << ' ' << edges[i]->nodes[1]->number + 1 << endl;
+                          ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:65:67: error: invalid types 'const int[size_t {aka long unsigned int}]' for array subscript
+         writer << edges[i]->nodes[0]->number + 1 << ' ' << edges[i]->nodes[1]->number + 1 << endl;
+                                                                   ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:76:21: error: request for member 'size' in '((const Mesh*)this)->Mesh::cells', which is of non-class type 'const int'
+     writer << cells.size() << endl;
+                     ^~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:78:34: error: request for member 'size' in '((const Mesh*)this)->Mesh::cells', which is of non-class type 'const int'
+     for (size_t i = 0; i < cells.size(); ++i)
+                                  ^~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:80:26: error: invalid types 'const int[size_t {aka long unsigned int}]' for array subscript
+         writer << cells[i]->edges.size();
+                          ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:85:36: error: invalid types 'const int[size_t {aka long unsigned int}]' for array subscript
+         for (int j = 0; j < cells[i]->edges.size(); j++)
+                                    ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:86:37: error: invalid types 'const int[size_t {aka long unsigned int}]' for array subscript
+             writer << ' ' << cells[i]->edges[j]->number  + 1 ;
+                                     ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:97:21: error: request for member 'size' in '((const Mesh*)this)->Mesh::cells', which is of non-class type 'const int'
+     writer << cells.size() << endl;
+                     ^~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:99:34: error: request for member 'size' in '((const Mesh*)this)->Mesh::cells', which is of non-class type 'const int'
+     for (size_t i = 0; i < cells.size(); ++i)
+                                  ^~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:100:26: error: invalid types 'const int[size_t {aka long unsigned int}]' for array subscript
+         writer << cells[i]->getCellCenter().x() << ' ' << cells[i]->getCellCenter().y() << endl;
+                          ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:100:66: error: invalid types 'const int[size_t {aka long unsigned int}]' for array subscript
+         writer << cells[i]->getCellCenter().x() << ' ' << cells[i]->getCellCenter().y() << endl;
+                                                                  ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:112:39: error: invalid types 'const int[size_t {aka long unsigned int}]' for array subscript
+         for (size_t j = 0; j < edges[i]->neibCells.size(); ++i)
+                                       ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:113:30: error: invalid types 'const int[size_t {aka long unsigned int}]' for array subscript
+             writer << edges[i]->neibCells[j]->number + 1 << ' ';
+                              ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:126:26: error: invalid types 'const int[size_t {aka long unsigned int}]' for array subscript
+         writer << edges[i]->n.x() << ' ' << edges[i]->n.y() << endl;
+                          ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:126:52: error: invalid types 'const int[size_t {aka long unsigned int}]' for array subscript
+         writer << edges[i]->n.x() << ' ' << edges[i]->n.y() << endl;
+                                                    ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:136:23: error: request for member 'size' in '((const Mesh*)this)->Mesh::patches', which is of non-class type 'const int'
+     writer << patches.size() << endl;
+                       ^~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:138:36: error: request for member 'size' in '((const Mesh*)this)->Mesh::patches', which is of non-class type 'const int'
+     for (size_t i = 0; i < patches.size(); ++i)
+                                    ^~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:140:28: error: invalid types 'const int[size_t {aka long unsigned int}]' for array subscript
+         writer << patches[i].patchName << endl;
+                            ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:142:28: error: invalid types 'const int[size_t {aka long unsigned int}]' for array subscript
+         writer << patches[i].edgeGroup.size() << endl;
+                            ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:144:41: error: invalid types 'const int[size_t {aka long unsigned int}]' for array subscript
+         for (size_t j = 0; j < patches[i].edgeGroup.size(); ++j)
+                                         ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:145:32: error: invalid types 'const int[size_t {aka long unsigned int}]' for array subscript
+             writer << patches[i].edgeGroup[j]->number + 1  << endl;
+                                ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp: At global scope:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:156:38: error: no 'void Mesh::importMesh(std::__cxx11::string)' member function declared in class 'Mesh'
+ void Mesh::importMesh(string fileName)
+                                      ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp: In member function 'void Mesh::exportMeshVTK(std::ostream&) const':
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:387:18: error: 'nodes' was not declared in this scope
+     int nNodes = nodes.size();
+                  ^~~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:406:28: error: invalid types 'const int[int]' for array subscript
+         polySize += cells[i]->nEntities;
+                            ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:414:40: error: 'begin' was not declared in this scope
+     for (const shared_ptr<Cell> cell : cells)
+                                        ^~~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:414:40: note: suggested alternatives:
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:105:37: note:   'std::begin'
+   template<typename _Tp> const _Tp* begin(const valarray<_Tp>&);
+                                     ^~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:105:37: note:   'std::begin'
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:414:40: error: 'end' was not declared in this scope
+     for (const shared_ptr<Cell> cell : cells)
+                                        ^~~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:414:40: note: suggested alternatives:
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:107:37: note:   'std::end'
+   template<typename _Tp> const _Tp* end(const valarray<_Tp>&);
+                                     ^~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:107:37: note:   'std::end'
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:418:31: error: 'Node' was not declared in this scope
+         for (const shared_ptr<Node> node : cell->nodes)
+                               ^~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:418:35: error: template argument 1 is invalid
+         for (const shared_ptr<Node> node : cell->nodes)
+                                   ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:418:50: error: no matching function for call to 'begin(std::vector<const Point&>&)'
+         for (const shared_ptr<Node> node : cell->nodes)
+                                                  ^~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:105:37: note: candidate: template<class _Tp> const _Tp* std::begin(const std::valarray<_Tp>&)
+   template<typename _Tp> const _Tp* begin(const valarray<_Tp>&);
+                                     ^~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:105:37: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:418:50: note:   'std::vector<const Point&>' is not derived from 'const std::valarray<_Tp>'
+         for (const shared_ptr<Node> node : cell->nodes)
+                                                  ^~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:104:31: note: candidate: template<class _Tp> _Tp* std::begin(std::valarray<_Tp>&)
+   template<typename _Tp> _Tp* begin(valarray<_Tp>&);
+                               ^~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:104:31: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:418:50: note:   'std::vector<const Point&>' is not derived from 'std::valarray<_Tp>'
+         for (const shared_ptr<Node> node : cell->nodes)
+                                                  ^~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:87:5: note: candidate: template<class _Tp, long unsigned int _Nm> constexpr _Tp* std::begin(_Tp (&)[_Nm])
+     begin(_Tp (&__arr)[_Nm])
+     ^~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:87:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:418:50: note:   mismatched types '_Tp [_Nm]' and 'std::vector<const Point&>'
+         for (const shared_ptr<Node> node : cell->nodes)
+                                                  ^~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:58:5: note: candidate: template<class _Container> decltype (__cont.begin()) std::begin(const _Container&)
+     begin(const _Container& __cont) -> decltype(__cont.begin())
+     ^~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:58:5: note:   template argument deduction/substitution failed:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h: In substitution of 'template<class _Container> decltype (__cont.begin()) std::begin(const _Container&) [with _Container = std::vector<const Point&>]':
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:418:50:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:58:56: error: 'const class std::vector<const Point&>' has no member named 'begin'
+     begin(const _Container& __cont) -> decltype(__cont.begin())
+                                                 ~~~~~~~^~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:48:5: note: candidate: template<class _Container> decltype (__cont.begin()) std::begin(_Container&)
+     begin(_Container& __cont) -> decltype(__cont.begin())
+     ^~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:48:5: note:   template argument deduction/substitution failed:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h: In substitution of 'template<class _Container> decltype (__cont.begin()) std::begin(_Container&) [with _Container = std::vector<const Point&>]':
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:418:50:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:48:50: error: 'class std::vector<const Point&>' has no member named 'begin'
+     begin(_Container& __cont) -> decltype(__cont.begin())
+                                           ~~~~~~~^~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:63:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:64,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/initializer_list:89:5: note: candidate: template<class _Tp> constexpr const _Tp* std::begin(std::initializer_list<_Tp>)
+     begin(initializer_list<_Tp> __ils) noexcept
+     ^~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/initializer_list:89:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:418:50: note:   'std::vector<const Point&>' is not derived from 'std::initializer_list<_Tp>'
+         for (const shared_ptr<Node> node : cell->nodes)
+                                                  ^~~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:418:50: error: no matching function for call to 'end(std::vector<const Point&>&)'
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:107:37: note: candidate: template<class _Tp> const _Tp* std::end(const std::valarray<_Tp>&)
+   template<typename _Tp> const _Tp* end(const valarray<_Tp>&);
+                                     ^~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:107:37: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:418:50: note:   'std::vector<const Point&>' is not derived from 'const std::valarray<_Tp>'
+         for (const shared_ptr<Node> node : cell->nodes)
+                                                  ^~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:106:31: note: candidate: template<class _Tp> _Tp* std::end(std::valarray<_Tp>&)
+   template<typename _Tp> _Tp* end(valarray<_Tp>&);
+                               ^~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:106:31: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:418:50: note:   'std::vector<const Point&>' is not derived from 'std::valarray<_Tp>'
+         for (const shared_ptr<Node> node : cell->nodes)
+                                                  ^~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:97:5: note: candidate: template<class _Tp, long unsigned int _Nm> constexpr _Tp* std::end(_Tp (&)[_Nm])
+     end(_Tp (&__arr)[_Nm])
+     ^~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:97:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:418:50: note:   mismatched types '_Tp [_Nm]' and 'std::vector<const Point&>'
+         for (const shared_ptr<Node> node : cell->nodes)
+                                                  ^~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:78:5: note: candidate: template<class _Container> decltype (__cont.end()) std::end(const _Container&)
+     end(const _Container& __cont) -> decltype(__cont.end())
+     ^~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:78:5: note:   template argument deduction/substitution failed:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h: In substitution of 'template<class _Container> decltype (__cont.end()) std::end(const _Container&) [with _Container = std::vector<const Point&>]':
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:418:50:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:78:54: error: 'const class std::vector<const Point&>' has no member named 'end'
+     end(const _Container& __cont) -> decltype(__cont.end())
+                                               ~~~~~~~^~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:68:5: note: candidate: template<class _Container> decltype (__cont.end()) std::end(_Container&)
+     end(_Container& __cont) -> decltype(__cont.end())
+     ^~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:68:5: note:   template argument deduction/substitution failed:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h: In substitution of 'template<class _Container> decltype (__cont.end()) std::end(_Container&) [with _Container = std::vector<const Point&>]':
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:418:50:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:68:48: error: 'class std::vector<const Point&>' has no member named 'end'
+     end(_Container& __cont) -> decltype(__cont.end())
+                                         ~~~~~~~^~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:63:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:64,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/initializer_list:99:5: note: candidate: template<class _Tp> constexpr const _Tp* std::end(std::initializer_list<_Tp>)
+     end(initializer_list<_Tp> __ils) noexcept
+     ^~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/initializer_list:99:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:418:50: note:   'std::vector<const Point&>' is not derived from 'std::initializer_list<_Tp>'
+         for (const shared_ptr<Node> node : cell->nodes)
+                                                  ^~~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:419:27: error: base operand of '->' is not a pointer
+             writer << node->number << ' ';
+                           ^~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp: In member function 'void Mesh::exportMeshVTK_polyvertices(std::ostream&) const':
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:448:28: error: 'nEntitiesTotal' was not declared in this scope
+     writer << "POINTS " << nEntitiesTotal << " float" << endl;
+                            ^~~~~~~~~~~~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:452:36: error: invalid types 'const int[int]' for array subscript
+         for (int j = 0; j < cells[i]->nEntities; ++j)
+                                    ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:453:30: error: invalid types 'const int[int]' for array subscript
+             writer << cells[i]->nodes[j]->x() << ' ' << cells[i]->nodes[j]->y() << ' ' << "0" << endl;
+                              ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:453:64: error: invalid types 'const int[int]' for array subscript
+             writer << cells[i]->nodes[j]->x() << ' ' << cells[i]->nodes[j]->y() << ' ' << "0" << endl;
+                                                                ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:462:40: error: 'begin' was not declared in this scope
+     for (const shared_ptr<Cell> cell : cells)
+                                        ^~~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:462:40: note: suggested alternatives:
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:105:37: note:   'std::begin'
+   template<typename _Tp> const _Tp* begin(const valarray<_Tp>&);
+                                     ^~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:105:37: note:   'std::begin'
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:462:40: error: 'end' was not declared in this scope
+     for (const shared_ptr<Cell> cell : cells)
+                                        ^~~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:462:40: note: suggested alternatives:
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:107:37: note:   'std::end'
+   template<typename _Tp> const _Tp* end(const valarray<_Tp>&);
+                                     ^~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:107:37: note:   'std::end'
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:466:31: error: 'Node' was not declared in this scope
+         for (const shared_ptr<Node> node : cell->nodes)
+                               ^~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:466:35: error: template argument 1 is invalid
+         for (const shared_ptr<Node> node : cell->nodes)
+                                   ^
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:466:50: error: no matching function for call to 'begin(std::vector<const Point&>&)'
+         for (const shared_ptr<Node> node : cell->nodes)
+                                                  ^~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:105:37: note: candidate: template<class _Tp> const _Tp* std::begin(const std::valarray<_Tp>&)
+   template<typename _Tp> const _Tp* begin(const valarray<_Tp>&);
+                                     ^~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:105:37: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:466:50: note:   'std::vector<const Point&>' is not derived from 'const std::valarray<_Tp>'
+         for (const shared_ptr<Node> node : cell->nodes)
+                                                  ^~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:104:31: note: candidate: template<class _Tp> _Tp* std::begin(std::valarray<_Tp>&)
+   template<typename _Tp> _Tp* begin(valarray<_Tp>&);
+                               ^~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:104:31: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:466:50: note:   'std::vector<const Point&>' is not derived from 'std::valarray<_Tp>'
+         for (const shared_ptr<Node> node : cell->nodes)
+                                                  ^~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:87:5: note: candidate: template<class _Tp, long unsigned int _Nm> constexpr _Tp* std::begin(_Tp (&)[_Nm])
+     begin(_Tp (&__arr)[_Nm])
+     ^~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:87:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:466:50: note:   mismatched types '_Tp [_Nm]' and 'std::vector<const Point&>'
+         for (const shared_ptr<Node> node : cell->nodes)
+                                                  ^~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:58:5: note: candidate: template<class _Container> decltype (__cont.begin()) std::begin(const _Container&)
+     begin(const _Container& __cont) -> decltype(__cont.begin())
+     ^~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:58:5: note:   template argument deduction/substitution failed:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h: In substitution of 'template<class _Container> decltype (__cont.begin()) std::begin(const _Container&) [with _Container = std::vector<const Point&>]':
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:466:50:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:58:56: error: 'const class std::vector<const Point&>' has no member named 'begin'
+     begin(const _Container& __cont) -> decltype(__cont.begin())
+                                                 ~~~~~~~^~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:48:5: note: candidate: template<class _Container> decltype (__cont.begin()) std::begin(_Container&)
+     begin(_Container& __cont) -> decltype(__cont.begin())
+     ^~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:48:5: note:   template argument deduction/substitution failed:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h: In substitution of 'template<class _Container> decltype (__cont.begin()) std::begin(_Container&) [with _Container = std::vector<const Point&>]':
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:466:50:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:48:50: error: 'class std::vector<const Point&>' has no member named 'begin'
+     begin(_Container& __cont) -> decltype(__cont.begin())
+                                           ~~~~~~~^~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:63:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:64,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/initializer_list:89:5: note: candidate: template<class _Tp> constexpr const _Tp* std::begin(std::initializer_list<_Tp>)
+     begin(initializer_list<_Tp> __ils) noexcept
+     ^~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/initializer_list:89:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:466:50: note:   'std::vector<const Point&>' is not derived from 'std::initializer_list<_Tp>'
+         for (const shared_ptr<Node> node : cell->nodes)
+                                                  ^~~~~
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:466:50: error: no matching function for call to 'end(std::vector<const Point&>&)'
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:107:37: note: candidate: template<class _Tp> const _Tp* std::end(const std::valarray<_Tp>&)
+   template<typename _Tp> const _Tp* end(const valarray<_Tp>&);
+                                     ^~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:107:37: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:466:50: note:   'std::vector<const Point&>' is not derived from 'const std::valarray<_Tp>'
+         for (const shared_ptr<Node> node : cell->nodes)
+                                                  ^~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:106:31: note: candidate: template<class _Tp> _Tp* std::end(std::valarray<_Tp>&)
+   template<typename _Tp> _Tp* end(valarray<_Tp>&);
+                               ^~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:106:31: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:466:50: note:   'std::vector<const Point&>' is not derived from 'std::valarray<_Tp>'
+         for (const shared_ptr<Node> node : cell->nodes)
+                                                  ^~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:97:5: note: candidate: template<class _Tp, long unsigned int _Nm> constexpr _Tp* std::end(_Tp (&)[_Nm])
+     end(_Tp (&__arr)[_Nm])
+     ^~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:97:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:466:50: note:   mismatched types '_Tp [_Nm]' and 'std::vector<const Point&>'
+         for (const shared_ptr<Node> node : cell->nodes)
+                                                  ^~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:66:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:78:5: note: candidate: template<class _Container> decltype (__cont.end()) std::end(const _Container&)
+     end(const _Container& __cont) -> decltype(__cont.end())
+     ^~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:78:5: note:   template argument deduction/substitution failed:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h: In substitution of 'template<class _Container> decltype (__cont.end()) std::end(const _Container&) [with _Container = std::vector<const Point&>]':
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:466:50:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:78:54: error: 'const class std::vector<const Point&>' has no member named 'end'
+     end(const _Container& __cont) -> decltype(__cont.end())
+                                               ~~~~~~~^~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:68:5: note: candidate: template<class _Container> decltype (__cont.end()) std::end(_Container&)
+     end(_Container& __cont) -> decltype(__cont.end())
+     ^~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:68:5: note:   template argument deduction/substitution failed:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h: In substitution of 'template<class _Container> decltype (__cont.end()) std::end(_Container&) [with _Container = std::vector<const Point&>]':
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:466:50:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/range_access.h:68:48: error: 'class std::vector<const Point&>' has no member named 'end'
+     end(_Container& __cont) -> decltype(__cont.end())
+                                         ~~~~~~~^~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:63:0,
+                 from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:64,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/initializer_list:99:5: note: candidate: template<class _Tp> constexpr const _Tp* std::end(std::initializer_list<_Tp>)
+     end(initializer_list<_Tp> __ils) noexcept
+     ^~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/initializer_list:99:5: note:   template argument deduction/substitution failed:
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:466:50: note:   'std::vector<const Point&>' is not derived from 'std::initializer_list<_Tp>'
+         for (const shared_ptr<Node> node : cell->nodes)
+                                                  ^~~~~
+In file included from /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/vector:64:0,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/numvector.h:14,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h:4,
+                 from /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:1:
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h: In instantiation of 'std::vector<_Tp, _Alloc>::~vector() [with _Tp = const Point&; _Alloc = std::allocator<const Point&>]':
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:99:13:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:426:37: error: 'struct std::_Vector_base<const Point&, std::allocator<const Point&> >::_Vector_impl' has no member named '_M_start'; did you mean '_M_swap_data'?
+       { std::_Destroy(this->_M_impl._M_start, this->_M_impl._M_finish,
+                       ~~~~~~~~~~~~~~^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:426:61: error: 'struct std::_Vector_base<const Point&, std::allocator<const Point&> >::_Vector_impl' has no member named '_M_finish'
+       { std::_Destroy(this->_M_impl._M_start, this->_M_impl._M_finish,
+                                               ~~~~~~~~~~~~~~^~~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h: In instantiation of 'std::vector<_Tp, _Alloc>::~vector() [with _Tp = Cell&; _Alloc = std::allocator<Cell&>]':
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:99:13:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:426:37: error: 'struct std::_Vector_base<Cell&, std::allocator<Cell&> >::_Vector_impl' has no member named '_M_start'; did you mean '_M_swap_data'?
+       { std::_Destroy(this->_M_impl._M_start, this->_M_impl._M_finish,
+                       ~~~~~~~~~~~~~~^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:426:61: error: 'struct std::_Vector_base<Cell&, std::allocator<Cell&> >::_Vector_impl' has no member named '_M_finish'
+       { std::_Destroy(this->_M_impl._M_start, this->_M_impl._M_finish,
+                                               ~~~~~~~~~~~~~~^~~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h: In instantiation of 'std::vector<_Tp, _Alloc>::size_type std::vector<_Tp, _Alloc>::size() const [with _Tp = Cell&; _Alloc = std::allocator<Cell&>; std::vector<_Tp, _Alloc>::size_type = long unsigned int]':
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:26:34:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:656:40: error: 'const struct std::_Vector_base<Cell&, std::allocator<Cell&> >::_Vector_impl' has no member named '_M_finish'
+       { return size_type(this->_M_impl._M_finish - this->_M_impl._M_start); }
+                          ~~~~~~~~~~~~~~^~~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:656:66: error: 'const struct std::_Vector_base<Cell&, std::allocator<Cell&> >::_Vector_impl' has no member named '_M_start'; did you mean '_M_swap_data'?
+       { return size_type(this->_M_impl._M_finish - this->_M_impl._M_start); }
+                                                    ~~~~~~~~~~~~~~^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h: In instantiation of 'std::vector<_Tp, _Alloc>::reference std::vector<_Tp, _Alloc>::operator[](std::vector<_Tp, _Alloc>::size_type) [with _Tp = Cell&; _Alloc = std::allocator<Cell&>; std::vector<_Tp, _Alloc>::reference = Cell&; std::vector<_Tp, _Alloc>::size_type = long unsigned int]':
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:28:34:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:781:32: error: 'struct std::_Vector_base<Cell&, std::allocator<Cell&> >::_Vector_impl' has no member named '_M_start'; did you mean '_M_swap_data'?
+       { return *(this->_M_impl._M_start + __n); }
+                  ~~~~~~~~~~~~~~^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h: In instantiation of 'void std::vector<_Tp, _Alloc>::push_back(const value_type&) [with _Tp = Cell&; _Alloc = std::allocator<Cell&>; std::vector<_Tp, _Alloc>::value_type = Cell&]':
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp:29:61:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:916:20: error: 'struct std::_Vector_base<Cell&, std::allocator<Cell&> >::_Vector_impl' has no member named '_M_finish'
+  if (this->_M_impl._M_finish != this->_M_impl._M_end_of_storage)
+      ~~~~~~~~~~~~~~^~~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:916:47: error: 'struct std::_Vector_base<Cell&, std::allocator<Cell&> >::_Vector_impl' has no member named '_M_end_of_storage'
+  if (this->_M_impl._M_finish != this->_M_impl._M_end_of_storage)
+                                 ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:918:60: error: 'struct std::_Vector_base<Cell&, std::allocator<Cell&> >::_Vector_impl' has no member named '_M_finish'
+      _Alloc_traits::construct(this->_M_impl, this->_M_impl._M_finish,
+                                              ~~~~~~~~~~~~~~^~~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:920:22: error: 'struct std::_Vector_base<Cell&, std::allocator<Cell&> >::_Vector_impl' has no member named '_M_finish'
+      ++this->_M_impl._M_finish;
+        ~~~~~~~~~~~~~~^~~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h: In instantiation of 'std::_Vector_base<_Tp, _Alloc>::~_Vector_base() [with _Tp = const Point&; _Alloc = std::allocator<const Point&>]':
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:427:33:   required from 'std::vector<_Tp, _Alloc>::~vector() [with _Tp = const Point&; _Alloc = std::allocator<const Point&>]'
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:99:13:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:160:37: error: 'struct std::_Vector_base<const Point&, std::allocator<const Point&> >::_Vector_impl' has no member named '_M_start'; did you mean '_M_swap_data'?
+       { _M_deallocate(this->_M_impl._M_start, this->_M_impl._M_end_of_storage
+                       ~~~~~~~~~~~~~~^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:160:61: error: 'struct std::_Vector_base<const Point&, std::allocator<const Point&> >::_Vector_impl' has no member named '_M_end_of_storage'
+       { _M_deallocate(this->_M_impl._M_start, this->_M_impl._M_end_of_storage
+                                               ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:161:25: error: 'struct std::_Vector_base<const Point&, std::allocator<const Point&> >::_Vector_impl' has no member named '_M_start'; did you mean '_M_swap_data'?
+         - this->_M_impl._M_start); }
+           ~~~~~~~~~~~~~~^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:160:22: error: '_M_deallocate' was not declared in this scope
+       { _M_deallocate(this->_M_impl._M_start, this->_M_impl._M_end_of_storage
+         ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         - this->_M_impl._M_start); }
+         ~~~~~~~~~~~~~~~~~~~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h: In instantiation of 'std::_Vector_base<_Tp, _Alloc>::~_Vector_base() [with _Tp = Cell&; _Alloc = std::allocator<Cell&>]':
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:427:33:   required from 'std::vector<_Tp, _Alloc>::~vector() [with _Tp = Cell&; _Alloc = std::allocator<Cell&>]'
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h:99:13:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:160:37: error: 'struct std::_Vector_base<Cell&, std::allocator<Cell&> >::_Vector_impl' has no member named '_M_start'; did you mean '_M_swap_data'?
+       { _M_deallocate(this->_M_impl._M_start, this->_M_impl._M_end_of_storage
+                       ~~~~~~~~~~~~~~^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:160:61: error: 'struct std::_Vector_base<Cell&, std::allocator<Cell&> >::_Vector_impl' has no member named '_M_end_of_storage'
+       { _M_deallocate(this->_M_impl._M_start, this->_M_impl._M_end_of_storage
+                                               ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:161:25: error: 'struct std::_Vector_base<Cell&, std::allocator<Cell&> >::_Vector_impl' has no member named '_M_start'; did you mean '_M_swap_data'?
+         - this->_M_impl._M_start); }
+           ~~~~~~~~~~~~~~^~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:160:22: error: '_M_deallocate' was not declared in this scope
+       { _M_deallocate(this->_M_impl._M_start, this->_M_impl._M_end_of_storage
+         ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         - this->_M_impl._M_start); }
+         ~~~~~~~~~~~~~~~~~~~~~~~~~
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h: In instantiation of 'std::_Vector_base<_Tp, _Alloc>::_Vector_impl::_Vector_impl() [with _Tp = const Point&; _Alloc = std::allocator<const Point&>]':
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:125:17:   required from 'std::_Vector_base<_Tp, _Alloc>::_Vector_base() [with _Tp = const Point&; _Alloc = std::allocator<const Point&>]'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:259:15:   required from 'std::vector<_Tp, _Alloc>::vector() [with _Tp = const Point&; _Alloc = std::allocator<const Point&>]'
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Edge.h:48:12:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:87:65: error: using invalid field 'std::_Vector_base<_Tp, _Alloc>::_Vector_impl::_M_start'
+  : _Tp_alloc_type(), _M_start(), _M_finish(), _M_end_of_storage()
+                                                                 ^
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:87:65: error: using invalid field 'std::_Vector_base<_Tp, _Alloc>::_Vector_impl::_M_finish'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:87:65: error: using invalid field 'std::_Vector_base<_Tp, _Alloc>::_Vector_impl::_M_end_of_storage'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h: In instantiation of 'std::_Vector_base<_Tp, _Alloc>::_Vector_impl::_Vector_impl() [with _Tp = Cell&; _Alloc = std::allocator<Cell&>]':
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:125:17:   required from 'std::_Vector_base<_Tp, _Alloc>::_Vector_base() [with _Tp = Cell&; _Alloc = std::allocator<Cell&>]'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:259:15:   required from 'std::vector<_Tp, _Alloc>::vector() [with _Tp = Cell&; _Alloc = std::allocator<Cell&>]'
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Edge.h:48:12:   required from here
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:87:65: error: using invalid field 'std::_Vector_base<_Tp, _Alloc>::_Vector_impl::_M_start'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:87:65: error: using invalid field 'std::_Vector_base<_Tp, _Alloc>::_Vector_impl::_M_finish'
+/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/include/c++/6.3.0/bits/stl_vector.h:87:65: error: using invalid field 'std::_Vector_base<_Tp, _Alloc>::_Vector_impl::_M_end_of_storage'
+make[2]: *** [CMakeFiles/RKDG2D.dir/src/Mesh/Mesh.cpp.o] Error 1
+make[1]: *** [CMakeFiles/RKDG2D.dir/all] Error 2
+make: *** [all] Error 2

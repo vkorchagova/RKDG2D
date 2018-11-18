@@ -20,22 +20,29 @@ public:
     Point(const numvector<double, 2>& coord) : numvector(coord) {}
 
     //- Copy constructor
-    //Point(const Point& p) = delete;
+    Point(const Point& p) = default;
 
     //- Destructor
     ~Point() {}
 
-    //- Get x coordinate
+    //- Get/Set x coordinate
     const double& x() const { return r[0]; }
-    
-    //- Set x coordinate
     double& x() { return r[0]; }
 
-    //- Get y coordinate
+    //- Get/Set y coordinate
     const double& y() const { return r[1]; }
-    
-    //- Set y coordinate
     double& y() { return r[1]; }
 };
+
+class Node : public Point
+{
+
+public:
+    int number;
+
+    Node(const Point& p, int num) : Point(p), number(num ) {}
+
+};
+
 
 #endif // POINT_H
