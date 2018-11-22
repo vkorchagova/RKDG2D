@@ -28,10 +28,11 @@ public:
     
      //- Constructor
     BoundaryNozzleInlet(double p0, double T, double M, const Problem& prb, const numvector<double,5>& u0 = {1,0,0,0,1}) 
-    : Boundary(), pTot(0), T(T), M(M), problem(prb) { type = "nozzle_inlet"; M = 1e-3 * M; R0 = 8.314459848;}
-
+    : Boundary(), pTot(p0), T(T), M(M), problem(prb) { type = "nozzle_inlet"; R0 = 10e3*8.314459848;}
+    ~BoundaryNozzleInlet() {};
+    
     //- Apply boundary condition
-    numvector<double, 5> applyBoundary(const numvector<double, 5>& solLeft = {0.0, 0.0, 0.0, 0.0, 0.0}, const Point& n = Point({0.0,0.0})) const override;
+    numvector<double, 5> applyBoundary(const numvector<double, 5>& solLeft = {0.0, 0.0, 0.0, 0.0, 0.0}, const Point& n = Point({0.0,0.0}), int numGP = 0) const override;
 };
 
 #endif // BOUNDARYNOZZLEINLET_H

@@ -3,7 +3,7 @@
 
 const double pi = 3.141592653589793;
 
-numvector<double, 5> BoundarySine::applyBoundary(const numvector<double, 5>& sol, const Point& n) const
+numvector<double, 5> BoundarySine::applyBoundary(const numvector<double, 5>& sol, const Point& n, int numGP ) const
 {
     double sine = a_ * sin(2.0 * pi * f_ * time_.runTime());
 

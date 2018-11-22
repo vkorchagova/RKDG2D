@@ -135,6 +135,7 @@ void FileConverter::readElements()
     vector<int> elementNodeNumbers;
 
     int elementType = -100500;
+    int elementNumber = -1;
 
     do
     {
@@ -146,6 +147,7 @@ void FileConverter::readElements()
         if (elementProperties[0] == -1)
             break;
 
+        elementNumber = elementProperties[0];
         elementType = elementProperties[1];
 
         //cout << "elemType = " << elementType << endl;
@@ -160,6 +162,8 @@ void FileConverter::readElements()
                 elementNodeNumbers = parseStringInt(str);
 
                 edges.push_back(elementNodeNumbers);
+                
+                edgesNumControl.insert(unordered_map<int,int>::value_type(elementNumber,edgesNumControl.size() + 1))
 
                 break;
             }
@@ -208,6 +212,7 @@ void FileConverter::readPatches()
         getline(reader, str);
 
         patchNames.push_back(str);
+        cout << str << endl;
 
         //getline(reader, str);
 
@@ -223,6 +228,7 @@ void FileConverter::readPatches()
             for (int j = 0; j < 2; ++j)
                 reader >> number;
 
+            cout << "enum = " << edgeNumber << endl;
             return edgeNumber;
         };
 

@@ -44,7 +44,7 @@ int main(int argc, char** argv)
     // Problem
 
 
-    string caseName = "nozzle";
+    string caseName = "SodCircle";
 
     omp_set_num_threads(atoi(argv[1]));
 
@@ -56,20 +56,23 @@ int main(int argc, char** argv)
 
     double tStart = 0.0;
 
-    double tEnd = 2e-3;
+    double tEnd = 0.4;
 
-    double outputInterval = 1e-4;
-    double initDeltaT = 1e-8;
+    double outputInterval = 0.1;
+    double initDeltaT = 1e-5;
 
     bool   defCoeffs = false; // true if alpha coefficients for start time are defined
     int    nOutputSteps = 1;
 
     bool   isDynamicTimeStep = true;
-    double Co = 0.4;
+    double Co = 0.1;
     double maxDeltaT = 1.0;
     double maxTauGrowth = 1.1;
 
-    int    ddtOrder = 3;
+    int    ddtOrder = 2;
+    
+    double nSteps = 0;
+    double meanStepTime = 0;
 
     // ---------------
 
@@ -88,7 +91,7 @@ int main(int argc, char** argv)
     cout << "main bc ok " << endl;
 
     // Initialize flux
-    FluxHLL numFlux(problem);
+    FluxHLLC numFlux(problem);
 
     // Initialize solver
     Solver solver(mesh, problem, numFlux);
@@ -98,12 +101,14 @@ int main(int argc, char** argv)
 
     // Initialize limiter
     LimiterRiemannWENOS limiter(indicator, problem);
+    //LimiterBJ limiter(indicator, problem);
 
     // Initialize time step controller
     TimeControl dynamicTimeController(mesh,Co,maxDeltaT,maxTauGrowth,initDeltaT,isDynamicTimeStep);
 
     // Initialize ddt loper
     RungeKutta timeLooper(ddtOrder, solver, limiter, time);
+    //Adams timeLooper(ddtOrder, solver, limiter, time);
 
     // ---------------
 
@@ -126,8 +131,8 @@ int main(int argc, char** argv)
         solver.setInitialConditions();
         cout << "init OK" << endl;
         limiter.limit(solver.alphaPrev);
-        //solver.write("alphaCoeffs/" + to_string(tStart),lhs);
-        solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(tStart));
+        solver.write("alphaCoeffs/" + to_string(tStart),solver.alphaPrev);
+        solver.writeSolutionVTK("alphaCoeffs/sol.0");
         
     }
 
@@ -155,12 +160,13 @@ int main(int argc, char** argv)
     do
     {
        time.updateTime(t);
-       t1 = omp_get_wtime();
+       
 
        cout.precision(6);
        cout << "---------\nt = " << t + tau << endl;
        cout << "tau = " << tau << endl;
-
+       
+       t1 = omp_get_wtime();
        solver.alphaNext = timeLooper.update(solver.alphaPrev, tau);
        //time.updateTime(t);
        // check energy conservation
@@ -221,6 +227,11 @@ int main(int argc, char** argv)
         cout << "step time: " << t2 - t1 << endl;
         cout << t << endl;
         
+        meanStepTime += t2 - t1;
+        nSteps += 1.0;
+        
+        cout << "mean step time = " << meanStepTime / nSteps << endl;
+        
         t += tau;
 
 
@@ -228,7 +239,7 @@ int main(int argc, char** argv)
         {
             //string fileName = "alphaCoeffs/" + to_string((long double)t);
 
-            solver.writeSolutionVTK("alphaCoeffs/sol_" + to_string(t));
+            solver.writeSolutionVTK("alphaCoeffs/sol." + to_string(nOutputSteps));
             solver.write("alphaCoeffs/" + to_string(t),lhs);
             nOutputSteps++;
             continue;
@@ -247,6 +258,7 @@ int main(int argc, char** argv)
     } while (t < tEnd);
 
     cout << "=========\nElapsed time = " << t2 - t00 << endl;
+    cout << "---------\nMean step time = " << meanStepTime / double(nSteps) << endl;
     cout << "---------\nEND \n";
 
     //cin.get();

@@ -171,6 +171,10 @@ void Mesh2D::exportMesh() const
 
 void Mesh2D::importMesh(string fileName, const Problem& prb)
 {
+    double scale = 1;
+    double ox = 0;
+    double oy = 0;
+    
     string tag;
 
     reader.open(fileName.c_str());
@@ -198,7 +202,7 @@ void Mesh2D::importMesh(string fileName, const Problem& prb)
             for (int i = 0; i < nNodes; ++i)
             {
                 reader >> x >> y;
-                nodes.emplace_back(Node(Point({x,y}),i));
+                nodes.emplace_back(Node(Point({scale*(x + ox),scale*(y + oy)}),i));
             }
 
             do
@@ -231,10 +235,11 @@ void Mesh2D::importMesh(string fileName, const Problem& prb)
                 {
                     nBoundEdges += 1;
                     edges.emplace_back(make_shared<EdgeBoundary>(nodes[node1-1], nodes[node2-1]));
-                    
                 }
                 else
                     edges.emplace_back(make_shared<EdgeInternal>(nodes[node1-1], nodes[node2-1]));
+                
+                edges.back()->number = i;
             }
 
 
@@ -377,6 +382,8 @@ void Mesh2D::importMesh(string fileName, const Problem& prb)
                 {
                     reader >> edge;
                     patches[iP].edgeGroup.push_back(dynamic_pointer_cast<EdgeBoundary>(edges[edge-1]));
+                    //patches[iP].edgeGroup.push_back(edges[edge-1]);
+                    //cout << edges[edge-1]->number << endl;
                 }
 
                 cout << "Patch #" << iP << ": " << patches[iP].patchName << ", " << nEdgesInPatch << " edges contains\n";

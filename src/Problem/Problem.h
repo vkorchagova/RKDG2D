@@ -9,6 +9,7 @@
 #include "BoundaryOpen.h"
 #include "BoundarySine.h"
 #include "BoundarySineDir.h"
+#include "BoundaryPeriodic.h"
 #include "BoundaryNozzleInlet.h"
 #include "BoundaryConstant.h"
 #include "defs.h"

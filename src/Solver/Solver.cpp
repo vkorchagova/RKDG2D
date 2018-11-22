@@ -75,7 +75,7 @@ void Solver::writeSolutionVTK(string fileName) const
     // get point data
 
     output << "POINT_DATA " << mesh.nEntitiesTotal << endl;
-/*
+
     output << "SCALARS rho double" << endl;
     output << "LOOKUP_TABLE default" << endl;
 
@@ -109,7 +109,7 @@ void Solver::writeSolutionVTK(string fileName) const
             output << 0.0 << endl;
         }
 
-*/
+
     output.close();
 }
 

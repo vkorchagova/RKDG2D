@@ -7,9 +7,9 @@ class BoundarySlip : public Boundary
 {
 public:
     BoundarySlip() : Boundary() { type = "slip";}
-
+    ~BoundarySlip() {}
     //- Apply boundary condition
-    numvector<double, 5> applyBoundary(const numvector<double, 5>& solLeft = {0.0, 0.0, 0.0, 0.0, 0.0}, const Point& n = Point({0.0,0.0})) const override;
+    numvector<double, 5> applyBoundary(const numvector<double, 5>& solLeft = {0.0, 0.0, 0.0, 0.0, 0.0}, const Point& n = Point({0.0,0.0}), int numGP = 0) const override;
 };
 
 #endif // BOUNDARYSLIP_H

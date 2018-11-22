@@ -14,7 +14,13 @@ void EdgeBoundary::getLocalFluxes(const Flux &flux)
     for (int i = 0; i < nGP; ++i)
     {
         solInner = rotate(neibCells[0]->reconstructSolution(gPoints[i]),n);
-        solOuter = bc->applyBoundary(solInner,n);
+        
+        if (bc->type == "periodic")
+        {
+            solOuter = rotate(bc->applyBoundary(solInner,i),n);
+        }
+        else
+            solOuter = bc->applyBoundary(solInner,n);
                         
         localFluxes[i] = flux.evaluate(solInner, solOuter, n);
     }

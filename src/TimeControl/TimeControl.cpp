@@ -32,10 +32,10 @@ default (none)
 //        for (const shared_ptr<Edge> edge : mesh.edges)
 //            edge->getMaxUL();
 
-#pragma omp parallel for \
-shared (mesh, newTauLocal) \
-private (factCo, relTau) \
-default (none)
+//#pragma omp parallel for \
+//shared (mesh, newTauLocal) \
+//private (factCo, relTau) \
+//default (none)
         //for (const shared_ptr<Cell> cell : mesh.cells)
         for (size_t i = 0; i < mesh.cells.size(); ++i)
         {

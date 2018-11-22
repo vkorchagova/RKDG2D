@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <unordered_map>
 #include <vector>
 #include <string>
 
@@ -61,6 +62,9 @@ private:
 
     //- patch edge groups
     std::vector<std::vector<int>> patchEdgeGroups;
+    
+    //- Control of possible renumeration
+    std::unordered_map<int,int> edgeNumControl;
 
 
     /// Methods

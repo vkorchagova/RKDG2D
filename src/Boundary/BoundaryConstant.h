@@ -11,9 +11,10 @@ public:
 
     //- Constructor
     BoundaryConstant(const numvector<double, 5>& defValue) : Boundary(), fixedValue(defValue) { type = "constant"; }
+    ~BoundaryConstant() {};
 
     //- Apply boundary condition
-    numvector<double, 5> applyBoundary(const numvector<double, 5>& solLeft = {0.0, 0.0, 0.0, 0.0, 0.0}, const Point& n = Point({0.0,0.0})) const override;
+    numvector<double, 5> applyBoundary(const numvector<double, 5>& solLeft = {0.0, 0.0, 0.0, 0.0, 0.0}, const Point& n = Point({0.0,0.0}), int numGP = 0) const override;
 
 };
 

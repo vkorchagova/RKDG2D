@@ -69,8 +69,8 @@ void Problem::setInitialConditions(string caseName)
     {
         cpcv = 1.4;
 
-        initRho = [](const Point& r) { return (r.length() <= 0.1) ? 1.0 : 0.125; };
-        initP   = [](const Point& r) { return (r.length() <= 0.1) ? 1.0 : 0.1;  };
+        initRho = [](const Point& r) { return (r.length() <= 0.5) ? 1.0 : 0.125; };
+        initP   = [](const Point& r) { return (r.length() <= 0.5) ? 1.0 : 0.1;  };
         initV   = [](const Point& r) { return 0.0; };
         initU   = [](const Point& r) { return 0.0; };
     }
@@ -146,6 +146,42 @@ void Problem::setInitialConditions(string caseName)
         initU   = [](const Point& r) { return 0.0; };
         initV   = [](const Point& r) { return 0.0; };
     }
+    else if (caseName == "planeWave")
+    {
+        cpcv = 1.4;
+
+        initRho = [](const Point& r) { return 1.0 + 1e-6 * sin(2.0 * 3.1415926535897932 * 1.0 * r.x()); };
+        initP   = [=](const Point& r) { return 1.0 * pow(initRho(r), cpcv);  };
+        initU   = [](const Point& r) { return 0.0; };
+        initV   = [](const Point& r) { return 0.0; };
+    }
+    else if (caseName == "periodic")
+    {
+        cpcv = 1.4;
+
+        initRho = [](const Point& r) { return 1.0 + 1e-6 * sin(2.0 * 3.1415926535897932 * 1.0 * r.x()); };
+        //initRho = [](const Point& r) { return 1.0 ; };
+        //initP   = [=](const Point& r) { return 1.0 * pow(initRho(r), cpcv);  };
+        initP   = [=](const Point& r) { return initRho(r) / cpcv;  };
+        initU   = [](const Point& r) { return 1.0; };
+        initV   = [](const Point& r) { return 0.0; };
+    }
+    else if (caseName == "periodic345")
+    {
+        cpcv = 1.4;
+
+            double cosA = 4.0/5.0;
+            double sinA = 3.0/5.0; 
+        initRho = [=](const Point& r)
+        {
+            return 1.0 + 1e-6 * sin(2.0 * 3.1415926535897932 * 1.0 * (r.x() - 0.75 * r.y())); 
+        };
+        //initRho = [](const Point& r) { return 1.0 ; };
+        //initP   = [=](const Point& r) { return 1.0 * pow(initRho(r), cpcv);  };
+        initP   = [=](const Point& r) { return 1.0 / cpcv;  };
+        initU   = [=](const Point& r) { return  cosA * 1.0; };
+        initV   = [=](const Point& r) { return -sinA * 1.0; };
+    }
     else if (caseName == "nozzle")
     {
         cpcv = 1.2;
@@ -155,14 +191,13 @@ void Problem::setInitialConditions(string caseName)
         double p = 1e5; // Pa
         double T = 292; // K
         
-        double R = R0 / M; // J / kg / K
+        double R = 1e3 * R0 / M; // J / kg / K
 
-        initRho = [&](const Point& r) { return p / R / T; };
-        initP   = [&](const Point& r) { return p;  };
+        initRho = [&](const Point& r) { return /*p / R / T*/ 0.78259435; };
+        initP   = [&](const Point& r) { return /*p*/1e5;  };
         initU   = [](const Point& r) { return 0.0; };
         initV   = [](const Point& r) { return 0.0; };
         
-        cout << "IC OK" << endl;
     }
     else
     {
@@ -184,6 +219,8 @@ void Problem::setInitialConditions(string caseName)
                 0.5 * initRho(r) * (sqr(initU(r)) + sqr(initV(r))) \
         };
     };
+    
+    cout << "init ok" << endl;
 }
 
 void Problem::setBoundaryConditions(string caseName, const std::vector<Patch>& patches)
@@ -247,6 +284,106 @@ void Problem::setBoundaryConditions(string caseName, const std::vector<Patch>& p
 
 
         bc = {bSine, bConst};
+    }    
+    else if (caseName == "planeWave")
+    {
+        shared_ptr<BoundaryOpen> bOpen = make_shared<BoundaryOpen>();
+        shared_ptr<BoundarySlip> bSlip = make_shared<BoundarySlip>();
+        shared_ptr<BoundarySine> bSine = \
+                make_shared<BoundarySine>(1e-6,1.0,time,*this,init(Point({0.0,0.0})));
+        //shared_ptr<BoundaryConstant> bConst = \
+        //        make_shared<BoundaryConstant>(init(Point({0.0,0.0})));
+
+
+        bc = {bSine, bSlip, bOpen};
+    }
+    else if (caseName == "periodic345")
+    {
+         cout << "Working with periodic BC..." << endl;
+         
+         int n = patches[0].edgeGroup.size();
+         
+         
+         int nx = 0.75*n;
+         int ny = n - nx;
+         
+         for (int i = 0; i < 2 ; i += 2)
+         {
+             for (int j = 0; j < n; ++j)
+             {
+                 shared_ptr<BoundaryPeriodic> b1 = make_shared<BoundaryPeriodic>(patches[i+1].edgeGroup[j]);
+
+                 shared_ptr<BoundaryPeriodic> b2 =
+                     make_shared<BoundaryPeriodic>(patches[i].edgeGroup[j]);
+                 
+                 patches[i].edgeGroup[j]->setBoundary(b1);
+                 patches[i+1].edgeGroup[j]->setBoundary(b2);
+             }
+         }
+         
+         
+        for (int i = 2; i < 4 ; i += 2)
+         {
+             for (int j = 0; j < n - nx; ++j)
+             {
+                 shared_ptr<BoundaryPeriodic> b1 = make_shared<BoundaryPeriodic>(patches[i+1].edgeGroup[nx + j]);
+
+                 shared_ptr<BoundaryPeriodic> b2 =
+                     make_shared<BoundaryPeriodic>(patches[i].edgeGroup[j]);
+                 
+                 patches[i].edgeGroup[j]->setBoundary(b1);
+                 patches[i+1].edgeGroup[nx + j]->setBoundary(b2);
+             }
+             
+             for (int j = n - nx; j < n; ++j)
+             {
+                 shared_ptr<BoundaryPeriodic> b1 = make_shared<BoundaryPeriodic>(patches[i+1].edgeGroup[j - n + nx]);
+
+                 shared_ptr<BoundaryPeriodic> b2 =
+                     make_shared<BoundaryPeriodic>(patches[i].edgeGroup[j]);
+                 
+                 patches[i].edgeGroup[j]->setBoundary(b1);
+                 patches[i+1].edgeGroup[j - n + nx]->setBoundary(b2);
+             }
+         }
+         
+         return;
+    }
+    else if (caseName == "periodic")
+    {
+         cout << "Working with periodic BC..." << endl;
+         
+         
+         for (int i = 0; i < 4 ; i += 2)
+         {
+             for (int j = 0; j < patches[i].edgeGroup.size(); ++j)
+             {
+                 shared_ptr<BoundaryPeriodic> b1 = make_shared<BoundaryPeriodic>(patches[i+1].edgeGroup[j]);
+
+                 shared_ptr<BoundaryPeriodic> b2 =
+                     make_shared<BoundaryPeriodic>(patches[i].edgeGroup[j]);
+                 
+                 patches[i].edgeGroup[j]->setBoundary(b1);
+                 patches[i+1].edgeGroup[j]->setBoundary(b2);
+             }
+         }
+         
+         /*
+         for (int i = 2; i < 4 ; i += 2)
+         {
+             for (int j = 0; j < patches[i].edgeGroup.size(); ++j)
+             {
+                 shared_ptr<BoundarySlip> b1 = make_shared<BoundarySlip>();
+
+                 shared_ptr<BoundarySlip> b2 = make_shared<BoundarySlip>();
+                 
+                 patches[i].edgeGroup[j]->setBoundary(b1);
+                 patches[i+1].edgeGroup[j]->setBoundary(b2);
+             }
+         }
+         */
+         
+         return;
     }
     else if (caseName == "dipole")
     {
@@ -265,18 +402,38 @@ void Problem::setBoundaryConditions(string caseName, const std::vector<Patch>& p
         shared_ptr<BoundaryOpen> bOpen = make_shared<BoundaryOpen>();
         shared_ptr<BoundarySlip> bSlip = make_shared<BoundarySlip>();
         
+        double pTot = 15e6;
+        double T = 3200;
+        double M = 19;
+        
         shared_ptr<BoundaryNozzleInlet> bInlet = \
-                make_shared<BoundaryNozzleInlet> (1e6,3200,19,*this,init(Point({0.0,0.0})));
-
-        bc = {bSlip, bSlip, bOpen, bSlip, bOpen};
+                make_shared<BoundaryNozzleInlet> (pTot,T,M,*this,init(Point({0.0,0.0})));
+        
+        //bc = {bInlet, bSlip, bOpen, bSlip, bOpen};
+        bc = {bInlet, bSlip, bSlip};
+        //bc = {bOpen, bOpen, bOpen};
     }
+    
     else
     {
         cout << "Problem " << caseName << " not found\n";
         exit(0);
     }
 
+    //for (int i = 0; i < patches.size(); ++i)
+    //    cout << patches[i].patchName << ", ";
+    //cout << endl;
 
+    /*
+    for (int i = 0; i < patches.size(); ++i)
+    {
+        for (int j = 0; j < patches[i].edgeGroup.size(); ++j)
+        {
+            cout << "Processing edge #" << patches[i].edgeGroup[j]->number << "...";
+            cout << "ok" << endl;
+        }
+    }*/
+    
     for (int i = 0; i < patches.size(); ++i)
         for (int j = 0; j < patches[i].edgeGroup.size(); ++j)
             patches[i].edgeGroup[j]->setBoundary(bc[i]);
@@ -284,6 +441,7 @@ void Problem::setBoundaryConditions(string caseName, const std::vector<Patch>& p
         
     for (int i = 0; i < patches.size(); ++i)
         cout << "Patch #" << i << ": type = " << bc[i]->type << endl;
+    
     
     cout << "BC OK" << endl;
 }
@@ -307,12 +465,11 @@ default(none)
 double Problem::getPressure(const numvector<double, 5>& sol) const
 {
     // uncomment for LEE
-//   //numvector<double,5> initfun = init(Point({0.0,0.0}));
+   //numvector<double,5> initfun = init(Point({0.0,0.0}));
+   //double rho0 = 1.0;//initfun[0];
+   //double p0 = 1.0;//initfun[4] * (cpcv - 1);
 
-//   double rho0 = 1.0;//initfun[0];
-//   double p0 = 1.0;//initfun[4] * (cpcv - 1);
-
-//   return p0 * pow(sol[0] / rho0 , cpcv);
+   //return p0 * pow(sol[0] / rho0 , cpcv);
 
     // end uncomment for LEE
 
