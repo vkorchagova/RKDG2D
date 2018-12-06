@@ -34,12 +34,12 @@ public:
 
 
     //- Two nodes define edge
-    //std::vector<std::unique_ptr<Point>> nodes;
-    std::vector<std::reference_wrapper<Point>> nodes;
+    //std::vector<std::shared_ptr<Point>> nodes;
+    std::vector<std::shared_ptr<Point>> nodes;
 
     //- Neighbour cells for edge
-    //std::vector<std::unique_ptr<Cell>> neibCells;
-    std::vector<std::reference_wrapper<Cell>> neibCells;
+    //std::vector<std::shared_ptr<Cell>> neibCells;
+    std::vector<std::shared_ptr<Cell>> neibCells;
 
     //- Normal to edge
     Point n;
@@ -48,11 +48,11 @@ public:
     //Edge() {}
     
     //- Copy constructor
-    //Edge(const Edge&) = delete;
+    Edge(const Edge&) = default;
 
     //- Construct using two nodes
-    //Edge(const Point& p1, const Point& p2);
-    Edge(const std::vector<std::reference_wrapper<Point>> &p);
+    Edge(const Point& p1, const Point& p2);
+    //Edge(const std::vector<std::shared_ptr<Point>> &p);
 
     //- Destructor
     virtual ~Edge() = default;

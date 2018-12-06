@@ -2,14 +2,6 @@
 
 using namespace std;
 
-numvector<double, dimPh> inverseRotate(const numvector<double, dimPh>& sol, const Point& n)
-{
-    return { sol[0], n.x * sol[1] - n.y * sol[2],  n.y * sol[1] + n.x * sol[2], sol[3], sol[4] };
-}
-numvector<double, dimPh> rotate(const numvector<double, dimPh>& sol, const Point& n)
-{
-    return { sol[0], n.x * sol[1] + n.y * sol[2], - n.y * sol[1] + n.x * sol[2], sol[3], sol[4] };
-}
 
 ///
 /// Overloading of vector<numvector<double,dimPhys * dimShapes>>.
@@ -70,6 +62,7 @@ vector<vector<double>>& operator += (vector<vector<double>>& a, const vector<vec
 			a[cell][val] += b[cell][val];
 	return a;
 };
+
 vector<vector<double>>& operator -= (vector<vector<double>>& a, const vector<vector<double>>& b)
 {
 	size_t dimx = a.size();
@@ -81,6 +74,7 @@ vector<vector<double>>& operator -= (vector<vector<double>>& a, const vector<vec
 			a[cell][val] -= b[cell][val];
 	return a;
 };
+
 vector<vector<double>>& operator *= (vector<vector<double>>& a, const double b)
 {
 	size_t dimx = a.size();
@@ -92,6 +86,7 @@ vector<vector<double>>& operator *= (vector<vector<double>>& a, const double b)
 			a[cell][val] *= b;
 	return a;
 };
+
 vector<vector<double>> operator * (const vector<vector<double>>& a, const double b)
 {
 	size_t dimx = a.size();
@@ -105,6 +100,7 @@ vector<vector<double>> operator * (const vector<vector<double>>& a, const double
 			m[cell][val] *= b;
 	return m;
 };
+
 vector<vector<double>> operator * (const double b, const vector<vector<double>>& a)
 {
 	size_t dimx = a.size();
@@ -131,6 +127,7 @@ vector<double>& operator *= (vector<double>& a, const double b)
 		a[cell] *= b;
 	return a;
 };
+
 vector<double>& operator += (vector<double>& a, const vector<double>& b)
 {
 	size_t dimx = a.size();

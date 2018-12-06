@@ -20,6 +20,8 @@
 //#include "Point.h"
 #include "Edge.h"
 
+class Edge;
+
 class Cell
 {
 
@@ -52,19 +54,19 @@ public:
     Point localToGlobal(const Point& localPoint) const;
 
     //- Nodes in cell
-    //std::vector<std::unique_ptr<Point>> nodes;
-    std::vector<std::reference_wrapper<Point>> nodes;
+    //std::vector<std::shared_ptr<Point>> nodes;
+    std::vector<std::shared_ptr<Point>> nodes;
 
     //- Edges in cell
-    //std::vector<std::unique_ptr<Edge>> edges;
-    std::vector<std::reference_wrapper<Edge>> edges;
+    //std::vector<std::shared_ptr<Edge>> edges;
+    std::vector<std::shared_ptr<Edge>> edges;
 
     //- Number of entities (nodes or edges)
     int nEntities;
 
     //- Neighbour cells
-    //std::vector<std::unique_ptr<Cell>> neibCells;
-    std::vector<std::reference_wrapper<Cell>> neibCells;
+    //std::vector<std::shared_ptr<Cell>> neibCells;
+    std::vector<std::shared_ptr<Cell>> neibCells;
 
     //- Return area of cell
     double getArea() const { return area; }
@@ -84,13 +86,10 @@ public:
     //- Set Gauss points
     void setGaussPoints();
 
-    //- Set basis functions
-    void setBasisFunctions();
-
 
     //- Construct cell using vectors of nodes and edges
-    //Cell(const std::vector<std::unique_ptr<Point>> &nodes, const std::vector<std::unique_ptr<Edge>> &edges);
-    Cell(const std::vector<std::reference_wrapper<Point>> &nodes, const std::vector<std::reference_wrapper<Edge>> &edges);
+    //Cell(const std::vector<std::shared_ptr<Point>> &nodes, const std::vector<std::shared_ptr<Edge>> &edges);
+    Cell(const std::vector<std::shared_ptr<Point>> &nodes, const std::vector<std::shared_ptr<Edge>> &edges);
     
     //- Copy constructor
     //Cell(const Cell&) = delete;

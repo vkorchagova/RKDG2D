@@ -1,4 +1,5 @@
-
+#ifndef COMPSERVICE_H_
+#define COMPSERVICE_H_
 
 #include "numvector.h"
 #include "defs.h"
@@ -11,10 +12,10 @@
 ///
 
 //- rotate coordinate system clockwise
-numvector<double, dimPh> rotate(const numvector<double, dimPh>& sol, const Point& n);
+numvector<double, PhysDim> rotate(const numvector<double, PhysDim>& sol, const Point& n);
 
 //- rotate coordinate system counter-clockwise
-numvector<double, dimPh> inverseRotate(const numvector<double, dimPh>& sol, const Point& n);
+numvector<double, PhysDim> inverseRotate(const numvector<double, PhysDim>& sol, const Point& n);
 
 
 ///
@@ -25,6 +26,13 @@ numvector<double, dimPh> inverseRotate(const numvector<double, dimPh>& sol, cons
 double integrate( const Cell& cell, const std::function<double(const Point &)>& f);
 
 //- 2D Gauss integration of vector function
-numvector<double,5> integrate( const Cell& cell, const std::function<numvector<double, 5>(const Point&)>& f);
+numvector<double, dimPh> integrate(const Cell& cell, const std::function<numvector<double, dimPh>(const Point&)>& f);
+
+///
+/// MPI operations
+///
+
+int localNumber(std::vector<int> globalNumbers, int curNum);
 
 
+#endif

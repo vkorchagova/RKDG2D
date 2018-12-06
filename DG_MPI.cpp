@@ -1,44 +1,43 @@
-// DG_MPI.cpp: main
+// DG_MPI.cpp: определяет точку входа для консольного приложения.
 //
 
 //#include "stdafx.h"
 //#include <stdio.h>
-//#include <iostream>
-//#include <iostream>
-//#include <iomanip>
-//#include <fstream>
-//#include <cmath>
-//#include <algorithm>
-//#include <vector>
-//#include <string>
-//#include <time.h>
-//#include "numvector.h"
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <cmath>
+#include <algorithm>
+#include <vector>
+#include <string>
+#include <time.h>
+#include "numvector.h"
 
-//#include "defs.h"
-//#include "Params.h"
-
-//#include "Mesh.h"
-//#include "NEX.h"
-//#include "Physics.h"
-//#include "Problem.h"
+#include "defs.h"		//- Basic arithmetics
+#include "Params.h"		//- All the manually defining parameters of the method
+#include "Mesh.h"		//- The very mesh
+#include "Basis.h"		//- All about the basis functions for DG
+#include "compService.h"//- Integration
+#include "Physics.h"	//- The physical models
+#include "Problem.h"	//- Initial-boundary staff
+#include "Solution.h"   //- Solution storage
 //#include "Boundary.h"
-//#include "Flux.h"
+#include "Flux.h"		//- All about the flux evaluating
 //#include "Indicator.h"
-//#include "Limiter.h"
-//#include "Solver.h"
+#include "Limiter.h"	//- All about the monotonization
+#include "Solver.h"		//- The whole spatial discretization module
 //#include "TimeControl.h"
 //#include "TimeStepper.h"
 
-#include <mpi.h>
 //#include "intel64\include\mpi.h"
-//#include <omp.h>
+#include <omp.h>
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
     
-	int rank, size, ibeg, iend;
+	/*int rank, size, ibeg, iend;
 	MPI_Status stat;
 
 	MPI_Init(&argc, &argv);
@@ -46,7 +45,7 @@ int main(int argc, char* argv[])
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-	MPI_Finalize();
+	MPI_Finalize();*/
 	
 	return 0;
 }

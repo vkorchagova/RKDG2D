@@ -5,10 +5,9 @@ using namespace std;
 
 // ------------------ Constructors & Destructor ----------------
 
-//Edge::Edge(const Point &p1, const Point &p2)
-Edge::Edge(const vector<reference_wrapper<Point>> &p) : nodes(p)
+Edge::Edge(const Point &p1, const Point &p2)
+//Edge::Edge(const vector<shared_ptr<Point>> &p) : nodes(p)
 {
-
     Point c = 0.5 * (p2 + p1);
     Point m = 0.5 * (p2 - p1);
 
@@ -61,9 +60,9 @@ Edge::Edge(const vector<reference_wrapper<Point>> &p) : nodes(p)
     }
    
 	// ...
-    length = Length(p[0], p[1]);
+    length = (p2 - p1).length();
 
     //- jacobian
-    J = 0.5 * length ;
+    J = 0.5 * length;
 }
 

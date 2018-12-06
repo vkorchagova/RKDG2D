@@ -7,8 +7,8 @@ using namespace std;
 
 // ------------------ Constructors & Destructor ----------------
 
-//Cell::Cell(const std::vector<std::unique_ptr<Point>> &defNodes, const vector<std::unique_ptr<Edge>> &defEdges)
-Cell::Cell(const std::vector<std::reference_wrapper<Point>> &defNodes, const vector<std::reference_wrapper<Edge>> &defEdges) 
+//Cell::Cell(const std::vector<std::shared_ptr<Point>> &defNodes, const vector<std::shared_ptr<Edge>> &defEdges)
+Cell::Cell(const std::vector<std::shared_ptr<Point>> &defNodes, const vector<std::shared_ptr<Edge>> &defEdges)
 : nodes(defNodes), edges(defEdges)
 {
     nEntities = defNodes.size();
@@ -56,8 +56,8 @@ Point Cell::localToGlobal(const Point& localPoint) const
 
     for (int i = 0; i < nEntities; ++i)
     {
-        globalPoint[0] += nodes[i].get().x() * ff[i];
-        globalPoint[1] += nodes[i].get().y() * ff[i];
+        globalPoint[0] += nodes[i]->x() * ff[i];
+        globalPoint[1] += nodes[i]->y() * ff[i];
     }
 
     return globalPoint;
@@ -70,9 +70,9 @@ void Cell::setArea()
     area = 0.0;
 
     for (int i = 0; i < n-1; ++i)
-        area += nodes[i].get.x() * nodes[i+1].get.y() - nodes[i].get.y() * nodes[i+1].get.x();
+        area += nodes[i]->x() * nodes[i+1]->y() - nodes[i]->y() * nodes[i+1]->x();
 
-    area += nodes[n-1].get.x() * nodes[0].get.y() - nodes[n-1].get.y() * nodes[0].get.x();
+    area += nodes[n-1]->x() * nodes[0]->y() - nodes[n-1]->y() * nodes[0]->x();
 
     area = 0.5 * fabs(area);
 }
@@ -98,10 +98,10 @@ void Cell::setJacobian()
     {
         fJ = [&](const Point& r)
         {
-            double dpde = (nodes[1].get.x() - nodes[0].get.x()) * (1.0 - r.get.y()) + (nodes[2].get.x() - nodes[3].get.x()) * (1.0 + r.get.y());
-            double dqde = (nodes[1].get.y() - nodes[0].get.y()) * (1.0 - r.get.y()) + (nodes[2].get.y() - nodes[3].get.y()) * (1.0 + r.get.y());
-            double dpdn = (nodes[3].get.x() - nodes[0].get.x()) * (1.0 - r.get.x()) + (nodes[2].get.x() - nodes[1].get.x()) * (1.0 + r.get.x());
-            double dqdn = (nodes[3].get.y() - nodes[0].get.y()) * (1.0 - r.get.x()) + (nodes[2].get.y() - nodes[1].get.y()) * (1.0 + r.get.x());
+            double dpde = (nodes[1]->x() - nodes[0]->x()) * (1.0 - r.y()) + (nodes[2]->x() - nodes[3]->x()) * (1.0 + r.y());
+            double dqde = (nodes[1]->y() - nodes[0]->y()) * (1.0 - r.y()) + (nodes[2]->y() - nodes[3]->y()) * (1.0 + r.y());
+            double dpdn = (nodes[3]->x() - nodes[0]->x()) * (1.0 - r.x()) + (nodes[2]->x() - nodes[1]->x()) * (1.0 + r.x());
+            double dqdn = (nodes[3]->y() - nodes[0]->y()) * (1.0 - r.x()) + (nodes[2]->y() - nodes[1]->y()) * (1.0 + r.x());
 
             return 0.0625 * fabs(dpde * dqdn - dpdn * dqde);
         };

@@ -18,7 +18,7 @@ public:
     std::string patchName;
 
     //- List of edges in the patch
-    std::vector<std::unique_ptr<Edge>> edgeGroup;
+    std::vector<std::shared_ptr<Edge>> edgeGroup;
 
     //- Default constructor
     Patch() {}

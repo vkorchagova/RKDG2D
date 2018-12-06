@@ -13,6 +13,10 @@
 #include "Params.h"
 #include "Point.h"
 
+//- Square
+template<class T>
+inline T sqr(T x) {return x*x;}
+
 ///
 /// Redefinition of the dimensions
 ///
@@ -22,13 +26,6 @@ const int dimS = PhysDim * nShapes;
 
 // Solution vector size
 const int dimPh = PhysDim;
-
-
-//- rotate coordinate system clockwise
-numvector<double, dimPh> rotate(const numvector<double, dimPh>& sol, const Point& n);
-
-//- rotate coordinate system counter-clockwise
-numvector<double, dimPh> inverseRotate(const numvector<double, dimPh>& sol, const Point& n);
 
 
 ///

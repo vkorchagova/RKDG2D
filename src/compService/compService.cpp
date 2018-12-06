@@ -2,6 +2,15 @@
 
 using namespace std;
 
+numvector<double, dimPh> inverseRotate(const numvector<double, dimPh>& sol, const Point& n)
+{
+    return { sol[0], n.x() * sol[1] - n.y() * sol[2],  n.y() * sol[1] + n.x() * sol[2], sol[3], sol[4] };
+}
+numvector<double, 5> rotate(const numvector<double,5> &sol, const Point& n)
+{
+    return { sol[0], n.x() * sol[1] + n.y() * sol[2], - n.y() * sol[1] + n.x() * sol[2], sol[3], sol[4] };
+}
+
 double integrate(const Cell& cell, const function<double(const Point &)>& f)
 {
     double res = 0.0;
@@ -17,17 +26,15 @@ double integrate(const Cell& cell, const function<double(const Point &)>& f)
     return res;
 
 } // end integrate 2D of scalar function
-
-
-numvector<double, 5> integrate(const Cell& cell, const function<numvector<double, 5>(const Point &)>& f)
+numvector<double, dimPh> integrate(const Cell& cell, const function<numvector<double, dimPh>(const Point &)>& f)
 {
-    numvector<double, 5> res (0.0);
+    numvector<double, dimPh> res (0.0);
 
     for (int i = 0; i < cell.nGP; ++i)
     {
-         numvector<double,5> resF = f(cell.gPoints2D[i]);
+         numvector<double,dimPh> resF = f(cell.gPoints2D[i]);
 
-        for (int k = 0; k < 5; ++k)
+        for (int k = 0; k < dimPh; ++k)
         {
            res[k] += cell.gWeights2D[i] * resF[k] * cell.J[i];
         }
@@ -36,3 +43,13 @@ numvector<double, 5> integrate(const Cell& cell, const function<numvector<double
     return res;
 
 } // end integrate 2D of vector function
+
+
+///
+/// MPI operations
+///
+
+int localNumber(std::vector<int>& globalNumbers, int curNum)
+{
+	return *find(globalNumbers.begin(), globalNumbers.end(), curNum);
+}
