@@ -4,11 +4,11 @@ using namespace std;
 
 numvector<double, dimPh> inverseRotate(const numvector<double, dimPh>& sol, const Point& n)
 {
-    return { sol[0], n.x * sol[1] - n.y * sol[2],  n.y * sol[1] + n.x * sol[2], sol[3], sol[4] };
+    return { sol[0], n.x() * sol[1] - n.y() * sol[2],  n.y() * sol[1] + n.x() * sol[2], sol[3], sol[4] };
 }
 numvector<double, dimPh> rotate(const numvector<double, dimPh>& sol, const Point& n)
 {
-    return { sol[0], n.x * sol[1] + n.y * sol[2], - n.y * sol[1] + n.x * sol[2], sol[3], sol[4] };
+    return { sol[0], n.x() * sol[1] + n.y() * sol[2], - n.y() * sol[1] + n.x() * sol[2], sol[3], sol[4] };
 }
 
 ///

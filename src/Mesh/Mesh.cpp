@@ -149,7 +149,7 @@ void Mesh::importMesh(string& fileName)
                     reader >> entity;
                     curEdges.push_back(
                                 make_shared<Edge>(
-                                    edges[localNumber(globalEdgeNumber, entity - 1)] );
+                                    edges[localNumber(globalEdgeNumber, entity - 1)] ));
                 }
 
                 // add cells in list
@@ -184,7 +184,7 @@ void Mesh::importMesh(string& fileName)
                {
                     reader >> adjCell;
                     edges[i].neibCells.push_back(
-                                cells[localNumber(globalCellNumber, adjCell - 1)] );
+                                make_shared<Cell>(cells[localNumber(globalCellNumber, adjCell - 1)] ));
                }
             }
 

@@ -1,1 +1,0 @@
-/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++    -std=c++14 -O2 -fopenmp     CMakeFiles/RKDG2D.dir/DG_MPI.cpp.o CMakeFiles/RKDG2D.dir/src/defs/defs.cpp.o CMakeFiles/RKDG2D.dir/src/Mesh/Cell.cpp.o CMakeFiles/RKDG2D.dir/src/Mesh/Edge.cpp.o CMakeFiles/RKDG2D.dir/src/Basis/Basis.cpp.o CMakeFiles/RKDG2D.dir/src/compService/compService.cpp.o  -o RKDG2D -rdynamic 

@@ -21,8 +21,6 @@ inline T sqr(T x) {return x*x;}
 /// Redefinition of the dimensions
 ///
 
-// Coeffs vector size
-const int dimS = PhysDim * nShapes;
 
 // Solution vector size
 const int dimPh = PhysDim;

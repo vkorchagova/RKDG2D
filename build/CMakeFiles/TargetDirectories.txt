@@ -1,1 +1,0 @@
-/lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles/RKDG2D.dir
