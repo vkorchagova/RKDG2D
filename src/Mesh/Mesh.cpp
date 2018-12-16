@@ -1,4 +1,7 @@
 #include "Mesh.h"
+
+#include "compService.h"
+#include "defs.h"
 #include <iostream>
 #include <fstream>
 
@@ -229,12 +232,12 @@ void Mesh::importMesh(string& fileName)
 
                 int nEdgesInPatch;
                 reader >> nEdgesInPatch;
-                int edge;
+                int iCell;
 
                 for (int i = 0; i < nEdgesInPatch; ++i)
                 {
-                    reader >> edge;
-                    patches[iP].edgeGroup.push_back(dynamic_pointer_cast<EdgeBoundary>(edges[edge-1]));
+                    reader >> iCell;
+                    patches[iP].cellGroup.push_back(localNumber(globalCellNumber, iCell - 1));
                 }
 
                 cout << "Patch #" << iP << ": " << patches[iP].patchName << ", " << nEdgesInPatch << " edges contains\n";
@@ -281,20 +284,20 @@ void Mesh::exportMeshVTK(ostream& writer) const
 
     int polySize = 0;
 
-    for (int i = 0; i < nCells; ++i)
+    for (int i = 0; i < nRealCells; ++i)
         polySize += cells[i].nEntities;
 
-    polySize += nCells;
+    polySize += nRealCells;
 
-    writer << "POLYGONS " << nCells << ' ' << polySize << endl;
+    writer << "POLYGONS " << nRealCells << ' ' << polySize << endl;
 
 
     // write cells using numbers of nodes
-    for (const shared_ptr<Cell> cell : cells)
+    for (int i = 0; i < nRealCells; ++i)
     {
-        writer << cell->nEntities << ' ';
+        writer << cells[i].nEntities << ' ';
 
-        for (const shared_ptr<Node> node : cell->nodes)
+        for (const shared_ptr<Point> node : cells[i].nodes)
             writer << node->number << ' ';
 
         writer << endl;
@@ -305,7 +308,7 @@ void Mesh::exportMeshVTK(ostream& writer) const
     //cout << "&num(-1) = " << &(cells[cells.size()-1]->edges[2]->nodes[0]->number) << endl;
 
 
-    //writer << "CELL_DATA " << nCells << endl;
+    //writer << "CELL_DATA " << nRealCells << endl;
     //writer << "POINT_DATA " << nNodes << endl;
 
 
@@ -324,25 +327,32 @@ void Mesh::exportMeshVTK_polyvertices(ostream& writer) const
 
     writer << "DATASET POLYDATA" << endl;
 
-    writer << "POINTS " << nEntitiesTotal << " float" << endl;
+    writer << "POINTS " << nNodes << " float" << endl;
 
     // write coordinates of nodes
-    for (int i = 0; i < nCells; ++i)
+    for (int i = 0; i < nRealCells; ++i)
         for (int j = 0; j < cells[i].nEntities; ++j)
             writer << cells[i].nodes[j]->x() << ' ' << cells[i].nodes[j]->y() << ' ' << "0" << endl;
 
     //get size of polygon list
 
-    writer << "POLYGONS " << nCells << ' ' << nCells +  nEntitiesTotal << endl;
+    int polySize = 0;
+
+    for (int i = 0; i < nRealCells; ++i)
+        polySize += cells[i].nEntities;
+
+    polySize += nRealCells;
+
+    writer << "POLYGONS " << nRealCells << ' ' << nRealCells +  polySize << endl;
 
 
     // write cells using numbers of nodes
     int numPolyVertex = 0;
-    for (const shared_ptr<Cell> cell : cells)
+    for (int i = 0; i < nRealCells; ++i)
     {
-        writer << cell->nEntities << ' ';
+        writer << cells[i].nEntities << ' ';
 
-        for (const shared_ptr<Node> node : cell->nodes)
+        for (const shared_ptr<Point> node : cells[i].nodes)
         {
             writer << numPolyVertex << ' ';
             numPolyVertex++;
@@ -356,7 +366,7 @@ void Mesh::exportMeshVTK_polyvertices(ostream& writer) const
     //cout << "&num(-1) = " << &(cells[cells.size()-1]->edges[2]->nodes[0]->number) << endl;
 
 
-    //writer << "CELL_DATA " << nCells << endl;
+    //writer << "CELL_DATA " << nRealCells << endl;
     //writer << "POINT_DATA " << nNodes << endl;
 
 

@@ -36,6 +36,8 @@ public:
     
     //- Set y coordinate
     double& y() { return r[1]; }
+
+    int number;
 };
 
 #endif // POINT_H

@@ -44,6 +44,12 @@ int main(int argc, char* argv[])
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
+    cout << "size = " << size << "; rank = " << rank << endl;
+
+    string meshFileName = "mesh2D." + to_string(rank);
+    cout << meshFileName;
+    Mesh mesh(meshFileName);
+
     MPI_Finalize();
 
     cout << "THE END" << endl;

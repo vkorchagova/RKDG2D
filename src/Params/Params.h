@@ -10,4 +10,4 @@ static const int nShapes = 3;
 static const int dimS = PhysDim * nShapes;
 
 //- Initialisaton of tools for computations
-void Initialize() {}
+//void Initialize() {}

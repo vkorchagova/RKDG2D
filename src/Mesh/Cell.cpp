@@ -1,4 +1,5 @@
 #include "Cell.h"
+#include "defs.h"
 //#include "Edge.h"
 #include "compService.h"
 #include <iostream>

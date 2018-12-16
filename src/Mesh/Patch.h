@@ -17,8 +17,11 @@ public:
     //- Name of patch
     std::string patchName;
 
-    //- List of edges in the patch
-    std::vector<std::shared_ptr<Edge>> edgeGroup;
+    //- List of numbers of cells in patch
+    std::vector<int> cellGroup;
+
+    //- Pointer to boundary condition
+    //Boundary bc;
 
     //- Default constructor
     Patch() {}

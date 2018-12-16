@@ -2,7 +2,6 @@
 #define COMPSERVICE_H_
 
 #include "numvector.h"
-#include "defs.h"
 #include "Params.h"
 #include "Cell.h"
 
@@ -32,7 +31,7 @@ numvector<double, dimPh> integrate(const Cell& cell, const std::function<numvect
 /// MPI operations
 ///
 
-int localNumber(std::vector<int> globalNumbers, int curNum);
+int localNumber(std::vector<int>& globalNumbers, int curNum);
 
 
 #endif

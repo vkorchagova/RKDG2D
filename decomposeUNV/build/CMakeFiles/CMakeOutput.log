@@ -1,0 +1,247 @@
+The system is: Linux - 2.6.32-358.6.2.el6.x86_64 - x86_64
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/gcc 
+Build flags: 
+Id flags: 
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+
+The C compiler identification is GNU, found in "/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/2.8.12.2/CompilerIdC/a.out"
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: /unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++ 
+Build flags: 
+Id flags: 
+
+The output was:
+0
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+
+The CXX compiler identification is GNU, found in "/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/2.8.12.2/CompilerIdCXX/a.out"
+
+Determining if the C compiler works passed with the following output:
+Change Dir: /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec67829736/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec67829736.dir/build.make CMakeFiles/cmTryCompileExec67829736.dir/build
+gmake[1]: Entering directory `/lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec67829736.dir/testCCompiler.c.o
+/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/gcc    -o CMakeFiles/cmTryCompileExec67829736.dir/testCCompiler.c.o   -c /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTryCompileExec67829736
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec67829736.dir/link.txt --verbose=1
+/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/gcc       CMakeFiles/cmTryCompileExec67829736.dir/testCCompiler.c.o  -o cmTryCompileExec67829736 -rdynamic 
+gmake[1]: Leaving directory `/lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp'
+
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec3740870832/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec3740870832.dir/build.make CMakeFiles/cmTryCompileExec3740870832.dir/build
+gmake[1]: Entering directory `/lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec3740870832.dir/CMakeCCompilerABI.c.o
+/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/gcc    -o CMakeFiles/cmTryCompileExec3740870832.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
+Linking C executable cmTryCompileExec3740870832
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3740870832.dir/link.txt --verbose=1
+/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/gcc     -v CMakeFiles/cmTryCompileExec3740870832.dir/CMakeCCompilerABI.c.o  -o cmTryCompileExec3740870832 -rdynamic  
+Using built-in specs.
+COLLECT_GCC=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/gcc
+COLLECT_LTO_WRAPPER=/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../libexec/gcc/x86_64-pc-linux-gnu/6.3.0/lto-wrapper
+Target: x86_64-pc-linux-gnu
+Configured with: ./configure --prefix=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3 --with-gmp=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3 --with-mpfr=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3 --with-mpc=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3 --with-isl=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3 --with-pkgversion=OpenFOAM --enable-languages=c,c++,fortran --enable-__cxa_atexit --enable-libstdcxx-allocator=new --disable-multilib
+Thread model: posix
+gcc version 6.3.0 (OpenFOAM) 
+COMPILER_PATH=/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../libexec/gcc/x86_64-pc-linux-gnu/6.3.0/:/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../libexec/gcc/
+LIBRARY_PATH=/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/:/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/:/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec3740870832' '-rdynamic' '-mtune=generic' '-march=x86-64'
+ /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../libexec/gcc/x86_64-pc-linux-gnu/6.3.0/collect2 --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTryCompileExec3740870832 /usr/lib/../lib64/crt1.o /usr/lib/../lib64/crti.o /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/crtbegin.o -L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0 -L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc -L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../.. CMakeFiles/cmTryCompileExec3740870832.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/crtend.o /usr/lib/../lib64/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec3740870832' '-rdynamic' '-mtune=generic' '-march=x86-64'
+gmake[1]: Leaving directory `/lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp'
+
+
+Parsed C implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:/usr/bin/gmake "cmTryCompileExec3740870832/fast"]
+  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTryCompileExec3740870832.dir/build.make CMakeFiles/cmTryCompileExec3740870832.dir/build]
+  ignore line: [gmake[1]: Entering directory `/lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp']
+  ignore line: [/usr/bin/cmake -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp/CMakeFiles 1]
+  ignore line: [Building C object CMakeFiles/cmTryCompileExec3740870832.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/gcc    -o CMakeFiles/cmTryCompileExec3740870832.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTryCompileExec3740870832]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3740870832.dir/link.txt --verbose=1]
+  ignore line: [/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/gcc     -v CMakeFiles/cmTryCompileExec3740870832.dir/CMakeCCompilerABI.c.o  -o cmTryCompileExec3740870832 -rdynamic  ]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/gcc]
+  ignore line: [COLLECT_LTO_WRAPPER=/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../libexec/gcc/x86_64-pc-linux-gnu/6.3.0/lto-wrapper]
+  ignore line: [Target: x86_64-pc-linux-gnu]
+  ignore line: [Configured with: ./configure --prefix=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3 --with-gmp=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3 --with-mpfr=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3 --with-mpc=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3 --with-isl=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3 --with-pkgversion=OpenFOAM --enable-languages=c,c++,fortran --enable-__cxa_atexit --enable-libstdcxx-allocator=new --disable-multilib]
+  ignore line: [Thread model: posix]
+  ignore line: [gcc version 6.3.0 (OpenFOAM) ]
+  ignore line: [COMPILER_PATH=/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../libexec/gcc/x86_64-pc-linux-gnu/6.3.0/:/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../libexec/gcc/]
+  ignore line: [LIBRARY_PATH=/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/:/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/:/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec3740870832' '-rdynamic' '-mtune=generic' '-march=x86-64']
+  link line: [ /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../libexec/gcc/x86_64-pc-linux-gnu/6.3.0/collect2 --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTryCompileExec3740870832 /usr/lib/../lib64/crt1.o /usr/lib/../lib64/crti.o /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/crtbegin.o -L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0 -L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc -L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../.. CMakeFiles/cmTryCompileExec3740870832.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/crtend.o /usr/lib/../lib64/crtn.o]
+    arg [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../libexec/gcc/x86_64-pc-linux-gnu/6.3.0/collect2] ==> ignore
+    arg [--eh-frame-hdr] ==> ignore
+    arg [-m] ==> ignore
+    arg [elf_x86_64] ==> ignore
+    arg [-export-dynamic] ==> ignore
+    arg [-dynamic-linker] ==> ignore
+    arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTryCompileExec3740870832] ==> ignore
+    arg [/usr/lib/../lib64/crt1.o] ==> ignore
+    arg [/usr/lib/../lib64/crti.o] ==> ignore
+    arg [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/crtbegin.o] ==> ignore
+    arg [-L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0] ==> dir [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0]
+    arg [-L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc] ==> dir [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc]
+    arg [-L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../../../lib64] ==> dir [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../../../lib64]
+    arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+    arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+    arg [-L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../..] ==> dir [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../..]
+    arg [CMakeFiles/cmTryCompileExec3740870832.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [-lgcc] ==> lib [gcc]
+    arg [--as-needed] ==> ignore
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [--no-as-needed] ==> ignore
+    arg [-lc] ==> lib [c]
+    arg [-lgcc] ==> lib [gcc]
+    arg [--as-needed] ==> ignore
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [--no-as-needed] ==> ignore
+    arg [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/crtend.o] ==> ignore
+    arg [/usr/lib/../lib64/crtn.o] ==> ignore
+  remove lib [gcc]
+  remove lib [gcc_s]
+  remove lib [gcc]
+  remove lib [gcc_s]
+  collapse library dir [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0] ==> [/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/lib/gcc/x86_64-pc-linux-gnu/6.3.0]
+  collapse library dir [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc] ==> [/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/lib/gcc]
+  collapse library dir [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../../../lib64] ==> [/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/lib64]
+  collapse library dir [/lib/../lib64] ==> [/lib64]
+  collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+  collapse library dir [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../..] ==> [/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/lib]
+  implicit libs: [c]
+  implicit dirs: [/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/lib/gcc/x86_64-pc-linux-gnu/6.3.0;/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/lib/gcc;/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/lib64;/lib64;/usr/lib64;/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/lib]
+  implicit fwks: []
+
+
+Determining if the CXX compiler works passed with the following output:
+Change Dir: /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec1081707646/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec1081707646.dir/build.make CMakeFiles/cmTryCompileExec1081707646.dir/build
+gmake[1]: Entering directory `/lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec1081707646.dir/testCXXCompiler.cxx.o
+/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++     -o CMakeFiles/cmTryCompileExec1081707646.dir/testCXXCompiler.cxx.o -c /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTryCompileExec1081707646
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1081707646.dir/link.txt --verbose=1
+/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++        CMakeFiles/cmTryCompileExec1081707646.dir/testCXXCompiler.cxx.o  -o cmTryCompileExec1081707646 -rdynamic 
+gmake[1]: Leaving directory `/lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp'
+
+
+Detecting CXX compiler ABI info compiled with the following output:
+Change Dir: /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec3058264490/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec3058264490.dir/build.make CMakeFiles/cmTryCompileExec3058264490.dir/build
+gmake[1]: Entering directory `/lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec3058264490.dir/CMakeCXXCompilerABI.cpp.o
+/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++     -o CMakeFiles/cmTryCompileExec3058264490.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTryCompileExec3058264490
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3058264490.dir/link.txt --verbose=1
+/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++      -v CMakeFiles/cmTryCompileExec3058264490.dir/CMakeCXXCompilerABI.cpp.o  -o cmTryCompileExec3058264490 -rdynamic  
+Using built-in specs.
+COLLECT_GCC=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++
+COLLECT_LTO_WRAPPER=/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../libexec/gcc/x86_64-pc-linux-gnu/6.3.0/lto-wrapper
+Target: x86_64-pc-linux-gnu
+Configured with: ./configure --prefix=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3 --with-gmp=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3 --with-mpfr=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3 --with-mpc=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3 --with-isl=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3 --with-pkgversion=OpenFOAM --enable-languages=c,c++,fortran --enable-__cxa_atexit --enable-libstdcxx-allocator=new --disable-multilib
+Thread model: posix
+gcc version 6.3.0 (OpenFOAM) 
+COMPILER_PATH=/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../libexec/gcc/x86_64-pc-linux-gnu/6.3.0/:/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../libexec/gcc/
+LIBRARY_PATH=/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/:/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/:/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec3058264490' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../libexec/gcc/x86_64-pc-linux-gnu/6.3.0/collect2 --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTryCompileExec3058264490 /usr/lib/../lib64/crt1.o /usr/lib/../lib64/crti.o /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/crtbegin.o -L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0 -L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc -L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../.. CMakeFiles/cmTryCompileExec3058264490.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/crtend.o /usr/lib/../lib64/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec3058264490' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+gmake[1]: Leaving directory `/lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp'
+
+
+Parsed CXX implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:/usr/bin/gmake "cmTryCompileExec3058264490/fast"]
+  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTryCompileExec3058264490.dir/build.make CMakeFiles/cmTryCompileExec3058264490.dir/build]
+  ignore line: [gmake[1]: Entering directory `/lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp']
+  ignore line: [/usr/bin/cmake -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/CMakeTmp/CMakeFiles 1]
+  ignore line: [Building CXX object CMakeFiles/cmTryCompileExec3058264490.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++     -o CMakeFiles/cmTryCompileExec3058264490.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTryCompileExec3058264490]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3058264490.dir/link.txt --verbose=1]
+  ignore line: [/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++      -v CMakeFiles/cmTryCompileExec3058264490.dir/CMakeCXXCompilerABI.cpp.o  -o cmTryCompileExec3058264490 -rdynamic  ]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++]
+  ignore line: [COLLECT_LTO_WRAPPER=/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../libexec/gcc/x86_64-pc-linux-gnu/6.3.0/lto-wrapper]
+  ignore line: [Target: x86_64-pc-linux-gnu]
+  ignore line: [Configured with: ./configure --prefix=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3 --with-gmp=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3 --with-mpfr=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3 --with-mpc=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3 --with-isl=/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3 --with-pkgversion=OpenFOAM --enable-languages=c,c++,fortran --enable-__cxa_atexit --enable-libstdcxx-allocator=new --disable-multilib]
+  ignore line: [Thread model: posix]
+  ignore line: [gcc version 6.3.0 (OpenFOAM) ]
+  ignore line: [COMPILER_PATH=/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../libexec/gcc/x86_64-pc-linux-gnu/6.3.0/:/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../libexec/gcc/]
+  ignore line: [LIBRARY_PATH=/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/:/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/:/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec3058264490' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  link line: [ /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../libexec/gcc/x86_64-pc-linux-gnu/6.3.0/collect2 --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTryCompileExec3058264490 /usr/lib/../lib64/crt1.o /usr/lib/../lib64/crti.o /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/crtbegin.o -L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0 -L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc -L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../.. CMakeFiles/cmTryCompileExec3058264490.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/crtend.o /usr/lib/../lib64/crtn.o]
+    arg [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../libexec/gcc/x86_64-pc-linux-gnu/6.3.0/collect2] ==> ignore
+    arg [--eh-frame-hdr] ==> ignore
+    arg [-m] ==> ignore
+    arg [elf_x86_64] ==> ignore
+    arg [-export-dynamic] ==> ignore
+    arg [-dynamic-linker] ==> ignore
+    arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTryCompileExec3058264490] ==> ignore
+    arg [/usr/lib/../lib64/crt1.o] ==> ignore
+    arg [/usr/lib/../lib64/crti.o] ==> ignore
+    arg [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/crtbegin.o] ==> ignore
+    arg [-L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0] ==> dir [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0]
+    arg [-L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc] ==> dir [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc]
+    arg [-L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../../../lib64] ==> dir [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../../../lib64]
+    arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+    arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+    arg [-L/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../..] ==> dir [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../..]
+    arg [CMakeFiles/cmTryCompileExec3058264490.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [-lstdc++] ==> lib [stdc++]
+    arg [-lm] ==> lib [m]
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [-lgcc] ==> lib [gcc]
+    arg [-lc] ==> lib [c]
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [-lgcc] ==> lib [gcc]
+    arg [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/crtend.o] ==> ignore
+    arg [/usr/lib/../lib64/crtn.o] ==> ignore
+  remove lib [gcc_s]
+  remove lib [gcc]
+  remove lib [gcc_s]
+  remove lib [gcc]
+  collapse library dir [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0] ==> [/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/lib/gcc/x86_64-pc-linux-gnu/6.3.0]
+  collapse library dir [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc] ==> [/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/lib/gcc]
+  collapse library dir [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../../../lib64] ==> [/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/lib64]
+  collapse library dir [/lib/../lib64] ==> [/lib64]
+  collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+  collapse library dir [/lustre/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/../lib/gcc/x86_64-pc-linux-gnu/6.3.0/../../..] ==> [/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/lib]
+  implicit libs: [stdc++;m;c]
+  implicit dirs: [/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/lib/gcc/x86_64-pc-linux-gnu/6.3.0;/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/lib/gcc;/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/lib64;/lib64;/usr/lib64;/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/lib]
+  implicit fwks: []
+
+

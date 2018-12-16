@@ -1,4 +1,5 @@
 #include "compService.h"
+#include "defs.h"
 
 using namespace std;
 

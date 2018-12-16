@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/DecomposerUNV.cpp
+DecomposerUNV.h
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/DecomposerUNV.h
+functional
+-
+math.h
+-
+ctime
+-
+
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/DecomposerUNV.h
+iostream
+-
+fstream
+-
+sstream
+-
+vector
+-
+string
+-
+algorithm
+-
+

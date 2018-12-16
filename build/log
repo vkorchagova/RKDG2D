@@ -1,0 +1,7 @@
+Scanning dependencies of target DG2D
+[ 16%] Building CXX object CMakeFiles/DG2D.dir/DG_MPI.cpp.o
+[ 33%] Building CXX object CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o
+[ 50%] Building CXX object CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o
+[ 66%] Building CXX object CMakeFiles/DG2D.dir/src/compService/compService.cpp.o
+Linking CXX executable DG2D
+[100%] Built target DG2D
