@@ -3,8 +3,6 @@
 
 #include "numvector.h"
 #include "Params.h"
-#include "defs.h"
-#include "compService.h"
 #include "Edge.h"
 #include "Patch.h"
 #include "Cell.h"
@@ -21,6 +19,13 @@ private:
 
     //- Find neighbours for given cell
     void findNeighbourCells (const std::shared_ptr<Cell>& cell) const;
+
+    //- Add cell to proc patch
+    void addToProcPatch(const Cell& cell, int numProc);
+
+    void createPhysicalPatch(const std::vector<std::shared_ptr<Edge>>& edgeGroup, const std::string& pName);
+
+    std::shared_ptr<Cell> makeGhostCell(const std::shared_ptr<Edge>& e);
 
 public:	
 
@@ -49,16 +54,22 @@ public:
 	int nNodes;
 
     //- Numbers of edges
-    int nEdges;
+    int nRealEdges;
+
+    //- Total number of edges (includes edges for neib proc cells)
+    int nTotalEdges;
 
     //- Numbers of real cells
     int nRealCells;
 
-    //- Nuber of ghost cells
+    //- Number of ghost cells
     int nGhostCells;
 
     //- Number of patches
     int nPatches; //needs to be delete? see applyBoundary function
+
+    //- Number of neighbor processors
+    int nNeibProcs;
 
 public:
 

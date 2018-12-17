@@ -2,7 +2,6 @@
 #define EDGE_H
 
 #include "numvector.h"
-#include "defs.h"
 //#include "Point.h"
 #include "Cell.h"
 //#include <functional>
@@ -51,14 +50,18 @@ public:
     Edge(const Edge&) = default;
 
     //- Construct using two nodes
-    Edge(const Point& p1, const Point& p2);
-    //Edge(const std::vector<std::shared_ptr<Point>> &p);
+    //Edge(const Point& p1, const Point& p2);
+    Edge(const std::vector<std::shared_ptr<Point>> &p);
 
     //- Destructor
     virtual ~Edge() = default;
 
     //- Get length
     double getLength() const { return length; }
+
+    //- Check edge is equal to given
+    bool isEqual(const Edge& e) const;
+    bool isEqual(const std::shared_ptr<Edge>& e) const { return isEqual(*e); }
 
 }; // for Edge
 

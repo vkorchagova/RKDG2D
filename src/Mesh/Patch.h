@@ -15,16 +15,19 @@ class Patch
 public:
 
     //- Name of patch
-    std::string patchName;
+    std::string name;
 
     //- List of numbers of cells in patch
-    std::vector<int> cellGroup;
+    std::vector<std::shared_ptr<Cell>> cellGroup;
 
     //- Pointer to boundary condition
     //Boundary bc;
 
     //- Default constructor
     Patch() {}
+
+    //- Construct by name
+    Patch(std::string pN) : name(pN) {}
 
     //- Destructor
     ~Patch() {}

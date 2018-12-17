@@ -10,14 +10,13 @@
 
 
 #include "numvector.h"
-#include "defs.h"
 
 #include <functional>
 #include <memory>
 #include <math.h>
 #include <algorithm>
 
-//#include "Point.h"
+#include "Point.h"
 #include "Edge.h"
 
 class Edge;

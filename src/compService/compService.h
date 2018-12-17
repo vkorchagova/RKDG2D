@@ -3,7 +3,9 @@
 
 #include "numvector.h"
 #include "Params.h"
+#include "Point.h"
 #include "Cell.h"
+#include "Patch.h"
 
 
 ///
@@ -12,9 +14,11 @@
 
 //- rotate coordinate system clockwise
 numvector<double, PhysDim> rotate(const numvector<double, PhysDim>& sol, const Point& n);
+Point rotate(const Point& v, const Point& n);
 
 //- rotate coordinate system counter-clockwise
 numvector<double, PhysDim> inverseRotate(const numvector<double, PhysDim>& sol, const Point& n);
+Point inverseRotate(const Point& v, const Point& n);
 
 
 ///
@@ -25,13 +29,15 @@ numvector<double, PhysDim> inverseRotate(const numvector<double, PhysDim>& sol, 
 double integrate( const Cell& cell, const std::function<double(const Point &)>& f);
 
 //- 2D Gauss integration of vector function
-numvector<double, dimPh> integrate(const Cell& cell, const std::function<numvector<double, dimPh>(const Point&)>& f);
+numvector<double, PhysDim> integrate(const Cell& cell, const std::function<numvector<double, PhysDim>(const Point&)>& f);
 
 ///
 /// MPI operations
 ///
 
 int localNumber(std::vector<int>& globalNumbers, int curNum);
+
+int getPatchByName(std::vector<Patch>& patches, std::string& pName);
 
 
 #endif

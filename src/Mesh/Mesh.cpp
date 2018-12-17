@@ -37,6 +37,80 @@ void Mesh::findNeighbourCells(const shared_ptr<Cell>& cell) const
     }
 }
 
+void Mesh::addToProcPatch(const Cell& cell, int numProc)
+{
+    string pName = "procPatch." + to_string(numProc);
+
+    int iPatch = getPatchByName(patches, pName);
+
+    if (iPatch == -1)
+    {
+        iPatch = patches.size();
+        patches.emplace_back(Patch(pName));
+    }
+
+    patches[iPatch].cellGroup.push_back(make_shared<Cell>(cell));
+}
+
+void Mesh::createPhysicalPatch(const vector<shared_ptr<Edge>>& edgeGroup, const string& pName)
+{
+    patches.emplace_back(Patch(pName));
+
+    Patch& p = patches.back();
+
+    for (const shared_ptr<Edge>& e : edgeGroup)
+        //shared_ptr<Cell> c = makeGhostCell(e);
+        p.cellGroup.push_back(makeGhostCell(e));
+}
+
+shared_ptr<Cell> Mesh::makeGhostCell(const shared_ptr<Edge>& e)
+{
+    vector<shared_ptr<Point>> cNodes;
+    vector<shared_ptr<Edge>> cEdges;
+
+    shared_ptr<Cell> realCell = e->neibCells[0];
+
+    Point nodeRef = *e->nodes[0];
+
+    // reflect nodes of real cell with respect to edge
+    for (const shared_ptr<Point> node : realCell->nodes)
+    {
+        if (node->isEqual(nodeRef) || node->isEqual(*(e->nodes[1])))
+        {
+            cNodes.push_back(node);
+        }
+        else
+        {
+            Point v = rotate(nodeRef - *node, e->n);
+            v.x() *= -1;
+
+            nodes.emplace_back(inverseRotate(v, e->n));
+            cNodes.push_back(make_shared<Point>(nodes.back()));
+        }
+    }
+
+    // construct edges of cell
+    for (int i = 0; i < realCell->nEntities - 1; ++i)
+    {
+        vector<shared_ptr<Point>> nodesInEdge = {realCell->nodes[i], realCell->nodes[i + 1]};
+
+        Edge iE (nodesInEdge);
+
+        if (iE.isEqual(e))
+            cEdges.push_back(e);
+        else
+        {
+            edges.push_back(iE);
+            cEdges.push_back(make_shared<Edge>(edges.back()));
+        }
+    }
+
+    // construct cell
+    cells.emplace_back(Cell(cNodes,cEdges));
+
+    return make_shared<Cell>(cells.back());
+}
+
 // ------------------ Public class methods ---------------------
 
 
@@ -72,7 +146,7 @@ void Mesh::importMesh(string& fileName)
             for (int i = 0; i < nNodes; ++i)
             {
                 reader >> globalNum >> x >> y;
-                globalNodeNumber.push_back(globalNum);
+                globalNodeNumber.push_back(globalNum-1);
                 nodes.emplace_back(Point({x,y}));
             }
 
@@ -91,22 +165,22 @@ void Mesh::importMesh(string& fileName)
         {
             int node1, node2;
 
-            reader >> nGhostCells >> nEdges;
+            reader >> nRealEdges >> nTotalEdges;
 
-            edges.reserve(nEdges);
+            edges.reserve(nTotalEdges);
 
-            bool onBoundary = false;
-
-            for (int i = 0; i < nEdges; ++i)
+            for (int i = 0; i < nTotalEdges; ++i)
             {
                 reader >> globalNum;
-                reader >> onBoundary;
                 reader >> node1 >> node2;
-                globalEdgeNumber.push_back(globalNum);
-                edges.emplace_back(
-                            Edge (nodes[localNumber(globalNodeNumber, node1-1)],
-                                  nodes[localNumber(globalNodeNumber, node2-1)]) );
+                globalEdgeNumber.push_back(globalNum-1);
+                std::vector<shared_ptr<Point>> nodesInEdge;
+                nodesInEdge.push_back( make_shared<Point>( nodes[localNumber(globalNodeNumber, node1-1)]));
+                nodesInEdge.push_back( make_shared<Point>( nodes[localNumber(globalNodeNumber, node2-1)]));
+                edges.emplace_back( Edge (nodesInEdge) );
             }
+
+            //
 
             do
             {
@@ -114,7 +188,7 @@ void Mesh::importMesh(string& fileName)
 
             } while (tag != "$EndEdges");
 
-            cout << "Number of edges: " << nEdges << ", on boundary: " << nGhostCells << endl;
+            cout << "Number of edges: " << nRealEdges << endl;
         }
         else if (tag == "$Cells")
         {
@@ -122,6 +196,16 @@ void Mesh::importMesh(string& fileName)
             cells.reserve(nRealCells);
             globalCellNumber.reserve(nRealCells);
 
+/*
+            for (int i : globalNodeNumber)
+                cout << i << ' ';
+            cout << endl;
+
+            for (int i : globalEdgeNumber)
+                cout << i << ' ';
+            cout << endl;
+
+*/
             for (int i = 0; i < nRealCells; ++i)
             {
                 int nEdgesInCell;
@@ -130,7 +214,7 @@ void Mesh::importMesh(string& fileName)
                 reader >> globalNum;
                 reader >> nEdgesInCell;
 
-                globalCellNumber.push_back(globalNum);
+                globalCellNumber.push_back(globalNum - 1);
 
                 //cout << nEdgesInCell << endl;
                 vector<shared_ptr<Point>> curNodes;
@@ -142,6 +226,7 @@ void Mesh::importMesh(string& fileName)
                 for (int j = 0; j < nEdgesInCell; ++j)
                 {
                     reader >> entity;
+                    //cout << entity - 1 << ' ' << localNumber(globalNodeNumber, entity - 1) << endl;
                     curNodes.push_back(
                                 make_shared<Point>(
                                     nodes[localNumber(globalNodeNumber, entity - 1)]) );
@@ -167,25 +252,90 @@ void Mesh::importMesh(string& fileName)
 
             cout << "Number of cells: " << nRealCells << endl;
         }
+        else if (tag == "$NeibProcCells")
+        {
+            int nProcCells;
+
+            reader >> nProcCells;
+            cells.reserve(nRealCells + nProcCells);
+            globalCellNumber.reserve(nRealCells + nProcCells);
+
+            for (int i = 0; i < nProcCells; ++i)
+            {
+
+                int nEdgesInCell;
+                int entity;
+
+                reader >> globalNum;
+                reader >> nEdgesInCell;
+
+                globalCellNumber.push_back(globalNum - 1);
+
+                //cout << nEdgesInCell << endl;
+                vector<shared_ptr<Point>> curNodes;
+                vector<shared_ptr<Edge>> curEdges;
+
+                curNodes.reserve(nEdgesInCell);
+                curEdges.reserve(nEdgesInCell);
+
+                for (int j = 0; j < nEdgesInCell; ++j)
+                {
+                    reader >> entity;
+                    //cout << entity - 1 << ' ' << localNumber(globalNodeNumber, entity - 1) << endl;
+                    curNodes.push_back(
+                                make_shared<Point>(
+                                    nodes[localNumber(globalNodeNumber, entity - 1)]) );
+                }
+
+                for (int j = 0; j < nEdgesInCell; ++j)
+                {
+                    reader >> entity;
+                    curEdges.push_back(
+                                make_shared<Edge>(
+                                    edges[localNumber(globalEdgeNumber, entity - 1)] ));
+                }
+
+                // add cells in list
+                Cell curCell(curNodes,curEdges);
+                cells.push_back(curCell);
+
+                // add proc cell to patch
+                int numProc;
+                reader >> numProc;
+
+                addToProcPatch(curCell, numProc);
+            }
+
+            do
+            {
+                getline(reader, tag);
+
+            } while (tag != "$EndNeibProcCells");
+
+            nNeibProcs = patches.size();
+
+            cout << "Number of procs: " << nNeibProcs << endl;
+        }
         else if (tag == "$AdjointCellsForEdges")
         {
             int nAdj;
             int adjCell;
             reader >> nAdj;
 
-            if (nAdj != nEdges)
+            if (nAdj != nRealEdges)
             {
-                cout << "Broken file: nAdj = " << nAdj << ", nEdges = " << nEdges << endl;
+                cout << "Broken file: nAdj = " << nAdj << ", nEdges = " << nRealEdges << endl;
                 exit(0);
             }
 
-            for (int i = 0; i < nEdges; ++i)
+            for (int i = 0; i < nRealEdges; ++i)
             {
                reader >> nAdj;
 
                for (int j = 0; j < nAdj; ++j)
                {
                     reader >> adjCell;
+                    //cout << adjCell - 1 << ' ' << localNumber(globalCellNumber, adjCell - 1) << endl;
                     edges[i].neibCells.push_back(
                                 make_shared<Cell>(cells[localNumber(globalCellNumber, adjCell - 1)] ));
                }
@@ -202,10 +352,18 @@ void Mesh::importMesh(string& fileName)
         }
         else if (tag == "$EdgeNormals")
         {
-            getline(reader, tag);
             double nx, ny;
 
-            for (int i = 0; i < nEdges; ++i)
+            int nAdj;
+            reader >> nAdj;
+
+            if (nAdj != nRealEdges)
+            {
+                cout << "Broken file: nAdj = " << nAdj << ", nEdges = " << nRealEdges << endl;
+                exit(0);
+            }
+
+            for (int i = 0; i < nRealEdges; ++i)
             {
                 reader >> nx >> ny;
                 edges[i].n = Point({nx, ny});
@@ -222,26 +380,39 @@ void Mesh::importMesh(string& fileName)
         else if (tag == "$Patches")
         {
             int nPatches;
+            string name;
+
             reader >> nPatches;
 
-            patches.resize(nPatches);
+            patches.reserve(nNeibProcs + nPatches);
 
             for (int iP = 0; iP < nPatches; ++iP)
             {
-                reader >> patches[iP].patchName;
+                reader >> name;
 
                 int nEdgesInPatch;
                 reader >> nEdgesInPatch;
-                int iCell;
+
+                vector<shared_ptr<Edge>> edgeGroup;
+                edgeGroup.reserve(nEdgesInPatch);
+
+                int iEdge;
 
                 for (int i = 0; i < nEdgesInPatch; ++i)
                 {
-                    reader >> iCell;
-                    patches[iP].cellGroup.push_back(localNumber(globalCellNumber, iCell - 1));
+                    reader >> iEdge;
+                    //cout << iEdge << ' ';
+                    //cout << localNumber(globalEdgeNumber, iEdge - 1) << endl;
+                    edgeGroup.push_back(make_shared<Edge>(edges[localNumber(globalEdgeNumber, iEdge - 1)]));
                 }
 
-                cout << "Patch #" << iP << ": " << patches[iP].patchName << ", " << nEdgesInPatch << " edges contains\n";
+                createPhysicalPatch(edgeGroup, name);
+
             }
+
+            for (const Patch& p : patches)
+                cout << "Patch name: " << p.name << "; number of edges = " << p.cellGroup.size() << endl;
+            
 
             do
             {

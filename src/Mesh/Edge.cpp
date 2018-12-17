@@ -6,9 +6,12 @@ using namespace std;
 
 // ------------------ Constructors & Destructor ----------------
 
-Edge::Edge(const Point &p1, const Point &p2)
-//Edge::Edge(const vector<shared_ptr<Point>> &p) : nodes(p)
+
+Edge::Edge(const vector<shared_ptr<Point>> &p) : nodes(p)
 {
+    Point p1 = *p[0];
+    Point p2 = *p[1];
+
     Point c = 0.5 * (p2 + p1);
     Point m = 0.5 * (p2 - p1);
 
@@ -65,5 +68,13 @@ Edge::Edge(const Point &p1, const Point &p2)
 
     //- jacobian
     J = 0.5 * length;
+}
+
+bool Edge::isEqual(const Edge& e) const
+{ 
+    return true ? ( (nodes[0]->isEqual(e.nodes[0]) && nodes[1]->isEqual(e.nodes[1])) 
+                    ||
+                    (nodes[0]->isEqual(e.nodes[1]) && nodes[1]->isEqual(e.nodes[0])) ) 
+                : false;
 }
 

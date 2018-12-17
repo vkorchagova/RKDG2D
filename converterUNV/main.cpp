@@ -11,16 +11,11 @@ using namespace std;
 int main()
 {
 
-    FileConverter converter("../sodRectTriag100.unv","mesh2D");
+    FileConverter converter("Mesh_4x4.unv","mesh2D");
 
 
     converter.importUNV();
-    //converter.exportRKDG();
-    converter.exportMETIS();
-    system("mpmetis meshMETIS 12");
-
-    converter.importPartition("meshMETIS.epart.12");
-    converter.exportVTK();
+    converter.exportRKDG();
     
     cout << "END" << endl;
     return 0;

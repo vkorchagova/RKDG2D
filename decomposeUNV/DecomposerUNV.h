@@ -167,8 +167,8 @@ public:
 ///     ...
 /// $EndNodes
 /// $Edges //at first - boundary edges, after - internal
-///     number_of_boundary_edges
-///     total_number_of_edges
+///     number_of_edges_in_real_cells
+///     total_number_of_edges (includes edges for neib proc cells)
 ///     global_number is_edge_on_boundary node_1 node_2
 ///     ...
 /// $EndEdges
@@ -177,18 +177,13 @@ public:
 ///     global_number number_of_edges_in_cell node1 node2 ... edge1 edge2 ... // number_of_nodes = number_of_edges
 ///     ...
 /// $EndCells
-/// $AlienCells
-///     number_of_cells
-///     global_number number_of_edges_in_cell node1 node2 ... edge1 edge2 ... number_of_processor_subdomain_for_alien_cell
-///     ...
-/// $EndAlienCells
 /// $AdjointCellsForEdges
-///     total_number_of_edges
+///     number_of_edges_in_real_cells
 ///     cell1 cell2
 ///     ...
 /// $EndAdjointCellsForEdges
 /// $EdgeNormals
-///     total_number_of_edges
+///     number_of_edges_in_real_cells
 ///     n_x n_y
 /// /// ...
 /// $EndEdgeNormals
@@ -202,3 +197,8 @@ public:
 ///     patch_name_2
 ///         ...
 /// $EndPatches
+/// $NeibProcCells
+///     total_number_of_neib_proc_cells
+///     global_number number_of_edges_in_cell node1 node2 ... edge1 edge2 ... number_of_processor_for_cell
+///     ...
+/// $NeibProcCells

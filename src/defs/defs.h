@@ -22,9 +22,6 @@ inline T sqr(T x) {return x*x;}
 ///
 
 
-// Solution vector size
-const int dimPh = PhysDim;
-
 
 ///
 /// Overloading of vector<numvector<double,dimPhys * dimShapes>> 

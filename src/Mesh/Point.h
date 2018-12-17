@@ -6,7 +6,7 @@
 #define POINT_H
 
 #include "numvector.h"
-
+#include <memory>
 
 class Point : public numvector<double, 2>
 {
@@ -36,6 +36,10 @@ public:
     
     //- Set y coordinate
     double& y() { return r[1]; }
+
+    //- check if point is equal to given
+    bool isEqual(const Point& p) const { return true ? (r[0] == p.x() && r[1] == p.y()) : false; }
+    bool isEqual(const std::shared_ptr<Point>& p) const { return isEqual(*p); }
 
     int number;
 };

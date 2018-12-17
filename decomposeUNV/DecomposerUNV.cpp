@@ -696,6 +696,7 @@ void DecomposerUNV::exportPartMeshRKDG(int nDom) const
         }
     }
     
+    int nRealEdges = edgesInDom.size();
     int nRealCells = cellsInDom.size();
     
     
@@ -757,27 +758,22 @@ void DecomposerUNV::exportPartMeshRKDG(int nDom) const
     for (int i = 0; i < nodesInDom.size(); ++i)
     {
         globalNum = nodesInDom[i];
-        writerPart << globalNum << ' ' << nodes[globalNum][0] << ' ' << nodes[globalNum][1] << endl;
+        writerPart << globalNum + 1 << ' ' << nodes[globalNum][0] << ' ' << nodes[globalNum][1] << endl;
     }
 
     writerPart << "$EndNodes\n";
 
     // --------------------------------------
 
-    int nEdgesBound = 0;
-
-    for (int i = 0; i < patchNames.size(); ++i)
-        nEdgesBound += patchGroupsInDom[i].size();
-
     writerPart << "$Edges\n";
 
-    writerPart << nEdgesBound << endl;
+    writerPart << nRealEdges << endl;
     writerPart << edgesInDom.size() << endl;
 
     for (size_t i = 0; i < edgesInDom.size(); ++i)
     {
         globalNum = edgesInDom[i];
-        writerPart << abs (int(adjEdgeCells[globalNum].size() - 2)) << ' ' << edges[2*globalNum] << ' ' << edges[2*globalNum + 1] << endl;
+        writerPart << globalNum + 1 << ' ' << edges[2*globalNum] << ' ' << edges[2*globalNum + 1] << endl;
     }
 
     writerPart << "$EndEdges\n";
@@ -790,7 +786,7 @@ void DecomposerUNV::exportPartMeshRKDG(int nDom) const
     for (size_t i = 0; i < nRealCells; ++i)
     {
         globalNum = cellsInDom[i];
-        writerPart << globalNum << ' ';
+        writerPart << globalNum + 1 << ' ';
         writerPart << cellsAsNodes[globalNum].size() << ' ';
         for (size_t j = 0; j < cellsAsNodes[globalNum].size(); ++j)
              writerPart << cellsAsNodes[globalNum][j] << ' ';
@@ -800,16 +796,16 @@ void DecomposerUNV::exportPartMeshRKDG(int nDom) const
     }
 
     writerPart << "$EndCells\n";
-    
+
     // --------------------------------------
 
-    writerPart << "$AlienCells\n";
+    writerPart << "$NeibProcCells\n";
     writerPart << nAlienCells << endl;
 
     for (int i = 0; i < nAlienCells; ++i)
     {
         globalNum = alienCells[i];
-        writerPart << globalNum << ' ';
+        writerPart << globalNum + 1 << ' ';
         writerPart << cellsAsNodes[globalNum].size() << ' ';
         for (size_t j = 0; j < cellsAsNodes[globalNum].size(); ++j)
              writerPart << cellsAsNodes[globalNum][j] << ' ';
@@ -821,14 +817,14 @@ void DecomposerUNV::exportPartMeshRKDG(int nDom) const
         writerPart << endl;
     }
 
-    writerPart << "$EndAlienCells\n";
+    writerPart << "$EndNeibProcCells\n";
 
     // --------------------------------------
 
     writerPart << "$AdjointCellsForEdges\n";
-    writerPart << edgesInDom.size() << endl;
+    writerPart << nRealEdges << endl;
 
-    for (size_t i = 0; i < edgesInDom.size(); ++i)
+    for (size_t i = 0; i < nRealEdges; ++i)
     {
         globalNum = edgesInDom[i];
         writerPart << adjEdgeCells[globalNum].size() << ' ';
@@ -843,9 +839,9 @@ void DecomposerUNV::exportPartMeshRKDG(int nDom) const
     // --------------------------------------
 
     writerPart << "$EdgeNormals\n";
-    writerPart << edgesInDom.size() << endl;
+    writerPart << nRealEdges << endl;
 
-    for (size_t i = 0; i < edgesInDom.size(); ++i)
+    for (size_t i = 0; i < nRealEdges; ++i)
     {
         globalNum = edgesInDom[i];
         writerPart << edgeNormals[globalNum][0] << ' ' << edgeNormals[globalNum][1] << endl;
@@ -864,7 +860,7 @@ void DecomposerUNV::exportPartMeshRKDG(int nDom) const
         writerPart  << patchGroupsInDom[i].size() << endl;
 
         for (size_t j = 0; j < patchGroupsInDom[i].size(); ++j)
-            writerPart << patchGroupsInDom[i][j] << endl;
+            writerPart << patchGroupsInDom[i][j] + 1 << endl;
     }
 
     writerPart << "$EndPatches\n";

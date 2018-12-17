@@ -45,7 +45,7 @@ CMakeFiles/DG2D.dir/DG_MPI.cpp.o: /usr/local/include/openmpi/ompi/mpi/cxx/topolo
 CMakeFiles/DG2D.dir/DG_MPI.cpp.o: /usr/local/include/openmpi/ompi/mpi/cxx/win.h
 CMakeFiles/DG2D.dir/DG_MPI.cpp.o: /usr/local/include/openmpi/ompi/mpi/cxx/win_inln.h
 
-CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/Mesh/Point.h
+CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/Mesh/Patch.h
 CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/Params/Params.h
 CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/compService/compService.h
 CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/defs/defs.h
@@ -53,6 +53,7 @@ CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/numvector.h
 CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/Mesh/Cell.cpp
 CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/Mesh/Cell.h
 CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/Mesh/Edge.h
+CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/Mesh/Point.h
 
 CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o: ../src/Mesh/Point.h
 CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o: ../src/Params/Params.h
@@ -75,6 +76,7 @@ CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o: ../src/Mesh/Patch.h
 
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/Mesh/Cell.h
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/Mesh/Edge.h
+CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/Mesh/Patch.h
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/Mesh/Point.h
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/Params/Params.h
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/defs/defs.h

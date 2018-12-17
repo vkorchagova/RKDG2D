@@ -46,7 +46,7 @@ CMakeFiles/DG2D.dir/DG_MPI.cpp.o
  /usr/local/include/openmpi/ompi/mpi/cxx/win.h
  /usr/local/include/openmpi/ompi/mpi/cxx/win_inln.h
 CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o
- ../src/Mesh/Point.h
+ ../src/Mesh/Patch.h
  ../src/Params/Params.h
  ../src/compService/compService.h
  ../src/defs/defs.h
@@ -54,6 +54,7 @@ CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o
  /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.cpp
  /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.h
  /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Edge.h
+ /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Point.h
 CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o
  ../src/Mesh/Point.h
  ../src/Params/Params.h
@@ -76,6 +77,7 @@ CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o
  ../src/Mesh/Cell.h
  ../src/Mesh/Edge.h
+ ../src/Mesh/Patch.h
  ../src/Mesh/Point.h
  ../src/Params/Params.h
  ../src/defs/defs.h

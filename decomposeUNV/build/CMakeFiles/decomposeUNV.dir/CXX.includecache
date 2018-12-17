@@ -6,16 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/DecomposerUNV.cpp
-DecomposerUNV.h
-/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/DecomposerUNV.h
-functional
--
-math.h
--
-ctime
--
-
 /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/DecomposerUNV.h
 iostream
 -
@@ -28,5 +18,13 @@ vector
 string
 -
 algorithm
+-
+
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/main.cpp
+iostream
+-
+DecomposerUNV.h
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/DecomposerUNV.h
+cstdlib
 -
 
