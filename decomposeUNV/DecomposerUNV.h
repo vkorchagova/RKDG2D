@@ -177,6 +177,11 @@ public:
 ///     global_number number_of_edges_in_cell node1 node2 ... edge1 edge2 ... // number_of_nodes = number_of_edges
 ///     ...
 /// $EndCells
+/// $NeibProcCells
+///     total_number_of_neib_proc_cells
+///     global_number number_of_edges_in_cell node1 node2 ... edge1 edge2 ... number_of_processor_for_cell
+///     ...
+/// $NeibProcCells
 /// $AdjointCellsForEdges
 ///     number_of_edges_in_real_cells
 ///     cell1 cell2
@@ -197,8 +202,3 @@ public:
 ///     patch_name_2
 ///         ...
 /// $EndPatches
-/// $NeibProcCells
-///     total_number_of_neib_proc_cells
-///     global_number number_of_edges_in_cell node1 node2 ... edge1 edge2 ... number_of_processor_for_cell
-///     ...
-/// $NeibProcCells

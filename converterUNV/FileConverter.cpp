@@ -432,7 +432,7 @@ void FileConverter::exportRKDG()
     writer << nodes.size() << endl;
 
     for (int i = 0; i < nodes.size(); ++i)
-        writer << nodes[i][0] << ' ' << nodes[i][1] << endl;
+        writer << i + 1 << ' ' << nodes[i][0] << ' ' << nodes[i][1] << endl;
 
     writer << "$EndNodes\n";
 
@@ -445,11 +445,11 @@ void FileConverter::exportRKDG()
 
     writer << "$Edges\n";
 
-    writer << nEdgesBound << endl;
+    writer << edges.size() << endl;
     writer << edges.size() << endl;
 
     for (size_t i = 0; i < edges.size(); ++i)
-        writer << abs (int(adjEdgeCells[i].size() - 2)) << ' ' << edges[i][0] << ' ' << edges[i][1] << endl;
+        writer << i + 1 << ' ' << edges[i][0] << ' ' << edges[i][1] << endl;
 
     writer << "$EndEdges\n";
 
@@ -460,7 +460,7 @@ void FileConverter::exportRKDG()
 
     for (size_t i = 0; i < cellsAsEdges.size(); ++i)
     {
-        writer << cellsAsEdges[i].size() << ' ';
+        writer << i + 1 << ' ' << cellsAsEdges[i].size() << ' ';
         for (size_t j = 0; j < cellsAsNodes[i].size(); ++j)
              writer << cellsAsNodes[i][j] << ' ';
         for (size_t j = 0; j < cellsAsEdges[i].size(); ++j)
@@ -470,15 +470,11 @@ void FileConverter::exportRKDG()
 
     writer << "$EndCells\n";
 
-    // --------------------------------------
+   // --------------------------------------
 
-//    writer << "$CellCenters\n";
-//    writer << cellsAsEdges.size() << endl;
-
-//    for (size_t i = 0; i < cellsAsEdges.size(); ++i)
-//        writer << cellCenters[i][0] << ' ' << cellCenters[i][1] << endl;
-
-//    writer << "$EndCellCenters\n";
+    writer << "$NeibProcCells\n";
+    writer << 0 << endl;
+    writer << "$EndNeibProcCells\n";
 
     // --------------------------------------
 

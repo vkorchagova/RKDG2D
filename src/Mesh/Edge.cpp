@@ -72,9 +72,14 @@ Edge::Edge(const vector<shared_ptr<Point>> &p) : nodes(p)
 
 bool Edge::isEqual(const Edge& e) const
 { 
-    return true ? ( (nodes[0]->isEqual(e.nodes[0]) && nodes[1]->isEqual(e.nodes[1])) 
+    return true ? ( (nodes[0] == e.nodes[0] && nodes[1] == e.nodes[1]) 
+                    ||
+                    (nodes[0] == e.nodes[1] && nodes[1] == e.nodes[0]) )
+                : false;
+
+    /*return true ? ( (nodes[0]->isEqual(e.nodes[0]) && nodes[1]->isEqual(e.nodes[1])) 
                     ||
                     (nodes[0]->isEqual(e.nodes[1]) && nodes[1]->isEqual(e.nodes[0])) ) 
-                : false;
+                : false; */
 }
 

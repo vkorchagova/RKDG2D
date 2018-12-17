@@ -75,16 +75,17 @@ shared_ptr<Cell> Mesh::makeGhostCell(const shared_ptr<Edge>& e)
     // reflect nodes of real cell with respect to edge
     for (const shared_ptr<Point> node : realCell->nodes)
     {
-        if (node->isEqual(nodeRef) || node->isEqual(*(e->nodes[1])))
+        //if (node->isEqual(nodeRef) || node->isEqual(*(e->nodes[1])))
+        if (node == e->nodes[0] || node == e->nodes[1])
         {
             cNodes.push_back(node);
         }
         else
         {
-            Point v = rotate(nodeRef - *node, e->n);
+            Point v = rotate(*node - nodeRef, e->n);
             v.x() *= -1;
 
-            nodes.emplace_back(inverseRotate(v, e->n));
+            nodes.emplace_back(inverseRotate(v, e->n) + nodeRef);
             cNodes.push_back(make_shared<Point>(nodes.back()));
         }
     }
@@ -314,7 +315,7 @@ void Mesh::importMesh(string& fileName)
 
             nNeibProcs = patches.size();
 
-            cout << "Number of procs: " << nNeibProcs << endl;
+            cout << "Number of neib procs: " << nNeibProcs << endl;
         }
         else if (tag == "$AdjointCellsForEdges")
         {
@@ -411,7 +412,13 @@ void Mesh::importMesh(string& fileName)
             }
 
             for (const Patch& p : patches)
+            {
                 cout << "Patch name: " << p.name << "; number of edges = " << p.cellGroup.size() << endl;
+
+                //for (const shared_ptr<Cell> c : p.cellGroup)
+                //    for (const shared_ptr<Point> n : c->nodes)
+                //        cout << n->x() << ' ' << n->y() << endl;
+            }
             
 
             do
