@@ -25,11 +25,18 @@ Point inverseRotate(const Point& v, const Point& n);
 /// Integration
 ///
 
+//- 1D Gauss integration of scalar function
+double integrate( const Edge& edge, const std::function<double(const Point &)>& f);
+
+//- 1D Gauss integration of vector function
+numvector<double, PhysDim> integrate(const Edge& edge, const std::function<numvector<double, PhysDim>(const Point&)>& f);
+
 //- 2D Gauss integration of scalar function
 double integrate( const Cell& cell, const std::function<double(const Point &)>& f);
 
 //- 2D Gauss integration of vector function
 numvector<double, PhysDim> integrate(const Cell& cell, const std::function<numvector<double, PhysDim>(const Point&)>& f);
+
 
 ///
 /// MPI operations

@@ -18,7 +18,7 @@ class Mesh
 private:
 
     //- Find neighbours for given cell
-    void findNeighbourCells (const std::shared_ptr<Cell>& cell) const;
+    void findNeighbourCells(Cell& cell);
 
     //- Add cell to proc patch
     void addToProcPatch(const Cell& cell, int numProc);

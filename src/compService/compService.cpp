@@ -41,6 +41,24 @@ double integrate(const Cell& cell, const function<double(const Point &)>& f)
     return res;
 
 } // end integrate 2D of scalar function
+
+double integrate(const Edge& edge, const function<double(const Point &)>& f)
+{
+    double res = 0.0;
+
+    for (int i = 0; i < edge.nGP; ++i)
+    {
+        double resF = f(edge.gPoints[i]);
+
+        res += edge.gWeights[i] * resF * edge.J;
+
+    }
+
+    return res;
+
+} // end integrate 1D of scalar function
+
+
 numvector<double, PhysDim> integrate(const Cell& cell, const function<numvector<double, PhysDim>(const Point &)>& f)
 {
     numvector<double, PhysDim> res (0.0);
@@ -58,6 +76,25 @@ numvector<double, PhysDim> integrate(const Cell& cell, const function<numvector<
     return res;
 
 } // end integrate 2D of vector function
+
+numvector<double, PhysDim> integrate(const Edge& edge, const function<numvector<double, PhysDim>(const Point &)>& f)
+{
+    numvector<double, PhysDim> res (0.0);
+
+    for (int i = 0; i < edge.nGP; ++i)
+    {
+         numvector<double,PhysDim> resF = f(edge.gPoints[i]);
+
+        for (int k = 0; k < PhysDim; ++k)
+        {
+           res[k] += edge.gWeights[i] * resF[k] * edge.J;
+        }
+    }
+
+    return res;
+
+} // end integrate 1D of vector function
+
 
 
 ///

@@ -13,8 +13,8 @@
 
 #include "defs.h"		//- Basic arithmetics
 //#include "Params.h"		//- All the manually defining parameters of the method
-#include "Mesh.h"		//- The very mesh
-//#include "Basis.h"		//- All about the basis functions for DG
+#include "Mesh.h"		//- The mesh
+#include "Basis.h"		//- All about the basis functions for DG
 #include "compService.h"//- Integration
 //#include "Physics.h"	//- The physical models
 //#include "Problem.h"	//- Initial-boundary staff
@@ -48,6 +48,11 @@ int main(int argc, char* argv[])
 
     string meshFileName = "mesh2D";// + to_string(rank);
     Mesh mesh(meshFileName);
+    Basis basis(mesh.cells);
+
+    ofstream writer("mesh2D.vtk");
+    mesh.exportMeshVTK(writer);
+    writer.close();
 
     MPI_Finalize();
 

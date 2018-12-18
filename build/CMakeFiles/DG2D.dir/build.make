@@ -167,9 +167,32 @@ CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o.provides: CMakeFiles/DG2D.dir/src/Mesh/E
 
 CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o.provides.build: CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o
 
+CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o: CMakeFiles/DG2D.dir/flags.make
+CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o: ../src/Basis/Basis.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_6)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o -c /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Basis/Basis.cpp
+
+CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.i"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Basis/Basis.cpp > CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.i
+
+CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.s"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Basis/Basis.cpp -o CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.s
+
+CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o.requires:
+.PHONY : CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o.requires
+
+CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o.provides: CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o.requires
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o.provides.build
+.PHONY : CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o.provides
+
+CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o.provides.build: CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o
+
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: CMakeFiles/DG2D.dir/flags.make
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/compService/compService.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_6)
+	$(CMAKE_COMMAND) -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_7)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/DG2D.dir/src/compService/compService.cpp.o"
 	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/DG2D.dir/src/compService/compService.cpp.o -c /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/compService/compService.cpp
 
@@ -197,6 +220,7 @@ DG2D_OBJECTS = \
 "CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o" \
 "CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o" \
 "CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o" \
+"CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o" \
 "CMakeFiles/DG2D.dir/src/compService/compService.cpp.o"
 
 # External object files for target DG2D
@@ -207,6 +231,7 @@ DG2D: CMakeFiles/DG2D.dir/src/defs/defs.cpp.o
 DG2D: CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o
 DG2D: CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o
 DG2D: CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o
+DG2D: CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o
 DG2D: CMakeFiles/DG2D.dir/src/compService/compService.cpp.o
 DG2D: CMakeFiles/DG2D.dir/build.make
 DG2D: /usr/local/lib/libmpi_cxx.so
@@ -234,6 +259,7 @@ CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/defs/defs.cpp.o.requires
 CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o.requires
 CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o.requires
 CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o.requires
+CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o.requires
 CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/compService/compService.cpp.o.requires
 .PHONY : CMakeFiles/DG2D.dir/requires
 

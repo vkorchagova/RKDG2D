@@ -138,6 +138,30 @@ DG_MPI.cpp.s:
 	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/DG_MPI.cpp.s
 .PHONY : DG_MPI.cpp.s
 
+src/Basis/Basis.o: src/Basis/Basis.cpp.o
+.PHONY : src/Basis/Basis.o
+
+# target to build an object file
+src/Basis/Basis.cpp.o:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o
+.PHONY : src/Basis/Basis.cpp.o
+
+src/Basis/Basis.i: src/Basis/Basis.cpp.i
+.PHONY : src/Basis/Basis.i
+
+# target to preprocess a source file
+src/Basis/Basis.cpp.i:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.i
+.PHONY : src/Basis/Basis.cpp.i
+
+src/Basis/Basis.s: src/Basis/Basis.cpp.s
+.PHONY : src/Basis/Basis.s
+
+# target to generate assembly for a file
+src/Basis/Basis.cpp.s:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.s
+.PHONY : src/Basis/Basis.cpp.s
+
 src/Mesh/Cell.o: src/Mesh/Cell.cpp.o
 .PHONY : src/Mesh/Cell.o
 
@@ -270,6 +294,9 @@ help:
 	@echo "... DG_MPI.o"
 	@echo "... DG_MPI.i"
 	@echo "... DG_MPI.s"
+	@echo "... src/Basis/Basis.o"
+	@echo "... src/Basis/Basis.i"
+	@echo "... src/Basis/Basis.s"
 	@echo "... src/Mesh/Cell.o"
 	@echo "... src/Mesh/Cell.i"
 	@echo "... src/Mesh/Cell.s"

@@ -14,6 +14,27 @@ using namespace std;
 Mesh::Mesh(std::string& fileName)
 {
     importMesh(fileName);
+
+    //nEntitiesTotal = 0;
+
+    for (int i = 0; i < cells.size(); ++i)
+    {
+        //nEntitiesTotal += cells[i]->nEntities;
+        //cells[i]->number = i;
+        cells[i].setArea();
+        cells[i].setGaussPoints();
+        cells[i].setJacobian();
+        cells[i].setCellCenter();
+    }
+
+    cout << "---" << endl;
+
+    for (int i = 0; i < nRealCells; ++i)
+    {
+        findNeighbourCells(cells[i]);
+    }
+
+
 }
 
 Mesh::~Mesh()
@@ -23,17 +44,24 @@ Mesh::~Mesh()
 
 // ------------------ Private class methods --------------------
 
-void Mesh::findNeighbourCells(const shared_ptr<Cell>& cell) const
+void Mesh::findNeighbourCells(Cell& cell)
 {
-    for (const shared_ptr<Edge> edge : cell->edges)
+
+
+    for (const shared_ptr<Edge> edge : cell.edges)
     {
-        if (edge->neibCells.size() == 2)
-        {
-            if (edge->neibCells[0] == cell)
-                cell->neibCells.push_back(edge->neibCells[1]);
-            else
-                cell->neibCells.push_back(edge->neibCells[0]);
-        }
+        for (const shared_ptr<Cell> c : edge->neibCells)
+            cout << c->center << "; ";
+        cout << endl;
+        
+
+        //if (edge->neibCells.size() == 2)
+        //{
+         //   if ((edge->neibCells[0]).get() == &cell)
+         //       cell.neibCells.push_back(edge->neibCells[1]);
+         //   else
+         //       cell.neibCells.push_back(edge->neibCells[0]);
+        //}
     }
 }
 
@@ -108,6 +136,7 @@ shared_ptr<Cell> Mesh::makeGhostCell(const shared_ptr<Edge>& e)
 
     // construct cell
     cells.emplace_back(Cell(cNodes,cEdges));
+    e->neibCells.push_back(make_shared<Cell>(cells.back()));
 
     return make_shared<Cell>(cells.back());
 }
@@ -149,6 +178,7 @@ void Mesh::importMesh(string& fileName)
                 reader >> globalNum >> x >> y;
                 globalNodeNumber.push_back(globalNum-1);
                 nodes.emplace_back(Point({x,y}));
+                nodes.back().number = i;
             }
 
             do
@@ -436,6 +466,7 @@ void Mesh::importMesh(string& fileName)
             break;
         }
     }
+
 
     reader.close();
 } // end importMesh

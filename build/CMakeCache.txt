@@ -172,7 +172,7 @@ MPIEXEC_POSTFLAGS:STRING=
 // run by MPIEXEC.
 MPIEXEC_PREFLAGS:STRING=
 
-//Path to a program.
+//Cleared
 MPI_CXX_COMPILER:FILEPATH=/usr/local/bin/mpicxx
 
 //MPI CXX compilation flags
@@ -187,7 +187,7 @@ MPI_CXX_LIBRARIES:STRING=/usr/local/lib/libmpi_cxx.so;/usr/local/lib/libmpi.so;/
 //MPI CXX linking flags
 MPI_CXX_LINK_FLAGS:STRING= -Wl,--export-dynamic
 
-//Path to a program.
+//Cleared
 MPI_C_COMPILER:FILEPATH=/usr/local/bin/mpicc
 
 //MPI C compilation flags
@@ -207,6 +207,9 @@ MPI_EXTRA_LIBRARY:STRING=/usr/local/lib/libmpi.so;/usr/lib64/libdl.so;/usr/lib64
 
 //MPI library to link against
 MPI_LIBRARY:FILEPATH=/usr/local/lib/libmpi_cxx.so
+
+//Path to a program.
+file_cmd:FILEPATH=/usr/bin/file
 
 
 ########################
@@ -358,4 +361,6 @@ MPI_C_LINK_FLAGS-ADVANCED:INTERNAL=1
 MPI_HEADER_PATH:INTERNAL=MPI_HEADER_PATH-NOTFOUND
 //Scratch variable for MPI lib detection
 MPI_LIB:INTERNAL=MPI_LIB-NOTFOUND
+//ADVANCED property for variable: file_cmd
+file_cmd-ADVANCED:INTERNAL=1
 
