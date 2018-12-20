@@ -1,0 +1,78 @@
+size = 1; rank = 0
+Processing mesh file mesh2D
+address of real node = 0xfb9ba0
+address of real node = 0xfb9bb8
+address of real node = 0xfb9bd0
+address of real node = 0xfb9be8
+address of real node = 0xfb9c00
+address of real node = 0xfb9c18
+address of real node = 0xfb9c30
+address of real node = 0xfb9c48
+address of real node = 0xfb9c60
+address of real node = 0xfb9c78
+address of real node = 0xfb9c90
+address of real node = 0xfb9ca8
+address of real node = 0xfb9cc0
+address of real node = 0xfb9cd8
+address of real node = 0xfb9cf0
+address of real node = 0xfb9d08
+address of real node = 0xfb9d20
+address of real node = 0xfb9d38
+address of real node = 0xfb9d50
+address of real node = 0xfb9d68
+address of real node = 0xfb9d80
+address of real node = 0xfb9d98
+address of real node = 0xfb9db0
+address of real node = 0xfb9dc8
+address of real node = 0xfb9de0
+Number of nodes: 25
+address of nodes in edge = 0xf12e80, 0xf12e90
+address of nodes in edge = 0xfae9a0, 0xfae9b0
+address of nodes in edge = 0xf552e0, 0xf552f0
+address of nodes in edge = 0xfb4f20, 0xfb4f30
+address of nodes in edge = 0xf52040, 0xf52050
+address of nodes in edge = 0xf56740, 0xf56750
+address of nodes in edge = 0xfa7620, 0xfa7630
+address of nodes in edge = 0xfc0d40, 0xfc0d50
+address of nodes in edge = 0xfc1340, 0xfc1350
+address of nodes in edge = 0xfc18a0, 0xfc18b0
+address of nodes in edge = 0xfc1e00, 0xfc1e10
+address of nodes in edge = 0xfc2360, 0xfc2370
+address of nodes in edge = 0xfc28c0, 0xfc28d0
+address of nodes in edge = 0xfc2e20, 0xfc2e30
+address of nodes in edge = 0xfc3380, 0xfc3390
+address of nodes in edge = 0xfc38e0, 0xfc38f0
+address of nodes in edge = 0xfc3e80, 0xfc3e90
+address of nodes in edge = 0xfc43e0, 0xfc43f0
+address of nodes in edge = 0xfc4940, 0xfc4950
+address of nodes in edge = 0xfc4ea0, 0xfc4eb0
+address of nodes in edge = 0xfc5400, 0xfc5410
+address of nodes in edge = 0xfc5960, 0xfc5970
+address of nodes in edge = 0xfc5ec0, 0xfc5ed0
+address of nodes in edge = 0xfc6420, 0xfc6430
+address of nodes in edge = 0xfc6980, 0xfc6990
+address of nodes in edge = 0xfc6ee0, 0xfc6ef0
+address of nodes in edge = 0xfc7440, 0xfc7450
+address of nodes in edge = 0xfc79a0, 0xfc79b0
+address of nodes in edge = 0xfc7f00, 0xfc7f10
+address of nodes in edge = 0xfc8460, 0xfc8470
+address of nodes in edge = 0xfc89c0, 0xfc89d0
+address of nodes in edge = 0xfc8f20, 0xfc8f30
+address of nodes in edge = 0xfc9560, 0xfc9570
+address of nodes in edge = 0xfc9ac0, 0xfc9ad0
+address of nodes in edge = 0xfca020, 0xfca030
+address of nodes in edge = 0xfca580, 0xfca590
+address of nodes in edge = 0xfcaae0, 0xfcaaf0
+address of nodes in edge = 0xfcb040, 0xfcb050
+address of nodes in edge = 0xfcb5a0, 0xfcb5b0
+address of nodes in edge = 0xfcbb00, 0xfcbb10
+Number of edges: 40
+Number of cells: 16
+Number of neib procs: 0
+Patch name: Group_1; number of edges = 4
+Patch name: Group_2; number of edges = 4
+Patch name: Group_3; number of edges = 4
+Patch name: Group_4; number of edges = 4
+num of cells = 32
+---
+num of cells = 32

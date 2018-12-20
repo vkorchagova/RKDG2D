@@ -14,6 +14,8 @@ using namespace std;
 Mesh::Mesh(std::string& fileName)
 {
     importMesh(fileName);
+    
+    cout << "num of cells = " << cells.size() << endl;
 
     //nEntitiesTotal = 0;
 
@@ -21,19 +23,19 @@ Mesh::Mesh(std::string& fileName)
     {
         //nEntitiesTotal += cells[i]->nEntities;
         //cells[i]->number = i;
-        cells[i].setArea();
-        cells[i].setGaussPoints();
-        cells[i].setJacobian();
-        cells[i].setCellCenter();
+        cells[i]->setArea();
+        cells[i]->setGaussPoints();
+        cells[i]->setJacobian();
+        cells[i]->setCellCenter();
     }
 
     cout << "---" << endl;
+    cout << "num of cells = " << cells.size() << endl;
 
     for (int i = 0; i < nRealCells; ++i)
     {
         findNeighbourCells(cells[i]);
     }
-
 
 }
 
@@ -44,12 +46,11 @@ Mesh::~Mesh()
 
 // ------------------ Private class methods --------------------
 
-void Mesh::findNeighbourCells(Cell& cell)
+void Mesh::findNeighbourCells(const std::shared_ptr<Cell>& cell)
 {
-
-
-    for (const shared_ptr<Edge> edge : cell.edges)
+    for (const shared_ptr<Edge> edge : cell->edges)
     {
+        //cout << edge->neibCells[0]->getArea() << endl;
         for (const shared_ptr<Cell> c : edge->neibCells)
             cout << c->center << "; ";
         cout << endl;
@@ -65,7 +66,7 @@ void Mesh::findNeighbourCells(Cell& cell)
     }
 }
 
-void Mesh::addToProcPatch(const Cell& cell, int numProc)
+void Mesh::addToProcPatch(const shared_ptr<Cell>& cell, int numProc)
 {
     string pName = "procPatch." + to_string(numProc);
 
@@ -77,7 +78,7 @@ void Mesh::addToProcPatch(const Cell& cell, int numProc)
         patches.emplace_back(Patch(pName));
     }
 
-    patches[iPatch].cellGroup.push_back(make_shared<Cell>(cell));
+    patches[iPatch].cellGroup.push_back(cell);
 }
 
 void Mesh::createPhysicalPatch(const vector<shared_ptr<Edge>>& edgeGroup, const string& pName)
@@ -87,8 +88,10 @@ void Mesh::createPhysicalPatch(const vector<shared_ptr<Edge>>& edgeGroup, const 
     Patch& p = patches.back();
 
     for (const shared_ptr<Edge>& e : edgeGroup)
+    {
         //shared_ptr<Cell> c = makeGhostCell(e);
         p.cellGroup.push_back(makeGhostCell(e));
+    }
 }
 
 shared_ptr<Cell> Mesh::makeGhostCell(const shared_ptr<Edge>& e)
@@ -104,8 +107,12 @@ shared_ptr<Cell> Mesh::makeGhostCell(const shared_ptr<Edge>& e)
     for (const shared_ptr<Point> node : realCell->nodes)
     {
         //if (node->isEqual(nodeRef) || node->isEqual(*(e->nodes[1])))
+        //cout << node << ' ' << node.get() << ' ' << e->nodes[0] << endl;
+        //cout << node << ' ' << e->nodes[1] << endl;
+
         if (node == e->nodes[0] || node == e->nodes[1])
         {
+
             cNodes.push_back(node);
         }
         else
@@ -113,32 +120,44 @@ shared_ptr<Cell> Mesh::makeGhostCell(const shared_ptr<Edge>& e)
             Point v = rotate(*node - nodeRef, e->n);
             v.x() *= -1;
 
-            nodes.emplace_back(inverseRotate(v, e->n) + nodeRef);
-            cNodes.push_back(make_shared<Point>(nodes.back()));
+            nodes.emplace_back(make_shared<Point>(inverseRotate(v, e->n) + nodeRef));
+            cNodes.push_back(nodes.back());
         }
     }
 
     // construct edges of cell
-    for (int i = 0; i < realCell->nEntities - 1; ++i)
+    for (int i = 0; i < realCell->nEntities-1; ++i)
     {
         vector<shared_ptr<Point>> nodesInEdge = {realCell->nodes[i], realCell->nodes[i + 1]};
 
-        Edge iE (nodesInEdge);
+        shared_ptr<Edge> iE = make_shared<Edge>(Edge(nodesInEdge));
 
-        if (iE.isEqual(e))
+        if (iE->isEqual(*e))
             cEdges.push_back(e);
         else
         {
             edges.push_back(iE);
-            cEdges.push_back(make_shared<Edge>(edges.back()));
+            cEdges.push_back(edges.back());
         }
+    }// 3/4 edges. The last is coming soon...
+
+    // construct last edge
+    vector<shared_ptr<Point>> nodesInEdge = {realCell->nodes[0], realCell->nodes[realCell->nEntities-1]};
+
+    shared_ptr<Edge> iE = make_shared<Edge>(Edge(nodesInEdge));
+
+    if (iE->isEqual(*e))
+        cEdges.push_back(e);
+    else
+    {
+        edges.push_back(iE);
+        cEdges.push_back(edges.back());
     }
 
     // construct cell
-    cells.emplace_back(Cell(cNodes,cEdges));
-    e->neibCells.push_back(make_shared<Cell>(cells.back()));
+    e->neibCells.push_back(make_shared<Cell>(Cell(cNodes,cEdges)));
 
-    return make_shared<Cell>(cells.back());
+    return cells.back();
 }
 
 // ------------------ Public class methods ---------------------
@@ -177,8 +196,8 @@ void Mesh::importMesh(string& fileName)
             {
                 reader >> globalNum >> x >> y;
                 globalNodeNumber.push_back(globalNum-1);
-                nodes.emplace_back(Point({x,y}));
-                nodes.back().number = i;
+                nodes.emplace_back(make_shared<Point>(Point({x,y})));
+                nodes.back()->number = i;
             }
 
             do
@@ -188,7 +207,7 @@ void Mesh::importMesh(string& fileName)
             } while (tag != "$EndNodes");
 
 //            for (int i = 0; i < nNodes; ++i)
-//                cout << nodes[i].x() << endl;
+//                cout << nodes[i]->x() << endl;
 
             cout << "Number of nodes: " << nNodes << endl;
         }
@@ -206,9 +225,9 @@ void Mesh::importMesh(string& fileName)
                 reader >> node1 >> node2;
                 globalEdgeNumber.push_back(globalNum-1);
                 std::vector<shared_ptr<Point>> nodesInEdge;
-                nodesInEdge.push_back( make_shared<Point>( nodes[localNumber(globalNodeNumber, node1-1)]));
-                nodesInEdge.push_back( make_shared<Point>( nodes[localNumber(globalNodeNumber, node2-1)]));
-                edges.emplace_back( Edge (nodesInEdge) );
+                nodesInEdge.push_back( nodes[localNumber(globalNodeNumber, node1 - 1)]);
+                nodesInEdge.push_back( nodes[localNumber(globalNodeNumber, node2 - 1)]);
+                edges.emplace_back( make_shared<Edge>(Edge(nodesInEdge) ));
             }
 
             //
@@ -258,21 +277,17 @@ void Mesh::importMesh(string& fileName)
                 {
                     reader >> entity;
                     //cout << entity - 1 << ' ' << localNumber(globalNodeNumber, entity - 1) << endl;
-                    curNodes.push_back(
-                                make_shared<Point>(
-                                    nodes[localNumber(globalNodeNumber, entity - 1)]) );
+                    curNodes.push_back(nodes[localNumber(globalNodeNumber, entity - 1)]);
                 }
 
                 for (int j = 0; j < nEdgesInCell; ++j)
                 {
                     reader >> entity;
-                    curEdges.push_back(
-                                make_shared<Edge>(
-                                    edges[localNumber(globalEdgeNumber, entity - 1)] ));
+                    curEdges.push_back(edges[localNumber(globalEdgeNumber, entity - 1)] );
                 }
 
                 // add cells in list
-                cells.emplace_back( Cell(curNodes,curEdges));
+                cells.emplace_back( make_shared<Cell>(Cell(curNodes,curEdges)));
             }
 
             do
@@ -313,28 +328,23 @@ void Mesh::importMesh(string& fileName)
                 {
                     reader >> entity;
                     //cout << entity - 1 << ' ' << localNumber(globalNodeNumber, entity - 1) << endl;
-                    curNodes.push_back(
-                                make_shared<Point>(
-                                    nodes[localNumber(globalNodeNumber, entity - 1)]) );
+                    curNodes.push_back(nodes[localNumber(globalNodeNumber, entity - 1)] );
                 }
 
                 for (int j = 0; j < nEdgesInCell; ++j)
                 {
                     reader >> entity;
-                    curEdges.push_back(
-                                make_shared<Edge>(
-                                    edges[localNumber(globalEdgeNumber, entity - 1)] ));
+                    curEdges.push_back(edges[localNumber(globalEdgeNumber, entity - 1)] );
                 }
 
                 // add cells in list
-                Cell curCell(curNodes,curEdges);
-                cells.push_back(curCell);
+                cells.push_back(make_shared<Cell>(Cell(curNodes,curEdges)));
 
                 // add proc cell to patch
                 int numProc;
                 reader >> numProc;
 
-                addToProcPatch(curCell, numProc);
+                addToProcPatch(cells.back(), numProc);
             }
 
             do
@@ -367,8 +377,7 @@ void Mesh::importMesh(string& fileName)
                {
                     reader >> adjCell;
                     //cout << adjCell - 1 << ' ' << localNumber(globalCellNumber, adjCell - 1) << endl;
-                    edges[i].neibCells.push_back(
-                                make_shared<Cell>(cells[localNumber(globalCellNumber, adjCell - 1)] ));
+                    edges[i]->neibCells.push_back(cells[localNumber(globalCellNumber, adjCell - 1)] );
                }
             }
 
@@ -397,7 +406,7 @@ void Mesh::importMesh(string& fileName)
             for (int i = 0; i < nRealEdges; ++i)
             {
                 reader >> nx >> ny;
-                edges[i].n = Point({nx, ny});
+                edges[i]->n = Point({nx, ny});
             }
 
             do
@@ -434,12 +443,13 @@ void Mesh::importMesh(string& fileName)
                     reader >> iEdge;
                     //cout << iEdge << ' ';
                     //cout << localNumber(globalEdgeNumber, iEdge - 1) << endl;
-                    edgeGroup.push_back(make_shared<Edge>(edges[localNumber(globalEdgeNumber, iEdge - 1)]));
+                    edgeGroup.push_back(edges[localNumber(globalEdgeNumber, iEdge - 1)]);
                 }
 
                 createPhysicalPatch(edgeGroup, name);
-
             }
+            //for(int i=0;i<edges.size();++i)\
+                cout << edges[i].neibCells.size() << endl;
 
             for (const Patch& p : patches)
             {
@@ -487,14 +497,14 @@ void Mesh::exportMeshVTK(ostream& writer) const
 
     // write coordinates of nodes
     for (int i = 0; i < nNodes; ++i)
-        writer << nodes[i].x() << ' ' << nodes[i].y() << ' ' << "0" << endl;
+        writer << nodes[i]->x() << ' ' << nodes[i]->y() << ' ' << "0" << endl;
 
     //get size of polygon list
 
     int polySize = 0;
 
     for (int i = 0; i < nRealCells; ++i)
-        polySize += cells[i].nEntities;
+        polySize += cells[i]->nEntities;
 
     polySize += nRealCells;
 
@@ -504,9 +514,9 @@ void Mesh::exportMeshVTK(ostream& writer) const
     // write cells using numbers of nodes
     for (int i = 0; i < nRealCells; ++i)
     {
-        writer << cells[i].nEntities << ' ';
+        writer << cells[i]->nEntities << ' ';
 
-        for (const shared_ptr<Point> node : cells[i].nodes)
+        for (const shared_ptr<Point> node : cells[i]->nodes)
             writer << node->number << ' ';
 
         writer << endl;
@@ -540,15 +550,15 @@ void Mesh::exportMeshVTK_polyvertices(ostream& writer) const
 
     // write coordinates of nodes
     for (int i = 0; i < nRealCells; ++i)
-        for (int j = 0; j < cells[i].nEntities; ++j)
-            writer << cells[i].nodes[j]->x() << ' ' << cells[i].nodes[j]->y() << ' ' << "0" << endl;
+        for (int j = 0; j < cells[i]->nEntities; ++j)
+            writer << cells[i]->nodes[j]->x() << ' ' << cells[i]->nodes[j]->y() << ' ' << "0" << endl;
 
     //get size of polygon list
 
     int polySize = 0;
 
     for (int i = 0; i < nRealCells; ++i)
-        polySize += cells[i].nEntities;
+        polySize += cells[i]->nEntities;
 
     polySize += nRealCells;
 
@@ -559,9 +569,9 @@ void Mesh::exportMeshVTK_polyvertices(ostream& writer) const
     int numPolyVertex = 0;
     for (int i = 0; i < nRealCells; ++i)
     {
-        writer << cells[i].nEntities << ' ';
+        writer << cells[i]->nEntities << ' ';
 
-        for (const shared_ptr<Point> node : cells[i].nodes)
+        for (const shared_ptr<Point> node : cells[i]->nodes)
         {
             writer << numPolyVertex << ' ';
             numPolyVertex++;

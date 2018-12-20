@@ -4,20 +4,20 @@
 
 using namespace std;
 
-Basis::Basis(const std::vector<Cell> &cls) : cells(cls)
+Basis::Basis(const std::vector<shared_ptr<Cell>>& cls) : cells(cls)
 {
     initBasisFunctions();
 }
 
 void Basis::initBasisFunctions()
 {
-    for (const Cell& cell : cells)
+    for (const shared_ptr<Cell> cell : cells)
     {
         numvector<double,nShapes> curCoeffs =
         {
-            1.0 / sqrt(cell.getArea()),
-            2.0 * sqrt(3) / cell.getArea(),
-            2.0 * sqrt(3) / cell.getArea()
+            1.0 / sqrt(cell->getArea()),
+            2.0 * sqrt(3) / cell->getArea(),
+            2.0 * sqrt(3) / cell->getArea()
         };
 
         if (nShapes == 6)
@@ -32,8 +32,8 @@ void Basis::initBasisFunctions()
     gradPhi.reserve(nShapes);
 
     phi.emplace_back([&](int iCell, const Point& r){ return phiCoeffs[iCell][0]; });
-    phi.emplace_back([&](int iCell, const Point& r){ return (r.x() - cells[iCell].center.x()) * phiCoeffs[iCell][1]; });
-    phi.emplace_back([&](int iCell, const Point& r){ return (r.y() - cells[iCell].center.y()) * phiCoeffs[iCell][2]; });
+    phi.emplace_back([&](int iCell, const Point& r){ return (r.x() - cells[iCell]->center.x()) * phiCoeffs[iCell][1]; });
+    phi.emplace_back([&](int iCell, const Point& r){ return (r.y() - cells[iCell]->center.y()) * phiCoeffs[iCell][2]; });
 
     gradPhi.emplace_back([&](int iCell, const Point& r)->Point { return Point({ 0.0                , 0.0 }); });
     gradPhi.emplace_back([&](int iCell, const Point& r)->Point { return Point({ phiCoeffs[iCell][1], 0.0 }); });
@@ -82,7 +82,7 @@ void Basis::initGramian()
             for (int j = i; j < nShapes; ++j)
             {
                 f = [&](const Point& p) {  return phi[i](i,p) * phi[j](i,p); };
-                curGram[i*nShapes + j] = integrate(cells[i], f);
+                curGram[i*nShapes + j] = integrate(*cells[i], f);
             }
         }
 

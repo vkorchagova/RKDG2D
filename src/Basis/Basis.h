@@ -15,7 +15,7 @@
 class Basis
 {
     //- Constant reference to mesh
-    const std::vector<Cell>& cells;
+    const std::vector<std::shared_ptr<Cell>>& cells;
 
     //- Init basis functions
     void initBasisFunctions();
@@ -26,7 +26,7 @@ class Basis
 public:
     //Basis(int nF) { nShapes = nF;};
 
-    Basis(const std::vector<Cell>& cells);
+    Basis(const std::vector<std::shared_ptr<Cell>>& cells);
     
     //- Coefficients for form functions
     std::vector<numvector<double, nShapes>> phiCoeffs;

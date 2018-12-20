@@ -50,6 +50,9 @@ int main(int argc, char* argv[])
     Mesh mesh(meshFileName);
     Basis basis(mesh.cells);
 
+    for (numvector<double,nShapes> cc : basis.phiCoeffs)
+        cout << cc << endl;
+
     ofstream writer("mesh2D.vtk");
     mesh.exportMeshVTK(writer);
     writer.close();

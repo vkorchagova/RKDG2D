@@ -18,10 +18,10 @@ class Mesh
 private:
 
     //- Find neighbours for given cell
-    void findNeighbourCells(Cell& cell);
+    void findNeighbourCells(const std::shared_ptr<Cell>& cell);
 
     //- Add cell to proc patch
-    void addToProcPatch(const Cell& cell, int numProc);
+    void addToProcPatch(const std::shared_ptr<Cell>& cell, int numProc);
 
     void createPhysicalPatch(const std::vector<std::shared_ptr<Edge>>& edgeGroup, const std::string& pName);
 
@@ -30,13 +30,13 @@ private:
 public:	
 
     //- Nodes of the mesh
-    std::vector<Point> nodes;
+    std::vector<std::shared_ptr<Point>> nodes;
 
     //- Edges
-    std::vector<Edge> edges;
+    std::vector<std::shared_ptr<Edge>> edges;
 
     //- Mesh cells (edge1, ..., edgek) CCW
-    std::vector<Cell> cells;
+    std::vector<std::shared_ptr<Cell>> cells;
 
     //- Groups of boundary edges
     std::vector<Patch> patches;
