@@ -13,6 +13,31 @@ CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o
  ../src/numvector.h
  /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Basis/Basis.cpp
  /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Basis/Basis.h
+CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o
+ ../src/Mesh/Cell.h
+ ../src/Mesh/Edge.h
+ ../src/Mesh/Patch.h
+ ../src/Mesh/Point.h
+ ../src/Params/Params.h
+ ../src/Physics/Physics.h
+ ../src/compService/compService.h
+ ../src/defs/defs.h
+ ../src/numvector.h
+ /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Flux/Flux.cpp
+ /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Flux/Flux.h
+CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o
+ ../src/Mesh/Cell.h
+ ../src/Mesh/Edge.h
+ ../src/Mesh/Patch.h
+ ../src/Mesh/Point.h
+ ../src/Params/Params.h
+ ../src/Physics/Physics.h
+ ../src/compService/compService.h
+ ../src/defs/defs.h
+ ../src/numvector.h
+ /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Flux/Flux.h
+ /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Flux/FluxLLF.cpp
+ /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Flux/FluxLLF.h
 CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o
  ../src/Mesh/Patch.h
  ../src/Params/Params.h
@@ -42,6 +67,65 @@ CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o
  /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp
  /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.h
  /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Patch.h
+CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o
+ ../src/Mesh/Point.h
+ ../src/Params/Params.h
+ ../src/defs/defs.h
+ ../src/numvector.h
+ /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Physics/Physics.cpp
+ /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Physics/Physics.h
+CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o
+ ../src/Mesh/Cell.h
+ ../src/Mesh/Edge.h
+ ../src/Mesh/Mesh.h
+ ../src/Mesh/Patch.h
+ ../src/Mesh/Point.h
+ ../src/Params/Params.h
+ ../src/TimeControl/TimeControl.h
+ ../src/defs/defs.h
+ ../src/numvector.h
+ /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Problem/Problem.cpp
+ /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Problem/Problem.h
+CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o
+ ../src/Basis/Basis.h
+ ../src/Mesh/Cell.h
+ ../src/Mesh/Edge.h
+ ../src/Mesh/Mesh.h
+ ../src/Mesh/Patch.h
+ ../src/Mesh/Point.h
+ ../src/Params/Params.h
+ ../src/defs/defs.h
+ ../src/numvector.h
+ /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Solution/Solution.cpp
+ /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Solution/Solution.h
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o
+ ../src/Basis/Basis.h
+ ../src/Flux/Flux.h
+ ../src/Mesh/Cell.h
+ ../src/Mesh/Edge.h
+ ../src/Mesh/Mesh.h
+ ../src/Mesh/Patch.h
+ ../src/Mesh/Point.h
+ ../src/Params/Params.h
+ ../src/Physics/Physics.h
+ ../src/Problem/Problem.h
+ ../src/Solution/Solution.h
+ ../src/TimeControl/TimeControl.h
+ ../src/compService/compService.h
+ ../src/defs/defs.h
+ ../src/numvector.h
+ /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Solver/Solver.cpp
+ /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Solver/Solver.h
+CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o
+ ../src/Mesh/Cell.h
+ ../src/Mesh/Edge.h
+ ../src/Mesh/Mesh.h
+ ../src/Mesh/Patch.h
+ ../src/Mesh/Point.h
+ ../src/Params/Params.h
+ ../src/numvector.h
+ /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/TimeControl/TimeControl.cpp
+ /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/TimeControl/TimeControl.h
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o
  ../src/Mesh/Cell.h
  ../src/Mesh/Edge.h

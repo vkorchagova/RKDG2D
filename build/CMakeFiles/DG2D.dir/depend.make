@@ -13,6 +13,31 @@ CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o: ../src/numvector.h
 CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o: ../src/Basis/Basis.cpp
 CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o: ../src/Basis/Basis.h
 
+CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/Mesh/Cell.h
+CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/Mesh/Edge.h
+CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/Mesh/Patch.h
+CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/Mesh/Point.h
+CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/Params/Params.h
+CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/Physics/Physics.h
+CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/compService/compService.h
+CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/defs/defs.h
+CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/numvector.h
+CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/Flux/Flux.cpp
+CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/Flux/Flux.h
+
+CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/Mesh/Cell.h
+CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/Mesh/Edge.h
+CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/Mesh/Patch.h
+CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/Mesh/Point.h
+CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/Params/Params.h
+CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/Physics/Physics.h
+CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/compService/compService.h
+CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/defs/defs.h
+CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/numvector.h
+CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/Flux/Flux.h
+CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/Flux/FluxLLF.cpp
+CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/Flux/FluxLLF.h
+
 CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/Mesh/Patch.h
 CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/Params/Params.h
 CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/compService/compService.h
@@ -41,6 +66,65 @@ CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o: ../src/Mesh/Edge.h
 CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o: ../src/Mesh/Mesh.cpp
 CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o: ../src/Mesh/Mesh.h
 CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o: ../src/Mesh/Patch.h
+
+CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o: ../src/Mesh/Point.h
+CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o: ../src/Params/Params.h
+CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o: ../src/defs/defs.h
+CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o: ../src/numvector.h
+CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o: ../src/Physics/Physics.cpp
+CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o: ../src/Physics/Physics.h
+
+CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o: ../src/Mesh/Cell.h
+CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o: ../src/Mesh/Edge.h
+CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o: ../src/Mesh/Mesh.h
+CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o: ../src/Mesh/Patch.h
+CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o: ../src/Mesh/Point.h
+CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o: ../src/Params/Params.h
+CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o: ../src/TimeControl/TimeControl.h
+CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o: ../src/defs/defs.h
+CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o: ../src/numvector.h
+CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o: ../src/Problem/Problem.cpp
+CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o: ../src/Problem/Problem.h
+
+CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o: ../src/Basis/Basis.h
+CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o: ../src/Mesh/Cell.h
+CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o: ../src/Mesh/Edge.h
+CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o: ../src/Mesh/Mesh.h
+CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o: ../src/Mesh/Patch.h
+CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o: ../src/Mesh/Point.h
+CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o: ../src/Params/Params.h
+CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o: ../src/defs/defs.h
+CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o: ../src/numvector.h
+CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o: ../src/Solution/Solution.cpp
+CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o: ../src/Solution/Solution.h
+
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/Basis/Basis.h
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/Flux/Flux.h
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/Mesh/Cell.h
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/Mesh/Edge.h
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/Mesh/Mesh.h
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/Mesh/Patch.h
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/Mesh/Point.h
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/Params/Params.h
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/Physics/Physics.h
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/Problem/Problem.h
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/Solution/Solution.h
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/TimeControl/TimeControl.h
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/compService/compService.h
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/defs/defs.h
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/numvector.h
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/Solver/Solver.cpp
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/Solver/Solver.h
+
+CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: ../src/Mesh/Cell.h
+CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: ../src/Mesh/Edge.h
+CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: ../src/Mesh/Mesh.h
+CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: ../src/Mesh/Patch.h
+CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: ../src/Mesh/Point.h
+CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: ../src/Params/Params.h
+CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: ../src/numvector.h
+CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: ../src/TimeControl/TimeControl.cpp
+CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: ../src/TimeControl/TimeControl.h
 
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/Mesh/Cell.h
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/Mesh/Edge.h

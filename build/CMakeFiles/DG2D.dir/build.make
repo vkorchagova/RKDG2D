@@ -98,9 +98,32 @@ CMakeFiles/DG2D.dir/src/defs/defs.cpp.o.provides: CMakeFiles/DG2D.dir/src/defs/d
 
 CMakeFiles/DG2D.dir/src/defs/defs.cpp.o.provides.build: CMakeFiles/DG2D.dir/src/defs/defs.cpp.o
 
+CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o: CMakeFiles/DG2D.dir/flags.make
+CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o: ../src/Solution/Solution.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_3)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o -c /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Solution/Solution.cpp
+
+CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.i"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Solution/Solution.cpp > CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.i
+
+CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.s"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Solution/Solution.cpp -o CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.s
+
+CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o.requires:
+.PHONY : CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o.requires
+
+CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o.provides: CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o.requires
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o.provides.build
+.PHONY : CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o.provides
+
+CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o.provides.build: CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o
+
 CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o: CMakeFiles/DG2D.dir/flags.make
 CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o: ../src/Mesh/Mesh.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_3)
+	$(CMAKE_COMMAND) -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_4)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o"
 	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o -c /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Mesh.cpp
 
@@ -123,7 +146,7 @@ CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o.provides.build: CMakeFiles/DG2D.dir/src/
 
 CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: CMakeFiles/DG2D.dir/flags.make
 CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/Mesh/Cell.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_4)
+	$(CMAKE_COMMAND) -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_5)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o"
 	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o -c /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Cell.cpp
 
@@ -146,7 +169,7 @@ CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o.provides.build: CMakeFiles/DG2D.dir/src/
 
 CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o: CMakeFiles/DG2D.dir/flags.make
 CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o: ../src/Mesh/Edge.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_5)
+	$(CMAKE_COMMAND) -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_6)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o"
 	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o -c /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Mesh/Edge.cpp
 
@@ -167,9 +190,32 @@ CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o.provides: CMakeFiles/DG2D.dir/src/Mesh/E
 
 CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o.provides.build: CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o
 
+CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o: CMakeFiles/DG2D.dir/flags.make
+CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o: ../src/Physics/Physics.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_7)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o -c /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Physics/Physics.cpp
+
+CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.i"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Physics/Physics.cpp > CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.i
+
+CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.s"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Physics/Physics.cpp -o CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.s
+
+CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o.requires:
+.PHONY : CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o.requires
+
+CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o.provides: CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o.requires
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o.provides.build
+.PHONY : CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o.provides
+
+CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o.provides.build: CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o
+
 CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o: CMakeFiles/DG2D.dir/flags.make
 CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o: ../src/Basis/Basis.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_6)
+	$(CMAKE_COMMAND) -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_8)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o"
 	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o -c /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Basis/Basis.cpp
 
@@ -190,9 +236,55 @@ CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o.provides: CMakeFiles/DG2D.dir/src/Basi
 
 CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o.provides.build: CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o
 
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: CMakeFiles/DG2D.dir/flags.make
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/Solver/Solver.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_9)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o -c /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Solver/Solver.cpp
+
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.i"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Solver/Solver.cpp > CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.i
+
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.s"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Solver/Solver.cpp -o CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.s
+
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o.requires:
+.PHONY : CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o.requires
+
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o.provides: CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o.requires
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o.provides.build
+.PHONY : CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o.provides
+
+CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o.provides.build: CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o
+
+CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o: CMakeFiles/DG2D.dir/flags.make
+CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o: ../src/Problem/Problem.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_10)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o -c /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Problem/Problem.cpp
+
+CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.i"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Problem/Problem.cpp > CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.i
+
+CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.s"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Problem/Problem.cpp -o CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.s
+
+CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o.requires:
+.PHONY : CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o.requires
+
+CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o.provides: CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o.requires
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o.provides.build
+.PHONY : CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o.provides
+
+CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o.provides.build: CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o
+
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: CMakeFiles/DG2D.dir/flags.make
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/compService/compService.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_7)
+	$(CMAKE_COMMAND) -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_11)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/DG2D.dir/src/compService/compService.cpp.o"
 	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/DG2D.dir/src/compService/compService.cpp.o -c /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/compService/compService.cpp
 
@@ -213,26 +305,109 @@ CMakeFiles/DG2D.dir/src/compService/compService.cpp.o.provides: CMakeFiles/DG2D.
 
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o.provides.build: CMakeFiles/DG2D.dir/src/compService/compService.cpp.o
 
+CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: CMakeFiles/DG2D.dir/flags.make
+CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: ../src/TimeControl/TimeControl.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_12)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o -c /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/TimeControl/TimeControl.cpp
+
+CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.i"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/TimeControl/TimeControl.cpp > CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.i
+
+CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.s"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/TimeControl/TimeControl.cpp -o CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.s
+
+CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o.requires:
+.PHONY : CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o.requires
+
+CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o.provides: CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o.requires
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o.provides.build
+.PHONY : CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o.provides
+
+CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o.provides.build: CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o
+
+CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: CMakeFiles/DG2D.dir/flags.make
+CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/Flux/FluxLLF.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_13)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o -c /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Flux/FluxLLF.cpp
+
+CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.i"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Flux/FluxLLF.cpp > CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.i
+
+CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.s"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Flux/FluxLLF.cpp -o CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.s
+
+CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o.requires:
+.PHONY : CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o.requires
+
+CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o.provides: CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o.requires
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o.provides.build
+.PHONY : CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o.provides
+
+CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o.provides.build: CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o
+
+CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: CMakeFiles/DG2D.dir/flags.make
+CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/Flux/Flux.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_14)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o -c /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Flux/Flux.cpp
+
+CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.i"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Flux/Flux.cpp > CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.i
+
+CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.s"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Flux/Flux.cpp -o CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.s
+
+CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o.requires:
+.PHONY : CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o.requires
+
+CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o.provides: CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o.requires
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o.provides.build
+.PHONY : CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o.provides
+
+CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o.provides.build: CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o
+
 # Object files for target DG2D
 DG2D_OBJECTS = \
 "CMakeFiles/DG2D.dir/DG_MPI.cpp.o" \
 "CMakeFiles/DG2D.dir/src/defs/defs.cpp.o" \
+"CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o" \
 "CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o" \
 "CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o" \
 "CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o" \
+"CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o" \
 "CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o" \
-"CMakeFiles/DG2D.dir/src/compService/compService.cpp.o"
+"CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o" \
+"CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o" \
+"CMakeFiles/DG2D.dir/src/compService/compService.cpp.o" \
+"CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o" \
+"CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o" \
+"CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o"
 
 # External object files for target DG2D
 DG2D_EXTERNAL_OBJECTS =
 
 DG2D: CMakeFiles/DG2D.dir/DG_MPI.cpp.o
 DG2D: CMakeFiles/DG2D.dir/src/defs/defs.cpp.o
+DG2D: CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o
 DG2D: CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o
 DG2D: CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o
 DG2D: CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o
+DG2D: CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o
 DG2D: CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o
+DG2D: CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o
+DG2D: CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o
 DG2D: CMakeFiles/DG2D.dir/src/compService/compService.cpp.o
+DG2D: CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o
+DG2D: CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o
+DG2D: CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o
 DG2D: CMakeFiles/DG2D.dir/build.make
 DG2D: /usr/local/lib/libmpi_cxx.so
 DG2D: /usr/local/lib/libmpi.so
@@ -256,11 +431,18 @@ CMakeFiles/DG2D.dir/build: DG2D
 
 CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/DG_MPI.cpp.o.requires
 CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/defs/defs.cpp.o.requires
+CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o.requires
 CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o.requires
 CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o.requires
 CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o.requires
+CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o.requires
 CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o.requires
+CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o.requires
+CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o.requires
 CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/compService/compService.cpp.o.requires
+CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o.requires
+CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o.requires
+CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o.requires
 .PHONY : CMakeFiles/DG2D.dir/requires
 
 CMakeFiles/DG2D.dir/clean:

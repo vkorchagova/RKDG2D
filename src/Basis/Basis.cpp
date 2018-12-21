@@ -7,6 +7,7 @@ using namespace std;
 Basis::Basis(const std::vector<shared_ptr<Cell>>& cls) : cells(cls)
 {
     initBasisFunctions();
+    initGramian();
 }
 
 void Basis::initBasisFunctions()
@@ -69,20 +70,21 @@ void Basis::initBasisFunctions()
 
 void Basis::initGramian()
 {
-    //gramian.reserve(mesh.nCells);
+    gramian.reserve(cells.size());
 
-    std::function<double(const Point&)> f ;
+    std::function<double(const Point&)> f;
+    numvector<double, nShapes> curGram;
 
-    for (int i = 0; i < cells.size(); ++i)
+
+    for (int iCell = 0; iCell < cells.size(); ++iCell)
     {
-        numvector<double, nShapes> curGram;
-
         for (int i = 1; i < nShapes; ++i)
         {
             for (int j = i; j < nShapes; ++j)
             {
-                f = [&](const Point& p) {  return phi[i](i,p) * phi[j](i,p); };
-                curGram[i*nShapes + j] = integrate(*cells[i], f);
+
+                f = [&](const Point& p) {  return phi[i](iCell,p) * phi[j](iCell,p); };
+                curGram[(i - 1)*nShapes + j] = integrate(*cells[iCell], f);
             }
         }
 

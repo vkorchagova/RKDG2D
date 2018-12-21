@@ -2,6 +2,7 @@
 
 //- Number of conservative variables
 static const int PhysDim = 5;
+static const int dimPh = 5;
 
 //- Number of basis functions
 static const int nShapes = 3;
@@ -11,3 +12,25 @@ static const int dimS = PhysDim * nShapes;
 
 //- Initialisaton of tools for computations
 //void Initialize() {}
+
+//- list of all variables 
+enum Variables 
+{ 
+    rho  = 0,  
+    rhou = 1,  
+    rhov = 2, 
+    rhow = 3, 
+    e    = 4
+}; 
+
+//- list if initial cases 
+enum CaseInit 
+{ 
+    SodX, SodY, SodDiag, SodCircle, Blast, Const, Acoustic, Acoustic1D
+}; 
+
+//- list of BC types
+enum CaseBound 
+{ 
+    Inf, Free, Diag, Wall, PeriodicSquare 
+};

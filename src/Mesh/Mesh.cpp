@@ -29,8 +29,8 @@ Mesh::Mesh(std::string& fileName)
         cells[i]->setCellCenter();
     }
 
-    cout << "---" << endl;
-    cout << "num of cells = " << cells.size() << endl;
+    //cout << "---" << endl;
+    //cout << "num of cells = " << cells.size() << endl;
 
     for (int i = 0; i < nRealCells; ++i)
     {
@@ -51,18 +51,18 @@ void Mesh::findNeighbourCells(const std::shared_ptr<Cell>& cell)
     for (const shared_ptr<Edge> edge : cell->edges)
     {
         //cout << edge->neibCells[0]->getArea() << endl;
-        for (const shared_ptr<Cell> c : edge->neibCells)
-            cout << c->center << "; ";
-        cout << endl;
+        //for (const shared_ptr<Cell> c : edge->neibCells)
+        //    cout << c->center << "; ";
+        //cout << endl;
         
 
-        //if (edge->neibCells.size() == 2)
-        //{
-         //   if ((edge->neibCells[0]).get() == &cell)
-         //       cell.neibCells.push_back(edge->neibCells[1]);
-         //   else
-         //       cell.neibCells.push_back(edge->neibCells[0]);
-        //}
+        if (edge->neibCells.size() == 2)
+        {
+            if (edge->neibCells[0] == cell)
+                cell->neibCells.push_back(edge->neibCells[1]);
+            else
+                cell->neibCells.push_back(edge->neibCells[0]);
+        }
     }
 }
 
@@ -155,7 +155,8 @@ shared_ptr<Cell> Mesh::makeGhostCell(const shared_ptr<Edge>& e)
     }
 
     // construct cell
-    e->neibCells.push_back(make_shared<Cell>(Cell(cNodes,cEdges)));
+    cells.push_back(make_shared<Cell>(Cell(cNodes,cEdges)));
+    e->neibCells.push_back(cells.back());
 
     return cells.back();
 }

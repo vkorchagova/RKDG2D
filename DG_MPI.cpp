@@ -16,15 +16,15 @@
 #include "Mesh.h"		//- The mesh
 #include "Basis.h"		//- All about the basis functions for DG
 #include "compService.h"//- Integration
-//#include "Physics.h"	//- The physical models
-//#include "Problem.h"	//- Initial-boundary staff
-//#include "Solution.h"   //- Solution storage
+#include "Physics.h"	//- The physical models
+#include "Problem.h"	//- Initial-boundary staff
+#include "Solution.h"   //- Solution storage
 //#include "Boundary.h"
-//#include "Flux.h"		//- All about the flux evaluating
+#include "FluxLLF.h"		//- All about the flux evaluating
 //#include "Indicator.h"
 //#include "Limiter.h"	//- All about the monotonization
-//#include "Solver.h"		//- The whole spatial discretization module
-//#include "TimeControl.h"
+#include "Solver.h"		//- The whole spatial discretization module
+#include "TimeControl.h"
 //#include "TimeStepper.h"
 
 //#include "intel64\include\mpi.h"
@@ -47,11 +47,24 @@ int main(int argc, char* argv[])
     cout << "size = " << size << "; rank = " << rank << endl;
 
     string meshFileName = "mesh2D";// + to_string(rank);
+
+    //-----------------------
+
     Mesh mesh(meshFileName);
     Basis basis(mesh.cells);
+    TimeControl time(mesh);
+    Physics physics;
+    Problem problem(SodX,mesh,time);
+    Solution solution(basis);
+    FluxLLF flux(physics);
+    Solver solver(basis, mesh, solution, problem, flux);
 
-    for (numvector<double,nShapes> cc : basis.phiCoeffs)
-        cout << cc << endl;
+    solver.setInitialConditions();
+
+    physics.cpcv = problem.cpcv;
+    cout << physics.cpcv << endl;
+
+    //-----------------------
 
     ofstream writer("mesh2D.vtk");
     mesh.exportMeshVTK(writer);

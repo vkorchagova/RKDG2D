@@ -162,6 +162,54 @@ src/Basis/Basis.cpp.s:
 	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.s
 .PHONY : src/Basis/Basis.cpp.s
 
+src/Flux/Flux.o: src/Flux/Flux.cpp.o
+.PHONY : src/Flux/Flux.o
+
+# target to build an object file
+src/Flux/Flux.cpp.o:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o
+.PHONY : src/Flux/Flux.cpp.o
+
+src/Flux/Flux.i: src/Flux/Flux.cpp.i
+.PHONY : src/Flux/Flux.i
+
+# target to preprocess a source file
+src/Flux/Flux.cpp.i:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.i
+.PHONY : src/Flux/Flux.cpp.i
+
+src/Flux/Flux.s: src/Flux/Flux.cpp.s
+.PHONY : src/Flux/Flux.s
+
+# target to generate assembly for a file
+src/Flux/Flux.cpp.s:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.s
+.PHONY : src/Flux/Flux.cpp.s
+
+src/Flux/FluxLLF.o: src/Flux/FluxLLF.cpp.o
+.PHONY : src/Flux/FluxLLF.o
+
+# target to build an object file
+src/Flux/FluxLLF.cpp.o:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o
+.PHONY : src/Flux/FluxLLF.cpp.o
+
+src/Flux/FluxLLF.i: src/Flux/FluxLLF.cpp.i
+.PHONY : src/Flux/FluxLLF.i
+
+# target to preprocess a source file
+src/Flux/FluxLLF.cpp.i:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.i
+.PHONY : src/Flux/FluxLLF.cpp.i
+
+src/Flux/FluxLLF.s: src/Flux/FluxLLF.cpp.s
+.PHONY : src/Flux/FluxLLF.s
+
+# target to generate assembly for a file
+src/Flux/FluxLLF.cpp.s:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.s
+.PHONY : src/Flux/FluxLLF.cpp.s
+
 src/Mesh/Cell.o: src/Mesh/Cell.cpp.o
 .PHONY : src/Mesh/Cell.o
 
@@ -234,6 +282,126 @@ src/Mesh/Mesh.cpp.s:
 	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.s
 .PHONY : src/Mesh/Mesh.cpp.s
 
+src/Physics/Physics.o: src/Physics/Physics.cpp.o
+.PHONY : src/Physics/Physics.o
+
+# target to build an object file
+src/Physics/Physics.cpp.o:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o
+.PHONY : src/Physics/Physics.cpp.o
+
+src/Physics/Physics.i: src/Physics/Physics.cpp.i
+.PHONY : src/Physics/Physics.i
+
+# target to preprocess a source file
+src/Physics/Physics.cpp.i:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.i
+.PHONY : src/Physics/Physics.cpp.i
+
+src/Physics/Physics.s: src/Physics/Physics.cpp.s
+.PHONY : src/Physics/Physics.s
+
+# target to generate assembly for a file
+src/Physics/Physics.cpp.s:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.s
+.PHONY : src/Physics/Physics.cpp.s
+
+src/Problem/Problem.o: src/Problem/Problem.cpp.o
+.PHONY : src/Problem/Problem.o
+
+# target to build an object file
+src/Problem/Problem.cpp.o:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o
+.PHONY : src/Problem/Problem.cpp.o
+
+src/Problem/Problem.i: src/Problem/Problem.cpp.i
+.PHONY : src/Problem/Problem.i
+
+# target to preprocess a source file
+src/Problem/Problem.cpp.i:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.i
+.PHONY : src/Problem/Problem.cpp.i
+
+src/Problem/Problem.s: src/Problem/Problem.cpp.s
+.PHONY : src/Problem/Problem.s
+
+# target to generate assembly for a file
+src/Problem/Problem.cpp.s:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.s
+.PHONY : src/Problem/Problem.cpp.s
+
+src/Solution/Solution.o: src/Solution/Solution.cpp.o
+.PHONY : src/Solution/Solution.o
+
+# target to build an object file
+src/Solution/Solution.cpp.o:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o
+.PHONY : src/Solution/Solution.cpp.o
+
+src/Solution/Solution.i: src/Solution/Solution.cpp.i
+.PHONY : src/Solution/Solution.i
+
+# target to preprocess a source file
+src/Solution/Solution.cpp.i:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.i
+.PHONY : src/Solution/Solution.cpp.i
+
+src/Solution/Solution.s: src/Solution/Solution.cpp.s
+.PHONY : src/Solution/Solution.s
+
+# target to generate assembly for a file
+src/Solution/Solution.cpp.s:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.s
+.PHONY : src/Solution/Solution.cpp.s
+
+src/Solver/Solver.o: src/Solver/Solver.cpp.o
+.PHONY : src/Solver/Solver.o
+
+# target to build an object file
+src/Solver/Solver.cpp.o:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o
+.PHONY : src/Solver/Solver.cpp.o
+
+src/Solver/Solver.i: src/Solver/Solver.cpp.i
+.PHONY : src/Solver/Solver.i
+
+# target to preprocess a source file
+src/Solver/Solver.cpp.i:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.i
+.PHONY : src/Solver/Solver.cpp.i
+
+src/Solver/Solver.s: src/Solver/Solver.cpp.s
+.PHONY : src/Solver/Solver.s
+
+# target to generate assembly for a file
+src/Solver/Solver.cpp.s:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.s
+.PHONY : src/Solver/Solver.cpp.s
+
+src/TimeControl/TimeControl.o: src/TimeControl/TimeControl.cpp.o
+.PHONY : src/TimeControl/TimeControl.o
+
+# target to build an object file
+src/TimeControl/TimeControl.cpp.o:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o
+.PHONY : src/TimeControl/TimeControl.cpp.o
+
+src/TimeControl/TimeControl.i: src/TimeControl/TimeControl.cpp.i
+.PHONY : src/TimeControl/TimeControl.i
+
+# target to preprocess a source file
+src/TimeControl/TimeControl.cpp.i:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.i
+.PHONY : src/TimeControl/TimeControl.cpp.i
+
+src/TimeControl/TimeControl.s: src/TimeControl/TimeControl.cpp.s
+.PHONY : src/TimeControl/TimeControl.s
+
+# target to generate assembly for a file
+src/TimeControl/TimeControl.cpp.s:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.s
+.PHONY : src/TimeControl/TimeControl.cpp.s
+
 src/compService/compService.o: src/compService/compService.cpp.o
 .PHONY : src/compService/compService.o
 
@@ -297,6 +465,12 @@ help:
 	@echo "... src/Basis/Basis.o"
 	@echo "... src/Basis/Basis.i"
 	@echo "... src/Basis/Basis.s"
+	@echo "... src/Flux/Flux.o"
+	@echo "... src/Flux/Flux.i"
+	@echo "... src/Flux/Flux.s"
+	@echo "... src/Flux/FluxLLF.o"
+	@echo "... src/Flux/FluxLLF.i"
+	@echo "... src/Flux/FluxLLF.s"
 	@echo "... src/Mesh/Cell.o"
 	@echo "... src/Mesh/Cell.i"
 	@echo "... src/Mesh/Cell.s"
@@ -306,6 +480,21 @@ help:
 	@echo "... src/Mesh/Mesh.o"
 	@echo "... src/Mesh/Mesh.i"
 	@echo "... src/Mesh/Mesh.s"
+	@echo "... src/Physics/Physics.o"
+	@echo "... src/Physics/Physics.i"
+	@echo "... src/Physics/Physics.s"
+	@echo "... src/Problem/Problem.o"
+	@echo "... src/Problem/Problem.i"
+	@echo "... src/Problem/Problem.s"
+	@echo "... src/Solution/Solution.o"
+	@echo "... src/Solution/Solution.i"
+	@echo "... src/Solution/Solution.s"
+	@echo "... src/Solver/Solver.o"
+	@echo "... src/Solver/Solver.i"
+	@echo "... src/Solver/Solver.s"
+	@echo "... src/TimeControl/TimeControl.o"
+	@echo "... src/TimeControl/TimeControl.i"
+	@echo "... src/TimeControl/TimeControl.s"
 	@echo "... src/compService/compService.o"
 	@echo "... src/compService/compService.i"
 	@echo "... src/compService/compService.s"
