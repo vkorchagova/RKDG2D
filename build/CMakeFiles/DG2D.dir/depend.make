@@ -126,6 +126,20 @@ CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: ../src/numvector.h
 CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: ../src/TimeControl/TimeControl.cpp
 CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: ../src/TimeControl/TimeControl.h
 
+CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/Basis/Basis.h
+CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/Mesh/Cell.h
+CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/Mesh/Edge.h
+CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/Mesh/Mesh.h
+CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/Mesh/Patch.h
+CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/Mesh/Point.h
+CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/Params/Params.h
+CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/Physics/Physics.h
+CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/Solution/Solution.h
+CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/defs/defs.h
+CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/numvector.h
+CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/Writer/Writer.cpp
+CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/Writer/Writer.h
+
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/Mesh/Cell.h
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/Mesh/Edge.h
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/Mesh/Patch.h

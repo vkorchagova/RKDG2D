@@ -18,14 +18,6 @@ Mesh.h
 Params.h
 ../src/Basis/Params.h
 
-../src/Flux/Flux.h
-Physics.h
-../src/Flux/Physics.h
-defs.h
-../src/Flux/defs.h
-compService.h
-../src/Flux/compService.h
-
 ../src/Mesh/Cell.h
 numvector.h
 ../src/Mesh/numvector.h
@@ -100,24 +92,6 @@ defs.h
 Params.h
 ../src/Physics/Params.h
 
-../src/Problem/Problem.h
-math.h
--
-functional
--
-numvector.h
-../src/Problem/numvector.h
-Point.h
-../src/Problem/Point.h
-Mesh.h
-../src/Problem/Mesh.h
-TimeControl.h
-../src/Problem/TimeControl.h
-defs.h
-../src/Problem/defs.h
-Params.h
-../src/Problem/Params.h
-
 ../src/Solution/Solution.h
 math.h
 -
@@ -133,24 +107,6 @@ Basis.h
 ../src/Solution/Basis.h
 Params.h
 ../src/Solution/Params.h
-
-../src/TimeControl/TimeControl.h
-Params.h
-../src/TimeControl/Params.h
-Mesh.h
-../src/TimeControl/Mesh.h
-
-../src/compService/compService.h
-numvector.h
-../src/compService/numvector.h
-Params.h
-../src/compService/Params.h
-Point.h
-../src/compService/Point.h
-Cell.h
-../src/compService/Cell.h
-Patch.h
-../src/compService/Patch.h
 
 ../src/defs/defs.h
 vector
@@ -184,25 +140,17 @@ ostream
 math.h
 ../src/math.h
 
-/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Solver/Solver.cpp
-Solver.h
-/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Solver/Solver.h
-iostream
--
-omp.h
--
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Writer/Writer.cpp
+Writer.h
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Writer/Writer.h
+Params.h
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Writer/Params.h
 
-/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Solver/Solver.h
-fstream
--
-Basis.h
-/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Solver/Basis.h
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Writer/Writer.h
+Mesh.h
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Writer/Mesh.h
+Physics.h
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Writer/Physics.h
 Solution.h
-/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Solver/Solution.h
-compService.h
-/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Solver/compService.h
-Problem.h
-/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Solver/Problem.h
-Flux.h
-/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Solver/Flux.h
+/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Writer/Solution.h
 

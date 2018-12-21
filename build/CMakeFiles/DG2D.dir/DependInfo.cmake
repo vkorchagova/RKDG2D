@@ -16,6 +16,7 @@ SET(CMAKE_DEPENDS_CHECK_CXX
   "/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Solution/Solution.cpp" "/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o"
   "/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Solver/Solver.cpp" "/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o"
   "/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/TimeControl/TimeControl.cpp" "/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o"
+  "/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Writer/Writer.cpp" "/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o"
   "/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/compService/compService.cpp" "/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles/DG2D.dir/src/compService/compService.cpp.o"
   "/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/defs/defs.cpp" "/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles/DG2D.dir/src/defs/defs.cpp.o"
   )
@@ -31,6 +32,7 @@ SET(CMAKE_C_TARGET_INCLUDE_PATH
   "../src/defs"
   "../src/Solution"
   "../src/Mesh"
+  "../src/Writer"
   "../src/Physics"
   "../src/Basis"
   "../src/Solver"

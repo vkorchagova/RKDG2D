@@ -25,6 +25,7 @@
 //#include "Limiter.h"	//- All about the monotonization
 #include "Solver.h"		//- The whole spatial discretization module
 #include "TimeControl.h"
+#include "Writer.h"
 //#include "TimeStepper.h"
 
 //#include "intel64\include\mpi.h"
@@ -58,6 +59,7 @@ int main(int argc, char* argv[])
     Solution solution(basis);
     FluxLLF flux(physics);
     Solver solver(basis, mesh, solution, problem, flux);
+    Writer writer(mesh, solution, physics);
 
     solver.setInitialConditions();
 
@@ -66,9 +68,8 @@ int main(int argc, char* argv[])
 
     //-----------------------
 
-    ofstream writer("mesh2D.vtk");
-    mesh.exportMeshVTK(writer);
-    writer.close();
+    writer.exportMeshVTK("mesh2D.vtk");
+    writer.exportFrameVTK("0.vtk");
 
     MPI_Finalize();
 

@@ -5,6 +5,7 @@ FILE(REMOVE_RECURSE
   "CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o"
   "CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o"
   "CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o"
+  "CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o"
   "CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o"
   "CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o"
   "CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o"

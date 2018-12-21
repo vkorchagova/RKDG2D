@@ -126,6 +126,20 @@ CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o
  ../src/numvector.h
  /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/TimeControl/TimeControl.cpp
  /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/TimeControl/TimeControl.h
+CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o
+ ../src/Basis/Basis.h
+ ../src/Mesh/Cell.h
+ ../src/Mesh/Edge.h
+ ../src/Mesh/Mesh.h
+ ../src/Mesh/Patch.h
+ ../src/Mesh/Point.h
+ ../src/Params/Params.h
+ ../src/Physics/Physics.h
+ ../src/Solution/Solution.h
+ ../src/defs/defs.h
+ ../src/numvector.h
+ /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Writer/Writer.cpp
+ /unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Writer/Writer.h
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o
  ../src/Mesh/Cell.h
  ../src/Mesh/Edge.h

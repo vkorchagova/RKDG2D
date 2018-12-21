@@ -13,7 +13,7 @@ Solution::Solution(Basis& Bas) : B(Bas)
 
 ///
 
-numvector<double, dimPh> Solution::reconstructSolution(int iCell, const Point& point ) const
+numvector<double, dimPh> Solution::reconstruct(int iCell, const Point& point ) const
 {
     numvector<double, dimPh> sol(0.0);
     vector<double> phip(nShapes);
@@ -31,8 +31,8 @@ numvector<double, dimPh> Solution::reconstructSolution(int iCell, const Point& p
 
     return sol;
 
-} // end reconstructSolution
-numvector<double, dimPh> Solution::reconstructSolution(int iCell, const Point& point, const numvector<double, dimS>& SOL) const
+} // end reconstruct
+numvector<double, dimPh> Solution::reconstruct(int iCell, const Point& point, const numvector<double, dimS>& SOL) const
 {
 	numvector<double, dimPh> sol(0.0);
 	vector<double> phip(nShapes);
@@ -51,9 +51,9 @@ numvector<double, dimPh> Solution::reconstructSolution(int iCell, const Point& p
 
 	return sol;
 
-} // end reconstructSolution
+} // end reconstruct
 
-double Solution::reconstructSolution(int iCell, const Point& point, Variables var ) const
+double Solution::reconstruct(int iCell, const Point& point, Variables var ) const
 {
     double sol(0.0);
 
@@ -62,8 +62,8 @@ double Solution::reconstructSolution(int iCell, const Point& point, Variables va
         sol += B.phi[j](iCell, point) * SOL[iCell][var * nShapes + j];
 
     return sol;
-} // end reconstructSolution
-double Solution::reconstructSolution(int iCell, const Point& point, const numvector<double, dimS>& SOL, Variables var ) const
+} // end reconstruct
+double Solution::reconstruct(int iCell, const Point& point, const numvector<double, dimS>& SOL, Variables var ) const
 {
     double sol(0.0);
 
@@ -72,7 +72,7 @@ double Solution::reconstructSolution(int iCell, const Point& point, const numvec
         sol += B.phi[j](iCell, point) * SOL[var * nShapes + j];
 
     return sol;
-} // end reconstructSolution
+} // end reconstruct
 
 /*
 void Solution::write(string fileName, const vector<numvector<double, dimS>>& coeffs) const
@@ -110,28 +110,28 @@ void Solution::writeSolutionVTK(const Mesh& mesh, string fileName) const
 
 //	for (const shared_ptr<Cell> cell : mesh.cells)
 	for (int iCell = 0; iCell < mesh.nRealCells; ++iCell)
-		output << reconstructSolution(iCell, mesh.cells[iCell]->getCellCenter(), 0) << endl;
+		output << reconstruct(iCell, mesh.cells[iCell]->getCellCenter(), 0) << endl;
 
 	output << "SCALARS e double" << endl;
 	output << "LOOKUP_TABLE default" << endl;
 
 	for (int iCell = 0; iCell < mesh.nRealCells; ++iCell)
-		output << reconstructSolution(iCell, mesh.cells[iCell]->getCellCenter(), 4) << endl;
+		output << reconstruct(iCell, mesh.cells[iCell]->getCellCenter(), 4) << endl;
 
 	output << "SCALARS p double" << endl;
 	output << "LOOKUP_TABLE default" << endl;
 
 	for (int iCell = 0; iCell < mesh.nRealCells; ++iCell)
-		output << problem.getPressure(cell->reconstructSolution(cell->getCellCenter())) << endl;
+		output << problem.getPressure(cell->reconstruct(cell->getCellCenter())) << endl;
 
 
 	output << "VECTORS U double" << endl;
 
 	for (const shared_ptr<Cell> cell : mesh.cells)
 	{
-		double rho = cell->reconstructSolution(cell->getCellCenter(), 0);
-		output << cell->reconstructSolution(cell->getCellCenter(), 1) / rho << endl;
-		output << cell->reconstructSolution(cell->getCellCenter(), 2) / rho << endl;
+		double rho = cell->reconstruct(cell->getCellCenter(), 0);
+		output << cell->reconstruct(cell->getCellCenter(), 1) / rho << endl;
+		output << cell->reconstruct(cell->getCellCenter(), 2) / rho << endl;
 		output << 0.0 << endl;
 	}
 
@@ -146,21 +146,21 @@ void Solution::writeSolutionVTK(const Mesh& mesh, string fileName) const
 
 	for (const shared_ptr<Cell> cell : mesh.cells)
 	for (int j = 0; j < cell->nEntities; ++j)
-	output << cell->reconstructSolution(cell->nodes[j], 0) << endl;
+	output << cell->reconstruct(cell->nodes[j], 0) << endl;
 
 	output << "SCALARS e double" << endl;
 	output << "LOOKUP_TABLE default" << endl;
 
 	for (const shared_ptr<Cell> cell : mesh.cells)
 	for (int j = 0; j < cell->nEntities; ++j)
-	output << cell->reconstructSolution(cell->nodes[j], 4) << endl;
+	output << cell->reconstruct(cell->nodes[j], 4) << endl;
 
 	output << "SCALARS p double" << endl;
 	output << "LOOKUP_TABLE default" << endl;
 
 	for (const shared_ptr<Cell> cell : mesh.cells)
 	for (int j = 0; j < cell->nEntities; ++j)
-	output << problem.getPressure(cell->reconstructSolution(cell->nodes[j])) << endl;
+	output << problem.getPressure(cell->reconstruct(cell->nodes[j])) << endl;
 
 
 	output << "VECTORS U double" << endl;
@@ -168,9 +168,9 @@ void Solution::writeSolutionVTK(const Mesh& mesh, string fileName) const
 	for (const shared_ptr<Cell> cell : mesh.cells)
 	for (int j = 0; j < cell->nEntities; ++j)
 	{
-	double rho = cell->reconstructSolution(cell->nodes[j], 0);
-	output << cell->reconstructSolution(cell->nodes[j], 1) / rho << endl;
-	output << cell->reconstructSolution(cell->nodes[j], 2) / rho << endl;
+	double rho = cell->reconstruct(cell->nodes[j], 0);
+	output << cell->reconstruct(cell->nodes[j], 1) / rho << endl;
+	output << cell->reconstruct(cell->nodes[j], 2) / rho << endl;
 	output << 0.0 << endl;
 	}
 

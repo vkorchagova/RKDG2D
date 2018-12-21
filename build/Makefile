@@ -402,6 +402,30 @@ src/TimeControl/TimeControl.cpp.s:
 	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.s
 .PHONY : src/TimeControl/TimeControl.cpp.s
 
+src/Writer/Writer.o: src/Writer/Writer.cpp.o
+.PHONY : src/Writer/Writer.o
+
+# target to build an object file
+src/Writer/Writer.cpp.o:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o
+.PHONY : src/Writer/Writer.cpp.o
+
+src/Writer/Writer.i: src/Writer/Writer.cpp.i
+.PHONY : src/Writer/Writer.i
+
+# target to preprocess a source file
+src/Writer/Writer.cpp.i:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.i
+.PHONY : src/Writer/Writer.cpp.i
+
+src/Writer/Writer.s: src/Writer/Writer.cpp.s
+.PHONY : src/Writer/Writer.s
+
+# target to generate assembly for a file
+src/Writer/Writer.cpp.s:
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.s
+.PHONY : src/Writer/Writer.cpp.s
+
 src/compService/compService.o: src/compService/compService.cpp.o
 .PHONY : src/compService/compService.o
 
@@ -495,6 +519,9 @@ help:
 	@echo "... src/TimeControl/TimeControl.o"
 	@echo "... src/TimeControl/TimeControl.i"
 	@echo "... src/TimeControl/TimeControl.s"
+	@echo "... src/Writer/Writer.o"
+	@echo "... src/Writer/Writer.i"
+	@echo "... src/Writer/Writer.s"
 	@echo "... src/compService/compService.o"
 	@echo "... src/compService/compService.i"
 	@echo "... src/compService/compService.s"

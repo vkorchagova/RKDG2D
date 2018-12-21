@@ -82,9 +82,6 @@ public:
     //- Import mesh from file "mesh2D"
     void importMesh(std::string& fileName);
 
-    //- Export VTK only for cells
-    void exportMeshVTK(std::ostream& writer) const;
-
     //- Export VTK for vertices too
     void exportMeshVTK_polyvertices(std::ostream& writer) const;
 

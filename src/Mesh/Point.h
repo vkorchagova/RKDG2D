@@ -41,8 +41,8 @@ public:
     bool isEqual(const Point& p) const { return true ? (r[0] == p.x() && r[1] == p.y()) : false; }
     bool isEqual(const std::shared_ptr<Point>& p) const { return isEqual(*p); }
 
-    //- save node number just for VTK export simplification
-    int number;
+    //- save global node number just for VTK export simplification
+    int gNumber;
 };
 
 #endif // POINT_H

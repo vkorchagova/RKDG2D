@@ -16,11 +16,11 @@ static const int dimS = PhysDim * nShapes;
 //- list of all variables 
 enum Variables 
 { 
-    rho  = 0,  
-    rhou = 1,  
-    rhov = 2, 
-    rhow = 3, 
-    e    = 4
+    RHO  = 0,  
+    RHOU = 1,  
+    RHOV = 2, 
+    RHOW = 3, 
+    E    = 4
 }; 
 
 //- list if initial cases 

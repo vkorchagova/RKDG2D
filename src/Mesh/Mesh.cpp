@@ -187,7 +187,6 @@ void Mesh::importMesh(string& fileName)
 
         if (tag == "$Nodes")
         {
-            int nNodes;
             double x, y;
 
             reader >> nNodes;
@@ -196,9 +195,9 @@ void Mesh::importMesh(string& fileName)
             for (int i = 0; i < nNodes; ++i)
             {
                 reader >> globalNum >> x >> y;
-                globalNodeNumber.push_back(globalNum-1);
+                globalNodeNumber.push_back(globalNum - 1);
                 nodes.emplace_back(make_shared<Point>(Point({x,y})));
-                nodes.back()->number = i;
+                nodes.back()->gNumber = globalNum - 1;
             }
 
             do
@@ -482,60 +481,7 @@ void Mesh::importMesh(string& fileName)
     reader.close();
 } // end importMesh
 
-void Mesh::exportMeshVTK(ostream& writer) const
-{
-    //writer.open("Mesh.vtk");
 
-    int nNodes = nodes.size();
-
-    writer << "# vtk DataFile Version 2.0" << endl;
-    writer << "RKDG 2D data" << endl;
-    writer << "ASCII" << endl;
-
-    writer << "DATASET POLYDATA" << endl;
-
-    writer << "POINTS " << nNodes << " float" << endl;
-
-    // write coordinates of nodes
-    for (int i = 0; i < nNodes; ++i)
-        writer << nodes[i]->x() << ' ' << nodes[i]->y() << ' ' << "0" << endl;
-
-    //get size of polygon list
-
-    int polySize = 0;
-
-    for (int i = 0; i < nRealCells; ++i)
-        polySize += cells[i]->nEntities;
-
-    polySize += nRealCells;
-
-    writer << "POLYGONS " << nRealCells << ' ' << polySize << endl;
-
-
-    // write cells using numbers of nodes
-    for (int i = 0; i < nRealCells; ++i)
-    {
-        writer << cells[i]->nEntities << ' ';
-
-        for (const shared_ptr<Point> node : cells[i]->nodes)
-            writer << node->number << ' ';
-
-        writer << endl;
-    }
-
-    //cout << "num(-1) = " << cells[cells.size()-1]->edges[2]->nodes[0]->number << endl;
-    //cout << "x(-1) = " << cells[cells.size()-1]->edges[2]->nodes[0]->x() << endl;
-    //cout << "&num(-1) = " << &(cells[cells.size()-1]->edges[2]->nodes[0]->number) << endl;
-
-
-    //writer << "CELL_DATA " << nRealCells << endl;
-    //writer << "POINT_DATA " << nNodes << endl;
-
-
-    //cout << "Mesh export OK" << endl;
-
-    //writer.close();
-}
 
 void Mesh::exportMeshVTK_polyvertices(ostream& writer) const
 {

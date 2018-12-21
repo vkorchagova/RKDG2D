@@ -34,27 +34,27 @@ public:
 	~Solution() {}
 
 	//- Reconstruct solution at the point
-	numvector<double, dimPh> reconstructSolution(int iCell, const Point& point) const;
-	double reconstructSolution(int iCell, const Point& point, Variables var) const;
-	/*numvector<double, dimPh> reconstructSolution(const std::shared_ptr<Point> point) const
+	numvector<double, dimPh> reconstruct(int iCell, const Point& point) const;
+	double reconstruct(int iCell, const Point& point, Variables var) const;
+	/*numvector<double, dimPh> reconstruct(const std::shared_ptr<Point> point) const
 	{
-		return reconstructSolution(*point);
+		return reconstruct(*point);
 	}
-	double reconstructSolution(const std::shared_ptr<Point> point, Variables var) const
+	double reconstruct(const std::shared_ptr<Point> point, Variables var) const
 	{
-		return reconstructSolution(*point, var);
+		return reconstruct(*point, var);
 	}*/
 
 	//- Reconstruct solution using given coeffs
-	numvector<double, dimPh> reconstructSolution(int iCell, const Point& point, const numvector<double, dimS>& SOL) const;
-	double reconstructSolution(int iCell, const Point& point, const numvector<double, dimS>& SOL, Variables var) const;
-	/*numvector<double, dimPh> reconstructSolution(const std::shared_ptr<Point> point, const numvector<double, dimS>& SOL) const
+	numvector<double, dimPh> reconstruct(int iCell, const Point& point, const numvector<double, dimS>& SOL) const;
+	double reconstruct(int iCell, const Point& point, const numvector<double, dimS>& SOL, Variables var) const;
+	/*numvector<double, dimPh> reconstruct(const std::shared_ptr<Point> point, const numvector<double, dimS>& SOL) const
 	{
-		return reconstructSolution(*point, SOL);
+		return reconstruct(*point, SOL);
 	}
-	double reconstructSolution(const std::shared_ptr<Point> point, const numvector<double, dimS>& SOL, Variables var) const
+	double reconstruct(const std::shared_ptr<Point> point, const numvector<double, dimS>& SOL, Variables var) const
 	{
-		return reconstructSolution(*point, SOL, var);
+		return reconstruct(*point, SOL, var);
 	}*/
 
 	///
