@@ -92,6 +92,8 @@ void Mesh::createPhysicalPatch(const vector<shared_ptr<Edge>>& edgeGroup, const 
         //shared_ptr<Cell> c = makeGhostCell(e);
         p.cellGroup.push_back(makeGhostCell(e));
     }
+
+    p.edgeGroup = edgeGroup;
 }
 
 shared_ptr<Cell> Mesh::makeGhostCell(const shared_ptr<Edge>& e)

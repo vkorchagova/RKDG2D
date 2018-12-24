@@ -11,6 +11,7 @@
 #include <fstream>
 
 #include "Basis.h"
+#include "BoundarySlip.h"
 #include "Solution.h"
 #include "compService.h"
 #include "Problem.h"
@@ -38,6 +39,8 @@ public:
 
     //- Reference to flux
     const Flux& flux;
+
+    std::vector<Boundary> bc;
 
 	/// Variables
 	//- Max speed buffer for the Courant condition

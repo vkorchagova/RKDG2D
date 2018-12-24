@@ -28,6 +28,8 @@ public:
 
     /// geometric variables
 
+    int number; 
+    
     //- Number of Gauss points
     int nGP;
 

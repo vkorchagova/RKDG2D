@@ -9,6 +9,7 @@ using namespace std;
 Problem::Problem(CaseInit task, const Mesh& m, const TimeControl& t) : M(m), T(t)
 {
     setInitialConditions(task);
+    setBoundaryConditions();
 } // end constructor 
 
 Problem::~Problem()
@@ -193,96 +194,20 @@ void Problem::setInitialConditions(CaseInit task)
                 0.5 * initRho(r) * (sqr(initU(r)) + sqr(initV(r))) \
         };
     };
-    
-}
 
-void Problem::setBoundaryConditions(string caseName, const std::vector<Patch>& patches)
+}
+*/
+void Problem::setBoundaryConditions()
 {
     // shared_ptr<BoundarySine> bSine = make_shared<BoundarySine>(1e-3,0.5,time,*this);
 
-    vector<shared_ptr<Boundary>> bc = {};
+    //vector<shared_ptr<Boundary>> bc = {};
 
-    if (caseName == "SodX" || \
-        caseName == "SodY" || \
-        caseName == "SodDiag" || \
-        caseName == "Woodward" || \
-        caseName == "BlastCircle" || \
-        caseName == "Noh" || \
-        caseName == "123" || \
-        caseName == "acousticPulse")
+    for (const Patch& p : M.patches)
     {
-        shared_ptr<BoundaryOpen> bOpen = make_shared<BoundaryOpen>();
-        shared_ptr<BoundarySlip> bSlip = make_shared<BoundarySlip>();
-
-        //bc = {bOpen, bOpen};
-
-        bc = {bSlip, bSlip, bSlip, bSlip};
-
-        //bc = {bOpen, bOpen, bOpen, bOpen};
-    }
-    else if (caseName == "forwardStep")
-    {
-        shared_ptr<BoundaryOpen> bOpen = make_shared<BoundaryOpen>();
-        shared_ptr<BoundarySlip> bSlip = make_shared<BoundarySlip>();
-        shared_ptr<BoundaryConstant> bConst = \
-                make_shared<BoundaryConstant>( \
-                numvector<double, 5>({1.0, -3.0, 0.0, 0.0, 6.286}));
-
-        bc = {bConst, bOpen, bSlip, bSlip};
-    }    
-    else if (caseName == "doubleMach")
-    {
-        shared_ptr<BoundaryOpen> bOpen = make_shared<BoundaryOpen>();
-        shared_ptr<BoundarySlip> bSlip = make_shared<BoundarySlip>();
-        shared_ptr<BoundaryConstant> bConst = 
-                make_shared<BoundaryConstant>( \
-                numvector<double, 5>({8.0, -8.25*8.0, 0.0, 0.0, 563.545}));
-
-        bc = {bConst, bOpen, bSlip};
-    }
-    else if (caseName == "SodCircle")
-    {
-        shared_ptr<BoundarySlip> bSlip = make_shared<BoundarySlip>();
-
-        bc = {bSlip, bSlip, bSlip};
-    }
-    else if (caseName == "monopole")
-    {
-        //shared_ptr<BoundaryOpen> bOpen = make_shared<BoundaryOpen>();
-        //shared_ptr<BoundarySlip> bSlip = make_shared<BoundarySlip>();
-        shared_ptr<BoundarySine> bSine = \
-                make_shared<BoundarySine>(1e-6,5.0,time,*this,init(Point({0.0,0.0})));
-        shared_ptr<BoundaryConstant> bConst = \
-                make_shared<BoundaryConstant>(init(Point({0.0,0.0})));
-
-
-        bc = {bSine, bConst};
-    }
-    else if (caseName == "dipole")
-    {
-        //shared_ptr<BoundaryOpen> bOpen = make_shared<BoundaryOpen>();
-        //shared_ptr<BoundarySlip> bSlip = make_shared<BoundarySlip>();
-        shared_ptr<BoundarySineDir> bSine = \
-                make_shared<BoundarySineDir>(1e-6,5.0,time,*this,init(Point({0.0,0.0})));
-        shared_ptr<BoundaryConstant> bConst = \
-                make_shared<BoundaryConstant>(init(Point({0.0,0.0})));
-
-
-        bc = {bSine, bConst};
-    }
-    else
-    {
-        cout << "Problem " << caseName << " not found\n";
-        exit(0);
+        bc.emplace_back(make_shared<BoundarySlip>(BoundarySlip(p)));
     }
 
-
-    for (int i = 0; i < patches.size(); ++i)
-        for (int j = 0; j < patches[i].edgeGroup.size(); ++j)
-            patches[i].edgeGroup[j]->setBoundary(bc[i]);
-
-    for (int i = 0; i < patches.size(); ++i)
-        cout << "Patch #" << i << ": type = " << bc[i]->type << endl;
 }
-*/
+
 

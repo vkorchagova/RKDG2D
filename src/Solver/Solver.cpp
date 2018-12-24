@@ -26,7 +26,7 @@ void Solver::setInitialConditions()
         sln.SOL[k] = correctNonOrthoCell(alpha, k);
     }
     
-    cout << "OK"<<endl;
+    cout << "OK" << endl;
 
 } // end setInitialConditions
 

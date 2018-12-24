@@ -1,5 +1,7 @@
 #pragma once
 
+#include "BoundarySlip.h"
+
 //- Number of conservative variables
 static const int PhysDim = 5;
 static const int dimPh = 5;

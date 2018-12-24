@@ -31,6 +31,10 @@ public:
     void exportFrameVTK(const std::string& fileName) const;
     void exportFrameVTK(std::ostream& wStream) const;
 
+    //- Export solution coeffs 
+    void exportNativeCoeffs(const std::string& fileName) const;
+    void exportNativeCoeffs(std::ostream& wStream) const;
+
 };
 
 

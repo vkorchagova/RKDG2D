@@ -1,0 +1,137 @@
+#include "RungeKutta.h"
+
+using namespace std;
+
+RungeKutta::RungeKutta(int o,  Basis& b, Solver& s, Solution& ss, std::vector<std::shared_ptr<Boundary>>& bond, Limiter& l, TimeControl& t) : TimeStepper(o, b, s, ss, bond, l, t)
+{
+    /// Initialization of the parameters
+	// Number of stages a.k.a. length of all the arrays
+	nStages = order; // OK for RK order <= 4
+
+	// The stages array sizing
+    k.resize(nStages);
+	//Arr.resize(nStages);
+
+	// Cfts arrays sizing
+    alpha.resize(nStages);
+    beta.resize(nStages);
+    for (int i = 0; i < nStages; ++i)
+        beta[i].resize(nStages);
+
+	// Initialization of the RK-cfts
+    setButcherTable();
+
+}
+
+void RungeKutta::setButcherTable()
+{
+    switch (order)
+    {
+        case 1:
+
+            beta[0][0] = 1.0;
+            break;
+
+        case 2:
+
+            alpha[0] = 0.0;
+            alpha[1] = 1.0;
+
+            //beta[0][0] = 0.5;
+            //beta[1][0] = 0.0;
+            //beta[1][1] = 1.0;
+
+            beta[0][0] = 1.0;
+            beta[1][0] = 0.5;
+            beta[1][1] = 0.5;
+
+            break;
+
+        case 3:
+
+            alpha[1] = 0.5;
+            alpha[2] = 1.0;
+
+            beta[0][0] = 0.5;
+            beta[1][1] = 1.0;
+
+            beta[2][0] = 0.1666666666666667;
+            beta[2][1] = 0.6666666666666667;
+            beta[2][2] = 0.1666666666666667;
+
+            break;
+
+        case 4:
+
+            alpha[1] = 0.5;
+            alpha[2] = 0.5;
+            alpha[3] = 1.0;
+
+            beta[0][0] = 0.5;
+            //beta[1][0] = 0.0;
+            beta[1][1] = 0.5;
+            //beta[2][0] = 0.0;
+            //beta[2][1] = 0.0;
+            beta[2][2] = 1.0;
+
+            beta[3][0] = 0.1666666666666667;
+            beta[3][1] = 0.3333333333333333;
+            beta[3][2] = 0.3333333333333333;
+            beta[3][3] = 0.1666666666666667;
+
+            break;
+
+        default:
+            cout << "Runge --- Kutta method of order " \
+                 << order \
+                 << "is not implemented. " \
+                 << "Please change order to 1, 2, 3 or 4." \
+                 << endl;
+            exit(1);
+
+    }
+}
+
+void RungeKutta::Tstep()
+{
+	/// Final preparations
+    double t = T.getTime();
+	double tau = T.getTau();
+
+							///!!! SOL_aux must be equal SOL at this point !!!
+    vector<numvector<double, dimS>> lhs  = sln.SOL;
+    vector<numvector<double, dimS>> lhsOld = slv.correctPrevIter();
+
+	/// The very step of the RK method
+    for (int i = 0; i < nStages; ++i)
+    {
+        T.updateTime(t + alpha[i]*tau);   // ??? Is it necessary?
+        k[i] = slv.assembleRHS(sln.SOL_aux);
+		//Arr[i]= slv.assembleRHS(sln.SOL_aux);
+
+        lhs = lhsOld;
+
+        for (int j = 0; j <= i; ++j)
+           lhs = lhs + k[j] * beta[i][j] * tau; // !!!Choose between Arr and k!!!
+
+        sln.SOL_aux = slv.correctNonOrtho(lhs);
+		
+		///
+        lmt.limit(sln.SOL_aux);
+
+        for (shared_ptr<Boundary> b : bc)
+		    b->applyBoundary(basis);
+
+		DataExchange();
+		///
+
+    }// for stages
+    
+	/// Updating the solution and time step
+	sln.SOL = sln.SOL_aux;
+	T.updateTimeStep(slv.MaxSpeed); // !!! IT MUST BE DEFINED ALREADY !!!
+	
+    //time.updateTime(tOld);
+
+    return;
+}

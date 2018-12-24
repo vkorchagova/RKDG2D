@@ -7,7 +7,6 @@
 #include "Point.h"
 
 #include "Mesh.h"
-//#include "Boundary.h"
 #include "TimeControl.h"
 #include "defs.h"
 #include "Params.h"
@@ -26,6 +25,9 @@ public:
 
     //- Function for initial conditions
     std::function<numvector<double, dimPh>(const Point& r)> init;
+
+    //- Vector of boundary conditions
+    std::vector<std::shared_ptr<Boundary>> bc;
 
     //- Parameters on infinity
     numvector<double, dimPh> infty;
@@ -47,7 +49,7 @@ public:
     void setInitialConditions(CaseInit task);
 
 	//- Set boundary conditions
-    //void setBoundaryConditions(CaseBound task, const std::vector<Patch> &patches);
+    void setBoundaryConditions();
 
 };// end Problem
 

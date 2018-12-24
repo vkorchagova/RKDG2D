@@ -20,6 +20,14 @@ void Writer::exportFrameVTK(const std::string& fileName) const
 }
 
 
+void Writer::exportNativeCoeffs(const std::string& fileName) const
+{
+    ofstream wStream (fileName);
+    exportNativeCoeffs(wStream);
+    wStream.close();
+}
+
+
 void Writer::exportMeshVTK(ostream& wStream) const
 {
     //wStream.open("Mesh.vtk");
@@ -144,4 +152,16 @@ void Writer::exportFrameVTK(ostream& wStream) const
     wStream << 0.0 << endl;
     }
     */
+}
+
+
+void Writer::exportNativeCoeffs(ostream& wStream) const
+{
+    for (size_t k = 0; k < solution.SOL.size(); ++k)
+    {
+        for (int i = 0; i < dimS; ++i)
+            wStream << solution.SOL[k][i] << ' ';
+
+        wStream << endl;
+    }
 }

@@ -66,10 +66,14 @@ int main(int argc, char* argv[])
     physics.cpcv = problem.cpcv;
     cout << physics.cpcv << endl;
 
+    for (int i = 0; i < mesh.patches.size(); ++i)
+        cout << "BC type #" << i << ":" << problem.bc[i]->type << endl;
+
     //-----------------------
 
     writer.exportMeshVTK("mesh2D.vtk");
     writer.exportFrameVTK("0.vtk");
+    writer.exportNativeCoeffs("0.dat");
 
     MPI_Finalize();
 

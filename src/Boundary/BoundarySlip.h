@@ -1,0 +1,19 @@
+#ifndef BOUNDARYSLIP_H
+#define BOUNDARYSLIP_H
+
+#include "Boundary.h"
+
+class BoundarySlip : public Boundary
+{
+
+public:
+
+    //- Constructor
+    BoundarySlip(const Patch& p) : Boundary(p) { type = "slip"; }
+
+    //- Apply boundary condition
+    virtual void applyBoundary(Basis& basis) const override;
+};
+
+#endif // BOUNDARYSLIP_H
+
