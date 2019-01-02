@@ -24,12 +24,15 @@ public:
 
     //- Construct by indicator and problem
     Limiter() {}
+
+    //- Destructor
+    virtual ~Limiter() {}
     //Limiter(const Indicator& ind, Problem& prb) : indicator(ind), problem(prb) {}
 
     //- Limit solution gradients
-    void limit(std::vector<numvector<double, dimS>>& alpha) {}
+    //void limit(std::vector<numvector<double, dimS>>& alpha) {}
 
-    //virtual void limit(std::vector<numvector<double, 5 * nShapes>>& alpha) = 0;
+    virtual void limit(std::vector<numvector<double, dimS> >& alpha) = 0;
 
 };
 

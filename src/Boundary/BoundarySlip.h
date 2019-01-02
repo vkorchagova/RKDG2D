@@ -12,7 +12,7 @@ public:
     BoundarySlip(const Patch& p) : Boundary(p) { type = "slip"; }
 
     //- Apply boundary condition
-    virtual void applyBoundary(Basis& basis) const override;
+    virtual void applyBoundary(std::vector<numvector<double, dimS>>& coeffs) const override;
 };
 
 #endif // BOUNDARYSLIP_H

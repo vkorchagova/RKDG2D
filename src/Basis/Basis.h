@@ -44,14 +44,12 @@ public:
     /// 0 phi1*phi1 phi1*phi2
     /// 0 phi2*phi1 phi2*phi2
     ///
-    /// The good idea is to save only three elements IN ONE ROW for linear BF
-    /// and six elements for quadratic BF. Therefore, it will be an array
-    /// which length is equal to nShapes.
+    /// The good idea is to save only one triangle of symmetric matrix.
     /// NOTE: in case of constant functions will be empty.
     /// NOTE: gramians for each cells are not similar in unstructured mesh!
     ///
     /// Gramian form for one cell in case of linear functions: {g[1][1], g[1][2], g[2][2]}
-	std::vector<numvector<double, nShapes>> gramian;
+	std::vector< std::vector<std::vector<double>> > gramian;
 
 };
 

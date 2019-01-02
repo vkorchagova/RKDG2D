@@ -5,8 +5,8 @@
 using namespace std;
 
 Solver::Solver( Basis& Bas, Mesh& msh, Solution& soln,
-				Problem &prob, Flux& flx) : B(Bas), M(msh), sln(soln),
-											prb(prob), flux(flx)
+                Problem &prob, Physics& phys, Flux& flx) : 
+                B(Bas), M(msh), sln(soln), phs(phys), prb(prob), flux(flx)
 {
     
 }
@@ -19,11 +19,12 @@ void Solver::setInitialConditions()
     sln.SOL.resize(nCells);
     sln.SOL_aux.resize(nCells);
 
-//#pragma omp parallel for
+    //#pragma omp parallel for
     for (int k = 0; k < nCells; ++k)
     {
         alpha = projection(prb.init, k);
-        sln.SOL[k] = correctNonOrthoCell(alpha, k);
+        sln.SOL[k] = correctNonOrthoCell(alpha, B.gramian[k]);
+        //cout << "cell# " << k << "; cfts: " << sln.SOL[k] << endl;
     }
     
     cout << "OK" << endl;
@@ -56,159 +57,250 @@ void Solver::setDefinedCoefficients(string fileName)
 
 numvector<double, dimS> Solver::projection(const std::function<numvector<double, dimPh>(const Point& point)>& foo, int iCell) const
 {
-	numvector<double, dimS> alpha;	
-	numvector<double, dimPh> buffer;
-	for (int q = 0; q < nShapes; ++q)
-	{
-		std::function<numvector<double, dimPh>(const Point&)> f = \
-			[&](const Point& p) { return B.phi[q](iCell, p) * foo(p); };
+    numvector<double, dimS> alpha;    
+    numvector<double, dimPh> buffer;
+    for (int q = 0; q < nShapes; ++q)
+    {
+        std::function<numvector<double, dimPh>(const Point&)> f = \
+            [&](const Point& p) { return B.phi[q](iCell, p) * foo(p); };
 
-		buffer = integrate(*(M.cells[iCell]), f);
-		for (int p = 0; p < dimPh; ++p)
-		{
-			alpha[p*nShapes + q] = buffer[p];
-		}// for p
-	}// for shapes
+        buffer = integrate(*(M.cells[iCell]), f);
+        for (int p = 0; p < dimPh; ++p)
+        {
+            alpha[p*nShapes + q] = buffer[p];
+        }// for p
+    }// for shapes
 
-	return alpha;
+    return alpha;
 } // end projection
 
 
-  /// REWRITE
-vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<double, dimS>> &SOL)
+vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<double, dimS>>& SOL)
 {
-    int nCells = M.cells.size();
+    
+    int nCells = M.nRealCells;
 
-    vector<numvector<double, dimS>> rhs(nCells);
-  /*  double ts0 = 0;
+    vector<numvector<double, dimS>> rhs(sln.SOL.size()); // the same length as SOL
+    vector<vector<numvector<double, dimPh>>> numFluxes(M.nRealEdges);
+
+    double ts0 = 0;
     double te0 = 0;
-
     
-    
-    ts0 = omp_get_wtime();
-    
-    // compute fluxes in gauss points on edges
-#pragma omp parallel for \
-shared (mesh) \
-default(none)
-    for (size_t i = 0; i < M.nEdges; ++i)
-        /mesh.edges[i]->getLocalFluxes(flux);
+    // 1st step: compute fluxes in gauss points on edges
 
-    te0 = omp_get_wtime();
-    
-    //cout << "get fluxes " << te0 - ts0 << endl;
+    int nGP = M.edges[0]->nGP;
+    vector<numvector<double, dimPh>> gpFluxes(nGP);
+    numvector<double, dimPh> solLeft;
+    numvector<double, dimPh> solRight;
 
-    ts0 = omp_get_wtime();
-
-    
-
-#pragma omp parallel for \
-shared (nCells, rhs, mesh) \
-default(none)
-    for (int k = 0; k < nCells; ++k) // for all cells
+    for (size_t iEdge = 0; iEdge < M.nRealEdges; ++iEdge)
     {
+        //cout << "iEdge = " << iEdge <<endl;
+
+        shared_ptr<Edge> e = M.edges[iEdge];
+
+        int iCellLeft  = e->neibCells[0]->number;
+        int iCellRight = e->neibCells[1]->number;
+
+        //cout << iCellLeft << ' ' << iCellRight << endl;
+
+
+        for (size_t iGP = 0; iGP < nGP; ++iGP)
+        {
+            //cout << "iGP = " << iGP;// << endl;
+
+            solLeft  = sln.reconstruct(iCellLeft,  e->gPoints[iGP]);
+            solRight = sln.reconstruct(iCellRight, e->gPoints[iGP]);
+
+            //cout << "slL = " << solLeft << endl;
+            //cout << "slR = " << solRight << endl;
+            
+            gpFluxes[iGP] = flux.evaluate(solLeft, solRight, e->n);
+
+            //cout << "; flux: " << gpFluxes[iGP] << endl;
+        }// for GP
+
+        //cout << "-------------" << endl;
+        numFluxes[iEdge] = gpFluxes;
+        //cout << "edge #" << iEdge << "; numFlux: " << res << endl;
+
+    }// for edges   
+
+
+
+    // 2nd step: compute RHS;
+
+    numvector<double, dimPh> sol;
+    numvector<double, dimPh> resV;
+    numvector<double, dimS> res(0.0);
+    double gW = 0.0;
+    Point pt;
+    Point nablaPhi;
+    //nGP=M.cells[0]->nGP;
+    
+    for (int iCell = 0; iCell < nCells; ++iCell) // for real (!) cells
+    {
+        shared_ptr<Cell> cell = M.cells[iCell];
+
         // compute internal integral
-        /rhs[k] = mesh.cells[k]->cellIntegral();
+        res *= 0.0;
+        nGP = cell->nGP;
+
+        for (int i = 0; i < nGP; ++i)
+        {
+            pt = cell->gPoints2D[i];
+            gW = cell->gWeights2D[i];
+            sol = sln.reconstruct(iCell, pt);            
+
+            for (int q = 0; q < nShapes; ++q)
+            {
+                nablaPhi = B.gradPhi[q](iCell, pt);
+                
+                resV = phs.fluxF(sol) * nablaPhi[0] + \
+                       phs.fluxG(sol) * nablaPhi[1];
+
+                for (int p = 0; p < dimPh; ++p)
+                    res[p * nShapes + q] += resV[p] * gW * cell->J[i]; // CHECK!!!
+            //cout << "cell #" << iCell << "; GP #" << i \
+                 //<< "; gradPhi: (" << nablaPhi[0] << ", " << nablaPhi[1] << ")" << endl; 
+                 //<< "; res: " << res << endl;     
+            }// for shapes
+
+
+        }// for GP
+        rhs[iCell] = res;
+
+        //cout << "cell #" << iCell << "; cellIntegral: " << res << endl;
+
 
         // compute boundary integrals
-#pragma omp simd
-        for (int i = 0; i < /mesh.cells[k]->nEntities; ++i)
-            /rhs[k] -= mesh.cells[k]->edges[i]->boundaryIntegral(mesh.cells[k]);
-    }// for cells
 
-    te0 = omp_get_wtime();
-    
-    //cout << "get rhs " << te0 - ts0 << endl;
+        nGP = M.edges[0]->nGP;
+        double sign;
+        int iEdge;
 
-    */
+        for (int iEnt = 0; iEnt < cell->nEntities; ++iEnt)
+        {
+            res*=0.0;   // ????????????????????
+
+            iEdge=cell->edges[iEnt]->number;  
+            shared_ptr<Edge> e = M.edges[iEdge];          
+            sign = (iCell == M.edges[iEdge]->neibCells[0]->number) ? 1.0 : -1.0;
+
+            for (int i = 0; i < nGP; ++i)
+            {
+                gW = e->gWeights[i]; 
+                pt = e->gPoints[i]; 
+
+                for (int q = 0; q < nShapes; ++q)
+                    for (int p = 0; p < dimPh; ++p)
+                        res[p*nShapes + q] += numFluxes[iEdge][i][p] * ( gW * B.phi[q](iCell, pt) );
+            
+            }// for GP
+
+            rhs[iCell] -= res * e->J * sign;
+        }// for edges
+        
+        //cout << "cell #" << iCell << "; RHS[i]: " << rhs[iCell] << endl;
+
+
+    }// for cells*/ 
 
     return rhs;
 }
 
-numvector<double, dimS> Solver::correctNonOrthoCell(const numvector<double, dimS>& alpha, int iCell) const
+numvector<double, dimS> Solver::correctNonOrthoCell(const numvector<double, dimS>& rhs, const vector<vector<double>>& gramian) const
 {
-	numvector<double, dimS> alphaCorr;
+    numvector<double, dimS> alphaCorr;
 
-	vector<double> solution(nShapes); //for 3 ff!!!
+    vector<double> solution(nShapes); //for 3 ff!!!
+
+    //cout << "cell# " << iCell << "; cfts: " << alpha << "; G: " << B.gramian[iCell] << endl;
+    for (int iSol = 0; iSol < dimPh; ++iSol)
+    {
+        // solve slae
+        solution[0] = rhs[iSol*nShapes];
 
 
-	for (int iSol = 0; iSol < dimPh; ++iSol)
-	{
-		// solve slae
-		solution[0] = alpha[iSol*nShapes];
-
-
-		if (nShapes == 3)
-		{
-			solution[2] = (alpha[iSol*nShapes + 2] * B.gramian[iCell][0] - alpha[iSol*nShapes + 1] * B.gramian[iCell][1]) \
-				            / (B.gramian[iCell][2] * B.gramian[iCell][0] - B.gramian[iCell][1] * B.gramian[iCell][1]);
-			solution[1] = (alpha[iSol*nShapes + 1] - solution[2] * B.gramian[iCell][1]) \
-				            / (B.gramian[iCell][0]);
-
+        if (nShapes == 3)
+        {
             //cout << "\tiSol = " << iSol << endl;
 
-            //solution[2] = (rhs[iSol*nShapes + 2] * gramian[1][1] - rhs[iSol*nShapes + 1] * gramian[2][1]) \
-            //    / (gramian[2][2] * gramian[1][1] - gramian[1][2] * gramian[2][1]);
-            //solution[1] = (rhs[iSol*nShapes + 1] - solution[2] * gramian[1][2]) \
-            //      / (gramian[1][1]);
-		}
+            solution[2] = (rhs[iSol*nShapes + 2] * gramian[0][0] - rhs[iSol*nShapes + 1] * gramian[1][0]) \
+                / (gramian[1][1] * gramian[0][0] - gramian[1][0] * gramian[1][0]);
+            solution[1] = (rhs[iSol*nShapes + 1] - solution[2] * gramian[1][0]) \
+                  / (gramian[0][0]);
+        }
 
-		//set solution to appropriate positions
-		for (int i = 0; i < nShapes; ++i)
+        //set solution to appropriate positions
+        for (int i = 0; i < nShapes; ++i)
         {
-			//cout << "i = " << i << "; iAlpha = " << i + iSol*nShapes << endl; 
+            //cout << "i = " << i << "; iAlpha = " << i + iSol*nShapes << endl; 
             alphaCorr[i + iSol*nShapes] = solution[i];
         }
 
         //cout << "the next sol..." << endl;
-	}
+    }
 
     //cout << "result in fun = " << alphaCorr << endl;
     //cout << "the next cell..." << endl;
 
-	return alphaCorr;
+    return alphaCorr;
 }
 
 
 vector<numvector<double, dimS>> Solver::correctNonOrtho(const vector<numvector<double, dimS>>& alpha) const
 {
-	vector<numvector<double, dimS>> alphaCorr(alpha.size());
+    vector<numvector<double, dimS>> alphaCorr(alpha.size());
 
-	cout << "size of alpha " << alpha.size() << endl;
-    cout << "size of alphaCorr " << alphaCorr.size() << endl;
+    //cout << "size of alpha " << alpha.size() << endl;
+    //cout << "size of alphaCorr " << alphaCorr.size() << endl;
     for (size_t iCell = 0; iCell < M.nRealCells; ++iCell)
-	{
-		cout << "iCell in common  = " << iCell << endl;
-        alphaCorr[iCell] = correctNonOrthoCell(alpha[iCell], iCell);
-        cout << "result = " << alphaCorr[iCell] << endl;
-	}// for cells
+    {
+        //cout << "iCell in common  = " << iCell << endl;
+        alphaCorr[iCell] = correctNonOrthoCell(alpha[iCell], B.gramian[iCell]);
+        //cout << "result = " << alphaCorr[iCell] << endl;
+    }// for cells
 
-	return alphaCorr;
+    return alphaCorr;
 }
 
 
-numvector<double, dimS> Solver::correctPrevIterCell(const numvector<double, dimS>& alphaCorr, int iCell) const
+numvector<double, dimS> Solver::correctPrevIterCell(const numvector<double, dimS>& alphaCorr, const vector<vector<double>>& gramian) const
 {
-	numvector<double, dimS> alpha(0.0);
-	for (int iSol = 0; iSol < dimPh; ++iSol)
-	{
-		for (int i = 0; i < nShapes; ++i)
-#pragma omp simd
-			for (int j = 0; j < nShapes; ++j)
-				alpha[i + iSol*nShapes] += B.gramian[i][j] * alphaCorr[iSol*nShapes + j];
-	}// for variables
+    numvector<double, dimS> alpha(0.0);
+    for (int iSol = 0; iSol < dimPh; ++iSol)
+    {
+        alpha[iSol*nShapes] += alphaCorr[iSol*nShapes];
 
-	return alpha;
+        for (int i = 1; i < nShapes; ++i)
+        {
+    //#pragma omp simd
+            for (int j = 1; j <=i; ++j)
+                alpha[i + iSol*nShapes] += gramian[i-1][j-1] * alphaCorr[iSol*nShapes + j];
+
+            for (int j = i + 1; j < nShapes; ++j)
+                alpha[i + iSol*nShapes] += gramian[j-1][i-1] * alphaCorr[iSol*nShapes + j];
+
+        }
+    }// for variables
+
+    return alpha;
 }
 
 
-vector<numvector<double, dimS>> Solver::correctPrevIter() const
+vector<numvector<double, dimS>> Solver::correctPrevIter(const vector<numvector<double, dimS>>& alpha) const
 {
-	vector<numvector<double, dimS>> alpha;
-	alpha.resize(sln.SOL.size());
+    vector<numvector<double, dimS>> alphaCorr(alpha.size());
 
-	//for(int cell=0;)
-	//   alpha[cell]... SOL OR SOL_aux
+    //cout << "size of alpha " << alpha.size() << endl;
+    //cout << "size of alphaCorr " << alphaCorr.size() << endl;
+    for (size_t iCell = 0; iCell < M.nRealCells; ++iCell)
+    {
+        //cout << "iCell in common  = " << iCell << endl;
+        alphaCorr[iCell] = correctPrevIterCell(alpha[iCell], B.gramian[iCell]);
+        //cout << "result = " << alphaCorr[iCell] << endl;
+    }// for cells
 
-	return alpha;
+    return alphaCorr;
 }

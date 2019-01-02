@@ -73,19 +73,20 @@ void Basis::initGramian()
     gramian.reserve(cells.size());
 
     std::function<double(const Point&)> f;
-    numvector<double, nShapes> curGram;
-
 
     for (int iCell = 0; iCell < cells.size(); ++iCell)
     {
+        std::vector<std::vector<double>> curGram(nShapes - 1);
+
         for (int i = 1; i < nShapes; ++i)
         {
-            for (int j = i; j < nShapes; ++j)
+            for (int j = 1; j <= i; ++j)
             {
 
                 f = [&](const Point& p) {  return phi[i](iCell,p) * phi[j](iCell,p); };
-                curGram[(i - 1)*nShapes + j] = integrate(*cells[iCell], f);
+                curGram[i-1].push_back(integrate(*cells[iCell], f));
             }
+
         }
 
         gramian.push_back(curGram);

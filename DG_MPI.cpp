@@ -19,17 +19,19 @@
 #include "Physics.h"	//- The physical models
 #include "Problem.h"	//- Initial-boundary staff
 #include "Solution.h"   //- Solution storage
-//#include "Boundary.h"
+#include "Boundary.h"
+#include "LimiterFinDiff.h"
 #include "FluxLLF.h"		//- All about the flux evaluating
 //#include "Indicator.h"
 //#include "Limiter.h"	//- All about the monotonization
 #include "Solver.h"		//- The whole spatial discretization module
 #include "TimeControl.h"
 #include "Writer.h"
-//#include "TimeStepper.h"
+#include "RungeKutta.h"
 
 //#include "intel64\include\mpi.h"
 #include <mpi.h>
+#include <omp.h>
 
 
 using namespace std;
@@ -58,10 +60,12 @@ int main(int argc, char* argv[])
     Problem problem(SodX,mesh,time);
     Solution solution(basis);
     FluxLLF flux(physics);
-    Solver solver(basis, mesh, solution, problem, flux);
+    Solver solver(basis, mesh, solution, problem, physics, flux);
     Writer writer(mesh, solution, physics);
+    LimiterFinDiff limiter;
 
-    solver.setInitialConditions();
+    solver.setInitialConditions();      // FIX THE GRAMIAN, MTFK!!! AND GRAIENTS FOR nSHAPES > 3
+    writer.exportNativeCoeffs("0.dat");
 
     physics.cpcv = problem.cpcv;
     cout << physics.cpcv << endl;
@@ -69,11 +73,35 @@ int main(int argc, char* argv[])
     for (int i = 0; i < mesh.patches.size(); ++i)
         cout << "BC type #" << i << ":" << problem.bc[i]->type << endl;
 
+    //for (size_t i = 0; i < mesh.cells.size(); ++i)
+     //   cout << "sol #" << i << ": " << solution.SOL[i] << endl;
+
     //-----------------------
+
+    // 1st step: apply boundary
+    for (size_t i = 0; i < mesh.patches.size(); ++i)
+    {
+        problem.bc[i]->applyBoundary(solution.SOL);
+    }
+
+    
+    //solver.assembleRHS(solution.SOL);
+    RungeKutta RK(2, basis, solver, solution, problem.bc, limiter, time);
+    solution.SOL_aux=solution.SOL;
+    
+    double t0, t1;
+
+    t0 = omp_get_wtime();
+    RK.Tstep();
+    t1 = omp_get_wtime();
+
+    cout << "Step time = " << t1 - t0 << " s" << endl;
+
+
 
     writer.exportMeshVTK("mesh2D.vtk");
     writer.exportFrameVTK("0.vtk");
-    writer.exportNativeCoeffs("0.dat");
+    
 
     MPI_Finalize();
 

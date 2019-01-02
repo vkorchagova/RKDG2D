@@ -6,7 +6,8 @@ using namespace std;
 
 void TimeControl::updateTimeStep(double MSpeed)
 {
-    /*if (isDynamic) // template for the code of Vik
+    /*
+    if (isDynamic) // template for the code of Vik
     {
         double factCo = 0.0;
         double relTau = 0.0;
@@ -46,7 +47,7 @@ default (none)
 		tau = CoNum*H / MaxSpeed;
 
 	}// if isDynamic
-
 */
+
 }
 

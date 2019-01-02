@@ -3,9 +3,9 @@
 
 #include "numvector.h"
 #include "Patch.h"
+#include "Params.h"
 #include <string>
 
-class Basis;
 
 
 class Boundary
@@ -17,11 +17,13 @@ public:
 
     const Patch& patch;
 
+
+
     //- Default constructor
     Boundary(const Patch& p) : type("not implemented"), patch(p) {};
 
     //- Apply boundary conditions
-    virtual void applyBoundary(Basis& basis) const = 0;
+    virtual void applyBoundary(std::vector<numvector<double, dimS>>& coeffs) const = 0;
 };
 
 #endif // BOUNDARY_H

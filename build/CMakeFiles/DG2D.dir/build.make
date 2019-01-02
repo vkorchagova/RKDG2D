@@ -397,9 +397,32 @@ CMakeFiles/DG2D.dir/src/Limiter/Limiter.cpp.o.provides: CMakeFiles/DG2D.dir/src/
 
 CMakeFiles/DG2D.dir/src/Limiter/Limiter.cpp.o.provides.build: CMakeFiles/DG2D.dir/src/Limiter/Limiter.cpp.o
 
+CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.o: CMakeFiles/DG2D.dir/flags.make
+CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.o: ../src/Limiter/LimiterFinDiff.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_16)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.o"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.o -c /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Limiter/LimiterFinDiff.cpp
+
+CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.i"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Limiter/LimiterFinDiff.cpp > CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.i
+
+CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.s"
+	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Limiter/LimiterFinDiff.cpp -o CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.s
+
+CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.o.requires:
+.PHONY : CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.o.requires
+
+CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.o.provides: CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.o.requires
+	$(MAKE) -f CMakeFiles/DG2D.dir/build.make CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.o.provides.build
+.PHONY : CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.o.provides
+
+CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.o.provides.build: CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.o
+
 CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: CMakeFiles/DG2D.dir/flags.make
 CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: ../src/TimeControl/TimeControl.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_16)
+	$(CMAKE_COMMAND) -E cmake_progress_report /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_17)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o"
 	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o -c /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/TimeControl/TimeControl.cpp
 
@@ -422,7 +445,7 @@ CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o.provides.build: CMakeFiles
 
 CMakeFiles/DG2D.dir/src/TimeStepper/RungeKutta.cpp.o: CMakeFiles/DG2D.dir/flags.make
 CMakeFiles/DG2D.dir/src/TimeStepper/RungeKutta.cpp.o: ../src/TimeStepper/RungeKutta.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_17)
+	$(CMAKE_COMMAND) -E cmake_progress_report /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_18)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/DG2D.dir/src/TimeStepper/RungeKutta.cpp.o"
 	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/DG2D.dir/src/TimeStepper/RungeKutta.cpp.o -c /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/TimeStepper/RungeKutta.cpp
 
@@ -445,7 +468,7 @@ CMakeFiles/DG2D.dir/src/TimeStepper/RungeKutta.cpp.o.provides.build: CMakeFiles/
 
 CMakeFiles/DG2D.dir/src/TimeStepper/TimeStepper.cpp.o: CMakeFiles/DG2D.dir/flags.make
 CMakeFiles/DG2D.dir/src/TimeStepper/TimeStepper.cpp.o: ../src/TimeStepper/TimeStepper.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_18)
+	$(CMAKE_COMMAND) -E cmake_progress_report /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_19)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/DG2D.dir/src/TimeStepper/TimeStepper.cpp.o"
 	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/DG2D.dir/src/TimeStepper/TimeStepper.cpp.o -c /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/TimeStepper/TimeStepper.cpp
 
@@ -468,7 +491,7 @@ CMakeFiles/DG2D.dir/src/TimeStepper/TimeStepper.cpp.o.provides.build: CMakeFiles
 
 CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: CMakeFiles/DG2D.dir/flags.make
 CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/Flux/FluxLLF.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_19)
+	$(CMAKE_COMMAND) -E cmake_progress_report /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_20)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o"
 	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o -c /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Flux/FluxLLF.cpp
 
@@ -491,7 +514,7 @@ CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o.provides.build: CMakeFiles/DG2D.dir/s
 
 CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: CMakeFiles/DG2D.dir/flags.make
 CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/Flux/Flux.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_20)
+	$(CMAKE_COMMAND) -E cmake_progress_report /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles $(CMAKE_PROGRESS_21)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o"
 	/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o -c /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/src/Flux/Flux.cpp
 
@@ -529,6 +552,7 @@ DG2D_OBJECTS = \
 "CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o" \
 "CMakeFiles/DG2D.dir/src/compService/compService.cpp.o" \
 "CMakeFiles/DG2D.dir/src/Limiter/Limiter.cpp.o" \
+"CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.o" \
 "CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o" \
 "CMakeFiles/DG2D.dir/src/TimeStepper/RungeKutta.cpp.o" \
 "CMakeFiles/DG2D.dir/src/TimeStepper/TimeStepper.cpp.o" \
@@ -553,6 +577,7 @@ DG2D: CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o
 DG2D: CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o
 DG2D: CMakeFiles/DG2D.dir/src/compService/compService.cpp.o
 DG2D: CMakeFiles/DG2D.dir/src/Limiter/Limiter.cpp.o
+DG2D: CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.o
 DG2D: CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o
 DG2D: CMakeFiles/DG2D.dir/src/TimeStepper/RungeKutta.cpp.o
 DG2D: CMakeFiles/DG2D.dir/src/TimeStepper/TimeStepper.cpp.o
@@ -594,6 +619,7 @@ CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o.requir
 CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o.requires
 CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/compService/compService.cpp.o.requires
 CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/Limiter/Limiter.cpp.o.requires
+CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.o.requires
 CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o.requires
 CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/TimeStepper/RungeKutta.cpp.o.requires
 CMakeFiles/DG2D.dir/requires: CMakeFiles/DG2D.dir/src/TimeStepper/TimeStepper.cpp.o.requires

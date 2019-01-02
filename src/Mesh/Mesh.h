@@ -27,6 +27,8 @@ private:
 
     std::shared_ptr<Cell> makeGhostCell(const std::shared_ptr<Edge>& e);
 
+    void structurizeEdges();
+
 public:	
 
     //- Nodes of the mesh

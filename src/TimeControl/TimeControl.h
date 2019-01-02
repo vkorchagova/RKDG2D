@@ -40,7 +40,10 @@ public:
     //- Constructor
     TimeControl(const Mesh& msh) : M(msh)
     {
-		tauNew = tau;
+		t=0.0;
+        tau=1e-4;
+
+        tauNew = tau;
 		//write the construction with initialization from Params.h or some other data source;
 	}  
 

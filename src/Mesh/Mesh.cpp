@@ -27,6 +27,7 @@ Mesh::Mesh(std::string& fileName)
         cells[i]->setGaussPoints();
         cells[i]->setJacobian();
         cells[i]->setCellCenter();
+        cells[i]->number = i;
     }
 
     //cout << "---" << endl;
@@ -37,6 +38,8 @@ Mesh::Mesh(std::string& fileName)
         findNeighbourCells(cells[i]);
     }
 
+    structurizeEdges();
+
 }
 
 Mesh::~Mesh()
@@ -45,6 +48,19 @@ Mesh::~Mesh()
 }
 
 // ------------------ Private class methods --------------------
+
+void Mesh::structurizeEdges()
+{
+    for (const Patch& p : patches )
+        for (const shared_ptr<Edge> e : p.edgeGroup)
+            edges.erase(find(edges.begin(),edges.end(),e));
+
+    for (const Patch& p : patches )
+        edges.insert(edges.begin(),p.edgeGroup.begin(), p.edgeGroup.end());
+
+    for (int i = 0; i < nRealEdges; ++i)
+        edges[i]->number = i;
+}
 
 void Mesh::findNeighbourCells(const std::shared_ptr<Cell>& cell)
 {
@@ -124,6 +140,7 @@ shared_ptr<Cell> Mesh::makeGhostCell(const shared_ptr<Edge>& e)
 
             nodes.emplace_back(make_shared<Point>(inverseRotate(v, e->n) + nodeRef));
             cNodes.push_back(nodes.back());
+
         }
     }
 
@@ -230,6 +247,8 @@ void Mesh::importMesh(string& fileName)
                 nodesInEdge.push_back( nodes[localNumber(globalNodeNumber, node1 - 1)]);
                 nodesInEdge.push_back( nodes[localNumber(globalNodeNumber, node2 - 1)]);
                 edges.emplace_back( make_shared<Edge>(Edge(nodesInEdge) ));
+
+                edges.back()->number = i;
             }
 
             //

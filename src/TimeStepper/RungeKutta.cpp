@@ -100,13 +100,16 @@ void RungeKutta::Tstep()
 
 							///!!! SOL_aux must be equal SOL at this point !!!
     vector<numvector<double, dimS>> lhs  = sln.SOL;
-    vector<numvector<double, dimS>> lhsOld = slv.correctPrevIter();
+    vector<numvector<double, dimS>> lhsOld = slv.correctPrevIter(sln.SOL);
 
+    //for(int iCell=0; iCell<16; ++iCell)\
+        cout << "cell#" << iCell << "; SOL: " << sln.SOL_aux[iCell] << endl;
+    cout << endl;
 	/// The very step of the RK method
     for (int i = 0; i < nStages; ++i)
     {
         T.updateTime(t + alpha[i]*tau);   // ??? Is it necessary?
-        k[i] = slv.assembleRHS(sln.SOL_aux);
+        k[i] = slv.assembleRHS(sln.SOL);
 		//Arr[i]= slv.assembleRHS(sln.SOL_aux);
 
         lhs = lhsOld;
@@ -114,13 +117,11 @@ void RungeKutta::Tstep()
         for (int j = 0; j <= i; ++j)
            lhs = lhs + k[j] * beta[i][j] * tau; // !!!Choose between Arr and k!!!
 
-        sln.SOL_aux = slv.correctNonOrtho(lhs);
+
+        sln.SOL = slv.correctNonOrtho(lhs);
 		
 		///
-        lmt.limit(sln.SOL_aux);
-
-        for (shared_ptr<Boundary> b : bc)
-		    b->applyBoundary(basis);
+        lmt.limit(sln.SOL);
 
 		DataExchange();
 		///
@@ -131,6 +132,10 @@ void RungeKutta::Tstep()
 	sln.SOL = sln.SOL_aux;
 	T.updateTimeStep(slv.MaxSpeed); // !!! IT MUST BE DEFINED ALREADY !!!
 	
+    //for(int iCell=0; iCell<16; ++iCell)\
+        cout << "cell#" << iCell << "; SOL: " << sln.SOL[iCell] << endl;
+    cout << endl;
+
     //time.updateTime(tOld);
 
     return;

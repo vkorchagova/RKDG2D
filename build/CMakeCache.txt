@@ -208,6 +208,12 @@ MPI_EXTRA_LIBRARY:STRING=/usr/local/lib/libmpi.so;/usr/lib64/libdl.so;/usr/lib64
 //MPI library to link against
 MPI_LIBRARY:FILEPATH=/usr/local/lib/libmpi_cxx.so
 
+//C++ compiler flags for OpenMP parallization
+OpenMP_CXX_FLAGS:STRING=-fopenmp
+
+//C compiler flags for OpenMP parallization
+OpenMP_C_FLAGS:STRING=-fopenmp
+
 //Path to a program.
 file_cmd:FILEPATH=/usr/bin/file
 
@@ -327,6 +333,8 @@ CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 FIND_PACKAGE_MESSAGE_DETAILS_MPI_C:INTERNAL=[/usr/local/lib/libmpi.so;/usr/lib64/libdl.so;/usr/lib64/libm.so;/usr/lib64/librt.so;/usr/lib64/libnsl.so;/usr/lib64/libutil.so;/usr/lib64/libm.so;/usr/lib64/libdl.so][/usr/local/include][v()]
 //Details about finding MPI_CXX
 FIND_PACKAGE_MESSAGE_DETAILS_MPI_CXX:INTERNAL=[/usr/local/lib/libmpi_cxx.so;/usr/local/lib/libmpi.so;/usr/lib64/libdl.so;/usr/lib64/libm.so;/usr/lib64/librt.so;/usr/lib64/libnsl.so;/usr/lib64/libutil.so;/usr/lib64/libm.so;/usr/lib64/libdl.so][/usr/local/include][v()]
+//Details about finding OpenMP
+FIND_PACKAGE_MESSAGE_DETAILS_OpenMP:INTERNAL=[-fopenmp][-fopenmp][v()]
 //ADVANCED property for variable: MPIEXEC
 MPIEXEC-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: MPIEXEC_MAX_NUMPROCS
@@ -361,6 +369,12 @@ MPI_C_LINK_FLAGS-ADVANCED:INTERNAL=1
 MPI_HEADER_PATH:INTERNAL=MPI_HEADER_PATH-NOTFOUND
 //Scratch variable for MPI lib detection
 MPI_LIB:INTERNAL=MPI_LIB-NOTFOUND
+//ADVANCED property for variable: OpenMP_CXX_FLAGS
+OpenMP_CXX_FLAGS-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenMP_C_FLAGS
+OpenMP_C_FLAGS-ADVANCED:INTERNAL=1
+//Test OpenMP_FLAG_DETECTED
+OpenMP_FLAG_DETECTED:INTERNAL=1
 //ADVANCED property for variable: file_cmd
 file_cmd-ADVANCED:INTERNAL=1
 

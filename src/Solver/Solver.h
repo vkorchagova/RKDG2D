@@ -9,9 +9,9 @@
 #define SOLVER_H
 
 #include <fstream>
+#include "Point.h"
 
 #include "Basis.h"
-#include "BoundarySlip.h"
 #include "Solution.h"
 #include "compService.h"
 #include "Problem.h"
@@ -34,8 +34,11 @@ public:
 	//- Reference to teh solution
 	Solution& sln;
 
-    //- Reference to Gas problem
+    //- Reference to problem
     const Problem& prb;
+
+    //- Reference to physics
+    const Physics& phs;
 
     //- Reference to flux
     const Flux& flux;
@@ -50,7 +53,7 @@ public:
 
     //- Constructor
     Solver( Basis& B, Mesh& msh, Solution& sln,
-			Problem &prb, Flux& flx);
+			Problem &prb, Physics& phs, Flux& flx);
 
     //- Destructor
     ~Solver() {}
@@ -70,12 +73,12 @@ public:
     std::vector<numvector<double, dimS>> assembleRHS(const std::vector<numvector<double, dimS>>& SOL);
 
     //- Correct alpha coeffs in case of non-orthogonal basis functions
-	numvector<double, dimS> correctNonOrthoCell(const numvector<double, dimS>& alpha, int iCell) const;
+	numvector<double, dimS> correctNonOrthoCell(const numvector<double, dimS>& rhs, const std::vector<std::vector<double>>& gramian) const;
 	std::vector<numvector<double, dimS>> correctNonOrtho(const std::vector<numvector<double, dimS>>& alpha) const;
 
 	//- Reconstruct SLAE RHS after limitation in case of non-orthogonal functions :TODO choose the necessary version
-	numvector<double, dimS> correctPrevIterCell(const numvector<double, dimS>& rhs, int iCell) const;
-	std::vector<numvector<double, dimS>> correctPrevIter() const;
+	numvector<double, dimS> correctPrevIterCell(const numvector<double, dimS>& alphaCorr, const std::vector<std::vector<double>>& gramian) const;
+	std::vector<numvector<double, dimS>> correctPrevIter(const std::vector<numvector<double, dimS>>& alpha) const;
 
 };
 

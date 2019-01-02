@@ -6,6 +6,8 @@ CMakeFiles/DG2D.dir/DG_MPI.cpp.o: ../src/Boundary/Boundary.h
 CMakeFiles/DG2D.dir/DG_MPI.cpp.o: ../src/Boundary/BoundarySlip.h
 CMakeFiles/DG2D.dir/DG_MPI.cpp.o: ../src/Flux/Flux.h
 CMakeFiles/DG2D.dir/DG_MPI.cpp.o: ../src/Flux/FluxLLF.h
+CMakeFiles/DG2D.dir/DG_MPI.cpp.o: ../src/Limiter/Limiter.h
+CMakeFiles/DG2D.dir/DG_MPI.cpp.o: ../src/Limiter/LimiterFinDiff.h
 CMakeFiles/DG2D.dir/DG_MPI.cpp.o: ../src/Mesh/Cell.h
 CMakeFiles/DG2D.dir/DG_MPI.cpp.o: ../src/Mesh/Edge.h
 CMakeFiles/DG2D.dir/DG_MPI.cpp.o: ../src/Mesh/Mesh.h
@@ -17,6 +19,8 @@ CMakeFiles/DG2D.dir/DG_MPI.cpp.o: ../src/Problem/Problem.h
 CMakeFiles/DG2D.dir/DG_MPI.cpp.o: ../src/Solution/Solution.h
 CMakeFiles/DG2D.dir/DG_MPI.cpp.o: ../src/Solver/Solver.h
 CMakeFiles/DG2D.dir/DG_MPI.cpp.o: ../src/TimeControl/TimeControl.h
+CMakeFiles/DG2D.dir/DG_MPI.cpp.o: ../src/TimeStepper/RungeKutta.h
+CMakeFiles/DG2D.dir/DG_MPI.cpp.o: ../src/TimeStepper/TimeStepper.h
 CMakeFiles/DG2D.dir/DG_MPI.cpp.o: ../src/Writer/Writer.h
 CMakeFiles/DG2D.dir/DG_MPI.cpp.o: ../src/compService/compService.h
 CMakeFiles/DG2D.dir/DG_MPI.cpp.o: ../src/defs/defs.h
@@ -56,8 +60,6 @@ CMakeFiles/DG2D.dir/DG_MPI.cpp.o: /usr/local/include/openmpi/ompi/mpi/cxx/topolo
 CMakeFiles/DG2D.dir/DG_MPI.cpp.o: /usr/local/include/openmpi/ompi/mpi/cxx/win.h
 CMakeFiles/DG2D.dir/DG_MPI.cpp.o: /usr/local/include/openmpi/ompi/mpi/cxx/win_inln.h
 
-CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o: ../src/Boundary/Boundary.h
-CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o: ../src/Boundary/BoundarySlip.h
 CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o: ../src/Mesh/Cell.h
 CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o: ../src/Mesh/Edge.h
 CMakeFiles/DG2D.dir/src/Basis/Basis.cpp.o: ../src/Mesh/Mesh.h
@@ -73,6 +75,7 @@ CMakeFiles/DG2D.dir/src/Boundary/Boundary.cpp.o: ../src/Mesh/Cell.h
 CMakeFiles/DG2D.dir/src/Boundary/Boundary.cpp.o: ../src/Mesh/Edge.h
 CMakeFiles/DG2D.dir/src/Boundary/Boundary.cpp.o: ../src/Mesh/Patch.h
 CMakeFiles/DG2D.dir/src/Boundary/Boundary.cpp.o: ../src/Mesh/Point.h
+CMakeFiles/DG2D.dir/src/Boundary/Boundary.cpp.o: ../src/Params/Params.h
 CMakeFiles/DG2D.dir/src/Boundary/Boundary.cpp.o: ../src/numvector.h
 CMakeFiles/DG2D.dir/src/Boundary/Boundary.cpp.o: ../src/Boundary/Boundary.cpp
 CMakeFiles/DG2D.dir/src/Boundary/Boundary.cpp.o: ../src/Boundary/Boundary.h
@@ -89,8 +92,6 @@ CMakeFiles/DG2D.dir/src/Boundary/BoundarySlip.cpp.o: ../src/Boundary/Boundary.h
 CMakeFiles/DG2D.dir/src/Boundary/BoundarySlip.cpp.o: ../src/Boundary/BoundarySlip.cpp
 CMakeFiles/DG2D.dir/src/Boundary/BoundarySlip.cpp.o: ../src/Boundary/BoundarySlip.h
 
-CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/Boundary/Boundary.h
-CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/Boundary/BoundarySlip.h
 CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/Mesh/Cell.h
 CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/Mesh/Edge.h
 CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/Mesh/Patch.h
@@ -103,8 +104,6 @@ CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/numvector.h
 CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/Flux/Flux.cpp
 CMakeFiles/DG2D.dir/src/Flux/Flux.cpp.o: ../src/Flux/Flux.h
 
-CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/Boundary/Boundary.h
-CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/Boundary/BoundarySlip.h
 CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/Mesh/Cell.h
 CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/Mesh/Edge.h
 CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/Mesh/Patch.h
@@ -118,19 +117,17 @@ CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/Flux/Flux.h
 CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/Flux/FluxLLF.cpp
 CMakeFiles/DG2D.dir/src/Flux/FluxLLF.cpp.o: ../src/Flux/FluxLLF.h
 
-CMakeFiles/DG2D.dir/src/Limiter/Limiter.cpp.o: ../src/Boundary/Boundary.h
-CMakeFiles/DG2D.dir/src/Limiter/Limiter.cpp.o: ../src/Boundary/BoundarySlip.h
-CMakeFiles/DG2D.dir/src/Limiter/Limiter.cpp.o: ../src/Mesh/Cell.h
-CMakeFiles/DG2D.dir/src/Limiter/Limiter.cpp.o: ../src/Mesh/Edge.h
-CMakeFiles/DG2D.dir/src/Limiter/Limiter.cpp.o: ../src/Mesh/Patch.h
-CMakeFiles/DG2D.dir/src/Limiter/Limiter.cpp.o: ../src/Mesh/Point.h
 CMakeFiles/DG2D.dir/src/Limiter/Limiter.cpp.o: ../src/Params/Params.h
 CMakeFiles/DG2D.dir/src/Limiter/Limiter.cpp.o: ../src/numvector.h
 CMakeFiles/DG2D.dir/src/Limiter/Limiter.cpp.o: ../src/Limiter/Limiter.cpp
 CMakeFiles/DG2D.dir/src/Limiter/Limiter.cpp.o: ../src/Limiter/Limiter.h
 
-CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/Boundary/Boundary.h
-CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/Boundary/BoundarySlip.h
+CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.o: ../src/Params/Params.h
+CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.o: ../src/numvector.h
+CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.o: ../src/Limiter/Limiter.h
+CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.o: ../src/Limiter/LimiterFinDiff.cpp
+CMakeFiles/DG2D.dir/src/Limiter/LimiterFinDiff.cpp.o: ../src/Limiter/LimiterFinDiff.h
+
 CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/Mesh/Patch.h
 CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/Params/Params.h
 CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/compService/compService.h
@@ -141,9 +138,6 @@ CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/Mesh/Cell.h
 CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/Mesh/Edge.h
 CMakeFiles/DG2D.dir/src/Mesh/Cell.cpp.o: ../src/Mesh/Point.h
 
-CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o: ../src/Boundary/Boundary.h
-CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o: ../src/Boundary/BoundarySlip.h
-CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o: ../src/Mesh/Patch.h
 CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o: ../src/Mesh/Point.h
 CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o: ../src/Params/Params.h
 CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o: ../src/defs/defs.h
@@ -152,8 +146,6 @@ CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o: ../src/Mesh/Cell.h
 CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o: ../src/Mesh/Edge.cpp
 CMakeFiles/DG2D.dir/src/Mesh/Edge.cpp.o: ../src/Mesh/Edge.h
 
-CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o: ../src/Boundary/Boundary.h
-CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o: ../src/Boundary/BoundarySlip.h
 CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o: ../src/Mesh/Point.h
 CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o: ../src/Params/Params.h
 CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o: ../src/compService/compService.h
@@ -165,11 +157,6 @@ CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o: ../src/Mesh/Mesh.cpp
 CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o: ../src/Mesh/Mesh.h
 CMakeFiles/DG2D.dir/src/Mesh/Mesh.cpp.o: ../src/Mesh/Patch.h
 
-CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o: ../src/Boundary/Boundary.h
-CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o: ../src/Boundary/BoundarySlip.h
-CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o: ../src/Mesh/Cell.h
-CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o: ../src/Mesh/Edge.h
-CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o: ../src/Mesh/Patch.h
 CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o: ../src/Mesh/Point.h
 CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o: ../src/Params/Params.h
 CMakeFiles/DG2D.dir/src/Physics/Physics.cpp.o: ../src/defs/defs.h
@@ -192,8 +179,6 @@ CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o: ../src/Problem/Problem.cpp
 CMakeFiles/DG2D.dir/src/Problem/Problem.cpp.o: ../src/Problem/Problem.h
 
 CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o: ../src/Basis/Basis.h
-CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o: ../src/Boundary/Boundary.h
-CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o: ../src/Boundary/BoundarySlip.h
 CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o: ../src/Mesh/Cell.h
 CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o: ../src/Mesh/Edge.h
 CMakeFiles/DG2D.dir/src/Solution/Solution.cpp.o: ../src/Mesh/Mesh.h
@@ -225,8 +210,6 @@ CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/numvector.h
 CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/Solver/Solver.cpp
 CMakeFiles/DG2D.dir/src/Solver/Solver.cpp.o: ../src/Solver/Solver.h
 
-CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: ../src/Boundary/Boundary.h
-CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: ../src/Boundary/BoundarySlip.h
 CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: ../src/Mesh/Cell.h
 CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: ../src/Mesh/Edge.h
 CMakeFiles/DG2D.dir/src/TimeControl/TimeControl.cpp.o: ../src/Mesh/Mesh.h
@@ -283,8 +266,6 @@ CMakeFiles/DG2D.dir/src/TimeStepper/TimeStepper.cpp.o: ../src/TimeStepper/TimeSt
 CMakeFiles/DG2D.dir/src/TimeStepper/TimeStepper.cpp.o: ../src/TimeStepper/TimeStepper.h
 
 CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/Basis/Basis.h
-CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/Boundary/Boundary.h
-CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/Boundary/BoundarySlip.h
 CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/Mesh/Cell.h
 CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/Mesh/Edge.h
 CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/Mesh/Mesh.h
@@ -298,8 +279,6 @@ CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/numvector.h
 CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/Writer/Writer.cpp
 CMakeFiles/DG2D.dir/src/Writer/Writer.cpp.o: ../src/Writer/Writer.h
 
-CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/Boundary/Boundary.h
-CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/Boundary/BoundarySlip.h
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/Mesh/Cell.h
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/Mesh/Edge.h
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/Mesh/Patch.h
@@ -310,11 +289,6 @@ CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/numvector.h
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/compService/compService.cpp
 CMakeFiles/DG2D.dir/src/compService/compService.cpp.o: ../src/compService/compService.h
 
-CMakeFiles/DG2D.dir/src/defs/defs.cpp.o: ../src/Boundary/Boundary.h
-CMakeFiles/DG2D.dir/src/defs/defs.cpp.o: ../src/Boundary/BoundarySlip.h
-CMakeFiles/DG2D.dir/src/defs/defs.cpp.o: ../src/Mesh/Cell.h
-CMakeFiles/DG2D.dir/src/defs/defs.cpp.o: ../src/Mesh/Edge.h
-CMakeFiles/DG2D.dir/src/defs/defs.cpp.o: ../src/Mesh/Patch.h
 CMakeFiles/DG2D.dir/src/defs/defs.cpp.o: ../src/Mesh/Point.h
 CMakeFiles/DG2D.dir/src/defs/defs.cpp.o: ../src/Params/Params.h
 CMakeFiles/DG2D.dir/src/defs/defs.cpp.o: ../src/numvector.h

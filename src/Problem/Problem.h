@@ -5,11 +5,12 @@
 #include <functional>
 #include "numvector.h"
 #include "Point.h"
-
 #include "Mesh.h"
 #include "TimeControl.h"
 #include "defs.h"
 #include "Params.h"
+
+#include "BoundarySlip.h"
 
 
 class Patch;

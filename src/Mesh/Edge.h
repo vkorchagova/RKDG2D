@@ -16,6 +16,9 @@ public:
 
     /// geometric variables
 
+
+    int number;
+
     //- Number of gauss points for edge
     int nGP;
 

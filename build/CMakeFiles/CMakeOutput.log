@@ -1,0 +1,50 @@
+Performing C SOURCE FILE Test OpenMP_FLAG_DETECTED succeded with the following output:
+Change Dir: /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec3901118979/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec3901118979.dir/build.make CMakeFiles/cmTryCompileExec3901118979.dir/build
+gmake[1]: Entering directory `/lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec3901118979.dir/src.c.o
+/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/gcc   -DOpenMP_FLAG_DETECTED -fopenmp   -o CMakeFiles/cmTryCompileExec3901118979.dir/src.c.o   -c /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTryCompileExec3901118979
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3901118979.dir/link.txt --verbose=1
+/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/gcc   -DOpenMP_FLAG_DETECTED -fopenmp    CMakeFiles/cmTryCompileExec3901118979.dir/src.c.o  -o cmTryCompileExec3901118979 -rdynamic 
+gmake[1]: Leaving directory `/lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles/CMakeTmp'
+
+Source file was:
+
+#include <omp.h>
+int main() {
+#ifdef _OPENMP
+  return 0;
+#else
+  breaks_on_purpose
+#endif
+}
+
+Performing C++ SOURCE FILE Test OpenMP_FLAG_DETECTED succeded with the following output:
+Change Dir: /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec2320916568/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec2320916568.dir/build.make CMakeFiles/cmTryCompileExec2320916568.dir/build
+gmake[1]: Entering directory `/lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec2320916568.dir/src.cxx.o
+/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++    -DOpenMP_FLAG_DETECTED -fopenmp   -o CMakeFiles/cmTryCompileExec2320916568.dir/src.cxx.o -c /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTryCompileExec2320916568
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2320916568.dir/link.txt --verbose=1
+/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++    -DOpenMP_FLAG_DETECTED -fopenmp    CMakeFiles/cmTryCompileExec2320916568.dir/src.cxx.o  -o cmTryCompileExec2320916568 -rdynamic 
+gmake[1]: Leaving directory `/lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles/CMakeTmp'
+
+Source file was:
+
+#include <omp.h>
+int main() {
+#ifdef _OPENMP
+  return 0;
+#else
+  breaks_on_purpose
+#endif
+}
+
