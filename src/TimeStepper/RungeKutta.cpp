@@ -104,13 +104,25 @@ void RungeKutta::Tstep()
 
     //for(int iCell=0; iCell<16; ++iCell)\
         cout << "cell#" << iCell << "; SOL: " << sln.SOL_aux[iCell] << endl;
-    cout << endl;
+    //cout << endl;
 	/// The very step of the RK method
     for (int i = 0; i < nStages; ++i)
     {
         T.updateTime(t + alpha[i]*tau);   // ??? Is it necessary?
+        
+        // 1st step: apply boundary
+        for (size_t i = 0; i < bc.size(); ++i)
+        {
+            bc[i]->applyBoundary(sln.SOL);
+        }
+
         k[i] = slv.assembleRHS(sln.SOL);
 		//Arr[i]= slv.assembleRHS(sln.SOL_aux);
+
+        //cout << "k[i]" << endl;
+        //for(int iCell = 0; iCell < sln.SOL.size(); ++iCell)\
+            cout << "cell#" << iCell << "; k[i][iCell]: " << k[i][iCell] << endl;
+        //cout << endl;
 
         lhs = lhsOld;
 
@@ -119,6 +131,10 @@ void RungeKutta::Tstep()
 
 
         sln.SOL = slv.correctNonOrtho(lhs);
+
+        //for(int iCell = 0; iCell < sln.SOL.size(); ++iCell)\
+        //    cout << "cell#" << iCell << "; SOL: " << sln.SOL[iCell] << endl;
+        //cout << endl;
 		
 		///
         lmt.limit(sln.SOL);
@@ -129,7 +145,6 @@ void RungeKutta::Tstep()
     }// for stages
     
 	/// Updating the solution and time step
-	sln.SOL = sln.SOL_aux;
 	T.updateTimeStep(slv.MaxSpeed); // !!! IT MUST BE DEFINED ALREADY !!!
 	
     //for(int iCell=0; iCell<16; ++iCell)\

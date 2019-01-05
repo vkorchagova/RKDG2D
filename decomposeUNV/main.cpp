@@ -11,9 +11,9 @@ using namespace std;
 int main()
 {
 
-    DecomposerUNV converter("Mesh_4x4.unv","mesh2D_single");
+    DecomposerUNV converter("sod1.unv","mesh2D_single");
 
-    int nDomains = 1;
+    int nDomains = 2;
     string metisCommand = "mpmetis meshMETIS " + to_string(nDomains);
     string partCellsFile = "meshMETIS.epart." + to_string(nDomains);
 

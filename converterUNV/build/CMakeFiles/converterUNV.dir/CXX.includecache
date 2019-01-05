@@ -6,14 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/converterUNV/FileConverter.cpp
-FileConverter.h
-/lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/converterUNV/FileConverter.h
-functional
--
-math.h
--
-
 /lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/converterUNV/FileConverter.h
 iostream
 -
@@ -24,5 +16,13 @@ sstream
 vector
 -
 string
+-
+
+/lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/converterUNV/main.cpp
+iostream
+-
+FileConverter.h
+/lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/converterUNV/FileConverter.h
+cstdlib
 -
 

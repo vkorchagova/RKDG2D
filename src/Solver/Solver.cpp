@@ -170,6 +170,9 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
         }// for GP
         rhs[iCell] = res;
 
+        if (iCell > M.nRealCells)
+            cout << "WARNING: iCell = " << iCell << "more than mesh size!!" << endl;   
+
         //cout << "cell #" << iCell << "; cellIntegral: " << res << endl;
 
 

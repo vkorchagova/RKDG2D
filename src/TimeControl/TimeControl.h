@@ -10,12 +10,20 @@ class TimeControl
 private:
 
 	/// Time itself
-	//- Current time
+	
+    //- Previous time point
+    double tOld;
+
+    //- Current time
 	double t;
+
+    //- End time
+    double tEnd;
 
 	/// Time steps
     //- Old time step -- with which we're working during the time integrating
     double tau;
+
     //- New time step -- for the next iteration
     double tauNew;
 	
@@ -38,12 +46,10 @@ private:
 public:
 
     //- Constructor
-    TimeControl(const Mesh& msh) : M(msh)
+    TimeControl(const Mesh& msh, const double tStart, const double tEnd, const double initTau) : M(msh), t(tStart), tau(initTau), tEnd(tEnd)
     {
-		t=0.0;
-        tau=1e-4;
-
         tauNew = tau;
+        tOld = t;
 		//write the construction with initialization from Params.h or some other data source;
 	}  
 
@@ -59,6 +65,9 @@ public:
     double getNewTau() const {return tauNew;}
     //- Update time step
     void updateTimeStep(double MSpeed);
+
+    //- Check if time is not finished
+    bool running() { return t < tEnd; }
 
 };
 

@@ -2,6 +2,13 @@
 //
 
 
+#if !defined(__linux__)
+#include <direct.h>
+#endif
+
+#include <sys/stat.h>
+
+
 #include <iostream>
 #include <fstream>
 #include <cmath>
@@ -49,23 +56,46 @@ int main(int argc, char* argv[])
 
     cout << "size = " << size << "; rank = " << rank << endl;
 
+    //-----------------------
+
     string meshFileName = "mesh2D";// + to_string(rank);
+    Mesh mesh(meshFileName);
+    Basis basis(mesh.cells);
+    Solution solution(basis);
+    
+    Physics physics;
+    FluxLLF flux(physics);
+    
+    Writer writer(mesh, solution, physics);
+
+    int order = 2;
+    double tStart = 0.0;
+    double tEnd = 0.2;
+    double initTau = 1e-4;
+    TimeControl time(mesh, tStart, tEnd, initTau);
+
+    CaseInit caseName = SodCircle;
+    Problem problem(caseName, mesh, time);
+
+    Solver solver(basis, mesh, solution, problem, physics, flux);
+
+    LimiterFinDiff limiter;
+
+    RungeKutta RK(order, basis, solver, solution, problem.bc, limiter, time);
 
     //-----------------------
 
-    Mesh mesh(meshFileName);
-    Basis basis(mesh.cells);
-    TimeControl time(mesh);
-    Physics physics;
-    Problem problem(SodX,mesh,time);
-    Solution solution(basis);
-    FluxLLF flux(physics);
-    Solver solver(basis, mesh, solution, problem, physics, flux);
-    Writer writer(mesh, solution, physics);
-    LimiterFinDiff limiter;
+    // create folder for solution
+    #if !defined(__linux__)
+        _mkdir("alphaCoeffs");
+    #else
+        mkdir("alphaCoeffs", S_IRWXU | S_IRGRP | S_IROTH);
+    #endif
 
-    solver.setInitialConditions();      // FIX THE GRAMIAN, MTFK!!! AND GRAIENTS FOR nSHAPES > 3
-    writer.exportNativeCoeffs("0.dat");
+    // get initial conditions
+    solver.setInitialConditions();      // FIX GRAIENTS FOR nSHAPES > 3
+    writer.exportFrameVTK("alphaCoeffs/0.vtk");
+    writer.exportNativeCoeffs("alphaCoeffs/0.dat");
 
     physics.cpcv = problem.cpcv;
     cout << physics.cpcv << endl;
@@ -84,23 +114,33 @@ int main(int argc, char* argv[])
         problem.bc[i]->applyBoundary(solution.SOL);
     }
 
-    
+    limiter.limit(solution.SOL);
     //solver.assembleRHS(solution.SOL);
-    RungeKutta RK(2, basis, solver, solution, problem.bc, limiter, time);
+    
     solution.SOL_aux=solution.SOL;
+
     
     double t0, t1;
 
-    t0 = omp_get_wtime();
-    RK.Tstep();
-    t1 = omp_get_wtime();
+    //for (double t = tStart; t < tEnd; t += tau)
+    while (time.running())
+    {
+        cout << "-------" << endl;
+        cout << "Time: " << time.getTime() << endl;
+        cout << "Time step: " << time.getTau() << endl;
 
-    cout << "Step time = " << t1 - t0 << " s" << endl;
+        t0 = MPI_Wtime();
+        RK.Tstep();
+        t1 = MPI_Wtime();
+
+        cout << "\tstep time = " << t1 - t0 << " s" << endl;
 
 
+        writer.exportFrameVTK("alphaCoeffs/" + to_string(time.getTime()) + ".vtk"); 
+        writer.exportNativeCoeffs("alphaCoeffs/" + to_string(time.getTime()) + ".dat");
+    }
 
-    writer.exportMeshVTK("mesh2D.vtk");
-    writer.exportFrameVTK("0.vtk");
+    
     
 
     MPI_Finalize();

@@ -1,0 +1,1019 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+ no time accumulated
+
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  Ts/call  Ts/call  name    
+  0.00      0.00     0.00     2336     0.00     0.00  std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#2}>::_M_invoke(std::_Any_data const&, int&&, Point const&)
+  0.00      0.00     0.00     2336     0.00     0.00  std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#3}>::_M_invoke(std::_Any_data const&, int&&, Point const&)
+  0.00      0.00     0.00     1952     0.00     0.00  std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#1}>::_M_invoke(std::_Any_data const&, int&&, Point const&)
+  0.00      0.00     0.00     1536     0.00     0.00  std::_Function_handler<double ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&)
+  0.00      0.00     0.00      768     0.00     0.00  std::_Function_handler<double ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#3}>::_M_invoke(std::_Any_data const&, Point const&)
+  0.00      0.00     0.00      768     0.00     0.00  std::_Function_handler<double ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#4}>::_M_invoke(std::_Any_data const&, Point const&)
+  0.00      0.00     0.00      704     0.00     0.00  Physics::fluxF(numvector<double, 5> const&) const
+  0.00      0.00     0.00      464     0.00     0.00  Solution::reconstruct(int, Point const&) const
+  0.00      0.00     0.00      464     0.00     0.00  _ZNSt6vectorI5PointSaIS0_EE12emplace_backIJS0_EEEvDpOT_
+  0.00      0.00     0.00      400     0.00     0.00  _ZNSt6vectorI5PointSaIS0_EE19_M_emplace_back_auxIJS0_EEEvDpOT_
+  0.00      0.00     0.00      384     0.00     0.00  Physics::fluxG(numvector<double, 5> const&) const
+  0.00      0.00     0.00      384     0.00     0.00  std::_Function_handler<numvector<double, 5> ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}>::_M_invoke(std::_Any_data const&, Point const&)
+  0.00      0.00     0.00      384     0.00     0.00  std::_Function_handler<numvector<double, 5> ()(Point const&), Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&)
+  0.00      0.00     0.00      384     0.00     0.00  std::_Function_handler<double ()(Point const&), Basis::initGramian()::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&)
+  0.00      0.00     0.00      384     0.00     0.00  std::_Function_handler<double ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#2}>::_M_invoke(std::_Any_data const&, Point const&)
+  0.00      0.00     0.00      336     0.00     0.00  Physics::getPressure(numvector<double, 5> const&) const
+  0.00      0.00     0.00      320     0.00     0.00  rotate(numvector<double, 5> const&, Point const&)
+  0.00      0.00     0.00      288     0.00     0.00  localNumber(std::vector<int, std::allocator<int> >&, int)
+  0.00      0.00     0.00      160     0.00     0.00  inverseRotate(numvector<double, 5> const&, Point const&)
+  0.00      0.00     0.00      160     0.00     0.00  integrate(Cell const&, std::function<double ()(Point const&)> const&)
+  0.00      0.00     0.00      160     0.00     0.00  Flux::lambdaF_Roe(numvector<double, 5> const&, numvector<double, 5> const&) const
+  0.00      0.00     0.00      160     0.00     0.00  Flux::lambdaF(numvector<double, 5> const&, numvector<double, 5> const&) const
+  0.00      0.00     0.00      160     0.00     0.00  FluxLLF::evaluate(numvector<double, 5> const&, numvector<double, 5> const&, Point const&) const
+  0.00      0.00     0.00      160     0.00     0.00  void std::vector<double, std::allocator<double> >::_M_assign_aux<double const*>(double const*, double const*, std::forward_iterator_tag)
+  0.00      0.00     0.00      128     0.00     0.00  Cell::localToGlobal(Point const&) const
+  0.00      0.00     0.00      128     0.00     0.00  std::_Function_handler<Point ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#4}>::_M_invoke(std::_Any_data const&, int&&, Point const&)
+  0.00      0.00     0.00      128     0.00     0.00  std::_Function_handler<Point ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#5}>::_M_invoke(std::_Any_data const&, int&&, Point const&)
+  0.00      0.00     0.00      128     0.00     0.00  std::_Function_handler<Point ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#6}>::_M_invoke(std::_Any_data const&, int&&, Point const&)
+  0.00      0.00     0.00      128     0.00     0.00  std::_Function_handler<double ()(Point const&), Cell::setJacobian()::{lambda(Point const&)#2}>::_M_invoke(std::_Any_data const&, Point const&)
+  0.00      0.00     0.00      128     0.00     0.00  std::_Function_handler<double ()(Point const&), Cell::setCellCenter()::{lambda(Point const&)#2}>::_M_invoke(std::_Any_data const&, Point const&)
+  0.00      0.00     0.00      128     0.00     0.00  std::_Function_handler<double ()(Point const&), Cell::setCellCenter()::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&)
+  0.00      0.00     0.00      128     0.00     0.00  _ZNSt6vectorISt10shared_ptrI4CellESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_
+  0.00      0.00     0.00      128     0.00     0.00  _ZNSt6vectorISt10shared_ptrI5PointESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_
+  0.00      0.00     0.00      112     0.00     0.00  std::vector<std::shared_ptr<Point>, std::allocator<std::shared_ptr<Point> > >::~vector()
+  0.00      0.00     0.00      104     0.00     0.00  Edge::Edge(std::vector<std::shared_ptr<Point>, std::allocator<std::shared_ptr<Point> > > const&)
+  0.00      0.00     0.00      104     0.00     0.00  std::_Sp_counted_ptr_inplace<Edge, std::allocator<Edge>, (__gnu_cxx::_Lock_policy)2>::_M_get_deleter(std::type_info const&)
+  0.00      0.00     0.00       96     0.00     0.00  integrate(Cell const&, std::function<numvector<double, 5> ()(Point const&)> const&)
+  0.00      0.00     0.00       96     0.00     0.00  std::_Function_base::_Base_manager<Basis::initGramian()::{lambda(Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initGramian()::{lambda(Point const&)#1}> const&, std::_Manager_operation)
+  0.00      0.00     0.00       96     0.00     0.00  std::_Function_base::_Base_manager<Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const::{lambda(Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const::{lambda(Point const&)#1}> const&, std::_Manager_operation)
+  0.00      0.00     0.00       96     0.00     0.00  _ZNSt6vectorIdSaIdEE19_M_emplace_back_auxIJdEEEvDpOT_
+  0.00      0.00     0.00       81     0.00     0.00  _ZNSt6vectorIiSaIiEE12emplace_backIJiEEEvDpOT_
+  0.00      0.00     0.00       80     0.00     0.00  Solution::reconstruct(int, Point const&, Variables) const
+  0.00      0.00     0.00       80     0.00     0.00  std::vector<numvector<double, 5>, std::allocator<numvector<double, 5> > >::operator=(std::vector<numvector<double, 5>, std::allocator<numvector<double, 5> > > const&)
+  0.00      0.00     0.00       64     0.00     0.00  Edge::isEqual(Edge const&) const
+  0.00      0.00     0.00       64     0.00     0.00  Solver::correctNonOrthoCell(numvector<double, 15> const&, std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > > const&) const
+  0.00      0.00     0.00       57     0.00     0.00  std::_Sp_counted_ptr_inplace<Point, std::allocator<Point>, (__gnu_cxx::_Lock_policy)2>::_M_get_deleter(std::type_info const&)
+  0.00      0.00     0.00       57     0.00     0.00  _ZNSt6vectorISt10shared_ptrI5PointESaIS2_EE12emplace_backIJS2_EEEvDpOT_
+  0.00      0.00     0.00       50     0.00     0.00  _ZNSt6vectorISt10shared_ptrI4EdgeESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_
+  0.00      0.00     0.00       48     0.00     0.00  _ZNSt6vectorISt10shared_ptrI4CellESaIS2_EE12emplace_backIJS2_EEEvDpOT_
+  0.00      0.00     0.00       32     0.00     0.00  inverseRotate(Point const&, Point const&)
+  0.00      0.00     0.00       32     0.00     0.00  rotate(Point const&, Point const&)
+  0.00      0.00     0.00       32     0.00     0.00  Cell::setJacobian()
+  0.00      0.00     0.00       32     0.00     0.00  Cell::setCellCenter()
+  0.00      0.00     0.00       32     0.00     0.00  Cell::setGaussPoints()
+  0.00      0.00     0.00       32     0.00     0.00  Cell::setArea()
+  0.00      0.00     0.00       32     0.00     0.00  Cell::Cell(std::vector<std::shared_ptr<Point>, std::allocator<std::shared_ptr<Point> > > const&, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > const&)
+  0.00      0.00     0.00       32     0.00     0.00  Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const
+  0.00      0.00     0.00       32     0.00     0.00  std::_Function_base::_Base_manager<Cell::setJacobian()::{lambda(Point const&)#2}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Cell::setJacobian()::{lambda(Point const&)#2}> const&, std::_Manager_operation)
+  0.00      0.00     0.00       32     0.00     0.00  std::_Function_base::_Base_manager<Cell::setCellCenter()::{lambda(Point const&)#2}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Cell::setCellCenter()::{lambda(Point const&)#2}> const&, std::_Manager_operation)
+  0.00      0.00     0.00       32     0.00     0.00  std::_Function_base::_Base_manager<Cell::setCellCenter()::{lambda(Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Cell::setCellCenter()::{lambda(Point const&)#1}> const&, std::_Manager_operation)
+  0.00      0.00     0.00       32     0.00     0.00  std::_Sp_counted_ptr_inplace<Cell, std::allocator<Cell>, (__gnu_cxx::_Lock_policy)2>::_M_get_deleter(std::type_info const&)
+  0.00      0.00     0.00       21     0.00     0.00  std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > >::reserve(unsigned long)
+  0.00      0.00     0.00       17     0.00     0.00  std::vector<std::shared_ptr<Point>, std::allocator<std::shared_ptr<Point> > >::reserve(unsigned long)
+  0.00      0.00     0.00       16     0.00     0.00  Mesh::makeGhostCell(std::shared_ptr<Edge> const&)
+  0.00      0.00     0.00       16     0.00     0.00  Mesh::findNeighbourCells(std::shared_ptr<Cell> const&)
+  0.00      0.00     0.00       16     0.00     0.00  Solver::correctPrevIterCell(numvector<double, 15> const&, std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > > const&) const
+  0.00      0.00     0.00       16     0.00     0.00  std::_Sp_counted_ptr_inplace<Edge, std::allocator<Edge>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+  0.00      0.00     0.00       16     0.00     0.00  std::_Sp_counted_ptr_inplace<Edge, std::allocator<Edge>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+  0.00      0.00     0.00       13     0.00     0.00  _GLOBAL__sub_I__ZN8SolutionC2ER5Basis
+  0.00      0.00     0.00       13     0.00     0.00  _ZNSt6vectorISt10shared_ptrI4CellESaIS2_EE19_M_emplace_back_auxIJS2_EEEvDpOT_
+  0.00      0.00     0.00       13     0.00     0.00  _ZNSt6vectorIiSaIiEE19_M_emplace_back_auxIJiEEEvDpOT_
+  0.00      0.00     0.00        6     0.00     0.00  _ZNSt6vectorI9numvectorIdLi3EESaIS1_EE19_M_emplace_back_auxIJRKS1_EEEvDpOT_
+  0.00      0.00     0.00        6     0.00     0.00  operator*(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&, double)
+  0.00      0.00     0.00        4     0.00     0.00  Mesh::createPhysicalPatch(std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  0.00      0.00     0.00        4     0.00     0.00  BoundarySlip::applyBoundary(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > >&) const
+  0.00      0.00     0.00        4     0.00     0.00  std::_Sp_counted_ptr_inplace<BoundarySlip, std::allocator<BoundarySlip>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+  0.00      0.00     0.00        4     0.00     0.00  std::_Sp_counted_ptr_inplace<BoundarySlip, std::allocator<BoundarySlip>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+  0.00      0.00     0.00        4     0.00     0.00  _ZNSt6vectorI5PatchSaIS0_EE12emplace_backIJS0_EEEvDpOT_
+  0.00      0.00     0.00        4     0.00     0.00  std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > >::operator=(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&)
+  0.00      0.00     0.00        4     0.00     0.00  void std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > >::_M_range_insert<__gnu_cxx::__normal_iterator<std::shared_ptr<Edge> const*, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > > >(__gnu_cxx::__normal_iterator<std::shared_ptr<Edge>*, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<Edge> const*, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<Edge> const*, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > >, std::forward_iterator_tag)
+  0.00      0.00     0.00        4     0.00     0.00  std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > >::~vector()
+  0.00      0.00     0.00        4     0.00     0.00  std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > >::operator=(std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > const&)
+  0.00      0.00     0.00        4     0.00     0.00  std::function<double ()(Point const&)>::function(std::function<double ()(Point const&)> const&)
+  0.00      0.00     0.00        4     0.00     0.00  frame_dummy
+  0.00      0.00     0.00        3     0.00     0.00  std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#2}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#2}> const&, std::_Manager_operation)
+  0.00      0.00     0.00        3     0.00     0.00  std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#3}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#3}> const&, std::_Manager_operation)
+  0.00      0.00     0.00        3     0.00     0.00  std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#4}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#4}> const&, std::_Manager_operation)
+  0.00      0.00     0.00        3     0.00     0.00  std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#1}> const&, std::_Manager_operation)
+  0.00      0.00     0.00        3     0.00     0.00  _ZNSt6vectorISt10shared_ptrI8BoundaryESaIS2_EE19_M_emplace_back_auxIJS0_I12BoundarySlipEEEEvDpOT_
+  0.00      0.00     0.00        3     0.00     0.00  std::vector<double, std::allocator<double> >::_M_default_append(unsigned long)
+  0.00      0.00     0.00        3     0.00     0.00  operator+(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&, std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&)
+  0.00      0.00     0.00        2     0.00     0.00  _GLOBAL__sub_I__ZN7PhysicsC2Ev
+  0.00      0.00     0.00        2     0.00     0.00  TimeStepper::DataExchange()
+  0.00      0.00     0.00        2     0.00     0.00  LimiterFinDiff::limit(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > >&)
+  0.00      0.00     0.00        2     0.00     0.00  Solver::assembleRHS(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&)
+  0.00      0.00     0.00        2     0.00     0.00  Solver::correctNonOrtho(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) const
+  0.00      0.00     0.00        2     0.00     0.00  Writer::exportMeshVTK(std::ostream&) const
+  0.00      0.00     0.00        2     0.00     0.00  std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > >::_M_default_append(unsigned long)
+  0.00      0.00     0.00        2     0.00     0.00  std::vector<std::vector<numvector<double, 5>, std::allocator<numvector<double, 5> > >, std::allocator<std::vector<numvector<double, 5>, std::allocator<numvector<double, 5> > > > >::~vector()
+  0.00      0.00     0.00        2     0.00     0.00  std::vector<std::shared_ptr<Cell>, std::allocator<std::shared_ptr<Cell> > >::reserve(unsigned long)
+  0.00      0.00     0.00        2     0.00     0.00  _ZNSt6vectorISt10shared_ptrI5PointESaIS2_EE19_M_emplace_back_auxIJS2_EEEvDpOT_
+  0.00      0.00     0.00        2     0.00     0.00  std::vector<int, std::allocator<int> >::reserve(unsigned long)
+  0.00      0.00     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z13inverseRotateRK9numvectorIdLi5EERK5Point
+  0.00      0.00     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN10RungeKuttaC2EiR5BasisR6SolverR8SolutionRSt6vectorISt10shared_ptrI8BoundaryESaIS9_EER7LimiterR11TimeControl
+  0.00      0.00     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN11TimeControl14updateTimeStepEd
+  0.00      0.00     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN11TimeStepper12DataExchangeEv
+  0.00      0.00     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN4CellC2ERKSt6vectorISt10shared_ptrI5PointESaIS3_EERKS0_IS1_I4EdgeESaIS9_EE
+  0.00      0.00     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN4EdgeC2ERKSt6vectorISt10shared_ptrI5PointESaIS3_EE
+  0.00      0.00     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN4MeshC2ERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
+  0.00      0.00     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN5BasisC2ERKSt6vectorISt10shared_ptrI4CellESaIS3_EE
+  0.00      0.00     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN6SolverC2ER5BasisR4MeshR8SolutionR7ProblemR7PhysicsR4Flux
+  0.00      0.00     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN7ProblemC2E8CaseInitRK4MeshRK11TimeControl
+  0.00      0.00     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZNK12BoundarySlip13applyBoundaryERSt6vectorI9numvectorIdLi15EESaIS2_EE
+  0.00      0.00     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZNK4Flux4c_avERK9numvectorIdLi5EES3_
+  0.00      0.00     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZNK6Writer13exportMeshVTKERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
+  0.00      0.00     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZNK7FluxLLF8evaluateERK9numvectorIdLi5EES3_RK5Point
+  0.00      0.00     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZmlRKSt6vectorI9numvectorIdLi15EESaIS1_EEd
+  0.00      0.00     0.00        1     0.00     0.00  _GLOBAL__sub_I_main
+  0.00      0.00     0.00        1     0.00     0.00  RungeKutta::setButcherTable()
+  0.00      0.00     0.00        1     0.00     0.00  RungeKutta::Tstep()
+  0.00      0.00     0.00        1     0.00     0.00  RungeKutta::RungeKutta(int, Basis&, Solver&, Solution&, std::vector<std::shared_ptr<Boundary>, std::allocator<std::shared_ptr<Boundary> > >&, Limiter&, TimeControl&)
+  0.00      0.00     0.00        1     0.00     0.00  RungeKutta::~RungeKutta()
+  0.00      0.00     0.00        1     0.00     0.00  TimeControl::updateTimeStep(double)
+  0.00      0.00     0.00        1     0.00     0.00  Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&)
+  0.00      0.00     0.00        1     0.00     0.00  Mesh::structurizeEdges()
+  0.00      0.00     0.00        1     0.00     0.00  Mesh::Mesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&)
+  0.00      0.00     0.00        1     0.00     0.00  Mesh::~Mesh()
+  0.00      0.00     0.00        1     0.00     0.00  Basis::initGramian()
+  0.00      0.00     0.00        1     0.00     0.00  Basis::initBasisFunctions()
+  0.00      0.00     0.00        1     0.00     0.00  Basis::Basis(std::vector<std::shared_ptr<Cell>, std::allocator<std::shared_ptr<Cell> > > const&)
+  0.00      0.00     0.00        1     0.00     0.00  Basis::~Basis()
+  0.00      0.00     0.00        1     0.00     0.00  Solver::setInitialConditions()
+  0.00      0.00     0.00        1     0.00     0.00  Solver::Solver(Basis&, Mesh&, Solution&, Problem&, Physics&, Flux&)
+  0.00      0.00     0.00        1     0.00     0.00  Physics::Physics()
+  0.00      0.00     0.00        1     0.00     0.00  Physics::~Physics()
+  0.00      0.00     0.00        1     0.00     0.00  Problem::setInitialConditions(CaseInit)
+  0.00      0.00     0.00        1     0.00     0.00  Problem::setBoundaryConditions()
+  0.00      0.00     0.00        1     0.00     0.00  Problem::Problem(CaseInit, Mesh const&, TimeControl const&)
+  0.00      0.00     0.00        1     0.00     0.00  Problem::~Problem()
+  0.00      0.00     0.00        1     0.00     0.00  Solution::Solution(Basis&)
+  0.00      0.00     0.00        1     0.00     0.00  Solution::~Solution()
+  0.00      0.00     0.00        1     0.00     0.00  Solver::correctPrevIter(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) const
+  0.00      0.00     0.00        1     0.00     0.00  Writer::exportMeshVTK(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
+  0.00      0.00     0.00        1     0.00     0.00  Writer::exportFrameVTK(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
+  0.00      0.00     0.00        1     0.00     0.00  Writer::exportFrameVTK(std::ostream&) const
+  0.00      0.00     0.00        1     0.00     0.00  Writer::exportNativeCoeffs(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
+  0.00      0.00     0.00        1     0.00     0.00  Writer::exportNativeCoeffs(std::ostream&) const
+  0.00      0.00     0.00        1     0.00     0.00  std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#2}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#2}> const&, std::_Manager_operation)
+  0.00      0.00     0.00        1     0.00     0.00  std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#3}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#3}> const&, std::_Manager_operation)
+  0.00      0.00     0.00        1     0.00     0.00  std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#4}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#4}> const&, std::_Manager_operation)
+  0.00      0.00     0.00        1     0.00     0.00  std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#5}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#5}> const&, std::_Manager_operation)
+  0.00      0.00     0.00        1     0.00     0.00  std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#6}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#6}> const&, std::_Manager_operation)
+  0.00      0.00     0.00        1     0.00     0.00  std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#1}> const&, std::_Manager_operation)
+  0.00      0.00     0.00        1     0.00     0.00  std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}> const&, std::_Manager_operation)
+  0.00      0.00     0.00        1     0.00     0.00  std::vector<Patch, std::allocator<Patch> >::reserve(unsigned long)
+  0.00      0.00     0.00        1     0.00     0.00  std::vector<Boundary, std::allocator<Boundary> >::~vector()
+  0.00      0.00     0.00        1     0.00     0.00  std::vector<std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > >, std::allocator<std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > > >::_M_default_append(unsigned long)
+  0.00      0.00     0.00        1     0.00     0.00  std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > >::_M_default_append(unsigned long)
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) no time propagated
+
+index % time    self  children    called     name
+                0.00    0.00       4/4           main [6]
+[1]      0.0    0.00    0.00       4         frame_dummy [1]
+-----------------------------------------------
+                0.00    0.00      80/2336        Solution::reconstruct(int, Point const&, Variables) const [49]
+                0.00    0.00     128/2336        std::_Function_handler<numvector<double, 5> ()(Point const&), Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&) [20]
+                0.00    0.00     384/2336        std::_Function_handler<double ()(Point const&), Basis::initGramian()::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&) [21]
+                0.00    0.00     464/2336        Solution::reconstruct(int, Point const&) const [15]
+                0.00    0.00    1280/2336        Solver::assembleRHS(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) [101]
+[8]      0.0    0.00    0.00    2336         std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#2}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [8]
+-----------------------------------------------
+                0.00    0.00      80/2336        Solution::reconstruct(int, Point const&, Variables) const [49]
+                0.00    0.00     128/2336        std::_Function_handler<numvector<double, 5> ()(Point const&), Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&) [20]
+                0.00    0.00     384/2336        std::_Function_handler<double ()(Point const&), Basis::initGramian()::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&) [21]
+                0.00    0.00     464/2336        Solution::reconstruct(int, Point const&) const [15]
+                0.00    0.00    1280/2336        Solver::assembleRHS(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) [101]
+[9]      0.0    0.00    0.00    2336         std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#3}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [9]
+-----------------------------------------------
+                0.00    0.00      80/1952        Solution::reconstruct(int, Point const&, Variables) const [49]
+                0.00    0.00     128/1952        std::_Function_handler<numvector<double, 5> ()(Point const&), Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&) [20]
+                0.00    0.00     464/1952        Solution::reconstruct(int, Point const&) const [15]
+                0.00    0.00    1280/1952        Solver::assembleRHS(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) [101]
+[10]     0.0    0.00    0.00    1952         std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#1}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [10]
+-----------------------------------------------
+                0.00    0.00    1536/1536        std::_Function_handler<numvector<double, 5> ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}>::_M_invoke(std::_Any_data const&, Point const&) [19]
+[11]     0.0    0.00    0.00    1536         std::_Function_handler<double ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&) [11]
+-----------------------------------------------
+                0.00    0.00     768/768         std::_Function_handler<numvector<double, 5> ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}>::_M_invoke(std::_Any_data const&, Point const&) [19]
+[12]     0.0    0.00    0.00     768         std::_Function_handler<double ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#3}>::_M_invoke(std::_Any_data const&, Point const&) [12]
+-----------------------------------------------
+                0.00    0.00     768/768         std::_Function_handler<numvector<double, 5> ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}>::_M_invoke(std::_Any_data const&, Point const&) [19]
+[13]     0.0    0.00    0.00     768         std::_Function_handler<double ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#4}>::_M_invoke(std::_Any_data const&, Point const&) [13]
+-----------------------------------------------
+                0.00    0.00     320/704         FluxLLF::evaluate(numvector<double, 5> const&, numvector<double, 5> const&, Point const&) const [30]
+                0.00    0.00     384/704         Solver::assembleRHS(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) [101]
+[14]     0.0    0.00    0.00     704         Physics::fluxF(numvector<double, 5> const&) const [14]
+-----------------------------------------------
+                0.00    0.00      16/464         Writer::exportFrameVTK(std::ostream&) const [151]
+                0.00    0.00     448/464         Solver::assembleRHS(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) [101]
+[15]     0.0    0.00    0.00     464         Solution::reconstruct(int, Point const&) const [15]
+                0.00    0.00     464/2336        std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#3}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [9]
+                0.00    0.00     464/2336        std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#2}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [8]
+                0.00    0.00     464/1952        std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#1}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [10]
+-----------------------------------------------
+                0.00    0.00     128/464         Cell::setJacobian() [59]
+                0.00    0.00     128/464         Cell::setGaussPoints() [61]
+                0.00    0.00     208/464         Edge::Edge(std::vector<std::shared_ptr<Point>, std::allocator<std::shared_ptr<Point> > > const&) [42]
+[16]     0.0    0.00    0.00     464         _ZNSt6vectorI5PointSaIS0_EE12emplace_backIJS0_EEEvDpOT_ [16]
+-----------------------------------------------
+                0.00    0.00      96/400         Cell::setJacobian() [59]
+                0.00    0.00      96/400         Cell::setGaussPoints() [61]
+                0.00    0.00     208/400         Edge::Edge(std::vector<std::shared_ptr<Point>, std::allocator<std::shared_ptr<Point> > > const&) [42]
+[17]     0.0    0.00    0.00     400         _ZNSt6vectorI5PointSaIS0_EE19_M_emplace_back_auxIJS0_EEEvDpOT_ [17]
+-----------------------------------------------
+                0.00    0.00     384/384         Solver::assembleRHS(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) [101]
+[18]     0.0    0.00    0.00     384         Physics::fluxG(numvector<double, 5> const&) const [18]
+-----------------------------------------------
+                0.00    0.00     384/384         std::_Function_handler<numvector<double, 5> ()(Point const&), Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&) [20]
+[19]     0.0    0.00    0.00     384         std::_Function_handler<numvector<double, 5> ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}>::_M_invoke(std::_Any_data const&, Point const&) [19]
+                0.00    0.00    1536/1536        std::_Function_handler<double ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&) [11]
+                0.00    0.00     768/768         std::_Function_handler<double ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#3}>::_M_invoke(std::_Any_data const&, Point const&) [12]
+                0.00    0.00     768/768         std::_Function_handler<double ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#4}>::_M_invoke(std::_Any_data const&, Point const&) [13]
+                0.00    0.00     384/384         std::_Function_handler<double ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#2}>::_M_invoke(std::_Any_data const&, Point const&) [22]
+-----------------------------------------------
+                0.00    0.00     384/384         integrate(Cell const&, std::function<numvector<double, 5> ()(Point const&)> const&) [44]
+[20]     0.0    0.00    0.00     384         std::_Function_handler<numvector<double, 5> ()(Point const&), Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&) [20]
+                0.00    0.00     384/384         std::_Function_handler<numvector<double, 5> ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}>::_M_invoke(std::_Any_data const&, Point const&) [19]
+                0.00    0.00     128/2336        std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#3}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [9]
+                0.00    0.00     128/2336        std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#2}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [8]
+                0.00    0.00     128/1952        std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#1}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [10]
+-----------------------------------------------
+                0.00    0.00     384/384         integrate(Cell const&, std::function<double ()(Point const&)> const&) [27]
+[21]     0.0    0.00    0.00     384         std::_Function_handler<double ()(Point const&), Basis::initGramian()::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&) [21]
+                0.00    0.00     384/2336        std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#3}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [9]
+                0.00    0.00     384/2336        std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#2}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [8]
+-----------------------------------------------
+                0.00    0.00     384/384         std::_Function_handler<numvector<double, 5> ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}>::_M_invoke(std::_Any_data const&, Point const&) [19]
+[22]     0.0    0.00    0.00     384         std::_Function_handler<double ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#2}>::_M_invoke(std::_Any_data const&, Point const&) [22]
+-----------------------------------------------
+                0.00    0.00      16/336         Writer::exportFrameVTK(std::ostream&) const [151]
+                0.00    0.00     320/336         Flux::lambdaF_Roe(numvector<double, 5> const&, numvector<double, 5> const&) const [28]
+[23]     0.0    0.00    0.00     336         Physics::getPressure(numvector<double, 5> const&) const [23]
+-----------------------------------------------
+                0.00    0.00     320/320         FluxLLF::evaluate(numvector<double, 5> const&, numvector<double, 5> const&, Point const&) const [30]
+[24]     0.0    0.00    0.00     320         rotate(numvector<double, 5> const&, Point const&) [24]
+-----------------------------------------------
+                0.00    0.00     288/288         Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+[25]     0.0    0.00    0.00     288         localNumber(std::vector<int, std::allocator<int> >&, int) [25]
+-----------------------------------------------
+                0.00    0.00     160/160         FluxLLF::evaluate(numvector<double, 5> const&, numvector<double, 5> const&, Point const&) const [30]
+[26]     0.0    0.00    0.00     160         inverseRotate(numvector<double, 5> const&, Point const&) [26]
+-----------------------------------------------
+                0.00    0.00      64/160         Cell::setCellCenter() [60]
+                0.00    0.00      96/160         Basis::initGramian() [134]
+[27]     0.0    0.00    0.00     160         integrate(Cell const&, std::function<double ()(Point const&)> const&) [27]
+                0.00    0.00     384/384         std::_Function_handler<double ()(Point const&), Basis::initGramian()::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&) [21]
+                0.00    0.00     128/128         std::_Function_handler<double ()(Point const&), Cell::setCellCenter()::{lambda(Point const&)#2}>::_M_invoke(std::_Any_data const&, Point const&) [37]
+                0.00    0.00     128/128         std::_Function_handler<double ()(Point const&), Cell::setCellCenter()::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&) [38]
+-----------------------------------------------
+                0.00    0.00     160/160         Flux::lambdaF(numvector<double, 5> const&, numvector<double, 5> const&) const [29]
+[28]     0.0    0.00    0.00     160         Flux::lambdaF_Roe(numvector<double, 5> const&, numvector<double, 5> const&) const [28]
+                0.00    0.00     320/336         Physics::getPressure(numvector<double, 5> const&) const [23]
+-----------------------------------------------
+                0.00    0.00     160/160         FluxLLF::evaluate(numvector<double, 5> const&, numvector<double, 5> const&, Point const&) const [30]
+[29]     0.0    0.00    0.00     160         Flux::lambdaF(numvector<double, 5> const&, numvector<double, 5> const&) const [29]
+                0.00    0.00     160/160         Flux::lambdaF_Roe(numvector<double, 5> const&, numvector<double, 5> const&) const [28]
+-----------------------------------------------
+                0.00    0.00     160/160         Solver::assembleRHS(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) [101]
+[30]     0.0    0.00    0.00     160         FluxLLF::evaluate(numvector<double, 5> const&, numvector<double, 5> const&, Point const&) const [30]
+                0.00    0.00     320/320         rotate(numvector<double, 5> const&, Point const&) [24]
+                0.00    0.00     320/704         Physics::fluxF(numvector<double, 5> const&) const [14]
+                0.00    0.00     160/160         Flux::lambdaF(numvector<double, 5> const&, numvector<double, 5> const&) const [29]
+                0.00    0.00     160/160         inverseRotate(numvector<double, 5> const&, Point const&) [26]
+-----------------------------------------------
+                0.00    0.00      32/160         Cell::setGaussPoints() [61]
+                0.00    0.00     128/160         Cell::localToGlobal(Point const&) const [32]
+[31]     0.0    0.00    0.00     160         void std::vector<double, std::allocator<double> >::_M_assign_aux<double const*>(double const*, double const*, std::forward_iterator_tag) [31]
+-----------------------------------------------
+                0.00    0.00     128/128         Cell::setGaussPoints() [61]
+[32]     0.0    0.00    0.00     128         Cell::localToGlobal(Point const&) const [32]
+                0.00    0.00     128/160         void std::vector<double, std::allocator<double> >::_M_assign_aux<double const*>(double const*, double const*, std::forward_iterator_tag) [31]
+-----------------------------------------------
+                0.00    0.00     128/128         Solver::assembleRHS(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) [101]
+[33]     0.0    0.00    0.00     128         std::_Function_handler<Point ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#4}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [33]
+-----------------------------------------------
+                0.00    0.00     128/128         Solver::assembleRHS(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) [101]
+[34]     0.0    0.00    0.00     128         std::_Function_handler<Point ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#5}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [34]
+-----------------------------------------------
+                0.00    0.00     128/128         Solver::assembleRHS(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) [101]
+[35]     0.0    0.00    0.00     128         std::_Function_handler<Point ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#6}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [35]
+-----------------------------------------------
+                0.00    0.00     128/128         Cell::setJacobian() [59]
+[36]     0.0    0.00    0.00     128         std::_Function_handler<double ()(Point const&), Cell::setJacobian()::{lambda(Point const&)#2}>::_M_invoke(std::_Any_data const&, Point const&) [36]
+-----------------------------------------------
+                0.00    0.00     128/128         integrate(Cell const&, std::function<double ()(Point const&)> const&) [27]
+[37]     0.0    0.00    0.00     128         std::_Function_handler<double ()(Point const&), Cell::setCellCenter()::{lambda(Point const&)#2}>::_M_invoke(std::_Any_data const&, Point const&) [37]
+-----------------------------------------------
+                0.00    0.00     128/128         integrate(Cell const&, std::function<double ()(Point const&)> const&) [27]
+[38]     0.0    0.00    0.00     128         std::_Function_handler<double ()(Point const&), Cell::setCellCenter()::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&) [38]
+-----------------------------------------------
+                0.00    0.00      16/128         Mesh::makeGhostCell(std::shared_ptr<Edge> const&) [71]
+                0.00    0.00      48/128         Mesh::findNeighbourCells(std::shared_ptr<Cell> const&) [72]
+                0.00    0.00      64/128         Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+[39]     0.0    0.00    0.00     128         _ZNSt6vectorISt10shared_ptrI4CellESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_ [39]
+-----------------------------------------------
+                0.00    0.00      48/128         Mesh::makeGhostCell(std::shared_ptr<Edge> const&) [71]
+                0.00    0.00      80/128         Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+[40]     0.0    0.00    0.00     128         _ZNSt6vectorISt10shared_ptrI5PointESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_ [40]
+-----------------------------------------------
+                0.00    0.00     112/112         Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+[41]     0.0    0.00    0.00     112         std::vector<std::shared_ptr<Point>, std::allocator<std::shared_ptr<Point> > >::~vector() [41]
+-----------------------------------------------
+                0.00    0.00      40/104         Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+                0.00    0.00      64/104         Mesh::makeGhostCell(std::shared_ptr<Edge> const&) [71]
+[42]     0.0    0.00    0.00     104         Edge::Edge(std::vector<std::shared_ptr<Point>, std::allocator<std::shared_ptr<Point> > > const&) [42]
+                0.00    0.00     208/400         _ZNSt6vectorI5PointSaIS0_EE19_M_emplace_back_auxIJS0_EEEvDpOT_ [17]
+                0.00    0.00     208/464         _ZNSt6vectorI5PointSaIS0_EE12emplace_backIJS0_EEEvDpOT_ [16]
+-----------------------------------------------
+                0.00    0.00      40/104         Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+                0.00    0.00      64/104         Mesh::makeGhostCell(std::shared_ptr<Edge> const&) [71]
+[43]     0.0    0.00    0.00     104         std::_Sp_counted_ptr_inplace<Edge, std::allocator<Edge>, (__gnu_cxx::_Lock_policy)2>::_M_get_deleter(std::type_info const&) [43]
+-----------------------------------------------
+                0.00    0.00      96/96          Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const [64]
+[44]     0.0    0.00    0.00      96         integrate(Cell const&, std::function<numvector<double, 5> ()(Point const&)> const&) [44]
+                0.00    0.00     384/384         std::_Function_handler<numvector<double, 5> ()(Point const&), Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&) [20]
+-----------------------------------------------
+                0.00    0.00      96/96          Basis::initGramian() [134]
+[45]     0.0    0.00    0.00      96         std::_Function_base::_Base_manager<Basis::initGramian()::{lambda(Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initGramian()::{lambda(Point const&)#1}> const&, std::_Manager_operation) [45]
+-----------------------------------------------
+                0.00    0.00      96/96          Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const [64]
+[46]     0.0    0.00    0.00      96         std::_Function_base::_Base_manager<Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const::{lambda(Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const::{lambda(Point const&)#1}> const&, std::_Manager_operation) [46]
+-----------------------------------------------
+                0.00    0.00      96/96          Basis::initGramian() [134]
+[47]     0.0    0.00    0.00      96         _ZNSt6vectorIdSaIdEE19_M_emplace_back_auxIJdEEEvDpOT_ [47]
+-----------------------------------------------
+                0.00    0.00      81/81          Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+[48]     0.0    0.00    0.00      81         _ZNSt6vectorIiSaIiEE12emplace_backIJiEEEvDpOT_ [48]
+-----------------------------------------------
+                0.00    0.00      80/80          Writer::exportFrameVTK(std::ostream&) const [151]
+[49]     0.0    0.00    0.00      80         Solution::reconstruct(int, Point const&, Variables) const [49]
+                0.00    0.00      80/2336        std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#3}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [9]
+                0.00    0.00      80/2336        std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#2}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [8]
+                0.00    0.00      80/1952        std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#1}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [10]
+-----------------------------------------------
+                0.00    0.00      80/80          Solver::assembleRHS(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) [101]
+[50]     0.0    0.00    0.00      80         std::vector<numvector<double, 5>, std::allocator<numvector<double, 5> > >::operator=(std::vector<numvector<double, 5>, std::allocator<numvector<double, 5> > > const&) [50]
+-----------------------------------------------
+                0.00    0.00      64/64          Mesh::makeGhostCell(std::shared_ptr<Edge> const&) [71]
+[51]     0.0    0.00    0.00      64         Edge::isEqual(Edge const&) const [51]
+-----------------------------------------------
+                0.00    0.00      32/64          Solver::correctNonOrtho(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) const [102]
+                0.00    0.00      32/64          Solver::setInitialConditions() [138]
+[52]     0.0    0.00    0.00      64         Solver::correctNonOrthoCell(numvector<double, 15> const&, std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > > const&) const [52]
+-----------------------------------------------
+                0.00    0.00      25/57          Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+                0.00    0.00      32/57          Mesh::makeGhostCell(std::shared_ptr<Edge> const&) [71]
+[53]     0.0    0.00    0.00      57         std::_Sp_counted_ptr_inplace<Point, std::allocator<Point>, (__gnu_cxx::_Lock_policy)2>::_M_get_deleter(std::type_info const&) [53]
+-----------------------------------------------
+                0.00    0.00      25/57          Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+                0.00    0.00      32/57          Mesh::makeGhostCell(std::shared_ptr<Edge> const&) [71]
+[54]     0.0    0.00    0.00      57         _ZNSt6vectorISt10shared_ptrI5PointESaIS2_EE12emplace_backIJS2_EEEvDpOT_ [54]
+-----------------------------------------------
+                0.00    0.00      50/50          Mesh::makeGhostCell(std::shared_ptr<Edge> const&) [71]
+[55]     0.0    0.00    0.00      50         _ZNSt6vectorISt10shared_ptrI4EdgeESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_ [55]
+-----------------------------------------------
+                0.00    0.00      16/48          Mesh::makeGhostCell(std::shared_ptr<Edge> const&) [71]
+                0.00    0.00      16/48          Mesh::createPhysicalPatch(std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [81]
+                0.00    0.00      16/48          Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+[56]     0.0    0.00    0.00      48         _ZNSt6vectorISt10shared_ptrI4CellESaIS2_EE12emplace_backIJS2_EEEvDpOT_ [56]
+-----------------------------------------------
+                0.00    0.00      32/32          Mesh::makeGhostCell(std::shared_ptr<Edge> const&) [71]
+[57]     0.0    0.00    0.00      32         inverseRotate(Point const&, Point const&) [57]
+-----------------------------------------------
+                0.00    0.00      32/32          Mesh::makeGhostCell(std::shared_ptr<Edge> const&) [71]
+[58]     0.0    0.00    0.00      32         rotate(Point const&, Point const&) [58]
+-----------------------------------------------
+                0.00    0.00      32/32          Mesh::Mesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [132]
+[59]     0.0    0.00    0.00      32         Cell::setJacobian() [59]
+                0.00    0.00     128/464         _ZNSt6vectorI5PointSaIS0_EE12emplace_backIJS0_EEEvDpOT_ [16]
+                0.00    0.00     128/128         std::_Function_handler<double ()(Point const&), Cell::setJacobian()::{lambda(Point const&)#2}>::_M_invoke(std::_Any_data const&, Point const&) [36]
+                0.00    0.00      96/400         _ZNSt6vectorI5PointSaIS0_EE19_M_emplace_back_auxIJS0_EEEvDpOT_ [17]
+                0.00    0.00      32/32          std::_Function_base::_Base_manager<Cell::setJacobian()::{lambda(Point const&)#2}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Cell::setJacobian()::{lambda(Point const&)#2}> const&, std::_Manager_operation) [65]
+-----------------------------------------------
+                0.00    0.00      32/32          Mesh::Mesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [132]
+[60]     0.0    0.00    0.00      32         Cell::setCellCenter() [60]
+                0.00    0.00      64/160         integrate(Cell const&, std::function<double ()(Point const&)> const&) [27]
+                0.00    0.00      32/32          std::_Function_base::_Base_manager<Cell::setCellCenter()::{lambda(Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Cell::setCellCenter()::{lambda(Point const&)#1}> const&, std::_Manager_operation) [67]
+                0.00    0.00      32/32          std::_Function_base::_Base_manager<Cell::setCellCenter()::{lambda(Point const&)#2}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Cell::setCellCenter()::{lambda(Point const&)#2}> const&, std::_Manager_operation) [66]
+-----------------------------------------------
+                0.00    0.00      32/32          Mesh::Mesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [132]
+[61]     0.0    0.00    0.00      32         Cell::setGaussPoints() [61]
+                0.00    0.00     128/128         Cell::localToGlobal(Point const&) const [32]
+                0.00    0.00     128/464         _ZNSt6vectorI5PointSaIS0_EE12emplace_backIJS0_EEEvDpOT_ [16]
+                0.00    0.00      96/400         _ZNSt6vectorI5PointSaIS0_EE19_M_emplace_back_auxIJS0_EEEvDpOT_ [17]
+                0.00    0.00      32/160         void std::vector<double, std::allocator<double> >::_M_assign_aux<double const*>(double const*, double const*, std::forward_iterator_tag) [31]
+-----------------------------------------------
+                0.00    0.00      32/32          Mesh::Mesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [132]
+[62]     0.0    0.00    0.00      32         Cell::setArea() [62]
+-----------------------------------------------
+                0.00    0.00      16/32          Mesh::makeGhostCell(std::shared_ptr<Edge> const&) [71]
+                0.00    0.00      16/32          Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+[63]     0.0    0.00    0.00      32         Cell::Cell(std::vector<std::shared_ptr<Point>, std::allocator<std::shared_ptr<Point> > > const&, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > const&) [63]
+-----------------------------------------------
+                0.00    0.00      32/32          Solver::setInitialConditions() [138]
+[64]     0.0    0.00    0.00      32         Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const [64]
+                0.00    0.00      96/96          integrate(Cell const&, std::function<numvector<double, 5> ()(Point const&)> const&) [44]
+                0.00    0.00      96/96          std::_Function_base::_Base_manager<Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const::{lambda(Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const::{lambda(Point const&)#1}> const&, std::_Manager_operation) [46]
+-----------------------------------------------
+                0.00    0.00      32/32          Cell::setJacobian() [59]
+[65]     0.0    0.00    0.00      32         std::_Function_base::_Base_manager<Cell::setJacobian()::{lambda(Point const&)#2}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Cell::setJacobian()::{lambda(Point const&)#2}> const&, std::_Manager_operation) [65]
+-----------------------------------------------
+                0.00    0.00      32/32          Cell::setCellCenter() [60]
+[66]     0.0    0.00    0.00      32         std::_Function_base::_Base_manager<Cell::setCellCenter()::{lambda(Point const&)#2}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Cell::setCellCenter()::{lambda(Point const&)#2}> const&, std::_Manager_operation) [66]
+-----------------------------------------------
+                0.00    0.00      32/32          Cell::setCellCenter() [60]
+[67]     0.0    0.00    0.00      32         std::_Function_base::_Base_manager<Cell::setCellCenter()::{lambda(Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Cell::setCellCenter()::{lambda(Point const&)#1}> const&, std::_Manager_operation) [67]
+-----------------------------------------------
+                0.00    0.00      16/32          Mesh::makeGhostCell(std::shared_ptr<Edge> const&) [71]
+                0.00    0.00      16/32          Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+[68]     0.0    0.00    0.00      32         std::_Sp_counted_ptr_inplace<Cell, std::allocator<Cell>, (__gnu_cxx::_Lock_policy)2>::_M_get_deleter(std::type_info const&) [68]
+-----------------------------------------------
+                0.00    0.00      21/21          Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+[69]     0.0    0.00    0.00      21         std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > >::reserve(unsigned long) [69]
+-----------------------------------------------
+                0.00    0.00      17/17          Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+[70]     0.0    0.00    0.00      17         std::vector<std::shared_ptr<Point>, std::allocator<std::shared_ptr<Point> > >::reserve(unsigned long) [70]
+-----------------------------------------------
+                0.00    0.00      16/16          Mesh::createPhysicalPatch(std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [81]
+[71]     0.0    0.00    0.00      16         Mesh::makeGhostCell(std::shared_ptr<Edge> const&) [71]
+                0.00    0.00      64/104         Edge::Edge(std::vector<std::shared_ptr<Point>, std::allocator<std::shared_ptr<Point> > > const&) [42]
+                0.00    0.00      64/104         std::_Sp_counted_ptr_inplace<Edge, std::allocator<Edge>, (__gnu_cxx::_Lock_policy)2>::_M_get_deleter(std::type_info const&) [43]
+                0.00    0.00      64/64          Edge::isEqual(Edge const&) const [51]
+                0.00    0.00      50/50          _ZNSt6vectorISt10shared_ptrI4EdgeESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_ [55]
+                0.00    0.00      48/128         _ZNSt6vectorISt10shared_ptrI5PointESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_ [40]
+                0.00    0.00      32/32          rotate(Point const&, Point const&) [58]
+                0.00    0.00      32/32          inverseRotate(Point const&, Point const&) [57]
+                0.00    0.00      32/57          std::_Sp_counted_ptr_inplace<Point, std::allocator<Point>, (__gnu_cxx::_Lock_policy)2>::_M_get_deleter(std::type_info const&) [53]
+                0.00    0.00      32/57          _ZNSt6vectorISt10shared_ptrI5PointESaIS2_EE12emplace_backIJS2_EEEvDpOT_ [54]
+                0.00    0.00      16/32          Cell::Cell(std::vector<std::shared_ptr<Point>, std::allocator<std::shared_ptr<Point> > > const&, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > const&) [63]
+                0.00    0.00      16/32          std::_Sp_counted_ptr_inplace<Cell, std::allocator<Cell>, (__gnu_cxx::_Lock_policy)2>::_M_get_deleter(std::type_info const&) [68]
+                0.00    0.00      16/48          _ZNSt6vectorISt10shared_ptrI4CellESaIS2_EE12emplace_backIJS2_EEEvDpOT_ [56]
+                0.00    0.00      16/16          std::_Sp_counted_ptr_inplace<Edge, std::allocator<Edge>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [74]
+                0.00    0.00      16/16          std::_Sp_counted_ptr_inplace<Edge, std::allocator<Edge>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [75]
+                0.00    0.00      16/128         _ZNSt6vectorISt10shared_ptrI4CellESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_ [39]
+                0.00    0.00       2/2           _ZNSt6vectorISt10shared_ptrI5PointESaIS2_EE19_M_emplace_back_auxIJS2_EEEvDpOT_ [107]
+                0.00    0.00       1/13          _ZNSt6vectorISt10shared_ptrI4CellESaIS2_EE19_M_emplace_back_auxIJS2_EEEvDpOT_ [77]
+-----------------------------------------------
+                0.00    0.00      16/16          Mesh::Mesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [132]
+[72]     0.0    0.00    0.00      16         Mesh::findNeighbourCells(std::shared_ptr<Cell> const&) [72]
+                0.00    0.00      48/128         _ZNSt6vectorISt10shared_ptrI4CellESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_ [39]
+-----------------------------------------------
+                0.00    0.00      16/16          Solver::correctPrevIter(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) const [148]
+[73]     0.0    0.00    0.00      16         Solver::correctPrevIterCell(numvector<double, 15> const&, std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > > const&) const [73]
+-----------------------------------------------
+                0.00    0.00      16/16          Mesh::makeGhostCell(std::shared_ptr<Edge> const&) [71]
+[74]     0.0    0.00    0.00      16         std::_Sp_counted_ptr_inplace<Edge, std::allocator<Edge>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [74]
+-----------------------------------------------
+                0.00    0.00      16/16          Mesh::makeGhostCell(std::shared_ptr<Edge> const&) [71]
+[75]     0.0    0.00    0.00      16         std::_Sp_counted_ptr_inplace<Edge, std::allocator<Edge>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [75]
+-----------------------------------------------
+                0.00    0.00       1/13          __do_global_ctors_aux [461]
+                0.00    0.00       4/13          _ZNSt6vectorI5PatchSaIS0_EE12emplace_backIJS0_EEEvDpOT_ [85]
+                0.00    0.00       8/13          Mesh::createPhysicalPatch(std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [81]
+[76]     0.0    0.00    0.00      13         _GLOBAL__sub_I__ZN8SolutionC2ER5Basis [76]
+-----------------------------------------------
+                0.00    0.00       1/13          Mesh::makeGhostCell(std::shared_ptr<Edge> const&) [71]
+                0.00    0.00      12/13          Mesh::createPhysicalPatch(std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [81]
+[77]     0.0    0.00    0.00      13         _ZNSt6vectorISt10shared_ptrI4CellESaIS2_EE19_M_emplace_back_auxIJS2_EEEvDpOT_ [77]
+-----------------------------------------------
+                0.00    0.00      13/13          Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+[78]     0.0    0.00    0.00      13         _ZNSt6vectorIiSaIiEE19_M_emplace_back_auxIJiEEEvDpOT_ [78]
+-----------------------------------------------
+                0.00    0.00       6/6           Basis::initBasisFunctions() [135]
+[79]     0.0    0.00    0.00       6         _ZNSt6vectorI9numvectorIdLi3EESaIS1_EE19_M_emplace_back_auxIJRKS1_EEEvDpOT_ [79]
+-----------------------------------------------
+                0.00    0.00       6/6           RungeKutta::Tstep() [126]
+[80]     0.0    0.00    0.00       6         operator*(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&, double) [80]
+-----------------------------------------------
+                0.00    0.00       4/4           Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+[81]     0.0    0.00    0.00       4         Mesh::createPhysicalPatch(std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [81]
+                0.00    0.00      16/16          Mesh::makeGhostCell(std::shared_ptr<Edge> const&) [71]
+                0.00    0.00      16/48          _ZNSt6vectorISt10shared_ptrI4CellESaIS2_EE12emplace_backIJS2_EEEvDpOT_ [56]
+                0.00    0.00      12/13          _ZNSt6vectorISt10shared_ptrI4CellESaIS2_EE19_M_emplace_back_auxIJS2_EEEvDpOT_ [77]
+                0.00    0.00       8/13          _GLOBAL__sub_I__ZN8SolutionC2ER5Basis [76]
+                0.00    0.00       4/4           _ZNSt6vectorI5PatchSaIS0_EE12emplace_backIJS0_EEEvDpOT_ [85]
+                0.00    0.00       4/4           std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > >::operator=(std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > const&) [89]
+-----------------------------------------------
+                0.00    0.00       4/4           main [6]
+[82]     0.0    0.00    0.00       4         BoundarySlip::applyBoundary(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > >&) const [82]
+-----------------------------------------------
+                0.00    0.00       4/4           Problem::~Problem() [145]
+[83]     0.0    0.00    0.00       4         std::_Sp_counted_ptr_inplace<BoundarySlip, std::allocator<BoundarySlip>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [83]
+-----------------------------------------------
+                0.00    0.00       4/4           Problem::~Problem() [145]
+[84]     0.0    0.00    0.00       4         std::_Sp_counted_ptr_inplace<BoundarySlip, std::allocator<BoundarySlip>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [84]
+-----------------------------------------------
+                0.00    0.00       4/4           Mesh::createPhysicalPatch(std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [81]
+[85]     0.0    0.00    0.00       4         _ZNSt6vectorI5PatchSaIS0_EE12emplace_backIJS0_EEEvDpOT_ [85]
+                0.00    0.00       4/13          _GLOBAL__sub_I__ZN8SolutionC2ER5Basis [76]
+-----------------------------------------------
+                0.00    0.00       1/4           main [6]
+                0.00    0.00       3/4           RungeKutta::Tstep() [126]
+[86]     0.0    0.00    0.00       4         std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > >::operator=(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) [86]
+-----------------------------------------------
+                0.00    0.00       4/4           Mesh::structurizeEdges() [131]
+[87]     0.0    0.00    0.00       4         void std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > >::_M_range_insert<__gnu_cxx::__normal_iterator<std::shared_ptr<Edge> const*, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > > >(__gnu_cxx::__normal_iterator<std::shared_ptr<Edge>*, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<Edge> const*, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<Edge> const*, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > >, std::forward_iterator_tag) [87]
+-----------------------------------------------
+                0.00    0.00       4/4           Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+[88]     0.0    0.00    0.00       4         std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > >::~vector() [88]
+-----------------------------------------------
+                0.00    0.00       4/4           Mesh::createPhysicalPatch(std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [81]
+[89]     0.0    0.00    0.00       4         std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > >::operator=(std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > const&) [89]
+-----------------------------------------------
+                0.00    0.00       4/4           Problem::setInitialConditions(CaseInit) [142]
+[90]     0.0    0.00    0.00       4         std::function<double ()(Point const&)>::function(std::function<double ()(Point const&)> const&) [90]
+                0.00    0.00       1/3           std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#2}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#2}> const&, std::_Manager_operation) [91]
+                0.00    0.00       1/3           std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#4}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#4}> const&, std::_Manager_operation) [93]
+                0.00    0.00       1/3           std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#3}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#3}> const&, std::_Manager_operation) [92]
+                0.00    0.00       1/3           std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#1}> const&, std::_Manager_operation) [94]
+-----------------------------------------------
+                0.00    0.00       1/3           std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}> const&, std::_Manager_operation) [160]
+                0.00    0.00       1/3           Problem::setInitialConditions(CaseInit) [142]
+                0.00    0.00       1/3           std::function<double ()(Point const&)>::function(std::function<double ()(Point const&)> const&) [90]
+[91]     0.0    0.00    0.00       3         std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#2}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#2}> const&, std::_Manager_operation) [91]
+-----------------------------------------------
+                0.00    0.00       1/3           std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}> const&, std::_Manager_operation) [160]
+                0.00    0.00       1/3           Problem::setInitialConditions(CaseInit) [142]
+                0.00    0.00       1/3           std::function<double ()(Point const&)>::function(std::function<double ()(Point const&)> const&) [90]
+[92]     0.0    0.00    0.00       3         std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#3}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#3}> const&, std::_Manager_operation) [92]
+-----------------------------------------------
+                0.00    0.00       1/3           std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}> const&, std::_Manager_operation) [160]
+                0.00    0.00       1/3           Problem::setInitialConditions(CaseInit) [142]
+                0.00    0.00       1/3           std::function<double ()(Point const&)>::function(std::function<double ()(Point const&)> const&) [90]
+[93]     0.0    0.00    0.00       3         std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#4}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#4}> const&, std::_Manager_operation) [93]
+-----------------------------------------------
+                0.00    0.00       1/3           std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}> const&, std::_Manager_operation) [160]
+                0.00    0.00       1/3           Problem::setInitialConditions(CaseInit) [142]
+                0.00    0.00       1/3           std::function<double ()(Point const&)>::function(std::function<double ()(Point const&)> const&) [90]
+[94]     0.0    0.00    0.00       3         std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#1}> const&, std::_Manager_operation) [94]
+-----------------------------------------------
+                0.00    0.00       3/3           Problem::setBoundaryConditions() [143]
+[95]     0.0    0.00    0.00       3         _ZNSt6vectorISt10shared_ptrI8BoundaryESaIS2_EE19_M_emplace_back_auxIJS0_I12BoundarySlipEEEEvDpOT_ [95]
+-----------------------------------------------
+                0.00    0.00       3/3           RungeKutta::RungeKutta(int, Basis&, Solver&, Solution&, std::vector<std::shared_ptr<Boundary>, std::allocator<std::shared_ptr<Boundary> > >&, Limiter&, TimeControl&) [127]
+[96]     0.0    0.00    0.00       3         std::vector<double, std::allocator<double> >::_M_default_append(unsigned long) [96]
+-----------------------------------------------
+                0.00    0.00       3/3           RungeKutta::Tstep() [126]
+[97]     0.0    0.00    0.00       3         operator+(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&, std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) [97]
+-----------------------------------------------
+                0.00    0.00       2/2           __do_global_ctors_aux [461]
+[98]     0.0    0.00    0.00       2         _GLOBAL__sub_I__ZN7PhysicsC2Ev [98]
+-----------------------------------------------
+                0.00    0.00       2/2           RungeKutta::Tstep() [126]
+[99]     0.0    0.00    0.00       2         TimeStepper::DataExchange() [99]
+-----------------------------------------------
+                0.00    0.00       2/2           RungeKutta::Tstep() [126]
+[100]    0.0    0.00    0.00       2         LimiterFinDiff::limit(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > >&) [100]
+-----------------------------------------------
+                0.00    0.00       2/2           RungeKutta::Tstep() [126]
+[101]    0.0    0.00    0.00       2         Solver::assembleRHS(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) [101]
+                0.00    0.00    1280/2336        std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#3}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [9]
+                0.00    0.00    1280/2336        std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#2}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [8]
+                0.00    0.00    1280/1952        std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#1}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [10]
+                0.00    0.00     448/464         Solution::reconstruct(int, Point const&) const [15]
+                0.00    0.00     384/384         Physics::fluxG(numvector<double, 5> const&) const [18]
+                0.00    0.00     384/704         Physics::fluxF(numvector<double, 5> const&) const [14]
+                0.00    0.00     160/160         FluxLLF::evaluate(numvector<double, 5> const&, numvector<double, 5> const&, Point const&) const [30]
+                0.00    0.00     128/128         std::_Function_handler<Point ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#6}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [35]
+                0.00    0.00     128/128         std::_Function_handler<Point ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#5}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [34]
+                0.00    0.00     128/128         std::_Function_handler<Point ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#4}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [33]
+                0.00    0.00      80/80          std::vector<numvector<double, 5>, std::allocator<numvector<double, 5> > >::operator=(std::vector<numvector<double, 5>, std::allocator<numvector<double, 5> > > const&) [50]
+                0.00    0.00       2/2           std::vector<std::vector<numvector<double, 5>, std::allocator<numvector<double, 5> > >, std::allocator<std::vector<numvector<double, 5>, std::allocator<numvector<double, 5> > > > >::~vector() [105]
+-----------------------------------------------
+                0.00    0.00       2/2           RungeKutta::Tstep() [126]
+[102]    0.0    0.00    0.00       2         Solver::correctNonOrtho(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) const [102]
+                0.00    0.00      32/64          Solver::correctNonOrthoCell(numvector<double, 15> const&, std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > > const&) const [52]
+-----------------------------------------------
+                0.00    0.00       1/2           Writer::exportMeshVTK(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const [149]
+                0.00    0.00       1/2           Writer::exportFrameVTK(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const [150]
+[103]    0.0    0.00    0.00       2         Writer::exportMeshVTK(std::ostream&) const [103]
+-----------------------------------------------
+                0.00    0.00       2/2           Solver::setInitialConditions() [138]
+[104]    0.0    0.00    0.00       2         std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > >::_M_default_append(unsigned long) [104]
+-----------------------------------------------
+                0.00    0.00       2/2           Solver::assembleRHS(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) [101]
+[105]    0.0    0.00    0.00       2         std::vector<std::vector<numvector<double, 5>, std::allocator<numvector<double, 5> > >, std::allocator<std::vector<numvector<double, 5>, std::allocator<numvector<double, 5> > > > >::~vector() [105]
+-----------------------------------------------
+                0.00    0.00       2/2           Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+[106]    0.0    0.00    0.00       2         std::vector<std::shared_ptr<Cell>, std::allocator<std::shared_ptr<Cell> > >::reserve(unsigned long) [106]
+-----------------------------------------------
+                0.00    0.00       2/2           Mesh::makeGhostCell(std::shared_ptr<Edge> const&) [71]
+[107]    0.0    0.00    0.00       2         _ZNSt6vectorISt10shared_ptrI5PointESaIS2_EE19_M_emplace_back_auxIJS2_EEEvDpOT_ [107]
+-----------------------------------------------
+                0.00    0.00       2/2           Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+[108]    0.0    0.00    0.00       2         std::vector<int, std::allocator<int> >::reserve(unsigned long) [108]
+-----------------------------------------------
+                0.00    0.00       1/1           __do_global_ctors_aux [461]
+[109]    0.0    0.00    0.00       1         _GLOBAL__sub_I__Z13inverseRotateRK9numvectorIdLi5EERK5Point [109]
+-----------------------------------------------
+                0.00    0.00       1/1           __do_global_ctors_aux [461]
+[110]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN10RungeKuttaC2EiR5BasisR6SolverR8SolutionRSt6vectorISt10shared_ptrI8BoundaryESaIS9_EER7LimiterR11TimeControl [110]
+-----------------------------------------------
+                0.00    0.00       1/1           __do_global_ctors_aux [461]
+[111]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN11TimeControl14updateTimeStepEd [111]
+-----------------------------------------------
+                0.00    0.00       1/1           __do_global_ctors_aux [461]
+[112]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN11TimeStepper12DataExchangeEv [112]
+-----------------------------------------------
+                0.00    0.00       1/1           __do_global_ctors_aux [461]
+[113]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN4CellC2ERKSt6vectorISt10shared_ptrI5PointESaIS3_EERKS0_IS1_I4EdgeESaIS9_EE [113]
+-----------------------------------------------
+                0.00    0.00       1/1           __do_global_ctors_aux [461]
+[114]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN4EdgeC2ERKSt6vectorISt10shared_ptrI5PointESaIS3_EE [114]
+-----------------------------------------------
+                0.00    0.00       1/1           __do_global_ctors_aux [461]
+[115]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN4MeshC2ERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE [115]
+-----------------------------------------------
+                0.00    0.00       1/1           __do_global_ctors_aux [461]
+[116]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN5BasisC2ERKSt6vectorISt10shared_ptrI4CellESaIS3_EE [116]
+-----------------------------------------------
+                0.00    0.00       1/1           __do_global_ctors_aux [461]
+[117]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN6SolverC2ER5BasisR4MeshR8SolutionR7ProblemR7PhysicsR4Flux [117]
+-----------------------------------------------
+                0.00    0.00       1/1           __do_global_ctors_aux [461]
+[118]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN7ProblemC2E8CaseInitRK4MeshRK11TimeControl [118]
+-----------------------------------------------
+                0.00    0.00       1/1           __do_global_ctors_aux [461]
+[119]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZNK12BoundarySlip13applyBoundaryERSt6vectorI9numvectorIdLi15EESaIS2_EE [119]
+-----------------------------------------------
+                0.00    0.00       1/1           __do_global_ctors_aux [461]
+[120]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZNK4Flux4c_avERK9numvectorIdLi5EES3_ [120]
+-----------------------------------------------
+                0.00    0.00       1/1           __do_global_ctors_aux [461]
+[121]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZNK6Writer13exportMeshVTKERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE [121]
+-----------------------------------------------
+                0.00    0.00       1/1           __do_global_ctors_aux [461]
+[122]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZNK7FluxLLF8evaluateERK9numvectorIdLi5EES3_RK5Point [122]
+-----------------------------------------------
+                0.00    0.00       1/1           __do_global_ctors_aux [461]
+[123]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZmlRKSt6vectorI9numvectorIdLi15EESaIS1_EEd [123]
+-----------------------------------------------
+                0.00    0.00       1/1           __do_global_ctors_aux [461]
+[124]    0.0    0.00    0.00       1         _GLOBAL__sub_I_main [124]
+-----------------------------------------------
+                0.00    0.00       1/1           RungeKutta::RungeKutta(int, Basis&, Solver&, Solution&, std::vector<std::shared_ptr<Boundary>, std::allocator<std::shared_ptr<Boundary> > >&, Limiter&, TimeControl&) [127]
+[125]    0.0    0.00    0.00       1         RungeKutta::setButcherTable() [125]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[126]    0.0    0.00    0.00       1         RungeKutta::Tstep() [126]
+                0.00    0.00       6/6           operator*(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&, double) [80]
+                0.00    0.00       3/4           std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > >::operator=(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) [86]
+                0.00    0.00       3/3           operator+(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&, std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) [97]
+                0.00    0.00       2/2           Solver::assembleRHS(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) [101]
+                0.00    0.00       2/2           Solver::correctNonOrtho(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) const [102]
+                0.00    0.00       2/2           LimiterFinDiff::limit(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > >&) [100]
+                0.00    0.00       2/2           TimeStepper::DataExchange() [99]
+                0.00    0.00       1/1           Solver::correctPrevIter(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) const [148]
+                0.00    0.00       1/1           TimeControl::updateTimeStep(double) [129]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[127]    0.0    0.00    0.00       1         RungeKutta::RungeKutta(int, Basis&, Solver&, Solution&, std::vector<std::shared_ptr<Boundary>, std::allocator<std::shared_ptr<Boundary> > >&, Limiter&, TimeControl&) [127]
+                0.00    0.00       3/3           std::vector<double, std::allocator<double> >::_M_default_append(unsigned long) [96]
+                0.00    0.00       1/1           RungeKutta::setButcherTable() [125]
+                0.00    0.00       1/1           std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > >::_M_default_append(unsigned long) [164]
+                0.00    0.00       1/1           std::vector<std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > >, std::allocator<std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > > >::_M_default_append(unsigned long) [163]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[128]    0.0    0.00    0.00       1         RungeKutta::~RungeKutta() [128]
+-----------------------------------------------
+                0.00    0.00       1/1           RungeKutta::Tstep() [126]
+[129]    0.0    0.00    0.00       1         TimeControl::updateTimeStep(double) [129]
+-----------------------------------------------
+                0.00    0.00       1/1           Mesh::Mesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [132]
+[130]    0.0    0.00    0.00       1         Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+                0.00    0.00     288/288         localNumber(std::vector<int, std::allocator<int> >&, int) [25]
+                0.00    0.00     112/112         std::vector<std::shared_ptr<Point>, std::allocator<std::shared_ptr<Point> > >::~vector() [41]
+                0.00    0.00      81/81          _ZNSt6vectorIiSaIiEE12emplace_backIJiEEEvDpOT_ [48]
+                0.00    0.00      80/128         _ZNSt6vectorISt10shared_ptrI5PointESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_ [40]
+                0.00    0.00      64/128         _ZNSt6vectorISt10shared_ptrI4CellESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_ [39]
+                0.00    0.00      40/104         Edge::Edge(std::vector<std::shared_ptr<Point>, std::allocator<std::shared_ptr<Point> > > const&) [42]
+                0.00    0.00      40/104         std::_Sp_counted_ptr_inplace<Edge, std::allocator<Edge>, (__gnu_cxx::_Lock_policy)2>::_M_get_deleter(std::type_info const&) [43]
+                0.00    0.00      25/57          std::_Sp_counted_ptr_inplace<Point, std::allocator<Point>, (__gnu_cxx::_Lock_policy)2>::_M_get_deleter(std::type_info const&) [53]
+                0.00    0.00      25/57          _ZNSt6vectorISt10shared_ptrI5PointESaIS2_EE12emplace_backIJS2_EEEvDpOT_ [54]
+                0.00    0.00      21/21          std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > >::reserve(unsigned long) [69]
+                0.00    0.00      17/17          std::vector<std::shared_ptr<Point>, std::allocator<std::shared_ptr<Point> > >::reserve(unsigned long) [70]
+                0.00    0.00      16/32          Cell::Cell(std::vector<std::shared_ptr<Point>, std::allocator<std::shared_ptr<Point> > > const&, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > const&) [63]
+                0.00    0.00      16/32          std::_Sp_counted_ptr_inplace<Cell, std::allocator<Cell>, (__gnu_cxx::_Lock_policy)2>::_M_get_deleter(std::type_info const&) [68]
+                0.00    0.00      16/48          _ZNSt6vectorISt10shared_ptrI4CellESaIS2_EE12emplace_backIJS2_EEEvDpOT_ [56]
+                0.00    0.00      13/13          _ZNSt6vectorIiSaIiEE19_M_emplace_back_auxIJiEEEvDpOT_ [78]
+                0.00    0.00       4/4           Mesh::createPhysicalPatch(std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [81]
+                0.00    0.00       4/4           std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > >::~vector() [88]
+                0.00    0.00       2/2           std::vector<std::shared_ptr<Cell>, std::allocator<std::shared_ptr<Cell> > >::reserve(unsigned long) [106]
+                0.00    0.00       2/2           std::vector<int, std::allocator<int> >::reserve(unsigned long) [108]
+                0.00    0.00       1/1           std::vector<Patch, std::allocator<Patch> >::reserve(unsigned long) [161]
+-----------------------------------------------
+                0.00    0.00       1/1           Mesh::Mesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [132]
+[131]    0.0    0.00    0.00       1         Mesh::structurizeEdges() [131]
+                0.00    0.00       4/4           void std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > >::_M_range_insert<__gnu_cxx::__normal_iterator<std::shared_ptr<Edge> const*, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > > >(__gnu_cxx::__normal_iterator<std::shared_ptr<Edge>*, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<Edge> const*, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<Edge> const*, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > >, std::forward_iterator_tag) [87]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[132]    0.0    0.00    0.00       1         Mesh::Mesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [132]
+                0.00    0.00      32/32          Cell::setGaussPoints() [61]
+                0.00    0.00      32/32          Cell::setArea() [62]
+                0.00    0.00      32/32          Cell::setJacobian() [59]
+                0.00    0.00      32/32          Cell::setCellCenter() [60]
+                0.00    0.00      16/16          Mesh::findNeighbourCells(std::shared_ptr<Cell> const&) [72]
+                0.00    0.00       1/1           Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+                0.00    0.00       1/1           Mesh::structurizeEdges() [131]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[133]    0.0    0.00    0.00       1         Mesh::~Mesh() [133]
+-----------------------------------------------
+                0.00    0.00       1/1           Basis::Basis(std::vector<std::shared_ptr<Cell>, std::allocator<std::shared_ptr<Cell> > > const&) [136]
+[134]    0.0    0.00    0.00       1         Basis::initGramian() [134]
+                0.00    0.00      96/96          std::_Function_base::_Base_manager<Basis::initGramian()::{lambda(Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initGramian()::{lambda(Point const&)#1}> const&, std::_Manager_operation) [45]
+                0.00    0.00      96/160         integrate(Cell const&, std::function<double ()(Point const&)> const&) [27]
+                0.00    0.00      96/96          _ZNSt6vectorIdSaIdEE19_M_emplace_back_auxIJdEEEvDpOT_ [47]
+-----------------------------------------------
+                0.00    0.00       1/1           Basis::Basis(std::vector<std::shared_ptr<Cell>, std::allocator<std::shared_ptr<Cell> > > const&) [136]
+[135]    0.0    0.00    0.00       1         Basis::initBasisFunctions() [135]
+                0.00    0.00       6/6           _ZNSt6vectorI9numvectorIdLi3EESaIS1_EE19_M_emplace_back_auxIJRKS1_EEEvDpOT_ [79]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[136]    0.0    0.00    0.00       1         Basis::Basis(std::vector<std::shared_ptr<Cell>, std::allocator<std::shared_ptr<Cell> > > const&) [136]
+                0.00    0.00       1/1           Basis::initGramian() [134]
+                0.00    0.00       1/1           Basis::initBasisFunctions() [135]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[137]    0.0    0.00    0.00       1         Basis::~Basis() [137]
+                0.00    0.00       1/1           std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#6}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#6}> const&, std::_Manager_operation) [158]
+                0.00    0.00       1/1           std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#5}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#5}> const&, std::_Manager_operation) [157]
+                0.00    0.00       1/1           std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#4}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#4}> const&, std::_Manager_operation) [156]
+                0.00    0.00       1/1           std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#3}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#3}> const&, std::_Manager_operation) [155]
+                0.00    0.00       1/1           std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#2}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#2}> const&, std::_Manager_operation) [154]
+                0.00    0.00       1/1           std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#1}> const&, std::_Manager_operation) [159]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[138]    0.0    0.00    0.00       1         Solver::setInitialConditions() [138]
+                0.00    0.00      32/32          Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const [64]
+                0.00    0.00      32/64          Solver::correctNonOrthoCell(numvector<double, 15> const&, std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > > const&) const [52]
+                0.00    0.00       2/2           std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > >::_M_default_append(unsigned long) [104]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[139]    0.0    0.00    0.00       1         Solver::Solver(Basis&, Mesh&, Solution&, Problem&, Physics&, Flux&) [139]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[140]    0.0    0.00    0.00       1         Physics::Physics() [140]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[141]    0.0    0.00    0.00       1         Physics::~Physics() [141]
+-----------------------------------------------
+                0.00    0.00       1/1           Problem::Problem(CaseInit, Mesh const&, TimeControl const&) [144]
+[142]    0.0    0.00    0.00       1         Problem::setInitialConditions(CaseInit) [142]
+                0.00    0.00       4/4           std::function<double ()(Point const&)>::function(std::function<double ()(Point const&)> const&) [90]
+                0.00    0.00       1/3           std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#4}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#4}> const&, std::_Manager_operation) [93]
+                0.00    0.00       1/3           std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#3}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#3}> const&, std::_Manager_operation) [92]
+                0.00    0.00       1/3           std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#2}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#2}> const&, std::_Manager_operation) [91]
+                0.00    0.00       1/3           std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#1}> const&, std::_Manager_operation) [94]
+-----------------------------------------------
+                0.00    0.00       1/1           Problem::Problem(CaseInit, Mesh const&, TimeControl const&) [144]
+[143]    0.0    0.00    0.00       1         Problem::setBoundaryConditions() [143]
+                0.00    0.00       3/3           _ZNSt6vectorISt10shared_ptrI8BoundaryESaIS2_EE19_M_emplace_back_auxIJS0_I12BoundarySlipEEEEvDpOT_ [95]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[144]    0.0    0.00    0.00       1         Problem::Problem(CaseInit, Mesh const&, TimeControl const&) [144]
+                0.00    0.00       1/1           Problem::setInitialConditions(CaseInit) [142]
+                0.00    0.00       1/1           Problem::setBoundaryConditions() [143]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[145]    0.0    0.00    0.00       1         Problem::~Problem() [145]
+                0.00    0.00       4/4           std::_Sp_counted_ptr_inplace<BoundarySlip, std::allocator<BoundarySlip>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [84]
+                0.00    0.00       4/4           std::_Sp_counted_ptr_inplace<BoundarySlip, std::allocator<BoundarySlip>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [83]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[146]    0.0    0.00    0.00       1         Solution::Solution(Basis&) [146]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[147]    0.0    0.00    0.00       1         Solution::~Solution() [147]
+-----------------------------------------------
+                0.00    0.00       1/1           RungeKutta::Tstep() [126]
+[148]    0.0    0.00    0.00       1         Solver::correctPrevIter(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) const [148]
+                0.00    0.00      16/16          Solver::correctPrevIterCell(numvector<double, 15> const&, std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > > const&) const [73]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[149]    0.0    0.00    0.00       1         Writer::exportMeshVTK(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const [149]
+                0.00    0.00       1/2           Writer::exportMeshVTK(std::ostream&) const [103]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[150]    0.0    0.00    0.00       1         Writer::exportFrameVTK(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const [150]
+                0.00    0.00       1/2           Writer::exportMeshVTK(std::ostream&) const [103]
+                0.00    0.00       1/1           Writer::exportFrameVTK(std::ostream&) const [151]
+-----------------------------------------------
+                0.00    0.00       1/1           Writer::exportFrameVTK(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const [150]
+[151]    0.0    0.00    0.00       1         Writer::exportFrameVTK(std::ostream&) const [151]
+                0.00    0.00      80/80          Solution::reconstruct(int, Point const&, Variables) const [49]
+                0.00    0.00      16/464         Solution::reconstruct(int, Point const&) const [15]
+                0.00    0.00      16/336         Physics::getPressure(numvector<double, 5> const&) const [23]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[152]    0.0    0.00    0.00       1         Writer::exportNativeCoeffs(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const [152]
+                0.00    0.00       1/1           Writer::exportNativeCoeffs(std::ostream&) const [153]
+-----------------------------------------------
+                0.00    0.00       1/1           Writer::exportNativeCoeffs(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const [152]
+[153]    0.0    0.00    0.00       1         Writer::exportNativeCoeffs(std::ostream&) const [153]
+-----------------------------------------------
+                0.00    0.00       1/1           Basis::~Basis() [137]
+[154]    0.0    0.00    0.00       1         std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#2}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#2}> const&, std::_Manager_operation) [154]
+-----------------------------------------------
+                0.00    0.00       1/1           Basis::~Basis() [137]
+[155]    0.0    0.00    0.00       1         std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#3}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#3}> const&, std::_Manager_operation) [155]
+-----------------------------------------------
+                0.00    0.00       1/1           Basis::~Basis() [137]
+[156]    0.0    0.00    0.00       1         std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#4}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#4}> const&, std::_Manager_operation) [156]
+-----------------------------------------------
+                0.00    0.00       1/1           Basis::~Basis() [137]
+[157]    0.0    0.00    0.00       1         std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#5}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#5}> const&, std::_Manager_operation) [157]
+-----------------------------------------------
+                0.00    0.00       1/1           Basis::~Basis() [137]
+[158]    0.0    0.00    0.00       1         std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#6}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#6}> const&, std::_Manager_operation) [158]
+-----------------------------------------------
+                0.00    0.00       1/1           Basis::~Basis() [137]
+[159]    0.0    0.00    0.00       1         std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#1}> const&, std::_Manager_operation) [159]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[160]    0.0    0.00    0.00       1         std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}> const&, std::_Manager_operation) [160]
+                0.00    0.00       1/3           std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#2}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#2}> const&, std::_Manager_operation) [91]
+                0.00    0.00       1/3           std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#4}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#4}> const&, std::_Manager_operation) [93]
+                0.00    0.00       1/3           std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#3}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#3}> const&, std::_Manager_operation) [92]
+                0.00    0.00       1/3           std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#1}> const&, std::_Manager_operation) [94]
+-----------------------------------------------
+                0.00    0.00       1/1           Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [130]
+[161]    0.0    0.00    0.00       1         std::vector<Patch, std::allocator<Patch> >::reserve(unsigned long) [161]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[162]    0.0    0.00    0.00       1         std::vector<Boundary, std::allocator<Boundary> >::~vector() [162]
+-----------------------------------------------
+                0.00    0.00       1/1           RungeKutta::RungeKutta(int, Basis&, Solver&, Solution&, std::vector<std::shared_ptr<Boundary>, std::allocator<std::shared_ptr<Boundary> > >&, Limiter&, TimeControl&) [127]
+[163]    0.0    0.00    0.00       1         std::vector<std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > >, std::allocator<std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > > >::_M_default_append(unsigned long) [163]
+-----------------------------------------------
+                0.00    0.00       1/1           RungeKutta::RungeKutta(int, Basis&, Solver&, Solution&, std::vector<std::shared_ptr<Boundary>, std::allocator<std::shared_ptr<Boundary> > >&, Limiter&, TimeControl&) [127]
+[164]    0.0    0.00    0.00       1         std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > >::_M_default_append(unsigned long) [164]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+
+Index by function name
+
+ [109] _GLOBAL__sub_I__Z13inverseRotateRK9numvectorIdLi5EERK5Point [141] Physics::~Physics() [21] std::_Function_handler<double ()(Point const&), Basis::initGramian()::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&)
+ [110] _GLOBAL__sub_I__ZN10RungeKuttaC2EiR5BasisR6SolverR8SolutionRSt6vectorISt10shared_ptrI8BoundaryESaIS9_EER7LimiterR11TimeControl [142] Problem::setInitialConditions(CaseInit) [22] std::_Function_handler<double ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#2}>::_M_invoke(std::_Any_data const&, Point const&)
+ [111] _GLOBAL__sub_I__ZN11TimeControl14updateTimeStepEd [143] Problem::setBoundaryConditions() [12] std::_Function_handler<double ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#3}>::_M_invoke(std::_Any_data const&, Point const&)
+ [112] _GLOBAL__sub_I__ZN11TimeStepper12DataExchangeEv [144] Problem::Problem(CaseInit, Mesh const&, TimeControl const&) [13] std::_Function_handler<double ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#4}>::_M_invoke(std::_Any_data const&, Point const&)
+ [113] _GLOBAL__sub_I__ZN4CellC2ERKSt6vectorISt10shared_ptrI5PointESaIS3_EERKS0_IS1_I4EdgeESaIS9_EE [145] Problem::~Problem() [11] std::_Function_handler<double ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&)
+ [114] _GLOBAL__sub_I__ZN4EdgeC2ERKSt6vectorISt10shared_ptrI5PointESaIS3_EE [146] Solution::Solution(Basis&) [8] std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#2}>::_M_invoke(std::_Any_data const&, int&&, Point const&)
+ [115] _GLOBAL__sub_I__ZN4MeshC2ERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE [147] Solution::~Solution() [9] std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#3}>::_M_invoke(std::_Any_data const&, int&&, Point const&)
+ [116] _GLOBAL__sub_I__ZN5BasisC2ERKSt6vectorISt10shared_ptrI4CellESaIS3_EE [82] BoundarySlip::applyBoundary(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > >&) const [10] std::_Function_handler<double ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#1}>::_M_invoke(std::_Any_data const&, int&&, Point const&)
+ [117] _GLOBAL__sub_I__ZN6SolverC2ER5BasisR4MeshR8SolutionR7ProblemR7PhysicsR4Flux [32] Cell::localToGlobal(Point const&) const [83] std::_Sp_counted_ptr_inplace<BoundarySlip, std::allocator<BoundarySlip>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+  [98] _GLOBAL__sub_I__ZN7PhysicsC2Ev [51] Edge::isEqual(Edge const&) const [84] std::_Sp_counted_ptr_inplace<BoundarySlip, std::allocator<BoundarySlip>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+ [118] _GLOBAL__sub_I__ZN7ProblemC2E8CaseInitRK4MeshRK11TimeControl [28] Flux::lambdaF_Roe(numvector<double, 5> const&, numvector<double, 5> const&) const [68] std::_Sp_counted_ptr_inplace<Cell, std::allocator<Cell>, (__gnu_cxx::_Lock_policy)2>::_M_get_deleter(std::type_info const&)
+  [76] _GLOBAL__sub_I__ZN8SolutionC2ER5Basis [29] Flux::lambdaF(numvector<double, 5> const&, numvector<double, 5> const&) const [74] std::_Sp_counted_ptr_inplace<Edge, std::allocator<Edge>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+ [119] _GLOBAL__sub_I__ZNK12BoundarySlip13applyBoundaryERSt6vectorI9numvectorIdLi15EESaIS2_EE [64] Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const [75] std::_Sp_counted_ptr_inplace<Edge, std::allocator<Edge>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+ [120] _GLOBAL__sub_I__ZNK4Flux4c_avERK9numvectorIdLi5EES3_ [102] Solver::correctNonOrtho(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) const [43] std::_Sp_counted_ptr_inplace<Edge, std::allocator<Edge>, (__gnu_cxx::_Lock_policy)2>::_M_get_deleter(std::type_info const&)
+ [121] _GLOBAL__sub_I__ZNK6Writer13exportMeshVTKERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE [148] Solver::correctPrevIter(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) const [53] std::_Sp_counted_ptr_inplace<Point, std::allocator<Point>, (__gnu_cxx::_Lock_policy)2>::_M_get_deleter(std::type_info const&)
+ [122] _GLOBAL__sub_I__ZNK7FluxLLF8evaluateERK9numvectorIdLi5EES3_RK5Point [52] Solver::correctNonOrthoCell(numvector<double, 15> const&, std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > > const&) const [85] _ZNSt6vectorI5PatchSaIS0_EE12emplace_backIJS0_EEEvDpOT_
+ [123] _GLOBAL__sub_I__ZmlRKSt6vectorI9numvectorIdLi15EESaIS1_EEd [73] Solver::correctPrevIterCell(numvector<double, 15> const&, std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > > const&) const [161] std::vector<Patch, std::allocator<Patch> >::reserve(unsigned long)
+ [124] _GLOBAL__sub_I_main   [149] Writer::exportMeshVTK(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const [16] _ZNSt6vectorI5PointSaIS0_EE12emplace_backIJS0_EEEvDpOT_
+  [25] localNumber(std::vector<int, std::allocator<int> >&, int) [103] Writer::exportMeshVTK(std::ostream&) const [17] _ZNSt6vectorI5PointSaIS0_EE19_M_emplace_back_auxIJS0_EEEvDpOT_
+  [57] inverseRotate(Point const&, Point const&) [150] Writer::exportFrameVTK(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const [162] std::vector<Boundary, std::allocator<Boundary> >::~vector()
+  [26] inverseRotate(numvector<double, 5> const&, Point const&) [151] Writer::exportFrameVTK(std::ostream&) const [104] std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > >::_M_default_append(unsigned long)
+  [58] rotate(Point const&, Point const&) [152] Writer::exportNativeCoeffs(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const [86] std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > >::operator=(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&)
+  [24] rotate(numvector<double, 5> const&, Point const&) [153] Writer::exportNativeCoeffs(std::ostream&) const [79] _ZNSt6vectorI9numvectorIdLi3EESaIS1_EE19_M_emplace_back_auxIJRKS1_EEEvDpOT_
+  [44] integrate(Cell const&, std::function<numvector<double, 5> ()(Point const&)> const&) [30] FluxLLF::evaluate(numvector<double, 5> const&, numvector<double, 5> const&, Point const&) const [50] std::vector<numvector<double, 5>, std::allocator<numvector<double, 5> > >::operator=(std::vector<numvector<double, 5>, std::allocator<numvector<double, 5> > > const&)
+  [27] integrate(Cell const&, std::function<double ()(Point const&)> const&) [23] Physics::getPressure(numvector<double, 5> const&) const [163] std::vector<std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > >, std::allocator<std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > > >::_M_default_append(unsigned long)
+ [125] RungeKutta::setButcherTable() [14] Physics::fluxF(numvector<double, 5> const&) const [105] std::vector<std::vector<numvector<double, 5>, std::allocator<numvector<double, 5> > >, std::allocator<std::vector<numvector<double, 5>, std::allocator<numvector<double, 5> > > > >::~vector()
+ [126] RungeKutta::Tstep()    [18] Physics::fluxG(numvector<double, 5> const&) const [164] std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > >::_M_default_append(unsigned long)
+ [127] RungeKutta::RungeKutta(int, Basis&, Solver&, Solution&, std::vector<std::shared_ptr<Boundary>, std::allocator<std::shared_ptr<Boundary> > >&, Limiter&, TimeControl&) [15] Solution::reconstruct(int, Point const&) const [56] _ZNSt6vectorISt10shared_ptrI4CellESaIS2_EE12emplace_backIJS2_EEEvDpOT_
+ [128] RungeKutta::~RungeKutta() [49] Solution::reconstruct(int, Point const&, Variables) const [39] _ZNSt6vectorISt10shared_ptrI4CellESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_
+ [129] TimeControl::updateTimeStep(double) [65] std::_Function_base::_Base_manager<Cell::setJacobian()::{lambda(Point const&)#2}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Cell::setJacobian()::{lambda(Point const&)#2}> const&, std::_Manager_operation) [77] _ZNSt6vectorISt10shared_ptrI4CellESaIS2_EE19_M_emplace_back_auxIJS2_EEEvDpOT_
+  [99] TimeStepper::DataExchange() [66] std::_Function_base::_Base_manager<Cell::setCellCenter()::{lambda(Point const&)#2}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Cell::setCellCenter()::{lambda(Point const&)#2}> const&, std::_Manager_operation) [106] std::vector<std::shared_ptr<Cell>, std::allocator<std::shared_ptr<Cell> > >::reserve(unsigned long)
+ [100] LimiterFinDiff::limit(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > >&) [67] std::_Function_base::_Base_manager<Cell::setCellCenter()::{lambda(Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Cell::setCellCenter()::{lambda(Point const&)#1}> const&, std::_Manager_operation) [87] void std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > >::_M_range_insert<__gnu_cxx::__normal_iterator<std::shared_ptr<Edge> const*, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > > >(__gnu_cxx::__normal_iterator<std::shared_ptr<Edge>*, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<Edge> const*, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<Edge> const*, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > >, std::forward_iterator_tag)
+  [59] Cell::setJacobian()    [45] std::_Function_base::_Base_manager<Basis::initGramian()::{lambda(Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initGramian()::{lambda(Point const&)#1}> const&, std::_Manager_operation) [55] _ZNSt6vectorISt10shared_ptrI4EdgeESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_
+  [60] Cell::setCellCenter() [154] std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#2}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#2}> const&, std::_Manager_operation) [69] std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > >::reserve(unsigned long)
+  [61] Cell::setGaussPoints() [155] std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#3}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#3}> const&, std::_Manager_operation) [88] std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > >::~vector()
+  [62] Cell::setArea()       [156] std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#4}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#4}> const&, std::_Manager_operation) [89] std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > >::operator=(std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > const&)
+  [63] Cell::Cell(std::vector<std::shared_ptr<Point>, std::allocator<std::shared_ptr<Point> > > const&, std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > const&) [157] std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#5}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#5}> const&, std::_Manager_operation) [54] _ZNSt6vectorISt10shared_ptrI5PointESaIS2_EE12emplace_backIJS2_EEEvDpOT_
+  [42] Edge::Edge(std::vector<std::shared_ptr<Point>, std::allocator<std::shared_ptr<Point> > > const&) [158] std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#6}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#6}> const&, std::_Manager_operation) [40] _ZNSt6vectorISt10shared_ptrI5PointESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_
+ [130] Mesh::importMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [159] std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Basis::initBasisFunctions()::{lambda(int, Point const&)#1}> const&, std::_Manager_operation) [107] _ZNSt6vectorISt10shared_ptrI5PointESaIS2_EE19_M_emplace_back_auxIJS2_EEEvDpOT_
+  [71] Mesh::makeGhostCell(std::shared_ptr<Edge> const&) [91] std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#2}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#2}> const&, std::_Manager_operation) [70] std::vector<std::shared_ptr<Point>, std::allocator<std::shared_ptr<Point> > >::reserve(unsigned long)
+ [131] Mesh::structurizeEdges() [160] std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}> const&, std::_Manager_operation) [41] std::vector<std::shared_ptr<Point>, std::allocator<std::shared_ptr<Point> > >::~vector()
+  [72] Mesh::findNeighbourCells(std::shared_ptr<Cell> const&) [92] std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#3}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#3}> const&, std::_Manager_operation) [95] _ZNSt6vectorISt10shared_ptrI8BoundaryESaIS2_EE19_M_emplace_back_auxIJS0_I12BoundarySlipEEEEvDpOT_
+  [81] Mesh::createPhysicalPatch(std::vector<std::shared_ptr<Edge>, std::allocator<std::shared_ptr<Edge> > > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [93] std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#4}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#4}> const&, std::_Manager_operation) [31] void std::vector<double, std::allocator<double> >::_M_assign_aux<double const*>(double const*, double const*, std::forward_iterator_tag)
+ [132] Mesh::Mesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [94] std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#1}> const&, std::_Manager_operation) [96] std::vector<double, std::allocator<double> >::_M_default_append(unsigned long)
+ [133] Mesh::~Mesh()          [46] std::_Function_base::_Base_manager<Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const::{lambda(Point const&)#1}>::_M_manager(std::_Any_data&, std::_Function_base::_Base_manager<Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const::{lambda(Point const&)#1}> const&, std::_Manager_operation) [47] _ZNSt6vectorIdSaIdEE19_M_emplace_back_auxIJdEEEvDpOT_
+ [134] Basis::initGramian()   [33] std::_Function_handler<Point ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#4}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [48] _ZNSt6vectorIiSaIiEE12emplace_backIJiEEEvDpOT_
+ [135] Basis::initBasisFunctions() [34] std::_Function_handler<Point ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#5}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [78] _ZNSt6vectorIiSaIiEE19_M_emplace_back_auxIJiEEEvDpOT_
+ [136] Basis::Basis(std::vector<std::shared_ptr<Cell>, std::allocator<std::shared_ptr<Cell> > > const&) [35] std::_Function_handler<Point ()(int, Point const&), Basis::initBasisFunctions()::{lambda(int, Point const&)#6}>::_M_invoke(std::_Any_data const&, int&&, Point const&) [108] std::vector<int, std::allocator<int> >::reserve(unsigned long)
+ [137] Basis::~Basis()        [19] std::_Function_handler<numvector<double, 5> ()(Point const&), Problem::setInitialConditions(CaseInit)::{lambda(Point const&)#17}>::_M_invoke(std::_Any_data const&, Point const&) [90] std::function<double ()(Point const&)>::function(std::function<double ()(Point const&)> const&)
+ [101] Solver::assembleRHS(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&) [20] std::_Function_handler<numvector<double, 5> ()(Point const&), Solver::projection(std::function<numvector<double, 5> ()(Point const&)> const&, int) const::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&) [80] operator*(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&, double)
+ [138] Solver::setInitialConditions() [36] std::_Function_handler<double ()(Point const&), Cell::setJacobian()::{lambda(Point const&)#2}>::_M_invoke(std::_Any_data const&, Point const&) [97] operator+(std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&, std::vector<numvector<double, 15>, std::allocator<numvector<double, 15> > > const&)
+ [139] Solver::Solver(Basis&, Mesh&, Solution&, Problem&, Physics&, Flux&) [37] std::_Function_handler<double ()(Point const&), Cell::setCellCenter()::{lambda(Point const&)#2}>::_M_invoke(std::_Any_data const&, Point const&) [1] frame_dummy
+ [140] Physics::Physics()     [38] std::_Function_handler<double ()(Point const&), Cell::setCellCenter()::{lambda(Point const&)#1}>::_M_invoke(std::_Any_data const&, Point const&)
