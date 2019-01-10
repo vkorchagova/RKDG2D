@@ -20,6 +20,12 @@ private:
     //- End time
     double tEnd;
 
+    //- Output time
+    double outputTime;
+
+    //- Output interval
+    double outputInterval;
+
 	/// Time steps
     //- Old time step -- with which we're working during the time integrating
     double tau;
@@ -46,10 +52,11 @@ private:
 public:
 
     //- Constructor
-    TimeControl(const Mesh& msh, const double tStart, const double tEnd, const double initTau) : M(msh), t(tStart), tau(initTau), tEnd(tEnd)
+    TimeControl(const Mesh& msh, const double tStart, const double tEnd, const double initTau, const double outputInterval) : M(msh), t(tStart), tau(initTau), tEnd(tEnd), outputInterval(outputInterval)
     {
         tauNew = tau;
         tOld = t;
+        outputTime = tStart + outputInterval;
 		//write the construction with initialization from Params.h or some other data source;
 	}  
 
@@ -68,6 +75,9 @@ public:
 
     //- Check if time is not finished
     bool running() { return t < tEnd; }
+
+    //- Check time point for output
+    bool isOutput();
 
 };
 

@@ -139,7 +139,7 @@ void RungeKutta::Tstep()
 		///
         lmt.limit(sln.SOL);
 
-		DataExchange();
+		slv.dataExchange();
 		///
 
     }// for stages

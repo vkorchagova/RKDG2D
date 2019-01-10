@@ -1,4 +1,4 @@
-#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
 
 #IncludeRegexScan: ^.*$
 
@@ -6,7 +6,17 @@
 
 #IncludeRegexTransform: 
 
-/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/DecomposerUNV.h
+/home/v.korchagova/Документы/BMSTU/RKDG/git/RKDG2D-MPI/decomposeUNV/DecomposerUNV.cpp
+DecomposerUNV.h
+/home/v.korchagova/Документы/BMSTU/RKDG/git/RKDG2D-MPI/decomposeUNV/DecomposerUNV.h
+functional
+-
+math.h
+-
+ctime
+-
+
+/home/v.korchagova/Документы/BMSTU/RKDG/git/RKDG2D-MPI/decomposeUNV/DecomposerUNV.h
 iostream
 -
 fstream
@@ -20,11 +30,11 @@ string
 algorithm
 -
 
-/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/main.cpp
+/home/v.korchagova/Документы/BMSTU/RKDG/git/RKDG2D-MPI/decomposeUNV/main.cpp
 iostream
 -
 DecomposerUNV.h
-/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/decomposeUNV/DecomposerUNV.h
+/home/v.korchagova/Документы/BMSTU/RKDG/git/RKDG2D-MPI/decomposeUNV/DecomposerUNV.h
 cstdlib
 -
 

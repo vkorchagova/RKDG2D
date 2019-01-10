@@ -1,1 +1,1 @@
-/unicluster/bl2x220Cluster/opt/gcc/gcc-6.3/bin/g++    -std=c++11    CMakeFiles/decomposeUNV.dir/main.cpp.o CMakeFiles/decomposeUNV.dir/DecomposerUNV.cpp.o  -o decomposeUNV -rdynamic 
+/usr/bin/c++   -std=c++11  -rdynamic CMakeFiles/decomposeUNV.dir/DecomposerUNV.cpp.o CMakeFiles/decomposeUNV.dir/main.cpp.o  -o decomposeUNV 

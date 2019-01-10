@@ -142,3 +142,12 @@ int getPatchByName(std::vector<Patch>& patches, std::string& pName)
 
     return -1;
 }
+
+int getPatchByName(std::vector<ProcPatch>& patches, std::string& pName)
+{
+    for (int i = 0; i < patches.size(); ++i)
+        if (patches[i].name == pName)
+            return i;
+
+    return -1;
+}

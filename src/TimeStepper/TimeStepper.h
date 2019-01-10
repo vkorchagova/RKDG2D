@@ -46,8 +46,4 @@ public:
     //- update time step
     virtual void Tstep() = 0;
 
-	/// MPI
-	//- MPI-data exchange
-	void DataExchange();
-
 };

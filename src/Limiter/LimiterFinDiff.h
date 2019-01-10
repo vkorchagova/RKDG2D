@@ -10,9 +10,9 @@ class LimiterFinDiff : public Limiter
 
 public:
 
-    //- Construct by indicator and problem
+    //- Construct 
     //LimiterFinDiff(const Indicator& ind, Problem& prb) : Limiter(ind, prb) {}
-    LimiterFinDiff() : Limiter() {}
+    LimiterFinDiff(const std::vector<std::shared_ptr<Cell>>& cells, const Solution& sln) : Limiter(cells, sln) {}
 
     ~LimiterFinDiff() {}
 

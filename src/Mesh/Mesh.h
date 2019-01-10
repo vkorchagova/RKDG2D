@@ -40,8 +40,11 @@ public:
     //- Mesh cells (edge1, ..., edgek) CCW
     std::vector<std::shared_ptr<Cell>> cells;
 
-    //- Groups of boundary edges
+    //- Groups of physical boundary edges
     std::vector<Patch> patches;
+
+    //- Groups of shadow cells between neib procs
+    std::vector<ProcPatch> procPatches;
 
     //- Global numeration of nodes
     std::vector<int> globalNodeNumber;

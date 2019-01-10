@@ -4,7 +4,7 @@
 using namespace std;
 
 
-void TimeControl::updateTimeStep(double MSpeed)
+void TimeControl::updateTimeStep(double MSpeed) // maxSpeed should be defined on each cell
 {
     /*
     if (isDynamic) // template for the code of Vik
@@ -23,7 +23,7 @@ private (factCo, relTau) \
 default (none)
         //for (const shared_ptr<Cell> cell : mesh.cells)
 
-		??? CYCLE THROUGH THE CELLS IS NEEDED???
+		??? CYCLE THROUGH THE CELLS IS NEEDED???YESSSS 
         factCo = tau * MaxSpeed / cell->getArea();
         relTau = CoNum / (factCo + 1e-6); //1e-6 is technical small number
         relTau = min(relTau, maxTauGrowth);
@@ -51,5 +51,18 @@ default (none)
     t = tOld + tau;
     tOld = t;
 
+}
+
+bool TimeControl::isOutput()
+{
+    if (fabs(outputTime - t) < 1e-12)
+    {
+        outputTime += outputInterval;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 

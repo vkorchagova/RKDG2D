@@ -1,1 +1,3 @@
-/lustre/unicluster/home/viktoria.korchagova/RKDG/git/RKDG2D-MPI/build/CMakeFiles/DG2D.dir
+/home/v.korchagova/Документы/BMSTU/RKDG/git/RKDG2D-MPI/build/CMakeFiles/rebuild_cache.dir
+/home/v.korchagova/Документы/BMSTU/RKDG/git/RKDG2D-MPI/build/CMakeFiles/DG2D.dir
+/home/v.korchagova/Документы/BMSTU/RKDG/git/RKDG2D-MPI/build/CMakeFiles/edit_cache.dir

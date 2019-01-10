@@ -11,7 +11,7 @@ using namespace std;
 int main()
 {
 
-    FileConverter converter("square1_96.unv","mesh2D");
+    FileConverter converter("../../../meshCollection/square1_96.unv","mesh2D");
 
 
     converter.importUNV();

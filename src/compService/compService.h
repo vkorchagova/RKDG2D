@@ -52,6 +52,7 @@ numvector<double, PhysDim> integrate(const Cell& cell, const std::function<numve
 int localNumber(std::vector<int>& globalNumbers, int curNum);
 
 int getPatchByName(std::vector<Patch>& patches, std::string& pName);
+int getPatchByName(std::vector<ProcPatch>& patches, std::string& pName);
 
 
 #endif

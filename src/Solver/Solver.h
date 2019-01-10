@@ -17,6 +17,14 @@
 #include "Problem.h"
 #include "Flux.h"
 
+//- Proc rank 
+extern int myRank;
+
+//- Size of ...
+extern int numProcsTotal;
+
+//- Status
+extern MPI_Status status;
 
 
 class Solver
@@ -79,6 +87,12 @@ public:
 	//- Reconstruct SLAE RHS after limitation in case of non-orthogonal functions :TODO choose the necessary version
 	numvector<double, dimS> correctPrevIterCell(const numvector<double, dimS>& alphaCorr, const std::vector<std::vector<double>>& gramian) const;
 	std::vector<numvector<double, dimS>> correctPrevIter(const std::vector<numvector<double, dimS>>& alpha) const;
+
+    /// MPI functions
+
+    //- Exchange data
+    void dataExchange();
+
 
 };
 

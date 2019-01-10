@@ -4,7 +4,10 @@
 //#include "Indicator.h"
 #include "numvector.h"
 #include "Params.h"
+#include "Cell.h"
+#include "Solution.h"
 #include <vector>
+#include <memory>
 
 class Limiter
 {
@@ -14,6 +17,12 @@ protected:
     //- Discontinuities checker
     //const Indicator& indicator;
 
+    //- Constant reference to mesh
+    const std::vector<std::shared_ptr<Cell>>& cells;
+
+    //- Reference to solution
+    const Solution& solution;
+
     //- Problem
     //Problem& problem;
 
@@ -22,8 +31,8 @@ protected:
 
 public:
 
-    //- Construct by indicator and problem
-    Limiter() {}
+    //- Construct
+    Limiter(const std::vector<std::shared_ptr<Cell>>& cells, const Solution& sln) : cells(cells), solution(sln) {}
 
     //- Destructor
     virtual ~Limiter() {}

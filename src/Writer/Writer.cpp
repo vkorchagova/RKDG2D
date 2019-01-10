@@ -80,7 +80,7 @@ void Writer::exportFrameVTK(ostream& wStream) const
     wStream << "SCALARS rho double" << endl;
     wStream << "LOOKUP_TABLE default" << endl;
 
-//  for (const shared_ptr<Cell> cell : mesh.cells)
+    //  for (const shared_ptr<Cell> cell : mesh.cells)
     for (int iCell = 0; iCell < mesh.nRealCells; ++iCell)
         wStream << solution.reconstruct(iCell, mesh.cells[iCell]->getCellCenter(), RHO) << endl;
 
@@ -164,4 +164,9 @@ void Writer::exportNativeCoeffs(ostream& wStream) const
 
         wStream << endl;
     }
+}
+
+void Writer::collectFullSolution()
+{
+
 }

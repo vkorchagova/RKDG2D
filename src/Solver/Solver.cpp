@@ -1,6 +1,7 @@
 #include "Solver.h"
 #include <iostream>
 #include <omp.h>
+#include <mpi.h>
 
 using namespace std;
 
@@ -8,7 +9,23 @@ Solver::Solver( Basis& Bas, Mesh& msh, Solution& soln,
                 Problem &prob, Physics& phys, Flux& flx) : 
                 B(Bas), M(msh), sln(soln), phs(phys), prb(prob), flux(flx)
 {
+    for (const ProcPatch& procPatch : M.procPatches)
+    {
+        sln.bufSend[procPatch.procNum].resize(dimS * procPatch.cellGroup.size());
+        sln.bufRecv[procPatch.procNum].resize(dimS * procPatch.cellGroup.size());
+    }
+
+    int nCellGlob = 0;
+    MPI_Reduce(&(M.nRealCells), &nCellGlob, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
     
+    //cout << "rank = " << myRank << "; local mesh size = " << M.nRealCells << endl;
+
+
+    if (myRank == 0)
+        sln.fullSOL.resize(nCellGlob); // TODOOOOOOOOOOOOOOOOOO
+
+    cout << "rank = " << myRank << "; total mesh size = " << sln.fullSOL.size() << endl;
+        
 }
 
 void Solver::setInitialConditions()
@@ -33,6 +50,9 @@ void Solver::setInitialConditions()
 
 void Solver::setDefinedCoefficients(string fileName)
 {
+    int nCells = M.cells.size();
+    sln.SOL.resize(nCells);
+
     ifstream reader;
     reader.open(fileName);
 
@@ -41,8 +61,6 @@ void Solver::setDefinedCoefficients(string fileName)
         cout << "File " << fileName << " is not found\n";
         exit(0);
     }// if open
-
-    int nCells = M.cells.size();
 
     numvector<double, dimS> rhs;
 
@@ -93,11 +111,15 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
     numvector<double, dimPh> solLeft;
     numvector<double, dimPh> solRight;
 
+    shared_ptr<Edge> e;
+    shared_ptr<Cell> cell;
+    Point gPoint;
+
     for (size_t iEdge = 0; iEdge < M.nRealEdges; ++iEdge)
     {
         //cout << "iEdge = " << iEdge <<endl;
 
-        shared_ptr<Edge> e = M.edges[iEdge];
+        e = M.edges[iEdge];
 
         int iCellLeft  = e->neibCells[0]->number;
         int iCellRight = e->neibCells[1]->number;
@@ -108,9 +130,10 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
         for (size_t iGP = 0; iGP < nGP; ++iGP)
         {
             //cout << "iGP = " << iGP;// << endl;
+            gPoint = e->gPoints[iGP];
 
-            solLeft  = sln.reconstruct(iCellLeft,  e->gPoints[iGP]);
-            solRight = sln.reconstruct(iCellRight, e->gPoints[iGP]);
+            solLeft  = sln.reconstruct(iCellLeft,  gPoint);
+            solRight = sln.reconstruct(iCellRight, gPoint);
 
             //cout << "slL = " << solLeft << endl;
             //cout << "slR = " << solRight << endl;
@@ -132,15 +155,14 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
 
     numvector<double, dimPh> sol;
     numvector<double, dimPh> resV;
-    numvector<double, dimS> res(0.0);
+    numvector<double, dimS>  res(0.0);
     double gW = 0.0;
-    Point pt;
     Point nablaPhi;
     //nGP=M.cells[0]->nGP;
     
     for (int iCell = 0; iCell < nCells; ++iCell) // for real (!) cells
     {
-        shared_ptr<Cell> cell = M.cells[iCell];
+        cell = M.cells[iCell];
 
         // compute internal integral
         res *= 0.0;
@@ -148,20 +170,20 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
 
         for (int i = 0; i < nGP; ++i)
         {
-            pt = cell->gPoints2D[i];
+            gPoint = cell->gPoints2D[i];
             gW = cell->gWeights2D[i];
-            sol = sln.reconstruct(iCell, pt);            
+            sol = sln.reconstruct(iCell, gPoint);            
 
             for (int q = 0; q < nShapes; ++q)
             {
-                nablaPhi = B.gradPhi[q](iCell, pt);
+                nablaPhi = B.gradPhi[q](iCell, gPoint);
                 
                 resV = phs.fluxF(sol) * nablaPhi[0] + \
                        phs.fluxG(sol) * nablaPhi[1];
 
                 for (int p = 0; p < dimPh; ++p)
-                    res[p * nShapes + q] += resV[p] * gW * cell->J[i]; // CHECK!!!
-            //cout << "cell #" << iCell << "; GP #" << i \
+                    res[p * nShapes + q] += resV[p] * gW * cell->J[i];
+                 //cout << "cell #" << iCell << "; GP #" << i \
                  //<< "; gradPhi: (" << nablaPhi[0] << ", " << nablaPhi[1] << ")" << endl; 
                  //<< "; res: " << res << endl;     
             }// for shapes
@@ -169,9 +191,6 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
 
         }// for GP
         rhs[iCell] = res;
-
-        if (iCell > M.nRealCells)
-            cout << "WARNING: iCell = " << iCell << "more than mesh size!!" << endl;   
 
         //cout << "cell #" << iCell << "; cellIntegral: " << res << endl;
 
@@ -182,22 +201,26 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
         double sign;
         int iEdge;
 
-        for (int iEnt = 0; iEnt < cell->nEntities; ++iEnt)
+        //for (int iEnt = 0; iEnt < cell->nEntities; ++iEnt)
+        for (const shared_ptr<Edge>& e : cell->edges)
         {
             res*=0.0;   // ????????????????????
 
-            iEdge=cell->edges[iEnt]->number;  
-            shared_ptr<Edge> e = M.edges[iEdge];          
-            sign = (iCell == M.edges[iEdge]->neibCells[0]->number) ? 1.0 : -1.0;
+            //iEdge=cell->edges[iEnt]->number;  
+            //shared_ptr<Edge> e = M.edges[iEdge];          
+            //sign = (iCell == M.edges[iEdge]->neibCells[0]->number) ? 1.0 : -1.0;
+
+            iEdge = e->number;
+            sign = (iCell == e->neibCells[0]->number) ? 1.0 : -1.0;
 
             for (int i = 0; i < nGP; ++i)
             {
                 gW = e->gWeights[i]; 
-                pt = e->gPoints[i]; 
+                gPoint = e->gPoints[i]; 
 
                 for (int q = 0; q < nShapes; ++q)
                     for (int p = 0; p < dimPh; ++p)
-                        res[p*nShapes + q] += numFluxes[iEdge][i][p] * ( gW * B.phi[q](iCell, pt) );
+                        res[p*nShapes + q] += numFluxes[iEdge][i][p] * ( gW * B.phi[q](iCell, gPoint) );
             
             }// for GP
 
@@ -306,4 +329,10 @@ vector<numvector<double, dimS>> Solver::correctPrevIter(const vector<numvector<d
     }// for cells
 
     return alphaCorr;
+}
+
+
+void Solver::dataExchange()
+{
+
 }

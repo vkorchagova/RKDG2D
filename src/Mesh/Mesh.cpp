@@ -16,7 +16,7 @@ Mesh::Mesh(std::string& fileName)
     importMesh(fileName);
     
     cout << "num of cells = " << cells.size() << endl;
-
+    cout << "num of real cells = " << nRealCells << endl;
     //nEntitiesTotal = 0;
 
     for (int i = 0; i < cells.size(); ++i)
@@ -86,15 +86,15 @@ void Mesh::addToProcPatch(const shared_ptr<Cell>& cell, int numProc)
 {
     string pName = "procPatch." + to_string(numProc);
 
-    int iPatch = getPatchByName(patches, pName);
+    int iPatch = getPatchByName(procPatches, pName);
 
     if (iPatch == -1)
     {
-        iPatch = patches.size();
-        patches.emplace_back(Patch(pName));
+        iPatch = procPatches.size();
+        procPatches.emplace_back(ProcPatch(pName, numProc));
     }
 
-    patches[iPatch].cellGroup.push_back(cell);
+    procPatches[iPatch].cellGroup.push_back(cell);
 }
 
 void Mesh::createPhysicalPatch(const vector<shared_ptr<Edge>>& edgeGroup, const string& pName)
@@ -374,7 +374,7 @@ void Mesh::importMesh(string& fileName)
 
             } while (tag != "$EndNeibProcCells");
 
-            nNeibProcs = patches.size();
+            nNeibProcs = procPatches.size();
 
             cout << "Number of neib procs: " << nNeibProcs << endl;
         }

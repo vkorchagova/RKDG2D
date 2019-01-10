@@ -28,6 +28,7 @@
 #include "Solution.h"   //- Solution storage
 #include "Boundary.h"
 #include "LimiterFinDiff.h"
+#include "LimiterBJ.h"
 #include "FluxLLF.h"		//- All about the flux evaluating
 //#include "Indicator.h"
 //#include "Limiter.h"	//- All about the monotonization
@@ -40,25 +41,34 @@
 #include <mpi.h>
 #include <omp.h>
 
+//- Proc rank 
+int myRank;
+
+//- Size of ...
+int numProcsTotal;
+
+//- Status
+MPI_Status status;
+
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
     
-    int rank, size, ibeg, iend;
-	MPI_Status stat;
+    //int rank, size, ibeg, iend;
+	//MPI_Status stat;
 
 	MPI_Init(&argc, &argv);
 
-	MPI_Comm_size(MPI_COMM_WORLD, &size);
-	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+	MPI_Comm_size(MPI_COMM_WORLD, &numProcsTotal);
+	MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
 
-    cout << "size = " << size << "; rank = " << rank << endl;
+    cout << "size = " << numProcsTotal << "; rank = " << myRank << endl;
 
     //-----------------------
 
-    string meshFileName = "mesh2D";// + to_string(rank);
+    string meshFileName = "mesh2D." + to_string(myRank);
     Mesh mesh(meshFileName);
     Basis basis(mesh.cells);
     Solution solution(basis);
@@ -70,16 +80,17 @@ int main(int argc, char* argv[])
 
     int order = 2;
     double tStart = 0.0;
-    double tEnd = 0.2;
+    double tEnd = -0.6;
     double initTau = 1e-4;
-    TimeControl time(mesh, tStart, tEnd, initTau);
+    double outputInterval = 0.01;
+    TimeControl time(mesh, tStart, tEnd, initTau, outputInterval);
 
     CaseInit caseName = SodCircle;
     Problem problem(caseName, mesh, time);
 
     Solver solver(basis, mesh, solution, problem, physics, flux);
 
-    LimiterFinDiff limiter;
+    LimiterBJ limiter(mesh.cells, solution);
 
     RungeKutta RK(order, basis, solver, solution, problem.bc, limiter, time);
 
@@ -92,10 +103,24 @@ int main(int argc, char* argv[])
         mkdir("alphaCoeffs", S_IRWXU | S_IRGRP | S_IROTH);
     #endif
 
+    // Set initial conditions
+    if (tStart > 1e-10)
+    {
+        solver.setDefinedCoefficients("alphaCoeffs/" + to_string(tStart) + ".dat");
+    }
+    else
+    {
     // get initial conditions
-    solver.setInitialConditions();      // FIX GRAIENTS FOR nSHAPES > 3
-    writer.exportFrameVTK("alphaCoeffs/0.vtk");
-    writer.exportNativeCoeffs("alphaCoeffs/0.dat");
+        solver.setInitialConditions();      // FIX GRAIENTS FOR nSHAPES > 3
+
+        for (size_t i = 0; i < mesh.patches.size(); ++i)
+            problem.bc[i]->applyBoundary(solution.SOL);
+
+        limiter.limit(solution.SOL);
+
+        writer.exportFrameVTK("alphaCoeffs/0.vtk");
+        writer.exportNativeCoeffs("alphaCoeffs/0.dat");
+    }
 
     physics.cpcv = problem.cpcv;
     cout << physics.cpcv << endl;
@@ -108,16 +133,10 @@ int main(int argc, char* argv[])
 
     //-----------------------
 
-    // 1st step: apply boundary
-    for (size_t i = 0; i < mesh.patches.size(); ++i)
-    {
-        problem.bc[i]->applyBoundary(solution.SOL);
-    }
-
-    limiter.limit(solution.SOL);
+    
     //solver.assembleRHS(solution.SOL);
     
-    solution.SOL_aux=solution.SOL;
+    //solution.SOL_aux=solution.SOL;
 
     
     double t0, t1;
@@ -126,8 +145,8 @@ int main(int argc, char* argv[])
     while (time.running())
     {
         cout << "-------" << endl;
-        cout << "Time: " << time.getTime() << endl;
-        cout << "Time step: " << time.getTau() << endl;
+        cout << "Time = " << time.getTime() << " s" << endl;
+        cout << "\ttau = " << time.getTau() << " s" << endl;
 
         t0 = MPI_Wtime();
         RK.Tstep();
@@ -135,12 +154,18 @@ int main(int argc, char* argv[])
 
         cout << "\tstep time = " << t1 - t0 << " s" << endl;
 
+        if (time.isOutput())
+        {
+            writer.exportFrameVTK("alphaCoeffs/" + to_string(time.getTime()) + ".vtk"); // not needed in MPI processes
 
-        writer.exportFrameVTK("alphaCoeffs/" + to_string(time.getTime()) + ".vtk"); 
-        writer.exportNativeCoeffs("alphaCoeffs/" + to_string(time.getTime()) + ".dat");
+            // if rank = 0 -> writer.exportNativeCoeffs(sln.fullSOL)
+            writer.exportNativeCoeffs("alphaCoeffs/" + to_string(time.getTime()) + ".dat"); // do it only on proc rank = 0
+        }
     }
 
-    
+    /// separate program for visualisation: 
+    /// load full mesh (prepare it in decomposer) and full pack of solution coeffs 
+    /// and convert it to VTK
     
 
     MPI_Finalize();

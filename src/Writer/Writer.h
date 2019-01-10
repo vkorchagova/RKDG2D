@@ -7,6 +7,16 @@
 
 // TODO: move here mesh. ExportVtkPoly & solution.export as exportNativeCoeffs
 
+//- Proc rank 
+extern int myRank;
+
+//- Size of ...
+extern int numProcsTotal;
+
+//- Status
+extern MPI_Status status;
+
+
 class Writer
 {
     //- Const reference to mesh
@@ -34,6 +44,11 @@ public:
     //- Export solution coeffs 
     void exportNativeCoeffs(const std::string& fileName) const;
     void exportNativeCoeffs(std::ostream& wStream) const;
+
+    /// MPI
+
+    //- Collect full solution 
+    void collectFullSolution();
 
 };
 

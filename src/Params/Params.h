@@ -1,5 +1,7 @@
 #pragma once
 
+#include <mpi.h>
+
 //- Number of conservative variables
 static const int PhysDim = 5;
 static const int dimPh = 5;
@@ -34,3 +36,8 @@ enum CaseBound
 { 
     Inf, Free, Diag, Wall, PeriodicSquare 
 };
+
+//- List of global MPI variables
+
+
+

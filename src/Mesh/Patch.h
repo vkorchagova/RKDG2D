@@ -9,6 +9,7 @@
 #include <vector>
 #include "Edge.h"
 
+// Default patch
 class Patch
 {
 
@@ -30,9 +31,24 @@ public:
 
     //- Destructor
     ~Patch() {}
+};
 
-    //- Apply boundary
-    // void applyBoundary();
+
+// MPI proc patch
+class ProcPatch : public Patch
+{
+
+public:
+
+    //- Proc num
+    int procNum;
+
+    //- Constructor
+    ProcPatch(std::string pN, int pNum) : Patch(pN), procNum(pNum) {}
+
+    //- Destructor
+    ~ProcPatch() {}
+
 };
 
 #endif // PATCH_H

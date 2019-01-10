@@ -39,9 +39,9 @@ void Problem::setInitialConditions(CaseInit task)
 	{
         cpcv = 1.4;
 
-		initRho = [](const Point& r) { return (r.x() < 0.5) ? 1.0 : 0.125; };
-		initP   = [](const Point& r) { return (r.x() < 0.5) ? 1.0 : 0.1;  };
-		initU   = [](const Point& r) { return (r.x() < 0.5) ? 0.0 : 0.0; };
+		initRho = [](const Point& r) { return (r.x() < 0) ? 1.0 : 0.125; };
+		initP   = [](const Point& r) { return (r.x() < 0) ? 1.0 : 0.1;  };
+		initU   = [](const Point& r) { return (r.x() < 0) ? 0.0 : 0.0; };
 		initV   = [](const Point& r) { return 0.0; };
 
         break;
@@ -207,6 +207,8 @@ void Problem::setBoundaryConditions()
     {
         bc.emplace_back(make_shared<BoundarySlip>(BoundarySlip(p)));
     }
+
+    // may be later: for procPatches bc. emplace_back(BoundaryMPI(pP.numProc))
 
 }
 
