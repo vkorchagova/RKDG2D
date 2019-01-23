@@ -1,1 +1,0 @@
-/usr/bin/c++   -std=c++11  -rdynamic CMakeFiles/decomposeUNV.dir/DecomposerUNV.cpp.o CMakeFiles/decomposeUNV.dir/main.cpp.o  -o decomposeUNV 

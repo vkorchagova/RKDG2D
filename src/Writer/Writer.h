@@ -16,6 +16,9 @@ extern int numProcsTotal;
 //- Status
 extern MPI_Status status;
 
+//- Request
+extern MPI_Request request;
+
 
 class Writer
 {
@@ -43,7 +46,9 @@ public:
 
     //- Export solution coeffs 
     void exportNativeCoeffs(const std::string& fileName) const;
-    void exportNativeCoeffs(std::ostream& wStream) const;
+    void outputNativeCoeffs(std::ostream& wStream) const;
+    void outputFullNativeCoeffs(std::ostream& wStream) const;
+    void outputFullNativeCoeffs(std::ostream& wStream, std::vector<numvector<double, dimS>> coeffs) const;
 
     /// MPI
 

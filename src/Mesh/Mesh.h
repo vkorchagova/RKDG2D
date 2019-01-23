@@ -7,15 +7,32 @@
 #include "Patch.h"
 #include "Cell.h"
 
+#include "Buffers.h"
+
 #include <vector>
 #include <fstream>
 #include <memory>
+
+//- Proc rank 
+extern int myRank;
+
+//- Size of ...
+extern int numProcsTotal;
+
+//- Status
+extern MPI_Status status;
+
+//- Request
+extern MPI_Request request;
 
 
 class Mesh
 {
 
 private:
+
+    //- Reference to MPI buffers
+    Buffers& buf;
 
     //- Find neighbours for given cell
     void findNeighbourCells(const std::shared_ptr<Cell>& cell);
@@ -76,10 +93,22 @@ public:
     //- Number of neighbor processors
     int nNeibProcs;
 
+    //- Number of cells in full mesh
+    int nCellsGlob;
+
+    // //- Full global numeration of cells
+    // std::vector<int> fullGlobalMap;
+
+    // //- Array of displacements for MPI_Gatherv
+    // std::vector<int> mpiDispl;
+
+    // //- nRealCells on each process
+    // std::vector<int> nCellsPerProc;
+
 public:
 
     //- Constructor
-    Mesh(std::string& fileName);
+    Mesh(std::string& fileName, Buffers& buf);
 
     //- Destructor
     ~Mesh();

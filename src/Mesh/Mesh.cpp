@@ -11,12 +11,12 @@ using namespace std;
 // ------------------ Constructors & Destructors ----------------
 
 
-Mesh::Mesh(std::string& fileName)
+Mesh::Mesh(std::string& fileName, Buffers& buf) : buf(buf)
 {
     importMesh(fileName);
     
-    cout << "num of cells = " << cells.size() << endl;
-    cout << "num of real cells = " << nRealCells << endl;
+    //cout << "num of cells = " << cells.size() << endl;
+    //cout << "num of real cells = " << nRealCells << endl;
     //nEntitiesTotal = 0;
 
     for (int i = 0; i < cells.size(); ++i)
@@ -39,6 +39,83 @@ Mesh::Mesh(std::string& fileName)
     }
 
     structurizeEdges();
+
+    /// MPI OPERATION
+
+    // get total number of cells
+    nCellsGlob = 0;
+    MPI_Reduce(
+        &nRealCells, 
+        &nCellsGlob, 
+        1, 
+        MPI_INT, 
+        MPI_SUM, 
+        0, 
+        MPI_COMM_WORLD
+    );
+
+    // first gather for nRealCells for each proc
+    buf.nCellsPerProc.resize(numProcsTotal);
+    buf.mpiDisplMesh.resize(numProcsTotal);
+    MPI_Gather(
+        &nRealCells, 
+        1, 
+        MPI_INT, 
+        &(buf.nCellsPerProc[myRank]), 
+        1, 
+        MPI_INT, 
+        0, 
+        MPI_COMM_WORLD
+    );
+
+    if (myRank == 0)
+    {
+        buf.mpiDisplMesh[0] = 0;
+        
+        for (int i = 1; i < numProcsTotal; ++i)
+            buf.mpiDisplMesh[i] = buf.mpiDisplMesh[i-1] + buf.nCellsPerProc[i-1]; 
+
+        // cout << "DISPL" << endl;
+
+        // for (int i = 0; i < numProcsTotal; ++i)
+        //     cout << buf.mpiDisplMesh[i] << ' ';
+        // cout << endl;
+    }
+    
+    
+    // if (false)//(myRank == 0)
+    // {
+    //     cout << "MYrank = " << myRank << "; ";
+
+    //     //for (int len=0; len<numProcsTotal; ++len)\
+    //         cout << nCellsPerProc[len] << " ,,,  ";	
+    //     cout << endl;
+    // }
+
+    // get global numeration of total mesh cells
+    buf.globalMap.resize(nCellsGlob);
+    MPI_Gatherv(
+        &(globalCellNumber[0]),   /*pointer to beginning of sender*/
+        nRealCells,                 /*length of send data*/
+        MPI_INT,                     
+        &(buf.globalMap[0]),        /*pointer to beginning of receiver*/
+        &(buf.nCellsPerProc[0]),    /*lengths of arrays of received data*/
+        &(buf.mpiDisplMesh[0]),     /*places of received data in receiver*/
+        MPI_INT, 
+        0,                          /*number of proc who collect data*/
+        MPI_COMM_WORLD
+    );
+    
+    // if (myRank == 0)
+    // {
+    //     cout << "MYrank = " << myRank << "; MAP: ";
+    //     for (int len = 0; len < nCellsGlob; ++len)\
+    //         cout << buf.globalMap[len] << " , ";
+    //     cout << endl;
+    // }
+
+
+    //cout << "rank = " << myRank << "; total mesh size = " << nCellsGlob << endl;   
 
 }
 
@@ -228,7 +305,7 @@ void Mesh::importMesh(string& fileName)
 //            for (int i = 0; i < nNodes; ++i)
 //                cout << nodes[i]->x() << endl;
 
-            cout << "Number of nodes: " << nNodes << endl;
+            //cout << "Number of nodes: " << nNodes << endl;
         }
         else if (tag == "$Edges")
         {
@@ -259,7 +336,7 @@ void Mesh::importMesh(string& fileName)
 
             } while (tag != "$EndEdges");
 
-            cout << "Number of edges: " << nRealEdges << endl;
+            //cout << "Number of edges: " << nRealEdges << endl;
         }
         else if (tag == "$Cells")
         {
@@ -270,7 +347,7 @@ void Mesh::importMesh(string& fileName)
 /*
             for (int i : globalNodeNumber)
                 cout << i << ' ';
-            cout << endl;
+	    cout << endl;
 
             for (int i : globalEdgeNumber)
                 cout << i << ' ';
@@ -317,66 +394,142 @@ void Mesh::importMesh(string& fileName)
 
             } while (tag != "$EndCells");
 
-            cout << "Number of cells: " << nRealCells << endl;
+            //cout << "Number of cells: " << nRealCells << endl;
         }
-        else if (tag == "$NeibProcCells")
+        // else if (tag == "$NeibProcCells")
+        // {
+        //     int nProcCells;
+
+        //     reader >> nProcCells;
+        //     cells.reserve(nRealCells + nProcCells);
+        //     globalCellNumber.reserve(nRealCells + nProcCells);
+
+        //     for (int i = 0; i < nProcCells; ++i)
+        //     {
+
+        //         int nEdgesInCell;
+        //         int entity;
+
+        //         reader >> globalNum;
+        //         reader >> nEdgesInCell;
+
+        //         globalCellNumber.push_back(globalNum - 1);
+
+        //         //cout << nEdgesInCell << endl;
+        //         vector<shared_ptr<Point>> curNodes;
+        //         vector<shared_ptr<Edge>> curEdges;
+
+        //         curNodes.reserve(nEdgesInCell);
+        //         curEdges.reserve(nEdgesInCell);
+
+        //         for (int j = 0; j < nEdgesInCell; ++j)
+        //         {
+        //             reader >> entity;
+        //             //cout << entity - 1 << ' ' << localNumber(globalNodeNumber, entity - 1) << endl;
+        //             curNodes.push_back(nodes[localNumber(globalNodeNumber, entity - 1)] );
+        //         }
+
+        //         for (int j = 0; j < nEdgesInCell; ++j)
+        //         {
+        //             reader >> entity;
+        //             curEdges.push_back(edges[localNumber(globalEdgeNumber, entity - 1)] );
+        //         }
+
+        //         // add cells in list
+        //         cells.push_back(make_shared<Cell>(Cell(curNodes,curEdges)));
+
+        //         // add proc cell to patch
+        //         int numProc;
+        //         reader >> numProc;
+
+        //         addToProcPatch(cells.back(), numProc);
+        //     }
+
+        //     do
+        //     {
+        //         getline(reader, tag);
+
+        //     } while (tag != "$EndNeibProcCells");
+
+        //     nNeibProcs = procPatches.size();
+
+        //     //cout << "Number of neib procs: " << nNeibProcs << endl;
+        // }
+        else if (tag == "$NeibProcPatches")
         {
-            int nProcCells;
+            int totalNumProcCells = 0;
+            reader >> nNeibProcs;
 
-            reader >> nProcCells;
-            cells.reserve(nRealCells + nProcCells);
-            globalCellNumber.reserve(nRealCells + nProcCells);
-
-            for (int i = 0; i < nProcCells; ++i)
+            for (int iPatch = 0; iPatch < nNeibProcs; ++iPatch)
             {
-
-                int nEdgesInCell;
-                int entity;
-
-                reader >> globalNum;
-                reader >> nEdgesInCell;
-
-                globalCellNumber.push_back(globalNum - 1);
-
-                //cout << nEdgesInCell << endl;
-                vector<shared_ptr<Point>> curNodes;
-                vector<shared_ptr<Edge>> curEdges;
-
-                curNodes.reserve(nEdgesInCell);
-                curEdges.reserve(nEdgesInCell);
-
-                for (int j = 0; j < nEdgesInCell; ++j)
-                {
-                    reader >> entity;
-                    //cout << entity - 1 << ' ' << localNumber(globalNodeNumber, entity - 1) << endl;
-                    curNodes.push_back(nodes[localNumber(globalNodeNumber, entity - 1)] );
-                }
-
-                for (int j = 0; j < nEdgesInCell; ++j)
-                {
-                    reader >> entity;
-                    curEdges.push_back(edges[localNumber(globalEdgeNumber, entity - 1)] );
-                }
-
-                // add cells in list
-                cells.push_back(make_shared<Cell>(Cell(curNodes,curEdges)));
-
-                // add proc cell to patch
                 int numProc;
                 reader >> numProc;
 
-                addToProcPatch(cells.back(), numProc);
-            }
+                int nProcCells;
+                reader >> nProcCells;
+                totalNumProcCells += nProcCells;
+
+                string pName = "procPatch." + to_string(numProc);
+                procPatches.emplace_back(ProcPatch(pName, numProc));
+
+                cells.reserve(nRealCells + totalNumProcCells);
+                globalCellNumber.reserve(nRealCells + totalNumProcCells);
+
+                for (int i = 0; i < nProcCells; ++i)
+                {
+                    int nEdgesInCell;
+                    int entity;
+
+                    reader >> globalNum;
+                    reader >> nEdgesInCell;
+
+                    globalCellNumber.push_back(globalNum - 1);
+
+                    //cout << nEdgesInCell << endl;
+                    vector<shared_ptr<Point>> curNodes;
+                    vector<shared_ptr<Edge>> curEdges;
+
+                    curNodes.reserve(nEdgesInCell);
+                    curEdges.reserve(nEdgesInCell);
+
+                    for (int j = 0; j < nEdgesInCell; ++j)
+                    {
+                        reader >> entity;
+                        //cout << entity - 1 << ' ' << localNumber(globalNodeNumber, entity - 1) << endl;
+                        curNodes.push_back(nodes[localNumber(globalNodeNumber, entity - 1)] );
+                    }
+
+                    for (int j = 0; j < nEdgesInCell; ++j)
+                    {
+                        reader >> entity;
+                        curEdges.push_back(edges[localNumber(globalEdgeNumber, entity - 1)] );
+                    }
+
+                    // add cells in list
+                    cells.push_back(make_shared<Cell>(Cell(curNodes,curEdges)));
+                    cells.back()->number = cells.size() - 1;
+
+                    procPatches[iPatch].cellGroup.push_back(cells.back());
+                } // for alien cells
+
+                int nInnerProcCells;
+                int iCellGlobal;
+                reader >> nInnerProcCells;
+
+                for (int i = 0; i < nInnerProcCells; ++i)
+                {
+                    reader >> iCellGlobal;
+                    procPatches[iPatch].innerCellGroup.push_back(cells[localNumber(globalCellNumber, iCellGlobal - 1)]);
+                } // for inner cells
+            } // for iPatch
 
             do
             {
                 getline(reader, tag);
 
-            } while (tag != "$EndNeibProcCells");
+            } while (tag != "$EndNeibProcPatches");
 
-            nNeibProcs = procPatches.size();
-
-            cout << "Number of neib procs: " << nNeibProcs << endl;
+            //cout << "Number of neib procs: " << nNeibProcs << endl;
         }
         else if (tag == "$AdjointCellsForEdges")
         {
@@ -472,9 +625,9 @@ void Mesh::importMesh(string& fileName)
             //for(int i=0;i<edges.size();++i)\
                 cout << edges[i].neibCells.size() << endl;
 
-            for (const Patch& p : patches)
+            //for (const Patch& p : patches)
             {
-                cout << "Patch name: " << p.name << "; number of edges = " << p.cellGroup.size() << endl;
+                //cout << "Patch name: " << p.name << "; number of edges = " << p.cellGroup.size() << endl;
 
                 //for (const shared_ptr<Cell> c : p.cellGroup)
                 //    for (const shared_ptr<Point> n : c->nodes)

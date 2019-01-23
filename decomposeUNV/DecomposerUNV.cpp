@@ -495,7 +495,7 @@ void DecomposerUNV::exportRKDG()
     writer << nNodes << endl;
 
     for (int i = 0; i < nNodes; ++i)
-        writer << nodes[i][0] << ' ' << nodes[i][1] << endl;
+        writer << i + 1 << ' ' << nodes[i][0] << ' ' << nodes[i][1] << endl;
 
     writer << "$EndNodes\n";
 
@@ -508,22 +508,22 @@ void DecomposerUNV::exportRKDG()
 
     writer << "$Edges\n";
 
-    writer << nEdgesBound << endl;
-    writer << nEdges << endl;
+    writer << edges.size() << endl;
+    writer << edges.size() << endl;
 
     for (size_t i = 0; i < nEdges; ++i)
-        writer << abs (int(adjEdgeCells[i].size() - 2)) << ' ' << edges[2*i] << ' ' << edges[2*i + 1] << endl;
+        writer << i + 1 << ' ' << edges[2*i] << ' ' << edges[2*i + 1] << endl;
 
     writer << "$EndEdges\n";
 
     // --------------------------------------
 
     writer << "$Cells\n";
-    writer << nCells << endl;
+    writer << cellsAsEdges.size() << endl;
 
     for (size_t i = 0; i < nCells; ++i)
     {
-        writer << cellsAsEdges[i].size() << ' ';
+        writer << i + 1 << " " << cellsAsEdges[i].size() << ' ';
         for (size_t j = 0; j < cellsAsNodes[i].size(); ++j)
              writer << cellsAsNodes[i][j] << ' ';
         for (size_t j = 0; j < cellsAsEdges[i].size(); ++j)
@@ -533,20 +533,16 @@ void DecomposerUNV::exportRKDG()
 
     writer << "$EndCells\n";
 
-    // --------------------------------------
+   // --------------------------------------
 
-//    writer << "$CellCenters\n";
-//    writer << cellsAsEdges.size() << endl;
-
-//    for (size_t i = 0; i < cellsAsEdges.size(); ++i)
-//        writer << cellCenters[i][0] << ' ' << cellCenters[i][1] << endl;
-
-//    writer << "$EndCellCenters\n";
+    writer << "$NeibProcCells\n";
+    writer << 0 << endl;
+    writer << "$EndNeibProcCells\n";
 
     // --------------------------------------
 
     writer << "$AdjointCellsForEdges\n";
-    writer << nEdges << endl;
+    writer << edges.size() << endl;
 
     for (size_t i = 0; i < nEdges; ++i)
     {
@@ -562,7 +558,7 @@ void DecomposerUNV::exportRKDG()
     // --------------------------------------
 
     writer << "$EdgeNormals\n";
-    writer << nEdges << endl;
+    writer << edges.size() << endl;
 
     for (size_t i = 0; i < nEdges; ++i)
         writer << edgeNormals[i][0] << ' ' << edgeNormals[i][1] << endl;
@@ -639,8 +635,13 @@ void DecomposerUNV::exportPartMeshRKDG(int nDom) const
     vector<int> edgesInDom;
     vector<vector<int>> patchGroupsInDom;
     
-    vector<int> alienCells;
-    vector<int> alienCellsDom;
+    // vector<int> alienCells;
+    // vector<int> alienCellsDom;
+    // vector<int> innerBoundCells;
+
+    map<int, vector<int>> alienCells;
+    map<int, vector<int>> innerBoundCells;
+
     
     clock_t ts, te;
     
@@ -701,44 +702,61 @@ void DecomposerUNV::exportPartMeshRKDG(int nDom) const
     
     
     //step 4: get alien cells
+    int cInner;
     for (int nEdge : edgesInDom)
     {
         for (int cell : adjEdgeCells[nEdge])
         {
-            if (partition[cell-1] != nDom && find(alienCells.begin(), alienCells.end(), cell - 1) == alienCells.end())
+            int iDom = partition[cell-1];
+
+            if (iDom != nDom)
             {
-                alienCells.push_back(cell - 1);
-                alienCellsDom.push_back(partition[cell - 1]);
-            }
-        }
-    }
+                cInner = (cell == adjEdgeCells[nEdge][0]) ? adjEdgeCells[nEdge][1] : adjEdgeCells[nEdge][0];
+
+                if (find(alienCells[iDom].begin(), alienCells[iDom].end(), cell - 1) == alienCells[iDom].end())
+                    alienCells[iDom].push_back(cell - 1);
+
+                if (find(innerBoundCells[iDom].begin(), innerBoundCells[iDom].end(), cInner - 1) == innerBoundCells[iDom].end())
+                    innerBoundCells[iDom].push_back(cInner - 1);
+            } // if alien
+        } // for neibCells
+    } // for edgesInDom
+
+    for (auto& x : alienCells)
+        std::sort(x.second.begin(), x.second.end());
+    
+    for (auto& x : innerBoundCells)
+        std::sort(x.second.begin(), x.second.end());
     
     //step 5: add nodes and edges for alien cells to vectors of nodes and edges
     //for (const int num : alienCells)
-    for (int i = 0; i < alienCells.size(); ++i)
+    for (auto& x : alienCells)
     {
-        int num = alienCells[i];
-        // get coordinates of nodes
-        for (const int nNode : cellsAsNodes[num])
+        vector<int> alienProcCells = x.second;
+        for (int i = 0; i < alienProcCells.size(); ++i)
         {
-            if (!isWrittenN[nNode-1])
+            int num = alienProcCells[i];
+            // get coordinates of nodes
+            for (const int nNode : cellsAsNodes[num])
             {
-                nodesInDom.push_back(nNode-1);
-                isWrittenN[nNode-1] = true;
+                if (!isWrittenN[nNode-1])
+                {
+                    nodesInDom.push_back(nNode-1);
+                    isWrittenN[nNode-1] = true;
+                }
             }
-        }
 
-        // get edges
-        for (const int nEdge : cellsAsEdges[num])
-            if (!isWrittenE[nEdge-1])
-            {
-                edgesInDom.push_back(nEdge-1);
-                isWrittenE[nEdge-1] = true;
-            }
+            // get edges
+            for (const int nEdge : cellsAsEdges[num])
+                if (!isWrittenE[nEdge-1])
+                {
+                    edgesInDom.push_back(nEdge-1);
+                    isWrittenE[nEdge-1] = true;
+                }
+        }
     }
     
-    
-    int nAlienCells = alienCells.size();
+    //int nAlienCells = alienCells.size(); //////////////////////////////
     
     te = clock();
     
@@ -797,27 +815,63 @@ void DecomposerUNV::exportPartMeshRKDG(int nDom) const
 
     writerPart << "$EndCells\n";
 
+    // // --------------------------------------
+
+    // writerPart << "$NeibProcCells\n";
+    // writerPart << nAlienCells << endl;
+
+    // for (int i = 0; i < nAlienCells; ++i)
+    // {
+    //     globalNum = alienCells[i];
+    //     writerPart << globalNum + 1 << ' ';
+    //     writerPart << cellsAsNodes[globalNum].size() << ' ';
+    //     for (size_t j = 0; j < cellsAsNodes[globalNum].size(); ++j)
+    //          writerPart << cellsAsNodes[globalNum][j] << ' ';
+    //     for (size_t j = 0; j < cellsAsEdges[globalNum].size(); ++j)
+    //          writerPart << cellsAsEdges[globalNum][j] << ' ';
+             
+    //     writerPart << alienCellsDom[i] << ' ';
+        
+    //     writerPart << endl;
+    // }
+
+    // writerPart << "$EndNeibProcCells\n";
+
     // --------------------------------------
 
-    writerPart << "$NeibProcCells\n";
-    writerPart << nAlienCells << endl;
+    writerPart << "$NeibProcPatches\n";
+    writerPart << alienCells.size() << endl;
 
-    for (int i = 0; i < nAlienCells; ++i)
+    for (auto& x : alienCells)
     {
-        globalNum = alienCells[i];
-        writerPart << globalNum + 1 << ' ';
-        writerPart << cellsAsNodes[globalNum].size() << ' ';
-        for (size_t j = 0; j < cellsAsNodes[globalNum].size(); ++j)
-             writerPart << cellsAsNodes[globalNum][j] << ' ';
-        for (size_t j = 0; j < cellsAsEdges[globalNum].size(); ++j)
-             writerPart << cellsAsEdges[globalNum][j] << ' ';
-             
-        writerPart << alienCellsDom[i] << ' ';
-        
+        int iProc = x.first;
+
+        writerPart << iProc << endl;
+        writerPart << x.second.size() << endl;
+
+        for (int i = 0; i < x.second.size(); ++i)
+        {
+            globalNum = x.second[i];
+            writerPart << globalNum + 1 << ' ';
+            writerPart << cellsAsNodes[globalNum].size() << ' ';
+            for (size_t j = 0; j < cellsAsNodes[globalNum].size(); ++j)
+                 writerPart << cellsAsNodes[globalNum][j] << ' ';
+            for (size_t j = 0; j < cellsAsEdges[globalNum].size(); ++j)
+                 writerPart << cellsAsEdges[globalNum][j] << ' ';
+            
+            writerPart << endl;
+        }
+
+        writerPart << innerBoundCells[iProc].size() << endl;
+
+        for (int iCell : innerBoundCells[iProc])
+            writerPart << iCell + 1 << ' ';
         writerPart << endl;
+
     }
 
-    writerPart << "$EndNeibProcCells\n";
+
+    writerPart << "$EndNeibProcPatches\n";
 
     // --------------------------------------
 

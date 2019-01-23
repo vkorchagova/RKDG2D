@@ -4,7 +4,6 @@
 #include <math.h>
 #include <functional>
 #include <memory>
-#include <map>
 
 #include "numvector.h"
 #include "defs.h"
@@ -27,10 +26,10 @@ public:
     const Basis& B;
 
     //- MPI buffers: key is the proc number, value is the pack of coeffs on proc
-    std::map<int, std::vector<double>> bufSend;
-    std::map<int, std::vector<double>> bufRecv;
+    // std::map<int, std::vector<double>> bufSendBound;
+    // std::map<int, std::vector<double>> bufRecvBound;
 
-    //- MPI full pack of solution coeffs
+    //- Full pack of solution coeffs
     std::vector<numvector<double, dimS>> fullSOL;
 
 public:

@@ -11,14 +11,15 @@ using namespace std;
 int main()
 {
 
-    DecomposerUNV converter("../../../meshCollection/Mesh_4x4.unv","mesh2D");
-    int nDomains = 4;
+    DecomposerUNV converter("../square1_192.unv","mesh2D");
+    int nDomains = 6;
     
     string metisCommand = "mpmetis meshMETIS " + to_string(nDomains);
     string partCellsFile = "meshMETIS.epart." + to_string(nDomains);
 
     converter.importUNV();
-    //converter.exportRKDG();
+    converter.exportRKDG();
+    
     converter.exportMETIS();
     system(metisCommand.c_str());
 

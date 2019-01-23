@@ -26,6 +26,9 @@ extern int numProcsTotal;
 //- Status
 extern MPI_Status status;
 
+//- Request
+extern MPI_Request request;
+
 
 class Solver
 {
@@ -51,6 +54,9 @@ public:
     //- Reference to flux
     const Flux& flux;
 
+    //- Reference to MPI buffers
+    Buffers& buf;
+
     std::vector<Boundary> bc;
 
 	/// Variables
@@ -61,7 +67,7 @@ public:
 
     //- Constructor
     Solver( Basis& B, Mesh& msh, Solution& sln,
-			Problem &prb, Physics& phs, Flux& flx);
+			Problem &prb, Physics& phs, Flux& flx, Buffers& buf);
 
     //- Destructor
     ~Solver() {}
@@ -92,6 +98,9 @@ public:
 
     //- Exchange data
     void dataExchange();
+
+    //- Collect solution
+    void collectSolution();
 
 
 };

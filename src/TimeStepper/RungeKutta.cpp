@@ -111,36 +111,53 @@ void RungeKutta::Tstep()
         T.updateTime(t + alpha[i]*tau);   // ??? Is it necessary?
         
         // 1st step: apply boundary
-        for (size_t i = 0; i < bc.size(); ++i)
+        for (size_t ind = 0; ind < bc.size(); ++ind)
         {
-            bc[i]->applyBoundary(sln.SOL);
+            bc[ind]->applyBoundary(sln.SOL);
         }
 
+        // 2nd step: MPI exchange between neib procs
+        slv.dataExchange();
+        
+        if (myRank == 0)
+        {
+	    cout << "sln sol before rhs" << sln.SOL[0] << endl;
+        }
+
+        // 3rd step: assemble rhs of SODE
         k[i] = slv.assembleRHS(sln.SOL);
-		//Arr[i]= slv.assembleRHS(sln.SOL_aux);
 
         //cout << "k[i]" << endl;
         //for(int iCell = 0; iCell < sln.SOL.size(); ++iCell)\
             cout << "cell#" << iCell << "; k[i][iCell]: " << k[i][iCell] << endl;
         //cout << endl;
 
+        // 4th step: RK step
         lhs = lhsOld;
 
         for (int j = 0; j <= i; ++j)
-           lhs = lhs + k[j] * beta[i][j] * tau; // !!!Choose between Arr and k!!!
+           lhs = lhs + k[j] * beta[i][j] * tau; 
 
+	if (myRank == 0)
+        {
+	    cout << "sln sol after rhs" << sln.SOL[0] << endl;
+        }
 
+        // 5th step: remember about non-ortho basis!
         sln.SOL = slv.correctNonOrtho(lhs);
+	
+	if (myRank == 0)
+        {
+	    cout << "sln sol after correct non ortho" << sln.SOL[0] << endl;
+        }
 
         //for(int iCell = 0; iCell < sln.SOL.size(); ++iCell)\
         //    cout << "cell#" << iCell << "; SOL: " << sln.SOL[iCell] << endl;
         //cout << endl;
 		
-		///
+		// 6th step: limit solution
+        slv.dataExchange();
         lmt.limit(sln.SOL);
-
-		slv.dataExchange();
-		///
 
     }// for stages
     
@@ -149,7 +166,7 @@ void RungeKutta::Tstep()
 	
     //for(int iCell=0; iCell<16; ++iCell)\
         cout << "cell#" << iCell << "; SOL: " << sln.SOL[iCell] << endl;
-    cout << endl;
+    //cout << endl;
 
     //time.updateTime(tOld);
 

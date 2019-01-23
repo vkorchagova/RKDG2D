@@ -6,26 +6,119 @@
 using namespace std;
 
 Solver::Solver( Basis& Bas, Mesh& msh, Solution& soln,
-                Problem &prob, Physics& phys, Flux& flx) : 
-                B(Bas), M(msh), sln(soln), phs(phys), prb(prob), flux(flx)
+                Problem &prob, Physics& phys, Flux& flx, Buffers& buf) : 
+                B(Bas), M(msh), sln(soln), phs(phys), prb(prob), flux(flx), buf(buf)
 {
-    for (const ProcPatch& procPatch : M.procPatches)
+
+    // // get total number of cells
+    // int nCellGlob = 0;
+    // MPI_Reduce(&(M.nRealCells), &nCellGlob, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
+
+    sln.fullSOL.resize(M.nCellsGlob); 
+    buf.forFullSOL.resize(M.nCellsGlob * dimS);
+
+    ///
+    /// preparation for sol collection on proc #0
+    ///
+
+    // resize buffers for sol collection on proc #0
+    buf.forSendLocalSOL.resize(M.nRealCells * dimS);
+    buf.forRecvLocalSOL.resize(M.nRealCells * dimS);
+
+    // resize length/displs for sol collection on proc #0
+    buf.nCoeffsPerProc.resize(numProcsTotal);
+    buf.mpiDisplSOL.resize(numProcsTotal);
+
+    // preparation for gatherv for solution
+    if (myRank == 0)
     {
-        sln.bufSend[procPatch.procNum].resize(dimS * procPatch.cellGroup.size());
-        sln.bufRecv[procPatch.procNum].resize(dimS * procPatch.cellGroup.size());
+        for (int i = 0; i < numProcsTotal; ++i)
+            buf.nCoeffsPerProc[i] = buf.nCellsPerProc[i] * dimS;
+
+        buf.mpiDisplSOL[0] = 0;
+        
+        for (int i = 1; i < numProcsTotal; ++i)
+            buf.mpiDisplSOL[i] = buf.mpiDisplSOL[i-1] + buf.nCoeffsPerProc[i-1]; 
+
+        // cout << "DISPL" << endl;
+
+        // for (int i = 0; i < numProcsTotal; ++i)
+        //     cout << buf.mpiDisplSOL[i] << ' ';
+        // cout << endl;
+    } // if myRank
+
+
+    ///
+    /// preparation for data exchange between boundary procs
+    ///
+
+    // resize buffer-sender for proc boundaries
+    int nProcCellsTotalInner = 0;
+    for (const ProcPatch& p : M.procPatches)
+        nProcCellsTotalInner += p.innerCellGroup.size();
+    
+    buf.forSendBoundSOL.resize(nProcCellsTotalInner * dimS);
+
+    // resize buffer-receiver for proc boundaries
+    int nProcCellsTotalOuter = 0;
+    for (const ProcPatch& p : M.procPatches)
+        nProcCellsTotalOuter += p.cellGroup.size();
+    
+    buf.forRecvBoundSOL.resize(nProcCellsTotalOuter * dimS);
+
+    // resize len/displs for data exchange
+    buf.boundProcSolSizesS.resize(numProcsTotal, 0);
+    buf.boundProcSolDisplS.resize(numProcsTotal, 0);
+
+    buf.boundProcSolSizesR.resize(numProcsTotal, 0);
+    buf.boundProcSolDisplR.resize(numProcsTotal, 0);
+
+    // prepare len/displs for data send
+    for (const ProcPatch& p : M.procPatches)
+        for (int i = 0; i < numProcsTotal; ++i) 
+            if (i == p.procNum)
+            {
+                buf.boundProcSolSizesS[i] = p.innerCellGroup.size() * dimS;
+                buf.boundProcSolSizesR[i] = p.cellGroup.size() * dimS;
+            }
+
+    buf.boundProcSolDisplS[0] = 0;
+    buf.boundProcSolDisplR[0] = 0;
+    
+    for (int i = 1; i < numProcsTotal; ++i)
+    {
+        buf.boundProcSolDisplS[i] = buf.boundProcSolDisplS[i-1] + buf.boundProcSolSizesS[i-1];
+        buf.boundProcSolDisplR[i] = buf.boundProcSolDisplR[i-1] + buf.boundProcSolSizesR[i-1];
     }
 
-    int nCellGlob = 0;
-    MPI_Reduce(&(M.nRealCells), &nCellGlob, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
-    
-    //cout << "rank = " << myRank << "; local mesh size = " << M.nRealCells << endl;
+    // cout << "rank = " << myRank << "; total mesh size = " << sln.fullSOL.size() << endl;
+    // if (myRank == 2)
+    // {
+    //     cout << "S BOUND SIZES" << endl;
 
+    //     for (int i = 0; i < numProcsTotal; ++i)
+    //         cout << buf.boundProcSolSizesS[i] << ' ';
+    //     cout << endl;
 
-    if (myRank == 0)
-        sln.fullSOL.resize(nCellGlob); // TODOOOOOOOOOOOOOOOOOO
+    //     cout << "S BOUND DISPL" << endl;
 
-    cout << "rank = " << myRank << "; total mesh size = " << sln.fullSOL.size() << endl;
-        
+    //     for (int i = 0; i < numProcsTotal; ++i)
+    //         cout << buf.boundProcSolDisplS[i] << ' ';
+    //     cout << endl;
+
+    //     cout << "R BOUND SIZES" << endl;
+
+    //     for (int i = 0; i < numProcsTotal; ++i)
+    //         cout << buf.boundProcSolSizesR[i] << ' ';
+    //     cout << endl;
+
+    //     cout << "R BOUND DISPL" << endl;
+
+    //     for (int i = 0; i < numProcsTotal; ++i)
+    //         cout << buf.boundProcSolDisplR[i] << ' ';
+    //     cout << endl;
+    // }
+    // // get full mapping
 }
 
 void Solver::setInitialConditions()
@@ -43,8 +136,6 @@ void Solver::setInitialConditions()
         sln.SOL[k] = correctNonOrthoCell(alpha, B.gramian[k]);
         //cout << "cell# " << k << "; cfts: " << sln.SOL[k] << endl;
     }
-    
-    cout << "OK" << endl;
 
 } // end setInitialConditions
 
@@ -334,5 +425,171 @@ vector<numvector<double, dimS>> Solver::correctPrevIter(const vector<numvector<d
 
 void Solver::dataExchange()
 {
+    // 1st step: fill bound send buffers and resize recv buffers
 
+    for (const ProcPatch& p : M.procPatches)
+    {
+        int curDispl = buf.boundProcSolDisplS[p.procNum];
+        // if (myRank == 2)
+        //     cout << "proc num = " << p.procNum << endl;
+
+        for (int i = 0; i < p.innerCellGroup.size(); ++i)
+        {
+            int iCell = p.innerCellGroup[i]->number;
+
+            for (int j = 0; j < dimS; ++j)
+                buf.forSendBoundSOL[curDispl + i*dimS + j] = sln.SOL[iCell][j];
+            
+            // if (myRank == 2)
+            // {
+            //     cout << "\nbufferize sol on cell #" << M.globalCellNumber[iCell] << endl;
+            //     for (int j = 0; j < dimS; ++j)
+            //         cout << sln.SOL[iCell][j] << ' ';
+            //     cout << endl;
+            // }
+        }
+    }
+
+    // if (myRank == 2)
+    // {
+    //     cout << "buf.forSendBoundSOL" << endl;
+    //     int stopper = 0;
+    //     for (int i = 0; i < buf.forSendBoundSOL.size(); ++i)
+    //     {    
+    //         cout << buf.forSendBoundSOL[i] << ' ';
+    //         if (stopper == dimS -1)
+    //         {
+    //             cout << endl;
+    //             stopper = 0;
+    //         }
+    //         else
+    //             ++stopper;
+    //     }
+    // }
+
+    // 2nd step: scatter data for all procs
+
+    MPI_Alltoallv(
+        &(buf.forSendBoundSOL[0]),      /*who send*/
+        &(buf.boundProcSolSizesS[0]),   /*how much*/
+        &(buf.boundProcSolDisplS[0]),   /*displs*/
+        MPI_DOUBLE,
+        &(buf.forRecvBoundSOL[0]),      /*who recv*/
+        &(buf.boundProcSolSizesR[0]),   /*how much*/
+        &(buf.boundProcSolDisplR[0]),   /*displs*/
+        MPI_DOUBLE,
+        MPI_COMM_WORLD
+    );
+
+    MPI_Barrier(MPI_COMM_WORLD);
+
+    // 3rd step: sort data after receiving
+
+    for (const ProcPatch& p : M.procPatches)
+    {
+        int curDispl = buf.boundProcSolDisplR[p.procNum];
+
+        // if (myRank == 2)
+        //     cout << "proc num = " << p.procNum << endl;
+
+        for (int i = 0; i < p.cellGroup.size(); ++i)
+        {
+            int iCell = p.cellGroup[i]->number;
+            
+            for (int j = 0; j < dimS; ++j)
+                sln.SOL[iCell][j] = buf.forRecvBoundSOL[curDispl + i*dimS + j];
+        }
+    }
+
+
+
+    // if (myRank == 2)
+    // {
+    //     cout << "buf.forRecvBoundSOL" << endl;
+    //     int stopper = 0;
+    //     for (int i = 0; i < buf.forRecvBoundSOL.size(); ++i)
+    //     {    
+    //         cout << buf.forRecvBoundSOL[i] << ' ';
+    //         if (stopper == dimS - 1)
+    //         {
+    //             cout << endl;
+    //             stopper = 0;
+    //         }
+    //         else
+    //             ++stopper;
+    //     }
+    // }
+
+    // if (myRank == 2)
+    // {
+    //     cout << "sol " << M.globalCellNumber[4] << " on proc 2\n" << sln.SOL[4] << endl;
+    // }
+
+    // if (myRank == 3)
+    // {
+    //     cout << "sol "<< M.globalCellNumber[2] << " on proc 3\n" << sln.SOL[2] << endl;
+    // }
+}
+
+void Solver::collectSolution()
+{
+    // put solution on each proc into buffer
+
+    for (int i = 0; i < M.nRealCells; ++i)
+        for (int j = 0; j < dimS; ++j)
+            buf.forSendLocalSOL[i*dimS + j] = sln.SOL[i][j];
+
+    // if (myRank == 0)
+    // {
+    //     cout << "sendBuf for local sol on proc 0" << endl;
+    //     for (int i = 0; i < M.nRealCells; ++i)
+    //     {   
+    //         for (int j = 0; j < dimS; ++j)
+    //             cout << buf.forSendLocalSOL[i*dimS + j] << ' ';
+    //         cout << endl;
+    //     }
+    // }
+
+
+
+    // collect full solution on proc #0
+    MPI_Gatherv(
+        &(buf.forSendLocalSOL[0]), 
+        M.nRealCells*dimS, 
+        MPI_DOUBLE, 
+        &(buf.forFullSOL[0]), 
+        &(buf.nCoeffsPerProc[0]), 
+        &(buf.mpiDisplSOL[0]), 
+        MPI_DOUBLE, 
+        0, 
+        MPI_COMM_WORLD
+    );
+
+    MPI_Barrier(MPI_COMM_WORLD);
+
+    // sort received solution according to global map
+
+    for (int i = 0; i < M.nCellsGlob; ++i)
+        for (int j = 0; j < dimS; ++j)
+            sln.fullSOL[buf.globalMap[i]][j] = buf.forFullSOL[i*dimS + j];
+
+    // if (myRank == 0)
+    // {
+    //     cout << "buf.forFullSOL for local sol on proc 0" << endl;
+    //     for (int i = 0; i < M.nCellsGlob; ++i)
+    //     {   
+    //         for (int j = 0; j < dimS; ++j)
+    //             cout << buf.forFullSOL[i*dimS + j] << ' ';
+    //         cout << endl;
+    //     }
+
+    //     // cout << "\nfullSOL for local sol on proc 0" << endl;
+    //     // for (int i = 0; i < M.nCellsGlob; ++i)
+    //     // {   
+    //     //     for (int j = 0; j < dimS; ++j)
+    //     //         cout << sln.fullSOL[i][j] << ' ';
+    //     //     cout << endl;
+    //     // }
+    // }
+    
 }

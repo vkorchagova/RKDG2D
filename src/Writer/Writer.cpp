@@ -23,7 +23,7 @@ void Writer::exportFrameVTK(const std::string& fileName) const
 void Writer::exportNativeCoeffs(const std::string& fileName) const
 {
     ofstream wStream (fileName);
-    exportNativeCoeffs(wStream);
+    outputFullNativeCoeffs(wStream);
     wStream.close();
 }
 
@@ -155,7 +155,7 @@ void Writer::exportFrameVTK(ostream& wStream) const
 }
 
 
-void Writer::exportNativeCoeffs(ostream& wStream) const
+void Writer::outputNativeCoeffs(ostream& wStream) const
 {
     for (size_t k = 0; k < solution.SOL.size(); ++k)
     {
@@ -166,7 +166,24 @@ void Writer::exportNativeCoeffs(ostream& wStream) const
     }
 }
 
-void Writer::collectFullSolution()
+void Writer::outputFullNativeCoeffs(ostream& wStream) const
 {
+    for (size_t k = 0; k < solution.fullSOL.size(); ++k)
+    {
+        for (int i = 0; i < dimS; ++i)
+            wStream << solution.fullSOL[k][i] << ' ';
 
+        wStream << endl;
+    }
+}
+
+void Writer::outputFullNativeCoeffs(std::ostream& wStream, std::vector<numvector<double, dimS>> coeffs) const
+{
+    for (size_t k = 0; k < coeffs.size(); ++k)
+    {
+        for (int i = 0; i < dimS; ++i)
+            wStream << coeffs[k][i] << ' ';
+
+        wStream << endl;
+    }    
 }

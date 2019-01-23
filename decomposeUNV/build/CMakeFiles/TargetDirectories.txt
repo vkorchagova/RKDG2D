@@ -1,3 +1,0 @@
-/home/v.korchagova/Документы/BMSTU/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/rebuild_cache.dir
-/home/v.korchagova/Документы/BMSTU/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/decomposeUNV.dir
-/home/v.korchagova/Документы/BMSTU/RKDG/git/RKDG2D-MPI/decomposeUNV/build/CMakeFiles/edit_cache.dir

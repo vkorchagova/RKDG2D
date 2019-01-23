@@ -43,6 +43,9 @@ public:
     //- Proc num
     int procNum;
 
+    //- Inner cell group
+    std::vector<std::shared_ptr<Cell>> innerCellGroup;
+
     //- Constructor
     ProcPatch(std::string pN, int pNum) : Patch(pN), procNum(pNum) {}
 

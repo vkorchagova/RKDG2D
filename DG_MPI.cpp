@@ -8,7 +8,6 @@
 
 #include <sys/stat.h>
 
-
 #include <iostream>
 #include <fstream>
 #include <cmath>
@@ -17,6 +16,7 @@
 #include <string>
 #include <time.h>
 #include "numvector.h"
+#include "Buffers.h"
 
 #include "defs.h"		//- Basic arithmetics
 //#include "Params.h"		//- All the manually defining parameters of the method
@@ -44,11 +44,14 @@
 //- Proc rank 
 int myRank;
 
-//- Size of ...
+//- Total number of procs
 int numProcsTotal;
 
 //- Status
 MPI_Status status;
+
+//- Request
+MPI_Request request;
 
 
 using namespace std;
@@ -64,12 +67,13 @@ int main(int argc, char* argv[])
 	MPI_Comm_size(MPI_COMM_WORLD, &numProcsTotal);
 	MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
 
-    cout << "size = " << numProcsTotal << "; rank = " << myRank << endl;
+    //cout << "size = " << numProcsTotal << "; rank = " << myRank << endl;
 
     //-----------------------
 
     string meshFileName = "mesh2D." + to_string(myRank);
-    Mesh mesh(meshFileName);
+    Buffers buf;
+    Mesh mesh(meshFileName, buf);
     Basis basis(mesh.cells);
     Solution solution(basis);
     
@@ -80,15 +84,15 @@ int main(int argc, char* argv[])
 
     int order = 2;
     double tStart = 0.0;
-    double tEnd = -0.6;
-    double initTau = 1e-4;
-    double outputInterval = 0.01;
+    double tEnd = 1.0;
+    double initTau = 2.5e-5;
+    double outputInterval = 0.05;
     TimeControl time(mesh, tStart, tEnd, initTau, outputInterval);
 
     CaseInit caseName = SodCircle;
     Problem problem(caseName, mesh, time);
 
-    Solver solver(basis, mesh, solution, problem, physics, flux);
+    Solver solver(basis, mesh, solution, problem, physics, flux, buf);
 
     LimiterBJ limiter(mesh.cells, solution);
 
@@ -116,17 +120,21 @@ int main(int argc, char* argv[])
         for (size_t i = 0; i < mesh.patches.size(); ++i)
             problem.bc[i]->applyBoundary(solution.SOL);
 
+        solver.dataExchange();
+
         limiter.limit(solution.SOL);
 
-        writer.exportFrameVTK("alphaCoeffs/0.vtk");
-        writer.exportNativeCoeffs("alphaCoeffs/0.dat");
+        solver.collectSolution();
+            
+        if (myRank == 0) 
+            writer.exportNativeCoeffs("alphaCoeffs/" + to_string(tStart) + ".dat");
     }
 
     physics.cpcv = problem.cpcv;
-    cout << physics.cpcv << endl;
+    //cout << physics.cpcv << endl;
 
-    for (int i = 0; i < mesh.patches.size(); ++i)
-        cout << "BC type #" << i << ":" << problem.bc[i]->type << endl;
+    //for (int i = 0; i < mesh.patches.size(); ++i)
+        //cout << "BC type #" << i << ":" << problem.bc[i]->type << endl;
 
     //for (size_t i = 0; i < mesh.cells.size(); ++i)
      //   cout << "sol #" << i << ": " << solution.SOL[i] << endl;
@@ -136,30 +144,33 @@ int main(int argc, char* argv[])
     
     //solver.assembleRHS(solution.SOL);
     
-    //solution.SOL_aux=solution.SOL;
-
-    
     double t0, t1;
 
     //for (double t = tStart; t < tEnd; t += tau)
     while (time.running())
     {
-        cout << "-------" << endl;
-        cout << "Time = " << time.getTime() << " s" << endl;
-        cout << "\ttau = " << time.getTau() << " s" << endl;
+        if (myRank == 0) 
+        {
+            cout << "-------" << endl;
+            cout << "Time = " << time.getTime() << " s" << endl;
+            cout << "\ttau = " << time.getTau() << " s" << endl;
+        }
 
         t0 = MPI_Wtime();
         RK.Tstep();
         t1 = MPI_Wtime();
 
-        cout << "\tstep time = " << t1 - t0 << " s" << endl;
+        if (myRank == 0) 
+        {
+            cout << "\tstep time = " << t1 - t0 << " s" << endl;
+        }
 
         if (time.isOutput())
         {
-            writer.exportFrameVTK("alphaCoeffs/" + to_string(time.getTime()) + ".vtk"); // not needed in MPI processes
-
-            // if rank = 0 -> writer.exportNativeCoeffs(sln.fullSOL)
-            writer.exportNativeCoeffs("alphaCoeffs/" + to_string(time.getTime()) + ".dat"); // do it only on proc rank = 0
+            solver.collectSolution();
+            
+            if (myRank == 0) 
+                writer.exportNativeCoeffs("alphaCoeffs/" + to_string(time.getTime()) + ".dat"); // do it only on proc rank = 0
         }
     }
 
