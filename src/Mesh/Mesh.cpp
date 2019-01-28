@@ -40,6 +40,8 @@ Mesh::Mesh(std::string& fileName, Buffers& buf) : buf(buf)
 
     structurizeEdges();
 
+    cout << "Mesh import OK" << endl;
+
     /// MPI OPERATION
 
     // get total number of cells
@@ -132,8 +134,12 @@ void Mesh::structurizeEdges()
         for (const shared_ptr<Edge> e : p.edgeGroup)
             edges.erase(find(edges.begin(),edges.end(),e));
 
+    nEdgesBound = 0;
     for (const Patch& p : patches )
+    {
         edges.insert(edges.begin(),p.edgeGroup.begin(), p.edgeGroup.end());
+        nEdgesBound += p.edgeGroup.size();
+    }
 
     for (int i = 0; i < nRealEdges; ++i)
         edges[i]->number = i;
@@ -180,11 +186,11 @@ void Mesh::createPhysicalPatch(const vector<shared_ptr<Edge>>& edgeGroup, const 
 
     Patch& p = patches.back();
 
-    for (const shared_ptr<Edge>& e : edgeGroup)
-    {
-        //shared_ptr<Cell> c = makeGhostCell(e);
-        p.cellGroup.push_back(makeGhostCell(e));
-    }
+    // for (const shared_ptr<Edge>& e : edgeGroup)
+    // {
+    //     //shared_ptr<Cell> c = makeGhostCell(e);
+    //     p.cellGroup.push_back(makeGhostCell(e));
+    // }
 
     p.edgeGroup = edgeGroup;
 }
@@ -305,7 +311,8 @@ void Mesh::importMesh(string& fileName)
 //            for (int i = 0; i < nNodes; ++i)
 //                cout << nodes[i]->x() << endl;
 
-            //cout << "Number of nodes: " << nNodes << endl;
+            if (myRank == 0)
+                cout << "Number of nodes: " << nNodes << endl;
         }
         else if (tag == "$Edges")
         {
@@ -336,7 +343,8 @@ void Mesh::importMesh(string& fileName)
 
             } while (tag != "$EndEdges");
 
-            //cout << "Number of edges: " << nRealEdges << endl;
+            if (myRank == 0)
+                cout << "Number of edges: " << nRealEdges << endl;
         }
         else if (tag == "$Cells")
         {
@@ -394,7 +402,8 @@ void Mesh::importMesh(string& fileName)
 
             } while (tag != "$EndCells");
 
-            //cout << "Number of cells: " << nRealCells << endl;
+            if (myRank == 0)
+                cout << "Number of cells: " << nRealCells << endl;
         }
         // else if (tag == "$NeibProcCells")
         // {
@@ -529,7 +538,8 @@ void Mesh::importMesh(string& fileName)
 
             } while (tag != "$EndNeibProcPatches");
 
-            //cout << "Number of neib procs: " << nNeibProcs << endl;
+            if (myRank == 0)
+                cout << "Number of neib procs: " << nNeibProcs << endl;
         }
         else if (tag == "$AdjointCellsForEdges")
         {
@@ -561,7 +571,8 @@ void Mesh::importMesh(string& fileName)
 
             } while (tag != "$EndAdjointCellsForEdges");
 
-            //cout << "Adjoint cells for each edge are proceeded" << endl;
+            if (myRank == 0)
+                cout << "Adjoint cells for each edge are obtained" << endl;
 
         }
         else if (tag == "$EdgeNormals")
@@ -589,7 +600,8 @@ void Mesh::importMesh(string& fileName)
 
             } while (tag != "$EndEdgeNormals");
 
-            //cout << "Normal vectors for each edge are proceeded" << endl;
+            if (myRank == 0)
+                cout << "Normal vectors for each edge are obtained" << endl;
         }
         else if (tag == "$Patches")
         {
@@ -625,14 +637,15 @@ void Mesh::importMesh(string& fileName)
             //for(int i=0;i<edges.size();++i)\
                 cout << edges[i].neibCells.size() << endl;
 
-            //for (const Patch& p : patches)
-            {
-                //cout << "Patch name: " << p.name << "; number of edges = " << p.cellGroup.size() << endl;
+            if (myRank == 0)
+                for (const Patch& p : patches)
+                {
+                    cout << "Patch name: " << p.name << "; number of edges = " << p.edgeGroup.size() << endl;
 
-                //for (const shared_ptr<Cell> c : p.cellGroup)
-                //    for (const shared_ptr<Point> n : c->nodes)
-                //        cout << n->x() << ' ' << n->y() << endl;
-            }
+                    //for (const shared_ptr<Cell> c : p.cellGroup)
+                    //    for (const shared_ptr<Point> n : c->nodes)
+                    //        cout << n->x() << ' ' << n->y() << endl;
+                }
             
 
             do

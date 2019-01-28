@@ -3,7 +3,6 @@
 
 #include "Physics.h"
 #include "defs.h"
-#include "compService.h"
 
 class Flux
 {
@@ -23,7 +22,7 @@ public:
     virtual ~Flux() {}
 
     //- Evaluate numerical flux through one point
-    virtual numvector<double, dimPh> evaluate(const numvector<double, dimPh>& solInner, const numvector<double, dimPh>& solOuter, const Point& n) const = 0;
+    virtual numvector<double, dimPh> evaluate(const numvector<double, dimPh>& solInner, const numvector<double, dimPh>& solOuter) const = 0;
 
 	///
 	///- Averaging computations

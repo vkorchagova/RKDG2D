@@ -18,10 +18,7 @@ public:
     
     //- The very Coeffs
     std::vector<numvector<double, dimS>> SOL;
-
-    //- And its auxilliary copy for any technical needs
-    std::vector<numvector<double, dimS>> SOL_aux;
-
+    
     //- Reference to the basis
     const Basis& B;
 

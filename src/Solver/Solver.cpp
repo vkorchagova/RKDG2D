@@ -127,7 +127,6 @@ void Solver::setInitialConditions()
     numvector<double, dimS> alpha;
 
     sln.SOL.resize(nCells);
-    sln.SOL_aux.resize(nCells);
 
     //#pragma omp parallel for
     for (int k = 0; k < nCells; ++k)
@@ -205,41 +204,80 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
     shared_ptr<Edge> e;
     shared_ptr<Cell> cell;
     Point gPoint;
+    Point eNormal;
 
-    for (size_t iEdge = 0; iEdge < M.nRealEdges; ++iEdge)
+    // for (size_t ind = 0; ind < bc.size(); ++ind)
+    //     {
+    //         bc[ind]->applyBoundary(sln.SOL);
+    //     }
+
+    for (const shared_ptr<Boundary>& bcond : prb.bc)
     {
-        //cout << "iEdge = " << iEdge <<endl;
+        for (const shared_ptr<Edge>& e : bcond->patch.edgeGroup)
+        {
+            int iCellLeft  = e->neibCells[0]->number;
+
+            // cout << iCellLeft << ' ' << iCellRight << endl;
+            for (size_t iGP = 0; iGP < nGP; ++iGP)
+            {
+                // cout << "iGP = " << iGP;// << endl;
+                gPoint = e->gPoints[iGP];
+                eNormal = e->n;
+                // cout << "gp = " << gPoint << endl;
+
+                solLeft  = rotate(sln.reconstruct(iCellLeft,  gPoint), eNormal);
+                solRight = bcond->getSolOuter(solLeft);
+
+                // cout << "slL = " << solLeft << endl;
+                // cout << "slR = " << solRight << endl;
+                
+                gpFluxes[iGP] = inverseRotate(flux.evaluate(solLeft, solRight), eNormal);
+
+                // cout << "; flux: " << gpFluxes[iGP] << endl;
+            }// for GP
+
+            //cout << "-------------" << endl;
+            numFluxes[e->number] = gpFluxes;
+            //cout << "edge #" << e->number << "; numFlux: " << gpFluxes[0] << ' ' << gpFluxes[1] << endl;
+
+        }// for bound edges
+    } // for bconds 
+
+    for (size_t iEdge = M.nEdgesBound; iEdge < M.nRealEdges; ++iEdge)
+    {
+        // cout << "iEdge = " << iEdge <<endl;
 
         e = M.edges[iEdge];
 
         int iCellLeft  = e->neibCells[0]->number;
         int iCellRight = e->neibCells[1]->number;
 
-        //cout << iCellLeft << ' ' << iCellRight << endl;
+        // cout << iCellLeft << ' ' << iCellRight << endl;
 
 
         for (size_t iGP = 0; iGP < nGP; ++iGP)
         {
-            //cout << "iGP = " << iGP;// << endl;
+            // cout << "iGP = " << iGP;// << endl;
             gPoint = e->gPoints[iGP];
+            eNormal = e->n;
+            // cout << "gp = " << gPoint << endl;
 
-            solLeft  = sln.reconstruct(iCellLeft,  gPoint);
-            solRight = sln.reconstruct(iCellRight, gPoint);
+            solLeft  = rotate(sln.reconstruct(iCellLeft,  gPoint), eNormal);
+            solRight = rotate(sln.reconstruct(iCellRight, gPoint), eNormal);
 
-            //cout << "slL = " << solLeft << endl;
-            //cout << "slR = " << solRight << endl;
+            // cout << "slL = " << solLeft << endl;
+            // cout << "slR = " << solRight << endl;
             
-            gpFluxes[iGP] = flux.evaluate(solLeft, solRight, e->n);
+            gpFluxes[iGP] = inverseRotate(flux.evaluate(solLeft, solRight), eNormal);
 
-            //cout << "; flux: " << gpFluxes[iGP] << endl;
+            // cout << "; flux: " << gpFluxes[iGP] << endl;
         }// for GP
 
         //cout << "-------------" << endl;
         numFluxes[iEdge] = gpFluxes;
-        //cout << "edge #" << iEdge << "; numFlux: " << res << endl;
+        //cout << "edge #" << iEdge << "; numFlux: " << gpFluxes[0] << ' ' << gpFluxes[1] << endl;
 
-    }// for edges   
-
+    }// for real edges   
 
 
     // 2nd step: compute RHS;
@@ -481,7 +519,7 @@ void Solver::dataExchange()
         MPI_COMM_WORLD
     );
 
-    MPI_Barrier(MPI_COMM_WORLD);
+    //MPI_Barrier(MPI_COMM_WORLD);
 
     // 3rd step: sort data after receiving
 
@@ -565,7 +603,7 @@ void Solver::collectSolution()
         MPI_COMM_WORLD
     );
 
-    MPI_Barrier(MPI_COMM_WORLD);
+    //MPI_Barrier(MPI_COMM_WORLD);
 
     // sort received solution according to global map
 

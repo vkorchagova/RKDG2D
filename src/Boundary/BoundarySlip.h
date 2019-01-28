@@ -13,6 +13,8 @@ public:
 
     //- Apply boundary condition
     virtual void applyBoundary(std::vector<numvector<double, dimS>>& coeffs) const override;
+
+    virtual numvector<double, dimPh> getSolOuter (const numvector<double, dimPh>& solInner) const override;
 };
 
 #endif // BOUNDARYSLIP_H

@@ -1,6 +1,8 @@
 #ifndef TIMECONTROL_H
 #define TIMECONTROL_H
 
+#include <fstream>
+
 #include "Params.h"
 #include "Mesh.h"
 
@@ -49,16 +51,22 @@ private:
     //- Reference to mesh
     const Mesh& M;
 
+    std::ofstream timeListing;
+
 public:
 
     //- Constructor
-    TimeControl(const Mesh& msh, const double tStart, const double tEnd, const double initTau, const double outputInterval) : M(msh), t(tStart), tau(initTau), tEnd(tEnd), outputInterval(outputInterval)
-    {
-        tauNew = tau;
-        tOld = t;
-        outputTime = tStart + outputInterval;
-		//write the construction with initialization from Params.h or some other data source;
-	}  
+    TimeControl(
+        const Mesh& msh, 
+        const double tStart, 
+        const double tEnd, 
+        const double initTau, 
+        const double outputInterval,
+        const std::string listingPath = "alphaCoeffs/times"
+    ); 
+
+    //- Destructor
+    ~TimeControl();
 
 
 	//- Get time
@@ -74,7 +82,7 @@ public:
     void updateTimeStep(double MSpeed);
 
     //- Check if time is not finished
-    bool running() { return t < tEnd; }
+    bool running() { return t < tEnd + 0.5*tau; }
 
     //- Check time point for output
     bool isOutput();

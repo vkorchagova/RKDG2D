@@ -508,8 +508,8 @@ void DecomposerUNV::exportRKDG()
 
     writer << "$Edges\n";
 
-    writer << edges.size() << endl;
-    writer << edges.size() << endl;
+    writer << nEdges << endl;
+    writer << nEdges << endl;
 
     for (size_t i = 0; i < nEdges; ++i)
         writer << i + 1 << ' ' << edges[2*i] << ' ' << edges[2*i + 1] << endl;
@@ -535,14 +535,14 @@ void DecomposerUNV::exportRKDG()
 
    // --------------------------------------
 
-    writer << "$NeibProcCells\n";
+    writer << "$NeibProcPatches\n";
     writer << 0 << endl;
-    writer << "$EndNeibProcCells\n";
+    writer << "$EndNeibProcPatches\n";
 
     // --------------------------------------
 
     writer << "$AdjointCellsForEdges\n";
-    writer << edges.size() << endl;
+    writer << nEdges << endl;
 
     for (size_t i = 0; i < nEdges; ++i)
     {
@@ -558,7 +558,7 @@ void DecomposerUNV::exportRKDG()
     // --------------------------------------
 
     writer << "$EdgeNormals\n";
-    writer << edges.size() << endl;
+    writer << nEdges << endl;
 
     for (size_t i = 0; i < nEdges; ++i)
         writer << edgeNormals[i][0] << ' ' << edgeNormals[i][1] << endl;

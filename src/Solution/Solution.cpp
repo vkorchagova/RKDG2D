@@ -24,7 +24,6 @@ numvector<double, dimPh> Solution::reconstruct(int iCell, const Point& point ) c
 
     for (int i = 0; i < dimPh; ++i)
     {
-#pragma omp simd
         for (int j = 0; j < nShapes; ++j)
             sol[i] += phip[j] * SOL[iCell][i * nShapes + j];
     }

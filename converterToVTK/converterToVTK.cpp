@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
 
     Writer writer(mesh, solution, physics);
     
-    ifstream timePointsFile("times");
+    ifstream timePointsFile("alphaCoeffs/times");
 
     if (!timePointsFile.is_open())
     {

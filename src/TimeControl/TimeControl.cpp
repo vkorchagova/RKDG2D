@@ -1,8 +1,45 @@
 #include "TimeControl.h"
 #include <algorithm>
+#include <iomanip>
 
 using namespace std;
 
+
+
+TimeControl::TimeControl(
+        const Mesh& msh, 
+        const double tStart, 
+        const double tEnd, 
+        const double initTau, 
+        const double outputInterval,
+        const string listingPath
+    ) : 
+    M(msh), 
+    t(tStart), 
+    tau(initTau), 
+    tEnd(tEnd), 
+    outputInterval(outputInterval)
+{
+    tauNew = tau;
+    tOld = t;
+    outputTime = tStart + outputInterval;
+    timeListing.open(listingPath.c_str());
+
+    if (!timeListing.is_open())
+    {
+        cout << "File " << listingPath << " could not be opened\n";
+        exit(0);
+    }
+
+    timeListing << setprecision(6);
+    timeListing << 0.000000 << endl;
+    //write the construction with initialization from Params.h or some other data source;
+}
+
+TimeControl::~TimeControl()
+{
+    timeListing.close();
+}
 
 void TimeControl::updateTimeStep(double MSpeed) // maxSpeed should be defined on each cell
 {
@@ -57,6 +94,7 @@ bool TimeControl::isOutput()
 {
     if (fabs(outputTime - t) < 1e-12)
     {
+        timeListing << t << endl;
         outputTime += outputInterval;
         return true;
     }

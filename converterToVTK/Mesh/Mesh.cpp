@@ -318,60 +318,79 @@ void Mesh::importMesh(string& fileName)
 
             //cout << "Number of cells: " << nRealCells << endl;
         }
-        else if (tag == "$NeibProcCells")
+        else if (tag == "$NeibProcPatches")
         {
-            int nProcCells;
+            int totalNumProcCells = 0;
+            reader >> nNeibProcs;
 
-            reader >> nProcCells;
-            cells.reserve(nRealCells + nProcCells);
-            globalCellNumber.reserve(nRealCells + nProcCells);
-
-            for (int i = 0; i < nProcCells; ++i)
+            for (int iPatch = 0; iPatch < nNeibProcs; ++iPatch)
             {
-
-                int nEdgesInCell;
-                int entity;
-
-                reader >> globalNum;
-                reader >> nEdgesInCell;
-
-                globalCellNumber.push_back(globalNum - 1);
-
-                //cout << nEdgesInCell << endl;
-                vector<shared_ptr<Point>> curNodes;
-                vector<shared_ptr<Edge>> curEdges;
-
-                curNodes.reserve(nEdgesInCell);
-                curEdges.reserve(nEdgesInCell);
-
-                for (int j = 0; j < nEdgesInCell; ++j)
-                {
-                    reader >> entity;
-                    //cout << entity - 1 << ' ' << localNumber(globalNodeNumber, entity - 1) << endl;
-                    curNodes.push_back(nodes[localNumber(globalNodeNumber, entity - 1)] );
-                }
-
-                for (int j = 0; j < nEdgesInCell; ++j)
-                {
-                    reader >> entity;
-                    curEdges.push_back(edges[localNumber(globalEdgeNumber, entity - 1)] );
-                }
-
-                // add cells in list
-                cells.push_back(make_shared<Cell>(Cell(curNodes,curEdges)));
-
-                // add proc cell to patch
                 int numProc;
                 reader >> numProc;
 
-                addToProcPatch(cells.back(), numProc);
-            }
+                int nProcCells;
+                reader >> nProcCells;
+                totalNumProcCells += nProcCells;
+
+                string pName = "procPatch." + to_string(numProc);
+                procPatches.emplace_back(ProcPatch(pName, numProc));
+
+                cells.reserve(nRealCells + totalNumProcCells);
+                globalCellNumber.reserve(nRealCells + totalNumProcCells);
+
+                for (int i = 0; i < nProcCells; ++i)
+                {
+                    int nEdgesInCell;
+                    int entity;
+
+                    reader >> globalNum;
+                    reader >> nEdgesInCell;
+
+                    globalCellNumber.push_back(globalNum - 1);
+
+                    //cout << nEdgesInCell << endl;
+                    vector<shared_ptr<Point>> curNodes;
+                    vector<shared_ptr<Edge>> curEdges;
+
+                    curNodes.reserve(nEdgesInCell);
+                    curEdges.reserve(nEdgesInCell);
+
+                    for (int j = 0; j < nEdgesInCell; ++j)
+                    {
+                        reader >> entity;
+                        //cout << entity - 1 << ' ' << localNumber(globalNodeNumber, entity - 1) << endl;
+                        curNodes.push_back(nodes[localNumber(globalNodeNumber, entity - 1)] );
+                    }
+
+                    for (int j = 0; j < nEdgesInCell; ++j)
+                    {
+                        reader >> entity;
+                        curEdges.push_back(edges[localNumber(globalEdgeNumber, entity - 1)] );
+                    }
+
+                    // add cells in list
+                    cells.push_back(make_shared<Cell>(Cell(curNodes,curEdges)));
+                    cells.back()->number = cells.size() - 1;
+
+                    procPatches[iPatch].cellGroup.push_back(cells.back());
+                } // for alien cells
+
+                int nInnerProcCells;
+                int iCellGlobal;
+                reader >> nInnerProcCells;
+
+                for (int i = 0; i < nInnerProcCells; ++i)
+                {
+                    reader >> iCellGlobal;
+                    procPatches[iPatch].innerCellGroup.push_back(cells[localNumber(globalCellNumber, iCellGlobal - 1)]);
+                } // for inner cells
+            } // for iPatch
 
             do
             {
                 getline(reader, tag);
 
-            } while (tag != "$EndNeibProcCells");
+            } while (tag != "$EndNeibProcPatches");
 
             nNeibProcs = procPatches.size();
 

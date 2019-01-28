@@ -26,7 +26,7 @@ public:
     
     //- Evaluate numerical flux through one point
     virtual numvector<double, dimPh> evaluate(const numvector<double, dimPh>& solInner, 
-											  const numvector<double, dimPh>& solOuter, const Point& n) const override;
+											  const numvector<double, dimPh>& solOuter) const override;
 };
 
 

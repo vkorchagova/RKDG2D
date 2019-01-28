@@ -86,6 +86,7 @@ public:
 
     //- Number of ghost cells
     int nGhostCells;
+    int nEdgesBound;
 
     //- Number of patches
     int nPatches; //needs to be delete? see applyBoundary function

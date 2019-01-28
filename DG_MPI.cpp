@@ -71,7 +71,20 @@ int main(int argc, char* argv[])
 
     //-----------------------
 
-    string meshFileName = "mesh2D." + to_string(myRank);
+    CaseInit caseName = SodCircle;
+
+    double tStart = 0.0;
+    double tEnd = 1.0;
+    double initTau = 1e-4;
+    double outputInterval = 0.05;
+
+    int order = 2;
+
+
+    string meshFileName = "mesh2D"; 
+    if (numProcsTotal > 1)
+	   meshFileName += "." + to_string(myRank);
+
     Buffers buf;
     Mesh mesh(meshFileName, buf);
     Basis basis(mesh.cells);
@@ -81,21 +94,12 @@ int main(int argc, char* argv[])
     FluxLLF flux(physics);
     
     Writer writer(mesh, solution, physics);
-
-    int order = 2;
-    double tStart = 0.0;
-    double tEnd = 1.0;
-    double initTau = 2.5e-5;
-    double outputInterval = 0.05;
     TimeControl time(mesh, tStart, tEnd, initTau, outputInterval);
 
-    CaseInit caseName = SodCircle;
     Problem problem(caseName, mesh, time);
-
     Solver solver(basis, mesh, solution, problem, physics, flux, buf);
 
     LimiterBJ limiter(mesh.cells, solution);
-
     RungeKutta RK(order, basis, solver, solution, problem.bc, limiter, time);
 
     //-----------------------
@@ -117,8 +121,8 @@ int main(int argc, char* argv[])
     // get initial conditions
         solver.setInitialConditions();      // FIX GRAIENTS FOR nSHAPES > 3
 
-        for (size_t i = 0; i < mesh.patches.size(); ++i)
-            problem.bc[i]->applyBoundary(solution.SOL);
+        // for (size_t i = 0; i < mesh.patches.size(); ++i)
+        //     problem.bc[i]->applyBoundary(solution.SOL);
 
         solver.dataExchange();
 
@@ -152,8 +156,8 @@ int main(int argc, char* argv[])
         if (myRank == 0) 
         {
             cout << "-------" << endl;
-            cout << "Time = " << time.getTime() << " s" << endl;
-            cout << "\ttau = " << time.getTau() << " s" << endl;
+            cout << "Time = " << time.getTime() << " s" << "\t\t";
+            cout << "Tau = " << time.getTau() << " s" << "\t\t";
         }
 
         t0 = MPI_Wtime();
@@ -162,7 +166,7 @@ int main(int argc, char* argv[])
 
         if (myRank == 0) 
         {
-            cout << "\tstep time = " << t1 - t0 << " s" << endl;
+            cout << "CPU time = " << t1 - t0 << " s" << endl;
         }
 
         if (time.isOutput())

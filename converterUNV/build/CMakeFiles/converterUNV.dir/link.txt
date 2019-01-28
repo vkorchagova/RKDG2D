@@ -1,0 +1,1 @@
+/opt/rh/devtoolset-2/root/usr/bin/c++    -std=c++11    CMakeFiles/converterUNV.dir/main.cpp.o CMakeFiles/converterUNV.dir/FileConverter.cpp.o  -o converterUNV -rdynamic 

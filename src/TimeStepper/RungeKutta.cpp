@@ -99,7 +99,7 @@ void RungeKutta::Tstep()
 	double tau = T.getTau();
 
 							///!!! SOL_aux must be equal SOL at this point !!!
-    vector<numvector<double, dimS>> lhs  = sln.SOL;
+    vector<numvector<double, dimS>> lhs    = sln.SOL;
     vector<numvector<double, dimS>> lhsOld = slv.correctPrevIter(sln.SOL);
 
     //for(int iCell=0; iCell<16; ++iCell)\
@@ -109,53 +109,57 @@ void RungeKutta::Tstep()
     for (int i = 0; i < nStages; ++i)
     {
         T.updateTime(t + alpha[i]*tau);   // ??? Is it necessary?
-        
-        // 1st step: apply boundary
-        for (size_t ind = 0; ind < bc.size(); ++ind)
-        {
-            bc[ind]->applyBoundary(sln.SOL);
-        }
 
-        // 2nd step: MPI exchange between neib procs
+        // MPI exchange between neib procs
+
         slv.dataExchange();
         
-        if (myRank == 0)
-        {
-	    cout << "sln sol before rhs" << sln.SOL[0] << endl;
-        }
+        // if (myRank == 0)
+        // {
+        //    cout << "sln sol before rhs" << endl;
+        //    for (int p = 0; p < sln.SOL.size(); ++p)
+        //         cout << p << ' ' << sln.SOL[p] << endl;
+        // }
 
-        // 3rd step: assemble rhs of SODE
+        // assemble rhs of SODE
         k[i] = slv.assembleRHS(sln.SOL);
 
-        //cout << "k[i]" << endl;
-        //for(int iCell = 0; iCell < sln.SOL.size(); ++iCell)\
-            cout << "cell#" << iCell << "; k[i][iCell]: " << k[i][iCell] << endl;
-        //cout << endl;
+        // if (myRank == 0)
+        // {
+        //    cout << "k" << i << endl;
+        //    for (int p = 0; p < k[i].size(); ++p)
+        //         cout << p << ' ' << k[i][p] << endl;
+        // }
 
-        // 4th step: RK step
+
+        // RK step
         lhs = lhsOld;
 
         for (int j = 0; j <= i; ++j)
            lhs = lhs + k[j] * beta[i][j] * tau; 
 
-	if (myRank == 0)
-        {
-	    cout << "sln sol after rhs" << sln.SOL[0] << endl;
-        }
+        // if (myRank == 0)
+        // {
+        //    cout << "lhs after rhs" << endl;
+        //    for (int p = 0; p < lhs.size(); ++p)
+        //         cout << p << ' ' << lhs[p] << endl;
+        // }
 
-        // 5th step: remember about non-ortho basis!
+        // remember about non-ortho basis!
         sln.SOL = slv.correctNonOrtho(lhs);
 	
-	if (myRank == 0)
-        {
-	    cout << "sln sol after correct non ortho" << sln.SOL[0] << endl;
-        }
+	    // if (myRank == 0)
+        // {
+        //    cout << "sln sol after non ortho" << endl;
+        //    for (int p = 0; p < sln.SOL.size(); ++p)
+        //         cout << p << ' ' << sln.SOL[p] << endl;
+        // }
 
-        //for(int iCell = 0; iCell < sln.SOL.size(); ++iCell)\
+        // for(int iCell = 0; iCell < sln.SOL.size(); ++iCell)\
         //    cout << "cell#" << iCell << "; SOL: " << sln.SOL[iCell] << endl;
-        //cout << endl;
+        // cout << endl;
 		
-		// 6th step: limit solution
+		// limit solution
         slv.dataExchange();
         lmt.limit(sln.SOL);
 
