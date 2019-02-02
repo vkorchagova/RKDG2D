@@ -19,7 +19,10 @@ class LimiterBJ : public Limiter
 
 public:
     /// Construct 
-    LimiterBJ(const std::vector<std::shared_ptr<Cell>>& cells, const Solution& sln) : Limiter(cells, sln) {}
+    LimiterBJ(
+        const std::vector<std::shared_ptr<Cell>>& cells, 
+        const Solution& sln,
+        const Physics& phs) : Limiter(cells, sln, phs) {}
 
     /// Limit solution gradients
     ///

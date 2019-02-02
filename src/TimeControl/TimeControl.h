@@ -71,13 +71,16 @@ public:
 
 	//- Get time
 	double getTime() const { return t; }
+    
 	//- Set time
 	void updateTime(double t_new) { t = t_new; }
 
 	//- Get time step
 	double getTau() const { return tau; }
+
     //- Get new time step
     double getNewTau() const {return tauNew;}
+
     //- Update time step
     void updateTimeStep(double MSpeed);
 

@@ -180,7 +180,6 @@ void DecomposerUNV::readElements()
                 elementNodeNumbers = parseStringInt(str);
                 cellsAsNodes.push_back(elementNodeNumbers);
 
-                getElementEdges(elementNodeNumbers);
                 getCellCenter(elementNodeNumbers);
 
                 break;
@@ -280,47 +279,73 @@ void DecomposerUNV::createNewEdge (int iNode1, int iNode2)
 };
 
 
-void DecomposerUNV::getElementEdges(const std::vector<int>& nodeNumbers)
+void DecomposerUNV::getEdges()
 {
-    int n = nodeNumbers.size();
+    //int nEntities = nodes.size();
+    map<pair<int, int>, int> isWritten;
+    pair<int, int> key(0,0);
 
-    vector<int> elementEdges;
-    elementEdges.reserve(n);
-    
-
-    //- end of useful internal functions
-    
-    int iEdge = -1;
-
-    for (int i = 0; i < n - 1; ++i)
+    for (int iEdge = 0; iEdge < nEdges; ++iEdge)
     {
-        iEdge = checkForExistingEdges(nodeNumbers[i],nodeNumbers[i + 1]);
-        
-        if (iEdge != -1)
+        key.first  = min(edges[2*iEdge],edges[2*iEdge + 1]);
+        key.second = max(edges[2*iEdge],edges[2*iEdge + 1]);
+        isWritten[key] = iEdge + 1;
+    }
+
+    for (int iCell = 0; iCell < cellsAsNodes.size(); ++iCell)
+    {
+        //cout << "cell #" << iCell << endl;
+        int n = cellsAsNodes[iCell].size();
+        vector<int> elementEdges;
+        //elementEdges.reserve(n);
+
+        for (int i = 0; i < n - 1; ++i)
         {
-            elementEdges.push_back(iEdge);
+            key.first  = min(cellsAsNodes[iCell][i],cellsAsNodes[iCell][i+1]);
+            key.second = max(cellsAsNodes[iCell][i],cellsAsNodes[iCell][i+1]);
+
+            //cout << key.first << ' ' << key.second << endl;
+
+            if (isWritten[key] == 0)
+            {
+               //cout << isWritten[key] << endl;
+               //vector<int> newEdge = {key.first,key.second};
+               createNewEdge(key.first,key.second);
+               elementEdges.push_back(nEdges);
+               isWritten[key] = nEdges;
+            }
+            else
+            {
+                //cout << isWritten[key] << endl;
+                elementEdges.push_back(isWritten[key]);
+            }
+        }
+
+        key.first  = min(cellsAsNodes[iCell][0],cellsAsNodes[iCell][n-1]);
+        key.second = max(cellsAsNodes[iCell][0],cellsAsNodes[iCell][n-1]);
+
+        //cout << key.first << ' ' << key.second << endl;
+
+        if (isWritten[key] == 0)
+        {
+           //cout << isWritten[key] << endl;
+           //vector<int> newEdge = {key.first,key.second};
+           createNewEdge(key.first,key.second);
+           elementEdges.push_back(nEdges);
+           isWritten[key] = nEdges;
         }
         else
         {
-            createNewEdge(nodeNumbers[i],nodeNumbers[i + 1]);
-            elementEdges.push_back(nEdges);
+            //cout << isWritten[key] << endl;
+            elementEdges.push_back(isWritten[key]);
         }
-    }
-    
-    iEdge = checkForExistingEdges(nodeNumbers[n - 1],nodeNumbers[0]);
-    
-    if (iEdge != -1)
-        elementEdges.push_back(iEdge);
-    else
-    {
-        createNewEdge(nodeNumbers[n - 1],nodeNumbers[0]);
-        elementEdges.push_back(nEdges);
-    }
-    
-    cellsAsEdges.push_back(elementEdges);
 
-    //cout << "nedgs = " << nEdges << endl;
-} // End getElementEdges
+        cellsAsEdges.push_back(elementEdges);
+    }
+
+    nCells = cellsAsEdges.size();
+
+} // End getEdges
 
 
 void DecomposerUNV::getCellCenter(const vector<int> &nodeNumbers)
@@ -345,7 +370,7 @@ void DecomposerUNV::setAdjointCells()
 {
     //int nEdges = edges.size();
     adjEdgeCells.resize(nEdges);
-    
+
     for (size_t iCell = 0; iCell < nCells; ++iCell)
         for (int iEdge : cellsAsEdges[iCell])
             adjEdgeCells[iEdge - 1].push_back(iCell + 1);
@@ -355,7 +380,7 @@ void DecomposerUNV::setAdjointCells()
 
 void DecomposerUNV::getEdgeNormals()
 {
-    edgeNormals.reserve(edges.size());
+    edgeNormals.reserve(nEdges);
     
     vector<double> edgeV(2);
     vector<double> node1(2); // | fast access to nodes of considered edge
@@ -363,10 +388,10 @@ void DecomposerUNV::getEdgeNormals()
     vector<double> centerFirstAdjCell(2);
     vector<double> centerV(2);
 
-
     for (size_t i = 0; i < nEdges; i++)
     {
         //vector<int> edge = edges[i];
+
         node1 = nodes[ edges[2*i + 1] - 1];
         node2 = nodes[ edges[2*i] - 1];
         
@@ -379,6 +404,8 @@ void DecomposerUNV::getEdgeNormals()
         centerV[1] = centerFirstAdjCell[1] - node2[1];
         
         vector<double> n = { edgeV[1], -edgeV[0]};
+
+
         
         if (n[0]*centerV[0] + n[1]*centerV[1] > 0.0)
         {
@@ -437,6 +464,15 @@ void DecomposerUNV::importUNV ()
                 clock_t to,te;
                 to = clock();
                 readElements();
+                te = clock();
+
+                cout << "OK" << endl;
+                cout << "time = " << float(te - to) / CLOCKS_PER_SEC << endl;
+                
+                cout << "Processing edges ... ";
+                
+                to = clock();
+                getEdges();
                 te = clock();
                 
                 cout << "OK" << endl;

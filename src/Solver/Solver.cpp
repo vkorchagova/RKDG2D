@@ -191,6 +191,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
     vector<numvector<double, dimS>> rhs(sln.SOL.size()); // the same length as SOL
     vector<vector<numvector<double, dimPh>>> numFluxes(M.nRealEdges);
 
+
     double ts0 = 0;
     double te0 = 0;
     
@@ -215,12 +216,14 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
     {
         for (const shared_ptr<Edge>& e : bcond->patch.edgeGroup)
         {
+            //cout << e->number << endl;
             int iCellLeft  = e->neibCells[0]->number;
+            //cout << "-------------" << endl;
 
             // cout << iCellLeft << ' ' << iCellRight << endl;
             for (size_t iGP = 0; iGP < nGP; ++iGP)
             {
-                // cout << "iGP = " << iGP;// << endl;
+               // cout << "iGP = " << iGP;// << endl;
                 gPoint = e->gPoints[iGP];
                 eNormal = e->n;
                 // cout << "gp = " << gPoint << endl;
@@ -236,12 +239,14 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
                 // cout << "; flux: " << gpFluxes[iGP] << endl;
             }// for GP
 
-            //cout << "-------------" << endl;
+            
             numFluxes[e->number] = gpFluxes;
-            //cout << "edge #" << e->number << "; numFlux: " << gpFluxes[0] << ' ' << gpFluxes[1] << endl;
+           // cout << "edge #" << e->number << "; numFlux: " << gpFluxes[0] << ' ' << gpFluxes[1] << endl;
 
         }// for bound edges
     } // for bconds 
+
+    //cout << "end bound edges" << endl;
 
     for (size_t iEdge = M.nEdgesBound; iEdge < M.nRealEdges; ++iEdge)
     {

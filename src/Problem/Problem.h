@@ -11,6 +11,8 @@
 #include "Params.h"
 
 #include "BoundarySlip.h"
+#include "BoundaryOpen.h"
+#include "BoundaryConstant.h"
 
 
 class Patch;
@@ -50,7 +52,7 @@ public:
     void setInitialConditions(CaseInit task);
 
 	//- Set boundary conditions
-    void setBoundaryConditions();
+    void setBoundaryConditions(CaseInit task);
 
 };// end Problem
 

@@ -1,7 +1,10 @@
 #include "FileConverter.h"
 
 #include <functional>
+#include <algorithm>
 #include <math.h>
+#include <map>
+#include <utility>
 
 using namespace std;
 
@@ -172,7 +175,6 @@ void FileConverter::readElements()
                 elementNodeNumbers = parseStringInt(str);
                 cellsAsNodes.push_back(elementNodeNumbers);
 
-                getElementEdges(elementNodeNumbers);
                 getCellCenter(elementNodeNumbers);
 
                 break;
@@ -243,77 +245,73 @@ void FileConverter::readPatches()
 }  // End readPatches
 
 
-void FileConverter::getElementEdges(const std::vector<int>& nodeNumbers)
+void FileConverter::getEdges()
 {
-    int n = nodeNumbers.size();
+    //int nEntities = nodes.size();
+    map<pair<int, int>, int> isWritten;
+    pair<int, int> key(0,0);
 
-    vector<int> elementEdges;
-    elementEdges.reserve(n);
-
-    //- useful internal functions
-
-    function<bool(int,int)> checkForExistingEdges = [&](int iNode1, int iNode2)
+    for (int iEdge = 0; iEdge < edges.size(); ++iEdge)
     {
+        key.first  = min(edges[iEdge][0],edges[iEdge][1]);
+        key.second  = max(edges[iEdge][0],edges[iEdge][1]);
+        isWritten[key] = iEdge + 1;
+    }
 
-        int nExistingEdges = edges.size();
+    for (int iCell = 0; iCell < cellsAsNodes.size(); ++iCell)
+    {
+        //cout << "cell #" << iCell << endl;
+        int n = cellsAsNodes[iCell].size();
+        vector<int> elementEdges;
+        //elementEdges.reserve(n);
 
-        for (int j = 0; j < nExistingEdges; ++j)
-        { // if this edge is exists
-            if ((iNode1 == edges[j][0] && iNode2 == edges[j][1]) ||\
-                (iNode1 == edges[j][1] && iNode2 == edges[j][0]))
+        for (int i = 0; i < n - 1; ++i)
+        {
+            key.first  = min(cellsAsNodes[iCell][i],cellsAsNodes[iCell][i+1]);
+            key.second = max(cellsAsNodes[iCell][i],cellsAsNodes[iCell][i+1]);
+
+            //cout << key.first << ' ' << key.second << endl;
+
+            if (isWritten[key] == 0)
             {
-                elementEdges.push_back(j+1);
-                return true;
+               //cout << isWritten[key] << endl;
+               vector<int> newEdge = {key.first,key.second};
+               edges.push_back(newEdge);
+               elementEdges.push_back(edges.size());
+               isWritten[key] = edges.size();
+            }
+            else
+            {
+                //cout << isWritten[key] << endl;
+                elementEdges.push_back(isWritten[key]);
             }
         }
 
-        return false;
-    };
+        key.first  = min(cellsAsNodes[iCell][0],cellsAsNodes[iCell][n-1]);
+        key.second = max(cellsAsNodes[iCell][0],cellsAsNodes[iCell][n-1]);
 
-    function<void(int,int)> createNewEdge = [&](int iNode1, int iNode2)
-    {
-        vector<int> newEdge = {iNode1,iNode2};
-        edges.push_back(newEdge);
-        elementEdges.push_back(edges.size());
-    };
+        //cout << key.first << ' ' << key.second << endl;
 
-    //- end of useful internal functions
-
-    for (int i = 0; i < n-1; ++i)
-    {
-        if (!checkForExistingEdges(nodeNumbers[i],nodeNumbers[i+1]))
+        if (isWritten[key] == 0)
         {
-           createNewEdge(nodeNumbers[i],nodeNumbers[i+1]);
+           //cout << isWritten[key] << endl;
+           vector<int> newEdge = {key.first,key.second};
+           edges.push_back(newEdge);
+           elementEdges.push_back(edges.size());
+           isWritten[key] = edges.size();
         }
+        else
+        {
+            //cout << isWritten[key] << endl;
+            elementEdges.push_back(isWritten[key]);
+        }
+
+        cellsAsEdges.push_back(elementEdges);
     }
 
-    if (!checkForExistingEdges(nodeNumbers[n-1],nodeNumbers[0]))
-    {
-       createNewEdge(nodeNumbers[n-1],nodeNumbers[0]);
-    }
+    cout << "OK" << endl;
 
-
-    cellsAsEdges.push_back(elementEdges);
-
-} // End getElementEdges
-
-
-void FileConverter::getCellCenter(const vector<int> &nodeNumbers)
-{
-    vector<double> center = {0.0, 0.0};
-
-    for (int iNode : nodeNumbers )
-    {
-        center[0] += nodes[iNode-1][0];
-        center[1] += nodes[iNode-1][1];
-    }
-
-    center[0] *= 1.0/nodeNumbers.size();
-    center[1] *= 1.0/nodeNumbers.size();
-
-    cellCenters.push_back(center);
-
-} // End getCellCenter
+} // End getEdges
 
 
 void FileConverter::setAdjointCells()
@@ -324,13 +322,31 @@ void FileConverter::setAdjointCells()
 
     for (size_t iCell = 0; iCell < cellsAsEdges.size(); ++iCell)
         for (int iEdge : cellsAsEdges[iCell])
-            adjEdgeCells[iEdge-1].push_back(iCell+1);
+                adjEdgeCells[iEdge-1].push_back(iCell+1);
 
 } // End setAdjointCells
+
+void FileConverter::getCellCenter(const vector<int> &nodeNumbers)
+{
+    vector<double> center = {0.0, 0.0};
+
+    for (int iNode : nodeNumbers )
+    {
+        center[0] += nodes[iNode - 1][0];
+        center[1] += nodes[iNode - 1][1];
+    }
+
+    center[0] /= double(nodeNumbers.size());
+    center[1] /= double(nodeNumbers.size());
+
+    cellCenters.push_back(center);
+
+} // End getCellCenter
 
 
 void FileConverter::getEgdeNormals()
 {
+    cout << "Get edge normals... ";
     edgeNormals.reserve(edges.size());
 
     for (size_t i = 0; i < edges.size(); ++i)
@@ -352,6 +368,8 @@ void FileConverter::getEgdeNormals()
 
         edgeNormals.push_back(n);
     }
+
+    cout << "OK" << endl;
 } // End getEgdeNormals
 
 
@@ -394,6 +412,7 @@ void FileConverter::importUNV ()
             {
                 cout << "Processing elements (boundary edges + cells) ... ";
                 readElements();
+                getEdges();
                 setAdjointCells();
                 getEgdeNormals();
 
@@ -423,6 +442,7 @@ void FileConverter::importUNV ()
 void FileConverter::exportRKDG()
 {
     //renumerateEdges();
+    cout << "Write RKDG mesh...";
 
     writer.precision(16);
 
@@ -472,9 +492,9 @@ void FileConverter::exportRKDG()
 
    // --------------------------------------
 
-    writer << "$NeibProcCells\n";
+    writer << "$NeibProcPatches\n";
     writer << 0 << endl;
-    writer << "$EndNeibProcCells\n";
+    writer << "$EndNeibProcPatches\n";
 
     // --------------------------------------
 

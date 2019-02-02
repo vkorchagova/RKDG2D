@@ -12,7 +12,10 @@ public:
 
     //- Construct 
     //LimiterFinDiff(const Indicator& ind, Problem& prb) : Limiter(ind, prb) {}
-    LimiterFinDiff(const std::vector<std::shared_ptr<Cell>>& cells, const Solution& sln) : Limiter(cells, sln) {}
+    LimiterFinDiff(
+        const std::vector<std::shared_ptr<Cell>>& cells, 
+        const Solution& sln,
+        const Physics& phs) : Limiter(cells, sln, phs) {}
 
     ~LimiterFinDiff() {}
 

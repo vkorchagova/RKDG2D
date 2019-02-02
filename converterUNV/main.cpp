@@ -11,7 +11,7 @@ using namespace std;
 int main()
 {
 
-    FileConverter converter("Mesh_4x4.unv","mesh2D");
+    FileConverter converter("..//..//..//mCol//Mesh_Sode_1.unv","mesh2D");
 
 
     converter.importUNV();

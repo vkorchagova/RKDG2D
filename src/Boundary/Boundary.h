@@ -21,10 +21,13 @@ public:
     Boundary(const Patch& p) : type("not implemented"), patch(p) {};
 
     //- Apply boundary conditions
-    virtual void applyBoundary(std::vector<numvector<double, dimS>>& coeffs) const = 0;
+    //virtual void applyBoundary(std::vector<numvector<double, dimS>>& coeffs) const = 0;
 
     //- Get solution in outer side
-    virtual numvector<double, dimPh> getSolOuter (const numvector<double, dimPh>& solInner) const = 0;
+    virtual numvector<double, dimPh> getSolOuter(
+        const numvector<double, dimPh>& solInner, 
+        const Point& n = Point({0.0,0.0})
+    ) const = 0;
 
 };
 

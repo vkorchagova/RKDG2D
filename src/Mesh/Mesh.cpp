@@ -40,6 +40,9 @@ Mesh::Mesh(std::string& fileName, Buffers& buf) : buf(buf)
 
     structurizeEdges();
 
+    for (int i = 0; i < edges.size(); ++i)
+        cout << edges[i]->number << endl;
+
     cout << "Mesh import OK" << endl;
 
     /// MPI OPERATION
@@ -141,9 +144,9 @@ void Mesh::structurizeEdges()
         nEdgesBound += p.edgeGroup.size();
     }
 
-    for (int i = 0; i < nRealEdges; ++i)
-        edges[i]->number = i;
+    cout << nRealEdges << ' ' << edges.size() << endl;
 }
+
 
 void Mesh::findNeighbourCells(const std::shared_ptr<Cell>& cell)
 {

@@ -123,4 +123,5 @@ void LimiterBJ::limit(vector<numvector<double, dimS>>& alpha)
     double te = omp_get_wtime();
     
     //cout << "BJ limiter " << te - ts << endl; 
+    lastHope(alpha);
 }

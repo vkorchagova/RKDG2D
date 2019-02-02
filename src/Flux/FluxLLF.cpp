@@ -12,7 +12,10 @@ using namespace std;
 
 
 
-numvector<double,dimPh> FluxLLF::evaluate( const numvector<double, dimPh>& solLeftRot, const numvector<double, dimPh>& solRightRot) const
+numvector<double,dimPh> FluxLLF::evaluate( 
+    const numvector<double, dimPh>& solLeftRot, 
+    const numvector<double, dimPh>& solRightRot
+) const
 {    
     numvector<double, dimPh> fluxOutward = phs.fluxF(solLeftRot);
     numvector<double, dimPh> fluxInward  = phs.fluxF(solRightRot);

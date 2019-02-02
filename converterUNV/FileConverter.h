@@ -80,8 +80,8 @@ private:
     //- Read patches
     void readPatches();
 
-    //- Find edges for cell defined by nodes
-    void getElementEdges(const std::vector<int>& nodeNumbers);
+    //- Find edges for cells defined by nodes
+    void getEdges();
 
     //- Find center of cell vertices
     void getCellCenter(const std::vector<int>& nodes);

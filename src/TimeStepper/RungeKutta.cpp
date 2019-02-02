@@ -102,9 +102,11 @@ void RungeKutta::Tstep()
     vector<numvector<double, dimS>> lhs    = sln.SOL;
     vector<numvector<double, dimS>> lhsOld = slv.correctPrevIter(sln.SOL);
 
-    //for(int iCell=0; iCell<16; ++iCell)\
-        cout << "cell#" << iCell << "; SOL: " << sln.SOL_aux[iCell] << endl;
+    //for(int iCell=0; iCell<sln.SOL.size(); ++iCell)\
+    //    cout << "cell#" << iCell << "; SOL: " << sln.SOL[iCell] << endl;
     //cout << endl;
+
+    //cout << "OK" << endl;
 	/// The very step of the RK method
     for (int i = 0; i < nStages; ++i)
     {
@@ -114,12 +116,12 @@ void RungeKutta::Tstep()
 
         slv.dataExchange();
         
-        // if (myRank == 0)
-        // {
-        //    cout << "sln sol before rhs" << endl;
-        //    for (int p = 0; p < sln.SOL.size(); ++p)
-        //         cout << p << ' ' << sln.SOL[p] << endl;
-        // }
+         //if (myRank == 0)
+         //{
+         //   cout << "sln sol before rhs" << endl;
+         ///   for (int p = 0; p < sln.SOL.size(); ++p)
+         //        cout << p << ' ' << sln.SOL[p] << endl;
+         //}
 
         // assemble rhs of SODE
         k[i] = slv.assembleRHS(sln.SOL);

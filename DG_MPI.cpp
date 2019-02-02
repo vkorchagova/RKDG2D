@@ -30,6 +30,8 @@
 #include "LimiterFinDiff.h"
 #include "LimiterBJ.h"
 #include "FluxLLF.h"		//- All about the flux evaluating
+#include "FluxHLL.h"
+#include "FluxHLLC.h"
 //#include "Indicator.h"
 //#include "Limiter.h"	//- All about the monotonization
 #include "Solver.h"		//- The whole spatial discretization module
@@ -60,49 +62,14 @@ int main(int argc, char* argv[])
 {
     
     //int rank, size, ibeg, iend;
-	//MPI_Status stat;
+    //MPI_Status stat;
 
-	MPI_Init(&argc, &argv);
+    MPI_Init(&argc, &argv);
 
-	MPI_Comm_size(MPI_COMM_WORLD, &numProcsTotal);
-	MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
+    MPI_Comm_size(MPI_COMM_WORLD, &numProcsTotal);
+    MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
 
     //cout << "size = " << numProcsTotal << "; rank = " << myRank << endl;
-
-    //-----------------------
-
-    CaseInit caseName = SodCircle;
-
-    double tStart = 0.0;
-    double tEnd = 1.0;
-    double initTau = 1e-4;
-    double outputInterval = 0.05;
-
-    int order = 2;
-
-
-    string meshFileName = "mesh2D"; 
-    if (numProcsTotal > 1)
-	   meshFileName += "." + to_string(myRank);
-
-    Buffers buf;
-    Mesh mesh(meshFileName, buf);
-    Basis basis(mesh.cells);
-    Solution solution(basis);
-    
-    Physics physics;
-    FluxLLF flux(physics);
-    
-    Writer writer(mesh, solution, physics);
-    TimeControl time(mesh, tStart, tEnd, initTau, outputInterval);
-
-    Problem problem(caseName, mesh, time);
-    Solver solver(basis, mesh, solution, problem, physics, flux, buf);
-
-    LimiterBJ limiter(mesh.cells, solution);
-    RungeKutta RK(order, basis, solver, solution, problem.bc, limiter, time);
-
-    //-----------------------
 
     // create folder for solution
     #if !defined(__linux__)
@@ -110,6 +77,43 @@ int main(int argc, char* argv[])
     #else
         mkdir("alphaCoeffs", S_IRWXU | S_IRGRP | S_IROTH);
     #endif
+
+    //-----------------------
+
+    CaseInit caseName = SodX;
+
+    double tStart = 0.0;
+    double tEnd = 0.2;
+    double initTau = 1e-3;
+    double outputInterval = 1e-1;
+
+    int order = 2;
+
+
+    string meshFileName = "mesh2D"; 
+    if (numProcsTotal > 1)
+        meshFileName += "." + to_string(myRank);
+
+    Buffers buf;
+    Mesh mesh(meshFileName, buf);
+    Basis basis(mesh.cells);
+    Solution solution(basis);
+    
+    Physics physics;
+    FluxHLL flux(physics);
+    
+    Writer writer(mesh, solution, physics);
+    TimeControl time(mesh, tStart, tEnd, initTau, outputInterval);
+
+    Problem problem(caseName, mesh, time);
+    Solver solver(basis, mesh, solution, problem, physics, flux, buf);
+
+    LimiterFinDiff limiter(mesh.cells, solution, physics);
+    RungeKutta RK(order, basis, solver, solution, problem.bc, limiter, time);
+
+    //-----------------------
+
+    writer.exportMeshVTK("mesh2D.vtk");
 
     // Set initial conditions
     if (tStart > 1e-10)
@@ -151,6 +155,7 @@ int main(int argc, char* argv[])
     double t0, t1;
 
     //for (double t = tStart; t < tEnd; t += tau)
+    cout << "LET'S START NOW!" << endl;
     while (time.running())
     {
         if (myRank == 0) 

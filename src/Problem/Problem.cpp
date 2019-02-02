@@ -9,7 +9,7 @@ using namespace std;
 Problem::Problem(CaseInit task, const Mesh& m, const TimeControl& t) : M(m), T(t)
 {
     setInitialConditions(task);
-    setBoundaryConditions();
+    setBoundaryConditions(task);
 } // end constructor 
 
 Problem::~Problem()
@@ -82,6 +82,30 @@ void Problem::setInitialConditions(CaseInit task)
 
         break;
 	}// SodCircle
+
+    case ForwardStep:
+    {
+        cpcv = 1.4;
+
+        initRho = [](const Point& r) { return 1.0; };
+        initP   = [&](const Point& r) { return 1.0 / cpcv;  };
+        initU   = [](const Point& r) { return 3.0; };
+        initV   = [](const Point& r) { return 0.0; };
+
+        break;
+    } // forward step
+
+    case Sedov:
+    {
+        cpcv = 1.4;
+
+        initRho = [](const Point& r) { return 1.0; };
+        initP   = [&](const Point& r) { return 1.0 / cpcv;  };
+        initU   = [](const Point& r) { return 3.0; };
+        initV   = [](const Point& r) { return 0.0; };
+
+        break;
+    } // forward step
 
 	}// switch
 
@@ -197,19 +221,43 @@ void Problem::setInitialConditions(CaseInit task)
 
 }
 */
-void Problem::setBoundaryConditions()
+void Problem::setBoundaryConditions(CaseInit task)
 {
     // shared_ptr<BoundarySine> bSine = make_shared<BoundarySine>(1e-3,0.5,time,*this);
 
     //vector<shared_ptr<Boundary>> bc = {};
-
-    for (const Patch& p : M.patches)
+    switch (task)
     {
-        bc.emplace_back(make_shared<BoundarySlip>(BoundarySlip(p)));
+
+    case SodX:
+    case SodY:
+    case SodDiag:
+    case SodCircle:
+    case Sedov:
+    {
+        for (const Patch& p : M.patches)
+            bc.emplace_back(make_shared<BoundarySlip>(p));
+
+        break;
     }
 
-    // may be later: for procPatches bc. emplace_back(BoundaryMPI(pP.numProc))
+    case ForwardStep:
+    {
+        bc.emplace_back(
+            make_shared<BoundaryConstant>(
+                M.patches[0], 
+                numvector<double, dimPh>({1.0, 3.0, 0.0, 0.0, 6.286})
+            )
+        );
+        bc.emplace_back(make_shared<BoundaryOpen>(M.patches[1]));
+        bc.emplace_back(make_shared<BoundarySlip>(M.patches[2]));
+        bc.emplace_back(make_shared<BoundarySlip>(M.patches[3]));
 
+        break;
+    }
+    }
+   
+    
 }
 
 

@@ -31,6 +31,7 @@ void Writer::exportNativeCoeffs(const std::string& fileName) const
 void Writer::exportMeshVTK(ostream& wStream) const
 {
     //wStream.open("Mesh.vtk");
+    cout << "Export mesh to VTK... ";
 
 
     wStream << "# vtk DataFile Version 2.0" << endl;
@@ -67,6 +68,8 @@ void Writer::exportMeshVTK(ostream& wStream) const
 
         wStream << endl;
     }
+
+    cout << "OK" << endl;
 
 }
 
