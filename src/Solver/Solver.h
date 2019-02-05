@@ -80,9 +80,6 @@ public:
     //- Run case from define set of coefficients
     void setDefinedCoefficients(std::string fileName);
 
-	//- Get coefficients of projection of function foo onto cell basis
-	numvector<double, dimS> projection(const std::function<numvector<double, dimPh>(const Point& point)>& init, int iCell) const;
-
     //- Assemble right-hand side
     std::vector<numvector<double, dimS>> assembleRHS(const std::vector<numvector<double, dimS>>& SOL);
 

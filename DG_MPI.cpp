@@ -29,6 +29,7 @@
 #include "Boundary.h"
 #include "LimiterFinDiff.h"
 #include "LimiterBJ.h"
+//#include "LimiterWENOS.h"
 #include "FluxLLF.h"		//- All about the flux evaluating
 #include "FluxHLL.h"
 #include "FluxHLLC.h"
@@ -108,7 +109,7 @@ int main(int argc, char* argv[])
     Problem problem(caseName, mesh, time);
     Solver solver(basis, mesh, solution, problem, physics, flux, buf);
 
-    LimiterFinDiff limiter(mesh.cells, solution, physics);
+    LimiterBJ limiter(mesh.cells, solution, physics);
     RungeKutta RK(order, basis, solver, solution, problem.bc, limiter, time);
 
     //-----------------------
@@ -155,7 +156,10 @@ int main(int argc, char* argv[])
     double t0, t1;
 
     //for (double t = tStart; t < tEnd; t += tau)
-    cout << "LET'S START NOW!" << endl;
+    double meanCpuTime = 0.0;
+    double totalCpuTime = 0.0;
+    int nSteps = 0;
+    
     while (time.running())
     {
         if (myRank == 0) 
@@ -172,6 +176,8 @@ int main(int argc, char* argv[])
         if (myRank == 0) 
         {
             cout << "CPU time = " << t1 - t0 << " s" << endl;
+            totalCpuTime += t1 - t0;
+            nSteps ++;
         }
 
         if (time.isOutput())
@@ -190,7 +196,16 @@ int main(int argc, char* argv[])
 
     MPI_Finalize();
 
-    cout << "THE END" << endl;
+    if (myRank == 0)
+    {
+        cout << "============" << endl;
+        cout << "Total CPU time: " << totalCpuTime << " s" << endl;
+        cout << "Numbr of time steps: " << nSteps << endl;
+        cout << "Mean CPU timestep: " << totalCpuTime / double(nSteps) << " s" << endl;
+        cout << "============" << endl;
+        cout << "THE END" << endl;
+    }
+    
 	
 	return 0;
 }

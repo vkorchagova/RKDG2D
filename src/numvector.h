@@ -80,7 +80,7 @@ public:
 	{
 		T res = 0;
 		
-#pragma omp simd
+//#pragma omp simd
 		for (int j = 0; j < n; ++j)
 			res += r[j] * y[j];
 		return res;

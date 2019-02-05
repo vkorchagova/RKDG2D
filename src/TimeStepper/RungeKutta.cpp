@@ -98,7 +98,6 @@ void RungeKutta::Tstep()
     double t = T.getTime();
 	double tau = T.getTau();
 
-							///!!! SOL_aux must be equal SOL at this point !!!
     vector<numvector<double, dimS>> lhs    = sln.SOL;
     vector<numvector<double, dimS>> lhsOld = slv.correctPrevIter(sln.SOL);
 
@@ -115,16 +114,21 @@ void RungeKutta::Tstep()
         // MPI exchange between neib procs
 
         slv.dataExchange();
+
+        //cout << myRank << "__after data exchange" << endl;
         
-         //if (myRank == 0)
-         //{
+         // if (myRank == 0)
+         // {
          //   cout << "sln sol before rhs" << endl;
-         ///   for (int p = 0; p < sln.SOL.size(); ++p)
+         // /   for (int p = 0; p < sln.SOL.size(); ++p)
          //        cout << p << ' ' << sln.SOL[p] << endl;
-         //}
+         // }
 
         // assemble rhs of SODE
         k[i] = slv.assembleRHS(sln.SOL);
+
+        //cout << myRank << "__after assemble" << endl;
+
 
         // if (myRank == 0)
         // {

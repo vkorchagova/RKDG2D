@@ -1,0 +1,24 @@
+#ifndef LIMITERWENOS_H
+#define LIMITERWENOS_H
+
+#include "Limiter.h"
+
+///
+/// WENO\_S limiter applied to conservative variables component-by-component
+///
+
+class LimiterWENOS : public Limiter
+{
+
+public:
+    //- Construct by indicator and problem
+	LimiterWENOS(
+		const std::vector<std::shared_ptr<Cell>>& cells,
+		const Solution& sln,
+		const Physics& phs) : Limiter(cells, sln, phs) {}
+
+    //- Limit solution moments
+	virtual void limit(std::vector<numvector<double, dimS> >& SOL) override;
+};
+
+#endif // LIMITERWENOS_H

@@ -51,6 +51,9 @@ public:
     /// Gramian form for one cell in case of linear functions: {g[1][1], g[1][2], g[2][2]}
 	std::vector< std::vector<std::vector<double>> > gramian;
 
+    //- Get coefficients of projection of function foo onto cell basis
+    numvector<double, dimS> projection(const std::function<numvector<double, dimPh>(const Point& point)>& init, int iCell) const;
+
 };
 
 #endif // BASIS_H
