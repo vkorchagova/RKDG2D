@@ -232,7 +232,6 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
     t1 = MPI_Wtime();
     if (debug) logger << "\t\teBound.numfluxes: " << t1 - t0 << endl;
 
-
     ////if (myRank == 1) cout << "end bound edges" << endl;
     t0 = MPI_Wtime();
     for (size_t iEdge = M.nEdgesBound; iEdge < M.nRealEdges; ++iEdge)
@@ -270,6 +269,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
         //////if (myRank == 1) cout << "edge #" << iEdge << "; numFlux: " << gpFluxes[0] << ' ' << gpFluxes[1] << endl;
 
     }// for real edges   
+
     t1 = MPI_Wtime();
     if (debug) logger << "\t\teInner.numfluxes: " << t1 - t0 << endl;
    
@@ -340,7 +340,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
                 for (int q = 0; q < nShapes; ++q)
                     for (int p = 0; p < dimPh; ++p)
                         res[p*nShapes + q] += numFluxes[iEdge][i][p] * ( gW * B.phi[q](iCell, gPoint) );
-            
+
             }// for GP
 
             rhs[iCell] -= res * e->J * sign;

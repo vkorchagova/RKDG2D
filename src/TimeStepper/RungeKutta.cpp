@@ -140,6 +140,9 @@ void RungeKutta::Tstep()
         //cout << myRank << "__after assemble" << endl;
 
 
+        //cout << myRank << "__after assemble" << endl;
+
+
         // if (myRank == 0)
         // {
         //    cout << "k" << i << endl;
