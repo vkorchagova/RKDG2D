@@ -29,6 +29,7 @@
 #include "Boundary.h"
 #include "LimiterFinDiff.h"
 #include "LimiterBJ.h"
+//#include "LimiterWENOS.h"
 #include "FluxLLF.h"		//- All about the flux evaluating
 #include "FluxHLL.h"
 #include "FluxHLLC.h"
@@ -52,8 +53,11 @@ int numProcsTotal;
 //- Status
 MPI_Status status;
 
-//- Request
-MPI_Request request;
+//- Debug
+bool debug;
+
+//- Log file to save data
+std::ofstream logger;
 
 
 using namespace std;
@@ -69,7 +73,10 @@ int main(int argc, char* argv[])
     MPI_Comm_size(MPI_COMM_WORLD, &numProcsTotal);
     MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
 
-    //cout << "size = " << numProcsTotal << "; rank = " << myRank << endl;
+    debug = (true && myRank == 0); // if you want save log type true else type false
+    logger.open("timeStat");
+
+    //if (myRank == 0) cout << "size = " << numProcsTotal << "; rank = " << myRank << endl;
 
     // create folder for solution
     #if !defined(__linux__)
@@ -108,7 +115,7 @@ int main(int argc, char* argv[])
     Problem problem(caseName, mesh, time);
     Solver solver(basis, mesh, solution, problem, physics, flux, buf);
 
-    LimiterFinDiff limiter(mesh.cells, solution, physics);
+    LimiterBJ limiter(mesh.cells, solution, physics);
     RungeKutta RK(order, basis, solver, solution, problem.bc, limiter, time);
 
     //-----------------------
@@ -155,7 +162,10 @@ int main(int argc, char* argv[])
     double t0, t1;
 
     //for (double t = tStart; t < tEnd; t += tau)
-    cout << "LET'S START NOW!" << endl;
+    double meanCpuTime = 0.0;
+    double totalCpuTime = 0.0;
+    int nSteps = 0;
+    
     while (time.running())
     {
         if (myRank == 0) 
@@ -169,9 +179,13 @@ int main(int argc, char* argv[])
         RK.Tstep();
         t1 = MPI_Wtime();
 
+        if (debug) logger << "RK.Tsep(): " << t1 - t0  << "\n----------" << endl;
+
         if (myRank == 0) 
         {
             cout << "CPU time = " << t1 - t0 << " s" << endl;
+            totalCpuTime += t1 - t0;
+            nSteps ++;
         }
 
         if (time.isOutput())
@@ -190,7 +204,18 @@ int main(int argc, char* argv[])
 
     MPI_Finalize();
 
-    cout << "THE END" << endl;
+    if (myRank == 0)
+    {
+        cout << "============" << endl;
+        cout << "Total CPU time: " << totalCpuTime << " s" << endl;
+        cout << "Numbr of time steps: " << nSteps << endl;
+        cout << "Mean CPU timestep: " << totalCpuTime / double(nSteps) << " s" << endl;
+        cout << "============" << endl;
+        cout << "THE END" << endl;
+    }
+
+    logger.close();
+    
 	
 	return 0;
 }

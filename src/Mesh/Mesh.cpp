@@ -40,9 +40,6 @@ Mesh::Mesh(std::string& fileName, Buffers& buf) : buf(buf)
 
     structurizeEdges();
 
-    for (int i = 0; i < edges.size(); ++i)
-        cout << edges[i]->number << endl;
-
     cout << "Mesh import OK" << endl;
 
     /// MPI OPERATION
@@ -144,7 +141,8 @@ void Mesh::structurizeEdges()
         nEdgesBound += p.edgeGroup.size();
     }
 
-    cout << nRealEdges << ' ' << edges.size() << endl;
+    for (int i = 0; i < edges.size(); ++i)
+        edges[i]->number = i;
 }
 
 

@@ -7,6 +7,12 @@
 #include "Limiter.h"
 #include "TimeControl.h"
 
+//- Debug
+extern bool debug;
+
+//- Log file to save data
+extern std::ofstream logger;
+
 class TimeStepper
 {
 

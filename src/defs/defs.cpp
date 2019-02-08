@@ -15,7 +15,7 @@ vector<numvector<double, dimS>> operator * (const vector<numvector<double, dimS>
 	vector<numvector<double, dimS>> m(a);
 
 	for (size_t cell = 0; cell < dimx; ++cell)
-#pragma omp simd
+//#pragma omp simd
 		for (size_t val = 0; val < dimy; ++val)
 			m[cell][val] *= b;
 
@@ -29,7 +29,7 @@ vector<numvector<double, dimS>> operator + (const vector<numvector<double, dimS>
 	vector<numvector<double, dimS>> m(a);
 
 	for (size_t cell = 0; cell < dimx; ++cell)
-#pragma omp simd
+//#pragma omp simd
 		for (size_t val = 0; val < dimy; ++val)
 			m[cell][val] = a[cell][val] + b[cell][val];
 
@@ -41,7 +41,7 @@ void sum(const vector<numvector<double, dimS>>& a, const vector<numvector<double
 	size_t dimy = dimS;
 
 	for (size_t cell = 0; cell < dimx; ++cell)
-#pragma omp simd
+//#pragma omp simd
 		for (size_t val = 0; val < dimy; ++val)
 			res[cell][val] = a[cell][val] + b[cell][val];
 };
@@ -57,7 +57,7 @@ vector<vector<double>>& operator += (vector<vector<double>>& a, const vector<vec
 	size_t dimy = a[0].size();
 
 	for (size_t cell = 0; cell < dimx; ++cell)
-#pragma omp simd
+//#pragma omp simd
 		for (size_t val = 0; val < dimy; ++val)
 			a[cell][val] += b[cell][val];
 	return a;
@@ -68,7 +68,7 @@ vector<vector<double>>& operator -= (vector<vector<double>>& a, const vector<vec
 	size_t dimy = a[0].size();
 
 	for (size_t cell = 0; cell < dimx; ++cell)
-#pragma omp simd
+//#pragma omp simd
 		for (size_t val = 0; val < dimy; ++val)
 			a[cell][val] -= b[cell][val];
 	return a;
@@ -79,7 +79,7 @@ vector<vector<double>>& operator *= (vector<vector<double>>& a, const double b)
 	size_t dimy = a[0].size();
 
 	for (size_t cell = 0; cell < dimx; ++cell)
-#pragma omp simd
+//#pragma omp simd
 		for (size_t val = 0; val < dimy; ++val)
 			a[cell][val] *= b;
 	return a;
@@ -92,7 +92,7 @@ vector<vector<double>> operator * (const vector<vector<double>>& a, const double
 	vector<vector<double>> m(a);
 
 	for (size_t cell = 0; cell < dimx; ++cell)
-#pragma omp simd
+//#pragma omp simd
 		for (size_t val = 0; val < dimy; ++val)
 			m[cell][val] *= b;
 	return m;
@@ -105,7 +105,7 @@ vector<vector<double>> operator * (const double b, const vector<vector<double>>&
 	vector<vector<double>> m(a);
 
 	for (size_t cell = 0; cell < dimx; ++cell)
-#pragma omp simd
+//#pragma omp simd
 		for (size_t val = 0; val < dimy; ++val)
 			m[cell][val] *= b;
 	return m;
@@ -118,7 +118,7 @@ vector<vector<double>> operator * (const double b, const vector<vector<double>>&
 vector<double>& operator *= (vector<double>& a, const double b)
 {
 	size_t dimx = a.size();
-#pragma omp simd
+//#pragma omp simd
 	for (size_t cell = 0; cell < dimx; ++cell)
 		a[cell] *= b;
 	return a;
@@ -126,7 +126,7 @@ vector<double>& operator *= (vector<double>& a, const double b)
 vector<double>& operator += (vector<double>& a, const vector<double>& b)
 {
 	size_t dimx = a.size();
-#pragma omp simd
+//#pragma omp simd
 	for (size_t cell = 0; cell < dimx; ++cell)
 		a[cell] += b[cell];
 	return a;
@@ -134,7 +134,7 @@ vector<double>& operator += (vector<double>& a, const vector<double>& b)
 vector<double>& operator -= (vector<double>& a, const vector<double>& b)
 {
 	size_t dimx = a.size();
-#pragma omp simd
+//#pragma omp simd
 	for (size_t cell = 0; cell < dimx; ++cell)
 		a[cell] -= b[cell];
 	return a;
@@ -143,7 +143,7 @@ vector<double> operator + (const vector<double>& a, const vector<double>& b)
 {
 	size_t dimx = a.size();
 	vector<double> res; res.resize(dimx);
-#pragma omp simd
+//#pragma omp simd
 	for (size_t cell = 0; cell < dimx; ++cell)
 		res[cell] = a[cell] + b[cell];
 	return res;
@@ -152,7 +152,7 @@ vector<double> operator - (const vector<double>& a, const vector<double>& b)
 {
 	size_t dimx = a.size();
 	vector<double> res; res.resize(dimx);
-#pragma omp simd
+//#pragma omp simd
 	for (size_t cell = 0; cell < dimx; ++cell)
 		res[cell] = a[cell] - b[cell];
 	return res;
@@ -162,7 +162,7 @@ vector<double> operator * (const vector<double>& a, const double b)
 	size_t dimx = a.size();
 
 	vector<double> m(a);
-#pragma omp simd
+//#pragma omp simd
 	for (size_t cell = 0; cell < dimx; ++cell)
 		m[cell] *= b;
 	return m;
@@ -172,7 +172,7 @@ vector<double> operator / (const vector<double>& a, const double b)
 	size_t dimx = a.size();
 
 	vector<double> m(a);
-#pragma omp simd
+//#pragma omp simd
 	for (size_t cell = 0; cell < dimx; ++cell)
 		m[cell] /= b;
 	return m;

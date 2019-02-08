@@ -1,0 +1,4623 @@
+	slv.correctPrevIter(): 0.0036118
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000674963
+		eInner.numfluxes: 0.0632069
+		rhs.compute: 0.111565
+	slv.assembleRHS(): 0.179304
+	updateRKstep: 0.00795484
+	slv.correctNonOrtho(): 0.00505495
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0927222
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000638962
+		eInner.numfluxes: 0.0695779
+		rhs.compute: 0.113732
+	slv.assembleRHS(): 0.186673
+	updateRKstep: 0.011704
+	slv.correctNonOrtho(): 0.00504279
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.092978
+	-----
+RK.Tsep(): 0.587678
+----------
+	slv.correctPrevIter(): 0.00272393
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000723839
+		eInner.numfluxes: 0.071336
+		rhs.compute: 0.11403
+	slv.assembleRHS(): 0.190085
+	updateRKstep: 0.00739908
+	slv.correctNonOrtho(): 0.00492501
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093317
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000648022
+		eInner.numfluxes: 0.0674942
+		rhs.compute: 0.112547
+	slv.assembleRHS(): 0.183538
+	updateRKstep: 0.0125391
+	slv.correctNonOrtho(): 0.00491905
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0954239
+	-----
+RK.Tsep(): 0.596011
+----------
+	slv.correctPrevIter(): 0.00281596
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.00067997
+		eInner.numfluxes: 0.0675089
+		rhs.compute: 0.116474
+	slv.assembleRHS(): 0.187477
+	updateRKstep: 0.00595689
+	slv.correctNonOrtho(): 0.00503492
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0942378
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000649929
+		eInner.numfluxes: 0.0679848
+		rhs.compute: 0.112618
+	slv.assembleRHS(): 0.18426
+	updateRKstep: 0.0115428
+	slv.correctNonOrtho(): 0.00493121
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0931211
+	-----
+RK.Tsep(): 0.590839
+----------
+	slv.correctPrevIter(): 0.00256705
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000727892
+		eInner.numfluxes: 0.0705199
+		rhs.compute: 0.1206
+	slv.assembleRHS(): 0.196181
+	updateRKstep: 0.00829291
+	slv.correctNonOrtho(): 0.00543284
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0927448
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000650167
+		eInner.numfluxes: 0.067245
+		rhs.compute: 0.114601
+	slv.assembleRHS(): 0.18537
+	updateRKstep: 0.01107
+	slv.correctNonOrtho(): 0.00504184
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0932579
+	-----
+RK.Tsep(): 0.601243
+----------
+	slv.correctPrevIter(): 0.00268102
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000695944
+		eInner.numfluxes: 0.0683839
+		rhs.compute: 0.113334
+	slv.assembleRHS(): 0.185228
+	updateRKstep: 0.00586796
+	slv.correctNonOrtho(): 0.00492096
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.095515
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.00075984
+		eInner.numfluxes: 0.066169
+		rhs.compute: 0.112447
+	slv.assembleRHS(): 0.182344
+	updateRKstep: 0.010905
+	slv.correctNonOrtho(): 0.00557494
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.094312
+	-----
+RK.Tsep(): 0.588831
+----------
+	slv.correctPrevIter(): 0.00268316
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000740051
+		eInner.numfluxes: 0.0706749
+		rhs.compute: 0.112846
+	slv.assembleRHS(): 0.188341
+	updateRKstep: 0.00852394
+	slv.correctNonOrtho(): 0.00554895
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0939488
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000653982
+		eInner.numfluxes: 0.0676
+		rhs.compute: 0.113545
+	slv.assembleRHS(): 0.184589
+	updateRKstep: 0.010987
+	slv.correctNonOrtho(): 0.00492501
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0945051
+	-----
+RK.Tsep(): 0.595319
+----------
+	slv.correctPrevIter(): 0.00256491
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000671864
+		eInner.numfluxes: 0.066448
+		rhs.compute: 0.114276
+	slv.assembleRHS(): 0.184218
+	updateRKstep: 0.00654101
+	slv.correctNonOrtho(): 0.00492191
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0920599
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000644922
+		eInner.numfluxes: 0.06727
+		rhs.compute: 0.113094
+	slv.assembleRHS(): 0.183965
+	updateRKstep: 0.010792
+	slv.correctNonOrtho(): 0.00493717
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0936081
+	-----
+RK.Tsep(): 0.585094
+----------
+	slv.correctPrevIter(): 0.00254822
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000730991
+		eInner.numfluxes: 0.0720019
+		rhs.compute: 0.114376
+	slv.assembleRHS(): 0.191116
+	updateRKstep: 0.00735903
+	slv.correctNonOrtho(): 0.00493002
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0946331
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000638008
+		eInner.numfluxes: 0.066798
+		rhs.compute: 0.117492
+	slv.assembleRHS(): 0.187962
+	updateRKstep: 0.0110891
+	slv.correctNonOrtho(): 0.00493407
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0940149
+	-----
+RK.Tsep(): 0.599762
+----------
+	slv.correctPrevIter(): 0.00267982
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000669003
+		eInner.numfluxes: 0.0666621
+		rhs.compute: 0.115175
+	slv.assembleRHS(): 0.185649
+	updateRKstep: 0.00854611
+	slv.correctNonOrtho(): 0.00570107
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.095602
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000643969
+		eInner.numfluxes: 0.067327
+		rhs.compute: 0.116262
+	slv.assembleRHS(): 0.1871
+	updateRKstep: 0.0106831
+	slv.correctNonOrtho(): 0.00491691
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.093333
+	-----
+RK.Tsep(): 0.595916
+----------
+	slv.correctPrevIter(): 0.00255609
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000718117
+		eInner.numfluxes: 0.0712609
+		rhs.compute: 0.115129
+	slv.assembleRHS(): 0.191099
+	updateRKstep: 0.00739694
+	slv.correctNonOrtho(): 0.00491714
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.0939262
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000642061
+		eInner.numfluxes: 0.0675681
+		rhs.compute: 0.112286
+	slv.assembleRHS(): 0.183291
+	updateRKstep: 0.0109639
+	slv.correctNonOrtho(): 0.00493407
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0948842
+	-----
+RK.Tsep(): 0.595134
+----------
+	slv.correctPrevIter(): 0.0026691
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000674963
+		eInner.numfluxes: 0.0674579
+		rhs.compute: 0.116583
+	slv.assembleRHS(): 0.187543
+	updateRKstep: 0.00597
+	slv.correctNonOrtho(): 0.00491881
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.094403
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000640154
+		eInner.numfluxes: 0.0714951
+		rhs.compute: 0.1126
+	slv.assembleRHS(): 0.187916
+	updateRKstep: 0.011205
+	slv.correctNonOrtho(): 0.00492811
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0940561
+	-----
+RK.Tsep(): 0.595092
+----------
+	slv.correctPrevIter(): 0.00255299
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000710964
+		eInner.numfluxes: 0.0705411
+		rhs.compute: 0.115957
+	slv.assembleRHS(): 0.1912
+	updateRKstep: 0.00799704
+	slv.correctNonOrtho(): 0.00492001
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0925701
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000643969
+		eInner.numfluxes: 0.0668621
+		rhs.compute: 0.119757
+	slv.assembleRHS(): 0.190061
+	updateRKstep: 0.0107861
+	slv.correctNonOrtho(): 0.00492501
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.092932
+	-----
+RK.Tsep(): 0.599112
+----------
+	slv.correctPrevIter(): 0.00255919
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000674963
+		eInner.numfluxes: 0.0684888
+		rhs.compute: 0.112807
+	slv.assembleRHS(): 0.184787
+	updateRKstep: 0.00581193
+	slv.correctNonOrtho(): 0.00491691
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.093586
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000759125
+		eInner.numfluxes: 0.0670259
+		rhs.compute: 0.113831
+	slv.assembleRHS(): 0.184467
+	updateRKstep: 0.011246
+	slv.correctNonOrtho(): 0.00492001
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0936642
+	-----
+RK.Tsep(): 0.587434
+----------
+	slv.correctPrevIter(): 0.00258899
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.00071907
+		eInner.numfluxes: 0.0707159
+		rhs.compute: 0.112959
+	slv.assembleRHS(): 0.188374
+	updateRKstep: 0.00741506
+	slv.correctNonOrtho(): 0.00535893
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0944662
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000656128
+		eInner.numfluxes: 0.0671129
+		rhs.compute: 0.11525
+	slv.assembleRHS(): 0.18582
+	updateRKstep: 0.0107169
+	slv.correctNonOrtho(): 0.00492811
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0934811
+	-----
+RK.Tsep(): 0.594312
+----------
+	slv.correctPrevIter(): 0.00254393
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000674009
+		eInner.numfluxes: 0.0668111
+		rhs.compute: 0.114403
+	slv.assembleRHS(): 0.184938
+	updateRKstep: 0.00605607
+	slv.correctNonOrtho(): 0.00493693
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0928409
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000645876
+		eInner.numfluxes: 0.0677021
+		rhs.compute: 0.113109
+	slv.assembleRHS(): 0.184326
+	updateRKstep: 0.0106399
+	slv.correctNonOrtho(): 0.00493002
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0931199
+	-----
+RK.Tsep(): 0.58581
+----------
+	slv.correctPrevIter(): 0.0025599
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000721931
+		eInner.numfluxes: 0.0725541
+		rhs.compute: 0.113276
+	slv.assembleRHS(): 0.190545
+	updateRKstep: 0.007375
+	slv.correctNonOrtho(): 0.00504303
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0950618
+	-----
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000642061
+		eInner.numfluxes: 0.0675271
+		rhs.compute: 0.113112
+	slv.assembleRHS(): 0.184403
+	updateRKstep: 0.0107999
+	slv.correctNonOrtho(): 0.00493002
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0945339
+	-----
+RK.Tsep(): 0.596425
+----------
+	slv.correctPrevIter(): 0.00293088
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000768185
+		eInner.numfluxes: 0.066828
+		rhs.compute: 0.117376
+	slv.assembleRHS(): 0.187797
+	updateRKstep: 0.00597095
+	slv.correctNonOrtho(): 0.00503016
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0932319
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000644922
+		eInner.numfluxes: 0.0671299
+		rhs.compute: 0.117601
+	slv.assembleRHS(): 0.188229
+	updateRKstep: 0.0106719
+	slv.correctNonOrtho(): 0.00503707
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0929511
+	-----
+RK.Tsep(): 0.593412
+----------
+	slv.correctPrevIter(): 0.0025928
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000720024
+		eInner.numfluxes: 0.071022
+		rhs.compute: 0.114161
+	slv.assembleRHS(): 0.189895
+	updateRKstep: 0.00750494
+	slv.correctNonOrtho(): 0.00505805
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0937209
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000641823
+		eInner.numfluxes: 0.068228
+		rhs.compute: 0.114407
+	slv.assembleRHS(): 0.186074
+	updateRKstep: 0.010869
+	slv.correctNonOrtho(): 0.00504518
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0948069
+	-----
+RK.Tsep(): 0.596742
+----------
+	slv.correctPrevIter(): 0.00261188
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000681877
+		eInner.numfluxes: 0.0680919
+		rhs.compute: 0.113439
+	slv.assembleRHS(): 0.185023
+	updateRKstep: 0.00598001
+	slv.correctNonOrtho(): 0.00493002
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0947828
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000660896
+		eInner.numfluxes: 0.0668719
+		rhs.compute: 0.113371
+	slv.assembleRHS(): 0.183769
+	updateRKstep: 0.011224
+	slv.correctNonOrtho(): 0.00550699
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0974309
+	-----
+RK.Tsep(): 0.592862
+----------
+	slv.correctPrevIter(): 0.00283694
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000799894
+		eInner.numfluxes: 0.070349
+		rhs.compute: 0.114696
+	slv.assembleRHS(): 0.190172
+	updateRKstep: 0.00745487
+	slv.correctNonOrtho(): 0.00534916
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0953701
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000640869
+		eInner.numfluxes: 0.066762
+		rhs.compute: 0.114024
+	slv.assembleRHS(): 0.184228
+	updateRKstep: 0.010798
+	slv.correctNonOrtho(): 0.00492692
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0934699
+	-----
+RK.Tsep(): 0.595878
+----------
+	slv.correctPrevIter(): 0.00255609
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000674009
+		eInner.numfluxes: 0.069438
+		rhs.compute: 0.117827
+	slv.assembleRHS(): 0.190761
+	updateRKstep: 0.0058279
+	slv.correctNonOrtho(): 0.00492501
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0934808
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000756979
+		eInner.numfluxes: 0.0671351
+		rhs.compute: 0.113041
+	slv.assembleRHS(): 0.183919
+	updateRKstep: 0.0111082
+	slv.correctNonOrtho(): 0.00501204
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.0938461
+	-----
+RK.Tsep(): 0.592922
+----------
+	slv.correctPrevIter(): 0.00257397
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000834942
+		eInner.numfluxes: 0.0711532
+		rhs.compute: 0.113331
+	slv.assembleRHS(): 0.189296
+	updateRKstep: 0.00739598
+	slv.correctNonOrtho(): 0.00493717
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0944111
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000648022
+		eInner.numfluxes: 0.0677891
+		rhs.compute: 0.113833
+	slv.assembleRHS(): 0.185196
+	updateRKstep: 0.0108449
+	slv.correctNonOrtho(): 0.00491905
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.093569
+	-----
+RK.Tsep(): 0.594318
+----------
+	slv.correctPrevIter(): 0.00255203
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000682116
+		eInner.numfluxes: 0.0665679
+		rhs.compute: 0.114612
+	slv.assembleRHS(): 0.184886
+	updateRKstep: 0.00637913
+	slv.correctNonOrtho(): 0.00493503
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.093044
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000643015
+		eInner.numfluxes: 0.066746
+		rhs.compute: 0.114851
+	slv.assembleRHS(): 0.185101
+	updateRKstep: 0.0107479
+	slv.correctNonOrtho(): 0.00515413
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.093492
+	-----
+RK.Tsep(): 0.587763
+----------
+	slv.correctPrevIter(): 0.00258088
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000838041
+		eInner.numfluxes: 0.0718091
+		rhs.compute: 0.112638
+	slv.assembleRHS(): 0.189285
+	updateRKstep: 0.00741887
+	slv.correctNonOrtho(): 0.0049212
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0949731
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000637054
+		eInner.numfluxes: 0.0667729
+		rhs.compute: 0.112951
+	slv.assembleRHS(): 0.183361
+	updateRKstep: 0.0112419
+	slv.correctNonOrtho(): 0.00512218
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0952308
+	-----
+RK.Tsep(): 0.59544
+----------
+	slv.correctPrevIter(): 0.00300002
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000795126
+		eInner.numfluxes: 0.0671771
+		rhs.compute: 0.11362
+	slv.assembleRHS(): 0.184643
+	updateRKstep: 0.00590086
+	slv.correctNonOrtho(): 0.00505304
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.093698
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000642061
+		eInner.numfluxes: 0.0706751
+		rhs.compute: 0.115171
+	slv.assembleRHS(): 0.189411
+	updateRKstep: 0.0107601
+	slv.correctNonOrtho(): 0.00492692
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0932021
+	-----
+RK.Tsep(): 0.592263
+----------
+	slv.correctPrevIter(): 0.00258398
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.00072217
+		eInner.numfluxes: 0.0709331
+		rhs.compute: 0.117889
+	slv.assembleRHS(): 0.193531
+	updateRKstep: 0.0073998
+	slv.correctNonOrtho(): 0.00492406
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0935662
+	-----
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000658035
+		eInner.numfluxes: 0.0681479
+		rhs.compute: 0.112798
+	slv.assembleRHS(): 0.184404
+	updateRKstep: 0.01073
+	slv.correctNonOrtho(): 0.00503898
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.094142
+	-----
+RK.Tsep(): 0.597607
+----------
+	slv.correctPrevIter(): 0.00259495
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.00067997
+		eInner.numfluxes: 0.0688219
+		rhs.compute: 0.113706
+	slv.assembleRHS(): 0.186006
+	updateRKstep: 0.00589895
+	slv.correctNonOrtho(): 0.00492907
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0944679
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000636101
+		eInner.numfluxes: 0.0671282
+		rhs.compute: 0.113409
+	slv.assembleRHS(): 0.184038
+	updateRKstep: 0.0107632
+	slv.correctNonOrtho(): 0.00543499
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0938089
+	-----
+RK.Tsep(): 0.589396
+----------
+	slv.correctPrevIter(): 0.00254798
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000720978
+		eInner.numfluxes: 0.0698271
+		rhs.compute: 0.114413
+	slv.assembleRHS(): 0.188939
+	updateRKstep: 0.00750208
+	slv.correctNonOrtho(): 0.00491786
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0985851
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.0006392
+		eInner.numfluxes: 0.0668271
+		rhs.compute: 0.114728
+	slv.assembleRHS(): 0.184998
+	updateRKstep: 0.0109441
+	slv.correctNonOrtho(): 0.00489998
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0932181
+	-----
+RK.Tsep(): 0.597736
+----------
+	slv.correctPrevIter(): 0.00254893
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.00067997
+		eInner.numfluxes: 0.0680721
+		rhs.compute: 0.113152
+	slv.assembleRHS(): 0.18472
+	updateRKstep: 0.00583482
+	slv.correctNonOrtho(): 0.00492692
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0942659
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.00064683
+		eInner.numfluxes: 0.0739219
+		rhs.compute: 0.11324
+	slv.assembleRHS(): 0.190665
+	updateRKstep: 0.011441
+	slv.correctNonOrtho(): 0.00493503
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0955479
+	-----
+RK.Tsep(): 0.596348
+----------
+	slv.correctPrevIter(): 0.00257087
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000741959
+		eInner.numfluxes: 0.0714722
+		rhs.compute: 0.112549
+	slv.assembleRHS(): 0.188745
+	updateRKstep: 0.00739408
+	slv.correctNonOrtho(): 0.00494695
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.095763
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.0006392
+		eInner.numfluxes: 0.067214
+		rhs.compute: 0.114205
+	slv.assembleRHS(): 0.18485
+	updateRKstep: 0.0107348
+	slv.correctNonOrtho(): 0.00491905
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0931568
+	-----
+RK.Tsep(): 0.594249
+----------
+	slv.correctPrevIter(): 0.00255799
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000684023
+		eInner.numfluxes: 0.0667109
+		rhs.compute: 0.115165
+	slv.assembleRHS(): 0.185488
+	updateRKstep: 0.00594497
+	slv.correctNonOrtho(): 0.00493312
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.09271
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000644922
+		eInner.numfluxes: 0.0672579
+		rhs.compute: 0.113869
+	slv.assembleRHS(): 0.184638
+	updateRKstep: 0.0106351
+	slv.correctNonOrtho(): 0.00493002
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0933309
+	-----
+RK.Tsep(): 0.586623
+----------
+	slv.correctPrevIter(): 0.00257802
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.00071907
+		eInner.numfluxes: 0.0720551
+		rhs.compute: 0.113784
+	slv.assembleRHS(): 0.190546
+	updateRKstep: 0.00738502
+	slv.correctNonOrtho(): 0.00490499
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.094348
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000663042
+		eInner.numfluxes: 0.066457
+		rhs.compute: 0.114592
+	slv.assembleRHS(): 0.184737
+	updateRKstep: 0.010766
+	slv.correctNonOrtho(): 0.004915
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0940909
+	-----
+RK.Tsep(): 0.595443
+----------
+	slv.correctPrevIter(): 0.0028069
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.00067091
+		eInner.numfluxes: 0.0667219
+		rhs.compute: 0.113265
+	slv.assembleRHS(): 0.183795
+	updateRKstep: 0.00656915
+	slv.correctNonOrtho(): 0.00504518
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093797
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000638008
+		eInner.numfluxes: 0.0669341
+		rhs.compute: 0.1138
+	slv.assembleRHS(): 0.184242
+	updateRKstep: 0.0107882
+	slv.correctNonOrtho(): 0.004915
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.095485
+	-----
+RK.Tsep(): 0.589008
+----------
+	slv.correctPrevIter(): 0.00258398
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000761986
+		eInner.numfluxes: 0.0751061
+		rhs.compute: 0.114096
+	slv.assembleRHS(): 0.19421
+	updateRKstep: 0.00820398
+	slv.correctNonOrtho(): 0.00492287
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.093714
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000648022
+		eInner.numfluxes: 0.0705311
+		rhs.compute: 0.113402
+	slv.assembleRHS(): 0.187392
+	updateRKstep: 0.0109761
+	slv.correctNonOrtho(): 0.00493002
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.094058
+	-----
+RK.Tsep(): 0.602139
+----------
+	slv.correctPrevIter(): 0.00264096
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000798941
+		eInner.numfluxes: 0.0671082
+		rhs.compute: 0.112369
+	slv.assembleRHS(): 0.183103
+	updateRKstep: 0.00587797
+	slv.correctNonOrtho(): 0.00504613
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0946651
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000640154
+		eInner.numfluxes: 0.067363
+		rhs.compute: 0.113232
+	slv.assembleRHS(): 0.184098
+	updateRKstep: 0.010802
+	slv.correctNonOrtho(): 0.00492501
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.094353
+	-----
+RK.Tsep(): 0.587109
+----------
+	slv.correctPrevIter(): 0.00255609
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000712156
+		eInner.numfluxes: 0.0699999
+		rhs.compute: 0.114169
+	slv.assembleRHS(): 0.188854
+	updateRKstep: 0.00760698
+	slv.correctNonOrtho(): 0.00502801
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0938139
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000648022
+		eInner.numfluxes: 0.0668409
+		rhs.compute: 0.115035
+	slv.assembleRHS(): 0.185615
+	updateRKstep: 0.0148101
+	slv.correctNonOrtho(): 0.00557303
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0937521
+	-----
+RK.Tsep(): 0.598785
+----------
+	slv.correctPrevIter(): 0.00258017
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000679016
+		eInner.numfluxes: 0.0682878
+		rhs.compute: 0.11405
+	slv.assembleRHS(): 0.185843
+	updateRKstep: 0.00582099
+	slv.correctNonOrtho(): 0.00502205
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0932159
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000643969
+		eInner.numfluxes: 0.0673101
+		rhs.compute: 0.112353
+	slv.assembleRHS(): 0.183157
+	updateRKstep: 0.010776
+	slv.correctNonOrtho(): 0.00559282
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0977349
+	-----
+RK.Tsep(): 0.59128
+----------
+	slv.correctPrevIter(): 0.00298405
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000776052
+		eInner.numfluxes: 0.0720222
+		rhs.compute: 0.112688
+	slv.assembleRHS(): 0.189566
+	updateRKstep: 0.00742197
+	slv.correctNonOrtho(): 0.00492311
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0946591
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000652075
+		eInner.numfluxes: 0.06744
+		rhs.compute: 0.113769
+	slv.assembleRHS(): 0.184657
+	updateRKstep: 0.0108321
+	slv.correctNonOrtho(): 0.00492716
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0936468
+	-----
+RK.Tsep(): 0.595039
+----------
+	slv.correctPrevIter(): 0.00256109
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000672817
+		eInner.numfluxes: 0.0665021
+		rhs.compute: 0.114507
+	slv.assembleRHS(): 0.184815
+	updateRKstep: 0.00611091
+	slv.correctNonOrtho(): 0.00490713
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.092644
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000658035
+		eInner.numfluxes: 0.0668299
+		rhs.compute: 0.114538
+	slv.assembleRHS(): 0.184886
+	updateRKstep: 0.010745
+	slv.correctNonOrtho(): 0.00493002
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.0955081
+	-----
+RK.Tsep(): 0.588687
+----------
+	slv.correctPrevIter(): 0.00255704
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000715971
+		eInner.numfluxes: 0.0720339
+		rhs.compute: 0.113817
+	slv.assembleRHS(): 0.190586
+	updateRKstep: 0.00736809
+	slv.correctNonOrtho(): 0.00493503
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0944738
+	-----
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000648022
+		eInner.numfluxes: 0.067997
+		rhs.compute: 0.114328
+	slv.assembleRHS(): 0.185767
+	updateRKstep: 0.0107861
+	slv.correctNonOrtho(): 0.00492191
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0947771
+	-----
+RK.Tsep(): 0.597343
+----------
+	slv.correctPrevIter(): 0.00255799
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000673056
+		eInner.numfluxes: 0.0665119
+		rhs.compute: 0.112579
+	slv.assembleRHS(): 0.18257
+	updateRKstep: 0.00654578
+	slv.correctNonOrtho(): 0.00554323
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.094882
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000643015
+		eInner.numfluxes: 0.066854
+		rhs.compute: 0.115057
+	slv.assembleRHS(): 0.185425
+	updateRKstep: 0.010684
+	slv.correctNonOrtho(): 0.00492191
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.094353
+	-----
+RK.Tsep(): 0.588963
+----------
+	slv.correctPrevIter(): 0.00256085
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000715017
+		eInner.numfluxes: 0.070791
+		rhs.compute: 0.1153
+	slv.assembleRHS(): 0.190794
+	updateRKstep: 0.00753593
+	slv.correctNonOrtho(): 0.00492311
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0998681
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000661135
+		eInner.numfluxes: 0.0678041
+		rhs.compute: 0.113134
+	slv.assembleRHS(): 0.184459
+	updateRKstep: 0.0112939
+	slv.correctNonOrtho(): 0.00492692
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0936952
+	-----
+RK.Tsep(): 0.601234
+----------
+	slv.correctPrevIter(): 0.00321913
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000878811
+		eInner.numfluxes: 0.070055
+		rhs.compute: 0.113287
+	slv.assembleRHS(): 0.187031
+	updateRKstep: 0.00606799
+	slv.correctNonOrtho(): 0.00551891
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0955179
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000645161
+		eInner.numfluxes: 0.067836
+		rhs.compute: 0.112767
+	slv.assembleRHS(): 0.184107
+	updateRKstep: 0.0107219
+	slv.correctNonOrtho(): 0.00492692
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0952771
+	-----
+RK.Tsep(): 0.594244
+----------
+	slv.correctPrevIter(): 0.00268912
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000714064
+		eInner.numfluxes: 0.0704648
+		rhs.compute: 0.114808
+	slv.assembleRHS(): 0.189971
+	updateRKstep: 0.00793695
+	slv.correctNonOrtho(): 0.004951
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0925019
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000656128
+		eInner.numfluxes: 0.0673349
+		rhs.compute: 0.114846
+	slv.assembleRHS(): 0.185629
+	updateRKstep: 0.0108581
+	slv.correctNonOrtho(): 0.00492191
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0941842
+	-----
+RK.Tsep(): 0.594782
+----------
+	slv.correctPrevIter(): 0.00255609
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000684977
+		eInner.numfluxes: 0.068018
+		rhs.compute: 0.116611
+	slv.assembleRHS(): 0.188128
+	updateRKstep: 0.00588703
+	slv.correctNonOrtho(): 0.00491905
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.093251
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000648022
+		eInner.numfluxes: 0.0674651
+		rhs.compute: 0.113109
+	slv.assembleRHS(): 0.184075
+	updateRKstep: 0.011446
+	slv.correctNonOrtho(): 0.00492096
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.093683
+	-----
+RK.Tsep(): 0.590324
+----------
+	slv.correctPrevIter(): 0.0025599
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000797987
+		eInner.numfluxes: 0.0703421
+		rhs.compute: 0.113584
+	slv.assembleRHS(): 0.188844
+	updateRKstep: 0.0076251
+	slv.correctNonOrtho(): 0.00492501
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.101561
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000640869
+		eInner.numfluxes: 0.066746
+		rhs.compute: 0.114288
+	slv.assembleRHS(): 0.184492
+	updateRKstep: 0.010874
+	slv.correctNonOrtho(): 0.00493312
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0934281
+	-----
+RK.Tsep(): 0.600423
+----------
+	slv.correctPrevIter(): 0.00255895
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000678062
+		eInner.numfluxes: 0.067219
+		rhs.compute: 0.114769
+	slv.assembleRHS(): 0.185469
+	updateRKstep: 0.00611496
+	slv.correctNonOrtho(): 0.00504398
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093622
+	-----
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000643015
+		eInner.numfluxes: 0.0664139
+		rhs.compute: 0.113627
+	slv.assembleRHS(): 0.183809
+	updateRKstep: 0.0107689
+	slv.correctNonOrtho(): 0.00491595
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0940609
+	-----
+RK.Tsep(): 0.587832
+----------
+	slv.correctPrevIter(): 0.00255108
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000716925
+		eInner.numfluxes: 0.072355
+		rhs.compute: 0.112804
+	slv.assembleRHS(): 0.189856
+	updateRKstep: 0.00739813
+	slv.correctNonOrtho(): 0.00491905
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0944321
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000644922
+		eInner.numfluxes: 0.0672719
+		rhs.compute: 0.113415
+	slv.assembleRHS(): 0.18412
+	updateRKstep: 0.0107882
+	slv.correctNonOrtho(): 0.00493097
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.094574
+	-----
+RK.Tsep(): 0.594749
+----------
+	slv.correctPrevIter(): 0.00256586
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000691175
+		eInner.numfluxes: 0.0674031
+		rhs.compute: 0.112966
+	slv.assembleRHS(): 0.183873
+	updateRKstep: 0.00659895
+	slv.correctNonOrtho(): 0.00566292
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.0933251
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000661135
+		eInner.numfluxes: 0.0669081
+		rhs.compute: 0.113061
+	slv.assembleRHS(): 0.183488
+	updateRKstep: 0.010694
+	slv.correctNonOrtho(): 0.00491881
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093261
+	-----
+RK.Tsep(): 0.585866
+----------
+	slv.correctPrevIter(): 0.00255013
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000712872
+		eInner.numfluxes: 0.071156
+		rhs.compute: 0.117844
+	slv.assembleRHS(): 0.193754
+	updateRKstep: 0.00822186
+	slv.correctNonOrtho(): 0.00493288
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.092973
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000643969
+		eInner.numfluxes: 0.0677118
+		rhs.compute: 0.11407
+	slv.assembleRHS(): 0.18523
+	updateRKstep: 0.0108631
+	slv.correctNonOrtho(): 0.00506401
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0967689
+	-----
+RK.Tsep(): 0.601559
+----------
+	slv.correctPrevIter(): 0.00276899
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000900984
+		eInner.numfluxes: 0.0677879
+		rhs.compute: 0.112283
+	slv.assembleRHS(): 0.183839
+	updateRKstep: 0.00592113
+	slv.correctNonOrtho(): 0.00493097
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.097311
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000658989
+		eInner.numfluxes: 0.0673749
+		rhs.compute: 0.112491
+	slv.assembleRHS(): 0.183384
+	updateRKstep: 0.0106978
+	slv.correctNonOrtho(): 0.00503492
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0945008
+	-----
+RK.Tsep(): 0.589857
+----------
+	slv.correctPrevIter(): 0.00256109
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.00071907
+		eInner.numfluxes: 0.07024
+		rhs.compute: 0.114105
+	slv.assembleRHS(): 0.189042
+	updateRKstep: 0.0077951
+	slv.correctNonOrtho(): 0.00503588
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0934501
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000643969
+		eInner.numfluxes: 0.0677559
+		rhs.compute: 0.113328
+	slv.assembleRHS(): 0.184528
+	updateRKstep: 0.010994
+	slv.correctNonOrtho(): 0.00492907
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093312
+	-----
+RK.Tsep(): 0.592824
+----------
+	slv.correctPrevIter(): 0.00255108
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000674009
+		eInner.numfluxes: 0.0672879
+		rhs.compute: 0.113338
+	slv.assembleRHS(): 0.184138
+	updateRKstep: 0.00581503
+	slv.correctNonOrtho(): 0.00492597
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0938501
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000638008
+		eInner.numfluxes: 0.067641
+		rhs.compute: 0.117079
+	slv.assembleRHS(): 0.188334
+	updateRKstep: 0.0113561
+	slv.correctNonOrtho(): 0.00536704
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0938451
+	-----
+RK.Tsep(): 0.591666
+----------
+	slv.correctPrevIter(): 0.00256205
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000718832
+		eInner.numfluxes: 0.071682
+		rhs.compute: 0.113166
+	slv.assembleRHS(): 0.189575
+	updateRKstep: 0.00738001
+	slv.correctNonOrtho(): 0.00492787
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.094358
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000641108
+		eInner.numfluxes: 0.0672851
+		rhs.compute: 0.113265
+	slv.assembleRHS(): 0.184419
+	updateRKstep: 0.015137
+	slv.correctNonOrtho(): 0.00650597
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.09618
+	-----
+RK.Tsep(): 0.602261
+----------
+	slv.correctPrevIter(): 0.00255203
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000670195
+		eInner.numfluxes: 0.0678031
+		rhs.compute: 0.114198
+	slv.assembleRHS(): 0.185486
+	updateRKstep: 0.00596905
+	slv.correctNonOrtho(): 0.00493002
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.093966
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000648022
+		eInner.numfluxes: 0.0660129
+		rhs.compute: 0.114537
+	slv.assembleRHS(): 0.184062
+	updateRKstep: 0.0106561
+	slv.correctNonOrtho(): 0.00492597
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.092895
+	-----
+RK.Tsep(): 0.586912
+----------
+	slv.correctPrevIter(): 0.00255799
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000707865
+		eInner.numfluxes: 0.0720119
+		rhs.compute: 0.112816
+	slv.assembleRHS(): 0.189549
+	updateRKstep: 0.00735497
+	slv.correctNonOrtho(): 0.00492692
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0947001
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000647068
+		eInner.numfluxes: 0.0684729
+		rhs.compute: 0.113324
+	slv.assembleRHS(): 0.185233
+	updateRKstep: 0.0107691
+	slv.correctNonOrtho(): 0.00491905
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.094944
+	-----
+RK.Tsep(): 0.596125
+----------
+	slv.correctPrevIter(): 0.00254607
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000674009
+		eInner.numfluxes: 0.066998
+		rhs.compute: 0.113205
+	slv.assembleRHS(): 0.183706
+	updateRKstep: 0.00582814
+	slv.correctNonOrtho(): 0.00537491
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.095144
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000648975
+		eInner.numfluxes: 0.0676649
+		rhs.compute: 0.113671
+	slv.assembleRHS(): 0.184856
+	updateRKstep: 0.010812
+	slv.correctNonOrtho(): 0.00492001
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0935359
+	-----
+RK.Tsep(): 0.588204
+----------
+	slv.correctPrevIter(): 0.00255704
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.00070405
+		eInner.numfluxes: 0.0705731
+		rhs.compute: 0.114502
+	slv.assembleRHS(): 0.189768
+	updateRKstep: 0.00751495
+	slv.correctNonOrtho(): 0.00492096
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0936391
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000646114
+		eInner.numfluxes: 0.067548
+		rhs.compute: 0.114643
+	slv.assembleRHS(): 0.185629
+	updateRKstep: 0.011054
+	slv.correctNonOrtho(): 0.00491405
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0929551
+	-----
+RK.Tsep(): 0.594141
+----------
+	slv.correctPrevIter(): 0.002671
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000691891
+		eInner.numfluxes: 0.068218
+		rhs.compute: 0.117283
+	slv.assembleRHS(): 0.189004
+	updateRKstep: 0.00593305
+	slv.correctNonOrtho(): 0.00503707
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.094207
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000641108
+		eInner.numfluxes: 0.066962
+		rhs.compute: 0.112711
+	slv.assembleRHS(): 0.18324
+	updateRKstep: 0.010685
+	slv.correctNonOrtho(): 0.00493002
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.098026
+	-----
+RK.Tsep(): 0.59522
+----------
+	slv.correctPrevIter(): 0.00256705
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000720024
+		eInner.numfluxes: 0.070277
+		rhs.compute: 0.115853
+	slv.assembleRHS(): 0.190843
+	updateRKstep: 0.00792718
+	slv.correctNonOrtho(): 0.00492191
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0929341
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000643969
+		eInner.numfluxes: 0.066957
+		rhs.compute: 0.113968
+	slv.assembleRHS(): 0.184365
+	updateRKstep: 0.0111489
+	slv.correctNonOrtho(): 0.00492501
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0946851
+	-----
+RK.Tsep(): 0.595509
+----------
+	slv.correctPrevIter(): 0.00256991
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000684023
+		eInner.numfluxes: 0.067374
+		rhs.compute: 0.114026
+	slv.assembleRHS(): 0.184911
+	updateRKstep: 0.00582504
+	slv.correctNonOrtho(): 0.00490499
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.093509
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000661135
+		eInner.numfluxes: 0.0676761
+		rhs.compute: 0.113212
+	slv.assembleRHS(): 0.184524
+	updateRKstep: 0.011014
+	slv.correctNonOrtho(): 0.00514698
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0934892
+	-----
+RK.Tsep(): 0.587395
+----------
+	slv.correctPrevIter(): 0.00255609
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000714064
+		eInner.numfluxes: 0.074981
+		rhs.compute: 0.112883
+	slv.assembleRHS(): 0.192579
+	updateRKstep: 0.00746894
+	slv.correctNonOrtho(): 0.00493002
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0943599
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000643015
+		eInner.numfluxes: 0.0674241
+		rhs.compute: 0.112515
+	slv.assembleRHS(): 0.183507
+	updateRKstep: 0.011744
+	slv.correctNonOrtho(): 0.00515509
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0932369
+	-----
+RK.Tsep(): 0.596702
+----------
+	slv.correctPrevIter(): 0.00254917
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000681877
+		eInner.numfluxes: 0.0668781
+		rhs.compute: 0.119994
+	slv.assembleRHS(): 0.190389
+	updateRKstep: 0.00655508
+	slv.correctNonOrtho(): 0.00491381
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0928659
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000775099
+		eInner.numfluxes: 0.066283
+		rhs.compute: 0.115003
+	slv.assembleRHS(): 0.184927
+	updateRKstep: 0.0106471
+	slv.correctNonOrtho(): 0.00492096
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0932028
+	-----
+RK.Tsep(): 0.592428
+----------
+	slv.correctPrevIter(): 0.0025599
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000710011
+		eInner.numfluxes: 0.0719271
+		rhs.compute: 0.113916
+	slv.assembleRHS(): 0.190544
+	updateRKstep: 0.00750399
+	slv.correctNonOrtho(): 0.0049212
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.0934472
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000759125
+		eInner.numfluxes: 0.067461
+		rhs.compute: 0.113175
+	slv.assembleRHS(): 0.184186
+	updateRKstep: 0.0107901
+	slv.correctNonOrtho(): 0.00492692
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.095114
+	-----
+RK.Tsep(): 0.59516
+----------
+	slv.correctPrevIter(): 0.00255704
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000788927
+		eInner.numfluxes: 0.0667291
+		rhs.compute: 0.114004
+	slv.assembleRHS(): 0.184349
+	updateRKstep: 0.00597715
+	slv.correctNonOrtho(): 0.00491595
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.0948842
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000651836
+		eInner.numfluxes: 0.0668728
+		rhs.compute: 0.114175
+	slv.assembleRHS(): 0.184553
+	updateRKstep: 0.010705
+	slv.correctNonOrtho(): 0.00492501
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.093838
+	-----
+RK.Tsep(): 0.588172
+----------
+	slv.correctPrevIter(): 0.00257301
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000711203
+		eInner.numfluxes: 0.0709679
+		rhs.compute: 0.116324
+	slv.assembleRHS(): 0.192004
+	updateRKstep: 0.00744987
+	slv.correctNonOrtho(): 0.00493288
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.092768
+	-----
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000646114
+		eInner.numfluxes: 0.066514
+		rhs.compute: 0.113623
+	slv.assembleRHS(): 0.183597
+	updateRKstep: 0.0108361
+	slv.correctNonOrtho(): 0.00503087
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0931101
+	-----
+RK.Tsep(): 0.593476
+----------
+	slv.correctPrevIter(): 0.00267601
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000795126
+		eInner.numfluxes: 0.068305
+		rhs.compute: 0.113694
+	slv.assembleRHS(): 0.185609
+	updateRKstep: 0.00592589
+	slv.correctNonOrtho(): 0.00492907
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0939848
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000647068
+		eInner.numfluxes: 0.067924
+		rhs.compute: 0.118034
+	slv.assembleRHS(): 0.18946
+	updateRKstep: 0.0107639
+	slv.correctNonOrtho(): 0.0049181
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0934498
+	-----
+RK.Tsep(): 0.593168
+----------
+	slv.correctPrevIter(): 0.00255394
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000717163
+		eInner.numfluxes: 0.0700419
+		rhs.compute: 0.116451
+	slv.assembleRHS(): 0.191527
+	updateRKstep: 0.00792193
+	slv.correctNonOrtho(): 0.00536609
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.092644
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000643015
+		eInner.numfluxes: 0.0668409
+		rhs.compute: 0.114578
+	slv.assembleRHS(): 0.18486
+	updateRKstep: 0.010886
+	slv.correctNonOrtho(): 0.00491691
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.092644
+	-----
+RK.Tsep(): 0.594513
+----------
+	slv.correctPrevIter(): 0.00256491
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.00067997
+		eInner.numfluxes: 0.0672081
+		rhs.compute: 0.114074
+	slv.assembleRHS(): 0.184777
+	updateRKstep: 0.00594783
+	slv.correctNonOrtho(): 0.00502014
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0932159
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000644922
+		eInner.numfluxes: 0.0673108
+		rhs.compute: 0.112476
+	slv.assembleRHS(): 0.18328
+	updateRKstep: 0.0107749
+	slv.correctNonOrtho(): 0.0049181
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0936439
+	-----
+RK.Tsep(): 0.58561
+----------
+	slv.correctPrevIter(): 0.00290799
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000832081
+		eInner.numfluxes: 0.0716238
+		rhs.compute: 0.112976
+	slv.assembleRHS(): 0.189514
+	updateRKstep: 0.0075109
+	slv.correctNonOrtho(): 0.00492406
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.096312
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000644922
+		eInner.numfluxes: 0.0719998
+		rhs.compute: 0.11297
+	slv.assembleRHS(): 0.188409
+	updateRKstep: 0.0109689
+	slv.correctNonOrtho(): 0.00547314
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0952811
+	-----
+RK.Tsep(): 0.602481
+----------
+	slv.correctPrevIter(): 0.00258398
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000689983
+		eInner.numfluxes: 0.066659
+		rhs.compute: 0.113801
+	slv.assembleRHS(): 0.183963
+	updateRKstep: 0.00643802
+	slv.correctNonOrtho(): 0.00493503
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0927441
+	-----
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000644922
+		eInner.numfluxes: 0.066848
+		rhs.compute: 0.120025
+	slv.assembleRHS(): 0.190378
+	updateRKstep: 0.0106571
+	slv.correctNonOrtho(): 0.00492811
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0936439
+	-----
+RK.Tsep(): 0.591704
+----------
+	slv.correctPrevIter(): 0.00256681
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.00070715
+		eInner.numfluxes: 0.071768
+		rhs.compute: 0.113391
+	slv.assembleRHS(): 0.189863
+	updateRKstep: 0.00742292
+	slv.correctNonOrtho(): 0.00493407
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0933969
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000638008
+		eInner.numfluxes: 0.067847
+		rhs.compute: 0.113873
+	slv.assembleRHS(): 0.185493
+	updateRKstep: 0.010792
+	slv.correctNonOrtho(): 0.00491714
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0942411
+	-----
+RK.Tsep(): 0.59491
+----------
+	slv.correctPrevIter(): 0.00255799
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000684023
+		eInner.numfluxes: 0.0673211
+		rhs.compute: 0.112277
+	slv.assembleRHS(): 0.183101
+	updateRKstep: 0.0058291
+	slv.correctNonOrtho(): 0.00492907
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0945292
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000646114
+		eInner.numfluxes: 0.067163
+		rhs.compute: 0.114639
+	slv.assembleRHS(): 0.185328
+	updateRKstep: 0.0114369
+	slv.correctNonOrtho(): 0.00492001
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.092798
+	-----
+RK.Tsep(): 0.586991
+----------
+	slv.correctPrevIter(): 0.00255609
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000710964
+		eInner.numfluxes: 0.070837
+		rhs.compute: 0.115231
+	slv.assembleRHS(): 0.190767
+	updateRKstep: 0.00740409
+	slv.correctNonOrtho(): 0.00492215
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.093477
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000635862
+		eInner.numfluxes: 0.0662811
+		rhs.compute: 0.113287
+	slv.assembleRHS(): 0.183009
+	updateRKstep: 0.010726
+	slv.correctNonOrtho(): 0.00492096
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0932591
+	-----
+RK.Tsep(): 0.592239
+----------
+	slv.correctPrevIter(): 0.00258708
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000675917
+		eInner.numfluxes: 0.068347
+		rhs.compute: 0.112783
+	slv.assembleRHS(): 0.184637
+	updateRKstep: 0.00589514
+	slv.correctNonOrtho(): 0.00491381
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.094245
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000651121
+		eInner.numfluxes: 0.067328
+		rhs.compute: 0.113241
+	slv.assembleRHS(): 0.184421
+	updateRKstep: 0.010674
+	slv.correctNonOrtho(): 0.0049212
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.09428
+	-----
+RK.Tsep(): 0.588008
+----------
+	slv.correctPrevIter(): 0.00258183
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000713825
+		eInner.numfluxes: 0.0702062
+		rhs.compute: 0.117857
+	slv.assembleRHS(): 0.192762
+	updateRKstep: 0.00813103
+	slv.correctNonOrtho(): 0.00560308
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0929141
+	-----
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000638008
+		eInner.numfluxes: 0.0674541
+		rhs.compute: 0.1168
+	slv.assembleRHS(): 0.187697
+	updateRKstep: 0.0109169
+	slv.correctNonOrtho(): 0.00492215
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.092912
+	-----
+RK.Tsep(): 0.59959
+----------
+	slv.correctPrevIter(): 0.002563
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000669003
+		eInner.numfluxes: 0.0682399
+		rhs.compute: 0.113836
+	slv.assembleRHS(): 0.185554
+	updateRKstep: 0.00583315
+	slv.correctNonOrtho(): 0.00492096
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093307
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000638962
+		eInner.numfluxes: 0.0674691
+		rhs.compute: 0.114804
+	slv.assembleRHS(): 0.185764
+	updateRKstep: 0.0107801
+	slv.correctNonOrtho(): 0.00492787
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.09319
+	-----
+RK.Tsep(): 0.588314
+----------
+	slv.correctPrevIter(): 0.00268292
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.00071311
+		eInner.numfluxes: 0.071892
+		rhs.compute: 0.113641
+	slv.assembleRHS(): 0.190227
+	updateRKstep: 0.00736403
+	slv.correctNonOrtho(): 0.00493097
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.09462
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000640869
+		eInner.numfluxes: 0.06707
+		rhs.compute: 0.112873
+	slv.assembleRHS(): 0.183389
+	updateRKstep: 0.0108929
+	slv.correctNonOrtho(): 0.004915
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.09846
+	-----
+RK.Tsep(): 0.598633
+----------
+	slv.correctPrevIter(): 0.00257897
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000674963
+		eInner.numfluxes: 0.0665469
+		rhs.compute: 0.114093
+	slv.assembleRHS(): 0.184241
+	updateRKstep: 0.00595307
+	slv.correctNonOrtho(): 0.00524688
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0929
+	-----
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000646114
+		eInner.numfluxes: 0.067142
+		rhs.compute: 0.113642
+	slv.assembleRHS(): 0.18429
+	updateRKstep: 0.0107751
+	slv.correctNonOrtho(): 0.00492311
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0933001
+	-----
+RK.Tsep(): 0.585683
+----------
+	slv.correctPrevIter(): 0.00254989
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000715971
+		eInner.numfluxes: 0.0730591
+		rhs.compute: 0.117917
+	slv.assembleRHS(): 0.19569
+	updateRKstep: 0.00742292
+	slv.correctNonOrtho(): 0.00491714
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.093899
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000644922
+		eInner.numfluxes: 0.0689211
+		rhs.compute: 0.113446
+	slv.assembleRHS(): 0.185807
+	updateRKstep: 0.0114229
+	slv.correctNonOrtho(): 0.00493002
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0937798
+	-----
+RK.Tsep(): 0.601602
+----------
+	slv.correctPrevIter(): 0.00276423
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000692129
+		eInner.numfluxes: 0.0685229
+		rhs.compute: 0.112691
+	slv.assembleRHS(): 0.184824
+	updateRKstep: 0.00595593
+	slv.correctNonOrtho(): 0.00492787
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0938771
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000648975
+		eInner.numfluxes: 0.066854
+		rhs.compute: 0.11295
+	slv.assembleRHS(): 0.183797
+	updateRKstep: 0.011441
+	slv.correctNonOrtho(): 0.00502706
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0939169
+	-----
+RK.Tsep(): 0.587999
+----------
+	slv.correctPrevIter(): 0.00257897
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000718832
+		eInner.numfluxes: 0.071137
+		rhs.compute: 0.11598
+	slv.assembleRHS(): 0.191927
+	updateRKstep: 0.00739098
+	slv.correctNonOrtho(): 0.00502896
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0928788
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000638962
+		eInner.numfluxes: 0.066824
+		rhs.compute: 0.1145
+	slv.assembleRHS(): 0.184761
+	updateRKstep: 0.0113211
+	slv.correctNonOrtho(): 0.00492811
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.094167
+	-----
+RK.Tsep(): 0.596229
+----------
+	slv.correctPrevIter(): 0.0025599
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000682831
+		eInner.numfluxes: 0.0683119
+		rhs.compute: 0.112708
+	slv.assembleRHS(): 0.184521
+	updateRKstep: 0.00592589
+	slv.correctNonOrtho(): 0.00491405
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0937839
+	-----
+	slv.dataExchange(): 5.96046e-06
+		eBound.numfluxes: 0.000738859
+		eInner.numfluxes: 0.0679069
+		rhs.compute: 0.11398
+	slv.assembleRHS(): 0.185824
+	updateRKstep: 0.010783
+	slv.correctNonOrtho(): 0.00493097
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.09603
+	-----
+RK.Tsep(): 0.590753
+----------
+	slv.correctPrevIter(): 0.00259495
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000828981
+		eInner.numfluxes: 0.071182
+		rhs.compute: 0.112951
+	slv.assembleRHS(): 0.189071
+	updateRKstep: 0.00735211
+	slv.correctNonOrtho(): 0.0054481
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0947881
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000668049
+		eInner.numfluxes: 0.0718651
+		rhs.compute: 0.114214
+	slv.assembleRHS(): 0.189547
+	updateRKstep: 0.0108418
+	slv.correctNonOrtho(): 0.00493407
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093262
+	-----
+RK.Tsep(): 0.59899
+----------
+	slv.correctPrevIter(): 0.00270605
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000669956
+		eInner.numfluxes: 0.0682199
+		rhs.compute: 0.117627
+	slv.assembleRHS(): 0.189449
+	updateRKstep: 0.00657892
+	slv.correctNonOrtho(): 0.00493503
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.092715
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000643969
+		eInner.numfluxes: 0.0677049
+		rhs.compute: 0.113171
+	slv.assembleRHS(): 0.184391
+	updateRKstep: 0.011225
+	slv.correctNonOrtho(): 0.00492215
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0939929
+	-----
+RK.Tsep(): 0.592582
+----------
+	slv.correctPrevIter(): 0.00256681
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000714064
+		eInner.numfluxes: 0.0720911
+		rhs.compute: 0.113693
+	slv.assembleRHS(): 0.190486
+	updateRKstep: 0.00738692
+	slv.correctNonOrtho(): 0.00502777
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0942991
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000643969
+		eInner.numfluxes: 0.0671449
+		rhs.compute: 0.112459
+	slv.assembleRHS(): 0.183041
+	updateRKstep: 0.0107419
+	slv.correctNonOrtho(): 0.00504589
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0946081
+	-----
+RK.Tsep(): 0.594377
+----------
+	slv.correctPrevIter(): 0.00257802
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000683069
+		eInner.numfluxes: 0.0666099
+		rhs.compute: 0.114163
+	slv.assembleRHS(): 0.184378
+	updateRKstep: 0.00588608
+	slv.correctNonOrtho(): 0.00550199
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0973141
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000643969
+		eInner.numfluxes: 0.0672469
+		rhs.compute: 0.114056
+	slv.assembleRHS(): 0.184808
+	updateRKstep: 0.010798
+	slv.correctNonOrtho(): 0.00492096
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0936668
+	-----
+RK.Tsep(): 0.591284
+----------
+	slv.correctPrevIter(): 0.00254703
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000711918
+		eInner.numfluxes: 0.070823
+		rhs.compute: 0.113852
+	slv.assembleRHS(): 0.189388
+	updateRKstep: 0.00735998
+	slv.correctNonOrtho(): 0.00493097
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093513
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000638962
+		eInner.numfluxes: 0.073853
+		rhs.compute: 0.113166
+	slv.assembleRHS(): 0.190747
+	updateRKstep: 0.010987
+	slv.correctNonOrtho(): 0.00492907
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.0943792
+	-----
+RK.Tsep(): 0.59998
+----------
+	slv.correctPrevIter(): 0.00266194
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000669956
+		eInner.numfluxes: 0.0668159
+		rhs.compute: 0.112692
+	slv.assembleRHS(): 0.182999
+	updateRKstep: 0.00583315
+	slv.correctNonOrtho(): 0.00493622
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.0945082
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000745773
+		eInner.numfluxes: 0.06743
+		rhs.compute: 0.113231
+	slv.assembleRHS(): 0.184268
+	updateRKstep: 0.0116692
+	slv.correctNonOrtho(): 0.00491691
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0931211
+	-----
+RK.Tsep(): 0.586515
+----------
+	slv.correctPrevIter(): 0.00255895
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.00070715
+		eInner.numfluxes: 0.070682
+		rhs.compute: 0.115106
+	slv.assembleRHS(): 0.190475
+	updateRKstep: 0.007406
+	slv.correctNonOrtho(): 0.00502896
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0933511
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000644922
+		eInner.numfluxes: 0.06687
+		rhs.compute: 0.114261
+	slv.assembleRHS(): 0.184574
+	updateRKstep: 0.010762
+	slv.correctNonOrtho(): 0.0049212
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0936909
+	-----
+RK.Tsep(): 0.593937
+----------
+	slv.correctPrevIter(): 0.00256705
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000682116
+		eInner.numfluxes: 0.068013
+		rhs.compute: 0.114156
+	slv.assembleRHS(): 0.185654
+	updateRKstep: 0.00590205
+	slv.correctNonOrtho(): 0.00491905
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0929821
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000638008
+		eInner.numfluxes: 0.0669291
+		rhs.compute: 0.112666
+	slv.assembleRHS(): 0.18353
+	updateRKstep: 0.0107791
+	slv.correctNonOrtho(): 0.00491881
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0942931
+	-----
+RK.Tsep(): 0.5871
+----------
+	slv.correctPrevIter(): 0.002599
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000716925
+		eInner.numfluxes: 0.070173
+		rhs.compute: 0.114236
+	slv.assembleRHS(): 0.189103
+	updateRKstep: 0.00750709
+	slv.correctNonOrtho(): 0.00491309
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0955119
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000645876
+		eInner.numfluxes: 0.0678651
+		rhs.compute: 0.114073
+	slv.assembleRHS(): 0.185397
+	updateRKstep: 0.0107679
+	slv.correctNonOrtho(): 0.00503087
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0945961
+	-----
+RK.Tsep(): 0.59664
+----------
+	slv.correctPrevIter(): 0.00331211
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000854969
+		eInner.numfluxes: 0.0704191
+		rhs.compute: 0.113746
+	slv.assembleRHS(): 0.187841
+	updateRKstep: 0.00581408
+	slv.correctNonOrtho(): 0.00493097
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0933869
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000649929
+		eInner.numfluxes: 0.070061
+		rhs.compute: 0.113422
+	slv.assembleRHS(): 0.187061
+	updateRKstep: 0.010968
+	slv.correctNonOrtho(): 0.00493217
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0945101
+	-----
+RK.Tsep(): 0.59462
+----------
+	slv.correctPrevIter(): 0.00265813
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000724792
+		eInner.numfluxes: 0.0714681
+		rhs.compute: 0.113401
+	slv.assembleRHS(): 0.189699
+	updateRKstep: 0.00752687
+	slv.correctNonOrtho(): 0.00493097
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.094245
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000649929
+		eInner.numfluxes: 0.0684469
+		rhs.compute: 0.113107
+	slv.assembleRHS(): 0.185015
+	updateRKstep: 0.010746
+	slv.correctNonOrtho(): 0.00491405
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0946469
+	-----
+RK.Tsep(): 0.595552
+----------
+	slv.correctPrevIter(): 0.00254989
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000682116
+		eInner.numfluxes: 0.0665972
+		rhs.compute: 0.114101
+	slv.assembleRHS(): 0.184305
+	updateRKstep: 0.00596499
+	slv.correctNonOrtho(): 0.00529718
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0934231
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000646114
+		eInner.numfluxes: 0.067024
+		rhs.compute: 0.114338
+	slv.assembleRHS(): 0.185429
+	updateRKstep: 0.0133102
+	slv.correctNonOrtho(): 0.00554109
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093879
+	-----
+RK.Tsep(): 0.591243
+----------
+	slv.correctPrevIter(): 0.00258994
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000719786
+		eInner.numfluxes: 0.0711651
+		rhs.compute: 0.11429
+	slv.assembleRHS(): 0.190161
+	updateRKstep: 0.00738811
+	slv.correctNonOrtho(): 0.00491595
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093374
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000644922
+		eInner.numfluxes: 0.067486
+		rhs.compute: 0.11314
+	slv.assembleRHS(): 0.184055
+	updateRKstep: 0.0115809
+	slv.correctNonOrtho(): 0.00492692
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0980201
+	-----
+RK.Tsep(): 0.598149
+----------
+	slv.correctPrevIter(): 0.00289392
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000778913
+		eInner.numfluxes: 0.0669558
+		rhs.compute: 0.112713
+	slv.assembleRHS(): 0.183357
+	updateRKstep: 0.00583386
+	slv.correctNonOrtho(): 0.00491714
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.094667
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000647068
+		eInner.numfluxes: 0.066936
+		rhs.compute: 0.11269
+	slv.assembleRHS(): 0.183134
+	updateRKstep: 0.0107791
+	slv.correctNonOrtho(): 0.00547886
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.096091
+	-----
+RK.Tsep(): 0.588941
+----------
+	slv.correctPrevIter(): 0.00254798
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000706911
+		eInner.numfluxes: 0.0700312
+		rhs.compute: 0.114706
+	slv.assembleRHS(): 0.189535
+	updateRKstep: 0.00749087
+	slv.correctNonOrtho(): 0.00493717
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.093817
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000642061
+		eInner.numfluxes: 0.0664301
+		rhs.compute: 0.114914
+	slv.assembleRHS(): 0.184882
+	updateRKstep: 0.0108631
+	slv.correctNonOrtho(): 0.004915
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0929439
+	-----
+RK.Tsep(): 0.593211
+----------
+	slv.correctPrevIter(): 0.002671
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000793934
+		eInner.numfluxes: 0.0685291
+		rhs.compute: 0.112535
+	slv.assembleRHS(): 0.184684
+	updateRKstep: 0.00587988
+	slv.correctNonOrtho(): 0.00493717
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0935121
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.00064683
+		eInner.numfluxes: 0.0675569
+		rhs.compute: 0.113595
+	slv.assembleRHS(): 0.184654
+	updateRKstep: 0.0113311
+	slv.correctNonOrtho(): 0.00491285
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0935769
+	-----
+RK.Tsep(): 0.587635
+----------
+	slv.correctPrevIter(): 0.00290203
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000716209
+		eInner.numfluxes: 0.070015
+		rhs.compute: 0.112805
+	slv.assembleRHS(): 0.187543
+	updateRKstep: 0.00738287
+	slv.correctNonOrtho(): 0.00504398
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.094033
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000758886
+		eInner.numfluxes: 0.0674932
+		rhs.compute: 0.114329
+	slv.assembleRHS(): 0.185371
+	updateRKstep: 0.010776
+	slv.correctNonOrtho(): 0.0049181
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0941958
+	-----
+RK.Tsep(): 0.593522
+----------
+	slv.correctPrevIter(): 0.00296903
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000795126
+		eInner.numfluxes: 0.0673931
+		rhs.compute: 0.113218
+	slv.assembleRHS(): 0.184222
+	updateRKstep: 0.00589108
+	slv.correctNonOrtho(): 0.00491595
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0976539
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000642061
+		eInner.numfluxes: 0.0671191
+		rhs.compute: 0.113373
+	slv.assembleRHS(): 0.183985
+	updateRKstep: 0.0108919
+	slv.correctNonOrtho(): 0.00492787
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.094228
+	-----
+RK.Tsep(): 0.591331
+----------
+	slv.correctPrevIter(): 0.00255203
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.00071311
+		eInner.numfluxes: 0.0700419
+		rhs.compute: 0.114162
+	slv.assembleRHS(): 0.188913
+	updateRKstep: 0.0076201
+	slv.correctNonOrtho(): 0.00493097
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0935569
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000638008
+		eInner.numfluxes: 0.0671928
+		rhs.compute: 0.113996
+	slv.assembleRHS(): 0.184619
+	updateRKstep: 0.010746
+	slv.correctNonOrtho(): 0.004915
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0926421
+	-----
+RK.Tsep(): 0.591666
+----------
+	slv.correctPrevIter(): 0.00255299
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000672817
+		eInner.numfluxes: 0.0675211
+		rhs.compute: 0.113131
+	slv.assembleRHS(): 0.184132
+	updateRKstep: 0.00589299
+	slv.correctNonOrtho(): 0.00491905
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0936792
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000661135
+		eInner.numfluxes: 0.067219
+		rhs.compute: 0.116919
+	slv.assembleRHS(): 0.18777
+	updateRKstep: 0.010886
+	slv.correctNonOrtho(): 0.00491691
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0939069
+	-----
+RK.Tsep(): 0.590115
+----------
+	slv.correctPrevIter(): 0.00254393
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000713825
+		eInner.numfluxes: 0.071826
+		rhs.compute: 0.113702
+	slv.assembleRHS(): 0.190229
+	updateRKstep: 0.00737095
+	slv.correctNonOrtho(): 0.00492001
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0947649
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000649929
+		eInner.numfluxes: 0.067127
+		rhs.compute: 0.118736
+	slv.assembleRHS(): 0.189865
+	updateRKstep: 0.0115938
+	slv.correctNonOrtho(): 0.00492215
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.093343
+	-----
+RK.Tsep(): 0.600729
+----------
+	slv.correctPrevIter(): 0.00257707
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000679016
+		eInner.numfluxes: 0.0661829
+		rhs.compute: 0.114428
+	slv.assembleRHS(): 0.184237
+	updateRKstep: 0.00626588
+	slv.correctNonOrtho(): 0.00514507
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0923939
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000641108
+		eInner.numfluxes: 0.0667372
+		rhs.compute: 0.113918
+	slv.assembleRHS(): 0.18426
+	updateRKstep: 0.0110111
+	slv.correctNonOrtho(): 0.00491786
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.092061
+	-----
+RK.Tsep(): 0.584323
+----------
+	slv.correctPrevIter(): 0.00254893
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000715017
+		eInner.numfluxes: 0.071142
+		rhs.compute: 0.112686
+	slv.assembleRHS(): 0.18854
+	updateRKstep: 0.00750899
+	slv.correctNonOrtho(): 0.00492001
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0927329
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000644922
+		eInner.numfluxes: 0.0671811
+		rhs.compute: 0.112599
+	slv.assembleRHS(): 0.183452
+	updateRKstep: 0.010957
+	slv.correctNonOrtho(): 0.00535512
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0947011
+	-----
+RK.Tsep(): 0.591905
+----------
+	slv.correctPrevIter(): 0.00255418
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000672102
+		eInner.numfluxes: 0.0669219
+		rhs.compute: 0.113217
+	slv.assembleRHS(): 0.183637
+	updateRKstep: 0.00591111
+	slv.correctNonOrtho(): 0.0049181
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0950341
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000648022
+		eInner.numfluxes: 0.0671961
+		rhs.compute: 0.113729
+	slv.assembleRHS(): 0.184432
+	updateRKstep: 0.0106668
+	slv.correctNonOrtho(): 0.00493407
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.093807
+	-----
+RK.Tsep(): 0.587358
+----------
+	slv.correctPrevIter(): 0.00256896
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000710011
+		eInner.numfluxes: 0.0702479
+		rhs.compute: 0.114187
+	slv.assembleRHS(): 0.18914
+	updateRKstep: 0.00802708
+	slv.correctNonOrtho(): 0.00493693
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.092387
+	-----
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000643015
+		eInner.numfluxes: 0.0675581
+		rhs.compute: 0.114278
+	slv.assembleRHS(): 0.185285
+	updateRKstep: 0.0107501
+	slv.correctNonOrtho(): 0.00492716
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0925229
+	-----
+RK.Tsep(): 0.59173
+----------
+	slv.correctPrevIter(): 0.0026772
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000671864
+		eInner.numfluxes: 0.068356
+		rhs.compute: 0.117361
+	slv.assembleRHS(): 0.189225
+	updateRKstep: 0.00586104
+	slv.correctNonOrtho(): 0.00492501
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0950098
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000648975
+		eInner.numfluxes: 0.066566
+		rhs.compute: 0.112495
+	slv.assembleRHS(): 0.182561
+	updateRKstep: 0.011363
+	slv.correctNonOrtho(): 0.0051589
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0985901
+	-----
+RK.Tsep(): 0.596841
+----------
+	slv.correctPrevIter(): 0.00289607
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000710011
+		eInner.numfluxes: 0.070164
+		rhs.compute: 0.116011
+	slv.assembleRHS(): 0.190951
+	updateRKstep: 0.00745988
+	slv.correctNonOrtho(): 0.00493383
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0934269
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000653982
+		eInner.numfluxes: 0.067543
+		rhs.compute: 0.114439
+	slv.assembleRHS(): 0.185435
+	updateRKstep: 0.010726
+	slv.correctNonOrtho(): 0.00502706
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0938089
+	-----
+RK.Tsep(): 0.596033
+----------
+	slv.correctPrevIter(): 0.00254917
+	slv.dataExchange(): 7.86781e-06
+		eBound.numfluxes: 0.000671864
+		eInner.numfluxes: 0.0670891
+		rhs.compute: 0.113761
+	slv.assembleRHS(): 0.184334
+	updateRKstep: 0.00595498
+	slv.correctNonOrtho(): 0.00491714
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0934238
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000643969
+		eInner.numfluxes: 0.0676832
+		rhs.compute: 0.112591
+	slv.assembleRHS(): 0.183782
+	updateRKstep: 0.0106471
+	slv.correctNonOrtho(): 0.00492406
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0943201
+	-----
+RK.Tsep(): 0.586446
+----------
+	slv.correctPrevIter(): 0.00289416
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000824928
+		eInner.numfluxes: 0.0763359
+		rhs.compute: 0.112896
+	slv.assembleRHS(): 0.194117
+	updateRKstep: 0.00746202
+	slv.correctNonOrtho(): 0.00492096
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.094501
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000636101
+		eInner.numfluxes: 0.067811
+		rhs.compute: 0.112974
+	slv.assembleRHS(): 0.184217
+	updateRKstep: 0.0113621
+	slv.correctNonOrtho(): 0.00609517
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.093996
+	-----
+RK.Tsep(): 0.600727
+----------
+	slv.correctPrevIter(): 0.0025661
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000684023
+		eInner.numfluxes: 0.0664649
+		rhs.compute: 0.120386
+	slv.assembleRHS(): 0.190483
+	updateRKstep: 0.00587487
+	slv.correctNonOrtho(): 0.00513792
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.092927
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000645161
+		eInner.numfluxes: 0.0675352
+		rhs.compute: 0.114142
+	slv.assembleRHS(): 0.185188
+	updateRKstep: 0.010664
+	slv.correctNonOrtho(): 0.00491905
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0933218
+	-----
+RK.Tsep(): 0.592561
+----------
+	slv.correctPrevIter(): 0.00255203
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000716925
+		eInner.numfluxes: 0.0715961
+		rhs.compute: 0.114069
+	slv.assembleRHS(): 0.190362
+	updateRKstep: 0.00739503
+	slv.correctNonOrtho(): 0.00492001
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0932529
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000638962
+		eInner.numfluxes: 0.067117
+		rhs.compute: 0.112769
+	slv.assembleRHS(): 0.183343
+	updateRKstep: 0.0109649
+	slv.correctNonOrtho(): 0.00544906
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.093874
+	-----
+RK.Tsep(): 0.593287
+----------
+	slv.correctPrevIter(): 0.00266314
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000684023
+		eInner.numfluxes: 0.067111
+		rhs.compute: 0.113233
+	slv.assembleRHS(): 0.183984
+	updateRKstep: 0.00590205
+	slv.correctNonOrtho(): 0.00492501
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.0947292
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000642061
+		eInner.numfluxes: 0.067158
+		rhs.compute: 0.113816
+	slv.assembleRHS(): 0.184497
+	updateRKstep: 0.0114698
+	slv.correctNonOrtho(): 0.00491405
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.093708
+	-----
+RK.Tsep(): 0.588261
+----------
+	slv.correctPrevIter(): 0.00255299
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.00070715
+		eInner.numfluxes: 0.0701399
+		rhs.compute: 0.114042
+	slv.assembleRHS(): 0.188877
+	updateRKstep: 0.00801682
+	slv.correctNonOrtho(): 0.0049181
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0925162
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000638962
+		eInner.numfluxes: 0.0671229
+		rhs.compute: 0.113613
+	slv.assembleRHS(): 0.1842
+	updateRKstep: 0.012239
+	slv.correctNonOrtho(): 0.00492811
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.0943971
+	-----
+RK.Tsep(): 0.59381
+----------
+	slv.correctPrevIter(): 0.00265503
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000802994
+		eInner.numfluxes: 0.0680702
+		rhs.compute: 0.114601
+	slv.assembleRHS(): 0.18629
+	updateRKstep: 0.00594997
+	slv.correctNonOrtho(): 0.00494099
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.0941701
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000636816
+		eInner.numfluxes: 0.0670929
+		rhs.compute: 0.117613
+	slv.assembleRHS(): 0.188207
+	updateRKstep: 0.0117259
+	slv.correctNonOrtho(): 0.00514197
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.094723
+	-----
+RK.Tsep(): 0.595383
+----------
+	slv.correctPrevIter(): 0.00291705
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000715017
+		eInner.numfluxes: 0.0697031
+		rhs.compute: 0.117761
+	slv.assembleRHS(): 0.192517
+	updateRKstep: 0.0078311
+	slv.correctNonOrtho(): 0.00493693
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0936141
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000641108
+		eInner.numfluxes: 0.0670881
+		rhs.compute: 0.114078
+	slv.assembleRHS(): 0.184656
+	updateRKstep: 0.010761
+	slv.correctNonOrtho(): 0.00504184
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0930591
+	-----
+RK.Tsep(): 0.596642
+----------
+	slv.correctPrevIter(): 0.00256419
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000799894
+		eInner.numfluxes: 0.0669169
+		rhs.compute: 0.114121
+	slv.assembleRHS(): 0.184644
+	updateRKstep: 0.00591302
+	slv.correctNonOrtho(): 0.00504518
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093863
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000645161
+		eInner.numfluxes: 0.068095
+		rhs.compute: 0.112574
+	slv.assembleRHS(): 0.184189
+	updateRKstep: 0.0106311
+	slv.correctNonOrtho(): 0.00493598
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0935881
+	-----
+RK.Tsep(): 0.586833
+----------
+	slv.correctPrevIter(): 0.00255394
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000720024
+		eInner.numfluxes: 0.0727441
+		rhs.compute: 0.112878
+	slv.assembleRHS(): 0.19046
+	updateRKstep: 0.00744486
+	slv.correctNonOrtho(): 0.00496697
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.097095
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000741005
+		eInner.numfluxes: 0.068434
+		rhs.compute: 0.113471
+	slv.assembleRHS(): 0.185439
+	updateRKstep: 0.0107789
+	slv.correctNonOrtho(): 0.00503707
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0955138
+	-----
+RK.Tsep(): 0.60045
+----------
+	slv.correctPrevIter(): 0.00258398
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000679016
+		eInner.numfluxes: 0.0666161
+		rhs.compute: 0.11342
+	slv.assembleRHS(): 0.183546
+	updateRKstep: 0.00580597
+	slv.correctNonOrtho(): 0.00504303
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093159
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000657082
+		eInner.numfluxes: 0.0672791
+		rhs.compute: 0.119667
+	slv.assembleRHS(): 0.19046
+	updateRKstep: 0.0106649
+	slv.correctNonOrtho(): 0.00492501
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.093143
+	-----
+RK.Tsep(): 0.590775
+----------
+	slv.correctPrevIter(): 0.00255704
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000711203
+		eInner.numfluxes: 0.0727611
+		rhs.compute: 0.113154
+	slv.assembleRHS(): 0.190643
+	updateRKstep: 0.00736594
+	slv.correctNonOrtho(): 0.00493002
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093344
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000646114
+		eInner.numfluxes: 0.067574
+		rhs.compute: 0.11327
+	slv.assembleRHS(): 0.184304
+	updateRKstep: 0.0108519
+	slv.correctNonOrtho(): 0.00535107
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0936611
+	-----
+RK.Tsep(): 0.594187
+----------
+	slv.correctPrevIter(): 0.00269294
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.00067687
+		eInner.numfluxes: 0.0677171
+		rhs.compute: 0.113633
+	slv.assembleRHS(): 0.184838
+	updateRKstep: 0.00602913
+	slv.correctNonOrtho(): 0.00504184
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0952001
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000638962
+		eInner.numfluxes: 0.06688
+		rhs.compute: 0.114755
+	slv.assembleRHS(): 0.185382
+	updateRKstep: 0.0106621
+	slv.correctNonOrtho(): 0.00490499
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0934658
+	-----
+RK.Tsep(): 0.589655
+----------
+	slv.correctPrevIter(): 0.00255609
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000715971
+		eInner.numfluxes: 0.070322
+		rhs.compute: 0.115207
+	slv.assembleRHS(): 0.190232
+	updateRKstep: 0.00806212
+	slv.correctNonOrtho(): 0.00503302
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.092278
+	-----
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000642061
+		eInner.numfluxes: 0.067076
+		rhs.compute: 0.113958
+	slv.assembleRHS(): 0.184469
+	updateRKstep: 0.010762
+	slv.correctNonOrtho(): 0.00491405
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.0933161
+	-----
+RK.Tsep(): 0.592798
+----------
+	slv.correctPrevIter(): 0.0026691
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000684023
+		eInner.numfluxes: 0.0682671
+		rhs.compute: 0.112428
+	slv.assembleRHS(): 0.184211
+	updateRKstep: 0.00581288
+	slv.correctNonOrtho(): 0.00492787
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0943141
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000752926
+		eInner.numfluxes: 0.067492
+		rhs.compute: 0.112679
+	slv.assembleRHS(): 0.183888
+	updateRKstep: 0.0108709
+	slv.correctNonOrtho(): 0.00536013
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.093729
+	-----
+RK.Tsep(): 0.587382
+----------
+	slv.correctPrevIter(): 0.00258183
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000726938
+		eInner.numfluxes: 0.0732911
+		rhs.compute: 0.11671
+	slv.assembleRHS(): 0.194716
+	updateRKstep: 0.00804615
+	slv.correctNonOrtho(): 0.00537086
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0930738
+	-----
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000642061
+		eInner.numfluxes: 0.0666571
+		rhs.compute: 0.117054
+	slv.assembleRHS(): 0.187164
+	updateRKstep: 0.0108202
+	slv.correctNonOrtho(): 0.00492191
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093281
+	-----
+RK.Tsep(): 0.601118
+----------
+	slv.correctPrevIter(): 0.00258613
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000681877
+		eInner.numfluxes: 0.0693109
+		rhs.compute: 0.113567
+	slv.assembleRHS(): 0.186555
+	updateRKstep: 0.00591397
+	slv.correctNonOrtho(): 0.00492883
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0929689
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000763178
+		eInner.numfluxes: 0.0673568
+		rhs.compute: 0.113973
+	slv.assembleRHS(): 0.184972
+	updateRKstep: 0.011209
+	slv.correctNonOrtho(): 0.00492191
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.093446
+	-----
+RK.Tsep(): 0.588956
+----------
+	slv.correctPrevIter(): 0.002563
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000725031
+		eInner.numfluxes: 0.0719211
+		rhs.compute: 0.113246
+	slv.assembleRHS(): 0.190092
+	updateRKstep: 0.00826383
+	slv.correctNonOrtho(): 0.00500798
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0950279
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000644922
+		eInner.numfluxes: 0.067127
+		rhs.compute: 0.113402
+	slv.assembleRHS(): 0.184209
+	updateRKstep: 0.0107911
+	slv.correctNonOrtho(): 0.00492382
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0983109
+	-----
+RK.Tsep(): 0.600401
+----------
+	slv.correctPrevIter(): 0.00254703
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000673056
+		eInner.numfluxes: 0.066541
+		rhs.compute: 0.113981
+	slv.assembleRHS(): 0.184131
+	updateRKstep: 0.00583506
+	slv.correctNonOrtho(): 0.005023
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.093977
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000638962
+		eInner.numfluxes: 0.0669641
+		rhs.compute: 0.114255
+	slv.assembleRHS(): 0.184708
+	updateRKstep: 0.0107701
+	slv.correctNonOrtho(): 0.00493097
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.093112
+	-----
+RK.Tsep(): 0.58651
+----------
+	slv.correctPrevIter(): 0.00256419
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000729084
+		eInner.numfluxes: 0.077044
+		rhs.compute: 0.113036
+	slv.assembleRHS(): 0.194795
+	updateRKstep: 0.00756907
+	slv.correctNonOrtho(): 0.00491595
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0943329
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000646114
+		eInner.numfluxes: 0.0677369
+		rhs.compute: 0.112362
+	slv.assembleRHS(): 0.183529
+	updateRKstep: 0.010854
+	slv.correctNonOrtho(): 0.00536299
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.095089
+	-----
+RK.Tsep(): 0.600302
+----------
+	slv.correctPrevIter(): 0.00279188
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000671148
+		eInner.numfluxes: 0.0671861
+		rhs.compute: 0.113135
+	slv.assembleRHS(): 0.183799
+	updateRKstep: 0.00601411
+	slv.correctNonOrtho(): 0.00492001
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.094275
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.00064683
+		eInner.numfluxes: 0.0669541
+		rhs.compute: 0.113481
+	slv.assembleRHS(): 0.183945
+	updateRKstep: 0.011605
+	slv.correctNonOrtho(): 0.00492406
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.0934942
+	-----
+RK.Tsep(): 0.587234
+----------
+	slv.correctPrevIter(): 0.00255299
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000721931
+		eInner.numfluxes: 0.070231
+		rhs.compute: 0.115034
+	slv.assembleRHS(): 0.189997
+	updateRKstep: 0.00759315
+	slv.correctNonOrtho(): 0.00527191
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0924649
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000761986
+		eInner.numfluxes: 0.0668321
+		rhs.compute: 0.113999
+	slv.assembleRHS(): 0.184395
+	updateRKstep: 0.0107658
+	slv.correctNonOrtho(): 0.00503922
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.093184
+	-----
+RK.Tsep(): 0.592446
+----------
+	slv.correctPrevIter(): 0.00259709
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000681877
+		eInner.numfluxes: 0.0677431
+		rhs.compute: 0.1134
+	slv.assembleRHS(): 0.184651
+	updateRKstep: 0.005826
+	slv.correctNonOrtho(): 0.00491691
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0935369
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000657082
+		eInner.numfluxes: 0.0672071
+		rhs.compute: 0.112359
+	slv.assembleRHS(): 0.183078
+	updateRKstep: 0.010783
+	slv.correctNonOrtho(): 0.00512195
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0946
+	-----
+RK.Tsep(): 0.586545
+----------
+	slv.correctPrevIter(): 0.00256515
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000710011
+		eInner.numfluxes: 0.0715091
+		rhs.compute: 0.113269
+	slv.assembleRHS(): 0.189585
+	updateRKstep: 0.00737786
+	slv.correctNonOrtho(): 0.00491905
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0955582
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000650167
+		eInner.numfluxes: 0.0719628
+		rhs.compute: 0.113832
+	slv.assembleRHS(): 0.189249
+	updateRKstep: 0.0108058
+	slv.correctNonOrtho(): 0.00491714
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.093055
+	-----
+RK.Tsep(): 0.599197
+----------
+	slv.correctPrevIter(): 0.00255799
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000682116
+		eInner.numfluxes: 0.066679
+		rhs.compute: 0.116976
+	slv.assembleRHS(): 0.187375
+	updateRKstep: 0.00599194
+	slv.correctNonOrtho(): 0.00493479
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0924649
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000652075
+		eInner.numfluxes: 0.0669522
+		rhs.compute: 0.113684
+	slv.assembleRHS(): 0.184222
+	updateRKstep: 0.010679
+	slv.correctNonOrtho(): 0.00491691
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0932169
+	-----
+RK.Tsep(): 0.587845
+----------
+	slv.correctPrevIter(): 0.0025568
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000718117
+		eInner.numfluxes: 0.0719049
+		rhs.compute: 0.113599
+	slv.assembleRHS(): 0.190209
+	updateRKstep: 0.00736189
+	slv.correctNonOrtho(): 0.00492215
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0943811
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000651121
+		eInner.numfluxes: 0.0663371
+		rhs.compute: 0.112974
+	slv.assembleRHS(): 0.1829
+	updateRKstep: 0.011363
+	slv.correctNonOrtho(): 0.00493312
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.093755
+	-----
+RK.Tsep(): 0.593543
+----------
+	slv.correctPrevIter(): 0.00290513
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.00068593
+		eInner.numfluxes: 0.066381
+		rhs.compute: 0.114757
+	slv.assembleRHS(): 0.184957
+	updateRKstep: 0.0060451
+	slv.correctNonOrtho(): 0.00492692
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0980399
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000645876
+		eInner.numfluxes: 0.0672371
+		rhs.compute: 0.115313
+	slv.assembleRHS(): 0.186053
+	updateRKstep: 0.010659
+	slv.correctNonOrtho(): 0.00503898
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0935261
+	-----
+RK.Tsep(): 0.593707
+----------
+	slv.correctPrevIter(): 0.00258994
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.00071907
+		eInner.numfluxes: 0.07075
+		rhs.compute: 0.114093
+	slv.assembleRHS(): 0.189561
+	updateRKstep: 0.00736904
+	slv.correctNonOrtho(): 0.00493717
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0936821
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000829935
+		eInner.numfluxes: 0.0743449
+		rhs.compute: 0.11248
+	slv.assembleRHS(): 0.190447
+	updateRKstep: 0.0108619
+	slv.correctNonOrtho(): 0.00492406
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0944619
+	-----
+RK.Tsep(): 0.599956
+----------
+	slv.correctPrevIter(): 0.00259304
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000682831
+		eInner.numfluxes: 0.0673339
+		rhs.compute: 0.112307
+	slv.assembleRHS(): 0.183129
+	updateRKstep: 0.0059092
+	slv.correctNonOrtho(): 0.00493693
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0941901
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000638962
+		eInner.numfluxes: 0.0671549
+		rhs.compute: 0.11282
+	slv.assembleRHS(): 0.183809
+	updateRKstep: 0.010891
+	slv.correctNonOrtho(): 0.00513411
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0939491
+	-----
+RK.Tsep(): 0.585994
+----------
+	slv.correctPrevIter(): 0.00259113
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.00071907
+		eInner.numfluxes: 0.069694
+		rhs.compute: 0.114703
+	slv.assembleRHS(): 0.189098
+	updateRKstep: 0.00747585
+	slv.correctNonOrtho(): 0.0049262
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093082
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000649929
+		eInner.numfluxes: 0.067754
+		rhs.compute: 0.11434
+	slv.assembleRHS(): 0.185535
+	updateRKstep: 0.0109131
+	slv.correctNonOrtho(): 0.00493002
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.093102
+	-----
+RK.Tsep(): 0.592797
+----------
+	slv.correctPrevIter(): 0.00256491
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.00068593
+		eInner.numfluxes: 0.0681529
+		rhs.compute: 0.114168
+	slv.assembleRHS(): 0.185832
+	updateRKstep: 0.00582695
+	slv.correctNonOrtho(): 0.00503302
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0937529
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000638008
+		eInner.numfluxes: 0.067466
+		rhs.compute: 0.112566
+	slv.assembleRHS(): 0.183536
+	updateRKstep: 0.0107648
+	slv.correctNonOrtho(): 0.00504994
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0946589
+	-----
+RK.Tsep(): 0.588487
+----------
+	slv.correctPrevIter(): 0.00254488
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000732183
+		eInner.numfluxes: 0.0717509
+		rhs.compute: 0.113232
+	slv.assembleRHS(): 0.189703
+	updateRKstep: 0.00740194
+	slv.correctNonOrtho(): 0.00513601
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0962651
+	-----
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000645161
+		eInner.numfluxes: 0.066992
+		rhs.compute: 0.114297
+	slv.assembleRHS(): 0.184733
+	updateRKstep: 0.010895
+	slv.correctNonOrtho(): 0.00491905
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0960951
+	-----
+RK.Tsep(): 0.59888
+----------
+	slv.correctPrevIter(): 0.00287986
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000850916
+		eInner.numfluxes: 0.0678599
+		rhs.compute: 0.113505
+	slv.assembleRHS(): 0.185042
+	updateRKstep: 0.0061059
+	slv.correctNonOrtho(): 0.00521088
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.092546
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000650883
+		eInner.numfluxes: 0.0708311
+		rhs.compute: 0.113728
+	slv.assembleRHS(): 0.188073
+	updateRKstep: 0.0106921
+	slv.correctNonOrtho(): 0.004915
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0946321
+	-----
+RK.Tsep(): 0.591645
+----------
+	slv.correctPrevIter(): 0.00259209
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000717878
+		eInner.numfluxes: 0.072248
+		rhs.compute: 0.113133
+	slv.assembleRHS(): 0.190173
+	updateRKstep: 0.00738215
+	slv.correctNonOrtho(): 0.00492001
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0948062
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000641823
+		eInner.numfluxes: 0.067224
+		rhs.compute: 0.112863
+	slv.assembleRHS(): 0.183766
+	updateRKstep: 0.0116839
+	slv.correctNonOrtho(): 0.00492001
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0933621
+	-----
+RK.Tsep(): 0.594749
+----------
+	slv.correctPrevIter(): 0.00286198
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000799179
+		eInner.numfluxes: 0.066426
+		rhs.compute: 0.112951
+	slv.assembleRHS(): 0.182996
+	updateRKstep: 0.00630903
+	slv.correctNonOrtho(): 0.00538182
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093138
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000643015
+		eInner.numfluxes: 0.067589
+		rhs.compute: 0.115866
+	slv.assembleRHS(): 0.187576
+	updateRKstep: 0.012718
+	slv.correctNonOrtho(): 0.00513721
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0929971
+	-----
+RK.Tsep(): 0.590717
+----------
+	slv.correctPrevIter(): 0.00256491
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000720024
+		eInner.numfluxes: 0.0707891
+		rhs.compute: 0.114786
+	slv.assembleRHS(): 0.190287
+	updateRKstep: 0.00758004
+	slv.correctNonOrtho(): 0.00502896
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0931919
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.00064683
+		eInner.numfluxes: 0.067404
+		rhs.compute: 0.113268
+	slv.assembleRHS(): 0.184114
+	updateRKstep: 0.010823
+	slv.correctNonOrtho(): 0.00492406
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.099967
+	-----
+RK.Tsep(): 0.599826
+----------
+	slv.correctPrevIter(): 0.00286412
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.00078392
+		eInner.numfluxes: 0.067359
+		rhs.compute: 0.112827
+	slv.assembleRHS(): 0.18383
+	updateRKstep: 0.00619912
+	slv.correctNonOrtho(): 0.00493193
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0944591
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000648022
+		eInner.numfluxes: 0.0672429
+		rhs.compute: 0.112855
+	slv.assembleRHS(): 0.18361
+	updateRKstep: 0.010725
+	slv.correctNonOrtho(): 0.00492907
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0946898
+	-----
+RK.Tsep(): 0.587826
+----------
+	slv.correctPrevIter(): 0.00255394
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000723124
+		eInner.numfluxes: 0.070339
+		rhs.compute: 0.114183
+	slv.assembleRHS(): 0.189239
+	updateRKstep: 0.00747108
+	slv.correctNonOrtho(): 0.00493002
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0941331
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000643015
+		eInner.numfluxes: 0.067204
+		rhs.compute: 0.114768
+	slv.assembleRHS(): 0.185409
+	updateRKstep: 0.0107641
+	slv.correctNonOrtho(): 0.00491381
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.093152
+	-----
+RK.Tsep(): 0.593864
+----------
+	slv.correctPrevIter(): 0.00257802
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000680923
+		eInner.numfluxes: 0.0676918
+		rhs.compute: 0.113312
+	slv.assembleRHS(): 0.184523
+	updateRKstep: 0.00585699
+	slv.correctNonOrtho(): 0.00493097
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.093364
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000649929
+		eInner.numfluxes: 0.0673749
+		rhs.compute: 0.113519
+	slv.assembleRHS(): 0.184395
+	updateRKstep: 0.0106759
+	slv.correctNonOrtho(): 0.0050261
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0940471
+	-----
+RK.Tsep(): 0.586819
+----------
+	slv.correctPrevIter(): 0.00255799
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000714064
+		eInner.numfluxes: 0.070828
+		rhs.compute: 0.113038
+	slv.assembleRHS(): 0.188689
+	updateRKstep: 0.00736904
+	slv.correctNonOrtho(): 0.00493193
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0939281
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000651121
+		eInner.numfluxes: 0.067215
+		rhs.compute: 0.114097
+	slv.assembleRHS(): 0.184759
+	updateRKstep: 0.0116851
+	slv.correctNonOrtho(): 0.0050559
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0942478
+	-----
+RK.Tsep(): 0.594401
+----------
+	slv.correctPrevIter(): 0.00254416
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000683069
+		eInner.numfluxes: 0.0666111
+		rhs.compute: 0.11513
+	slv.assembleRHS(): 0.185241
+	updateRKstep: 0.00602794
+	slv.correctNonOrtho(): 0.00505018
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0980449
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000649929
+		eInner.numfluxes: 0.0670569
+		rhs.compute: 0.113216
+	slv.assembleRHS(): 0.183787
+	updateRKstep: 0.0107741
+	slv.correctNonOrtho(): 0.00493002
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0936031
+	-----
+RK.Tsep(): 0.591504
+----------
+	slv.correctPrevIter(): 0.00329018
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000836134
+		eInner.numfluxes: 0.074321
+		rhs.compute: 0.112967
+	slv.assembleRHS(): 0.192283
+	updateRKstep: 0.00737095
+	slv.correctNonOrtho(): 0.00491595
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.094486
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000645876
+		eInner.numfluxes: 0.0672872
+		rhs.compute: 0.112548
+	slv.assembleRHS(): 0.183484
+	updateRKstep: 0.011199
+	slv.correctNonOrtho(): 0.00499701
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.094183
+	-----
+RK.Tsep(): 0.597838
+----------
+	slv.correctPrevIter(): 0.00256705
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000684977
+		eInner.numfluxes: 0.067652
+		rhs.compute: 0.113407
+	slv.assembleRHS(): 0.184571
+	updateRKstep: 0.00586295
+	slv.correctNonOrtho(): 0.00492907
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0943091
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000641108
+		eInner.numfluxes: 0.066915
+		rhs.compute: 0.113376
+	slv.assembleRHS(): 0.183795
+	updateRKstep: 0.0106649
+	slv.correctNonOrtho(): 0.0049181
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0929952
+	-----
+RK.Tsep(): 0.586071
+----------
+	slv.correctPrevIter(): 0.00255585
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000707865
+		eInner.numfluxes: 0.0709801
+		rhs.compute: 0.11836
+	slv.assembleRHS(): 0.19433
+	updateRKstep: 0.00749993
+	slv.correctNonOrtho(): 0.00493193
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.092665
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000642061
+		eInner.numfluxes: 0.0676889
+		rhs.compute: 0.114017
+	slv.assembleRHS(): 0.185153
+	updateRKstep: 0.01073
+	slv.correctNonOrtho(): 0.00493002
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0924649
+	-----
+RK.Tsep(): 0.596438
+----------
+	slv.correctPrevIter(): 0.00255418
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000690937
+		eInner.numfluxes: 0.0677381
+		rhs.compute: 0.112849
+	slv.assembleRHS(): 0.184089
+	updateRKstep: 0.00588393
+	slv.correctNonOrtho(): 0.00504494
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.101476
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000648975
+		eInner.numfluxes: 0.066186
+		rhs.compute: 0.113469
+	slv.assembleRHS(): 0.183584
+	updateRKstep: 0.0114319
+	slv.correctNonOrtho(): 0.00493312
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0945759
+	-----
+RK.Tsep(): 0.595055
+----------
+	slv.correctPrevIter(): 0.00277901
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000718117
+		eInner.numfluxes: 0.070178
+		rhs.compute: 0.114326
+	slv.assembleRHS(): 0.189198
+	updateRKstep: 0.00736499
+	slv.correctNonOrtho(): 0.00493407
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.093343
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000638008
+		eInner.numfluxes: 0.067004
+		rhs.compute: 0.113658
+	slv.assembleRHS(): 0.184103
+	updateRKstep: 0.0109129
+	slv.correctNonOrtho(): 0.00492978
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.093153
+	-----
+RK.Tsep(): 0.591994
+----------
+	slv.correctPrevIter(): 0.00254202
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000672102
+		eInner.numfluxes: 0.069335
+		rhs.compute: 0.113669
+	slv.assembleRHS(): 0.186501
+	updateRKstep: 0.00595808
+	slv.correctNonOrtho(): 0.00492692
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093833
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000740051
+		eInner.numfluxes: 0.067466
+		rhs.compute: 0.112813
+	slv.assembleRHS(): 0.18401
+	updateRKstep: 0.010663
+	slv.correctNonOrtho(): 0.00503111
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0937779
+	-----
+RK.Tsep(): 0.588827
+----------
+	slv.correctPrevIter(): 0.00286508
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000715017
+		eInner.numfluxes: 0.071233
+		rhs.compute: 0.114279
+	slv.assembleRHS(): 0.190449
+	updateRKstep: 0.00748205
+	slv.correctNonOrtho(): 0.00502896
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0953228
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000646114
+		eInner.numfluxes: 0.0670552
+		rhs.compute: 0.113239
+	slv.assembleRHS(): 0.183738
+	updateRKstep: 0.0109921
+	slv.correctNonOrtho(): 0.00556493
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0922608
+	-----
+RK.Tsep(): 0.595063
+----------
+	slv.correctPrevIter(): 0.00256395
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000681162
+		eInner.numfluxes: 0.0664918
+		rhs.compute: 0.114608
+	slv.assembleRHS(): 0.184599
+	updateRKstep: 0.00591207
+	slv.correctNonOrtho(): 0.00505686
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0943389
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000764847
+		eInner.numfluxes: 0.0668392
+		rhs.compute: 0.113645
+	slv.assembleRHS(): 0.184117
+	updateRKstep: 0.0110152
+	slv.correctNonOrtho(): 0.004915
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.098413
+	-----
+RK.Tsep(): 0.592416
+----------
+	slv.correctPrevIter(): 0.00255895
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000712156
+		eInner.numfluxes: 0.0715311
+		rhs.compute: 0.113066
+	slv.assembleRHS(): 0.189296
+	updateRKstep: 0.00733709
+	slv.correctNonOrtho(): 0.00493693
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0978601
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.00064683
+		eInner.numfluxes: 0.067832
+		rhs.compute: 0.113718
+	slv.assembleRHS(): 0.184988
+	updateRKstep: 0.0115099
+	slv.correctNonOrtho(): 0.00543189
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0940151
+	-----
+RK.Tsep(): 0.599122
+----------
+	slv.correctPrevIter(): 0.00256896
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.00067687
+		eInner.numfluxes: 0.0669439
+		rhs.compute: 0.1129
+	slv.assembleRHS(): 0.183408
+	updateRKstep: 0.00588202
+	slv.correctNonOrtho(): 0.00491786
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0968089
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000642061
+		eInner.numfluxes: 0.0674801
+		rhs.compute: 0.113928
+	slv.assembleRHS(): 0.184909
+	updateRKstep: 0.0107791
+	slv.correctNonOrtho(): 0.00493288
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0926981
+	-----
+RK.Tsep(): 0.588482
+----------
+	slv.correctPrevIter(): 0.00255895
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000708103
+		eInner.numfluxes: 0.0705841
+		rhs.compute: 0.114066
+	slv.assembleRHS(): 0.189369
+	updateRKstep: 0.00800705
+	slv.correctNonOrtho(): 0.00492883
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0921111
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000646114
+		eInner.numfluxes: 0.0676
+		rhs.compute: 0.118306
+	slv.assembleRHS(): 0.189342
+	updateRKstep: 0.010745
+	slv.correctNonOrtho(): 0.00492978
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0926461
+	-----
+RK.Tsep(): 0.59581
+----------
+	slv.correctPrevIter(): 0.00256109
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.00067997
+		eInner.numfluxes: 0.0682571
+		rhs.compute: 0.113137
+	slv.assembleRHS(): 0.184892
+	updateRKstep: 0.005898
+	slv.correctNonOrtho(): 0.00492692
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093755
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000651836
+		eInner.numfluxes: 0.0662539
+		rhs.compute: 0.113431
+	slv.assembleRHS(): 0.183546
+	updateRKstep: 0.0144329
+	slv.correctNonOrtho(): 0.00588894
+	slv.dataExchange(): 3.09944e-06
+	slmt.limit(): 0.0958521
+	-----
+RK.Tsep(): 0.593272
+----------
+	slv.correctPrevIter(): 0.00286102
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000705957
+		eInner.numfluxes: 0.0702012
+		rhs.compute: 0.115089
+	slv.assembleRHS(): 0.190218
+	updateRKstep: 0.007658
+	slv.correctNonOrtho(): 0.00492692
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0934789
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000640154
+		eInner.numfluxes: 0.0673182
+		rhs.compute: 0.114201
+	slv.assembleRHS(): 0.18497
+	updateRKstep: 0.0109041
+	slv.correctNonOrtho(): 0.0049181
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093271
+	-----
+RK.Tsep(): 0.594489
+----------
+	slv.correctPrevIter(): 0.00258207
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000680923
+		eInner.numfluxes: 0.066925
+		rhs.compute: 0.113651
+	slv.assembleRHS(): 0.184073
+	updateRKstep: 0.00584412
+	slv.correctNonOrtho(): 0.00491691
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0931919
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000663996
+		eInner.numfluxes: 0.0676241
+		rhs.compute: 0.112506
+	slv.assembleRHS(): 0.183755
+	updateRKstep: 0.0115318
+	slv.correctNonOrtho(): 0.00492001
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0933669
+	-----
+RK.Tsep(): 0.585619
+----------
+	slv.correctPrevIter(): 0.00256991
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000844955
+		eInner.numfluxes: 0.0719919
+		rhs.compute: 0.112688
+	slv.assembleRHS(): 0.189501
+	updateRKstep: 0.00740695
+	slv.correctNonOrtho(): 0.00503492
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093534
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000645876
+		eInner.numfluxes: 0.067112
+		rhs.compute: 0.114531
+	slv.assembleRHS(): 0.185091
+	updateRKstep: 0.0107429
+	slv.correctNonOrtho(): 0.00491905
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0940752
+	-----
+RK.Tsep(): 0.594052
+----------
+	slv.correctPrevIter(): 0.00255799
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000682116
+		eInner.numfluxes: 0.066726
+		rhs.compute: 0.114506
+	slv.assembleRHS(): 0.184719
+	updateRKstep: 0.00590515
+	slv.correctNonOrtho(): 0.00502586
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.092766
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000639915
+		eInner.numfluxes: 0.0677011
+		rhs.compute: 0.114058
+	slv.assembleRHS(): 0.185708
+	updateRKstep: 0.011292
+	slv.correctNonOrtho(): 0.00493383
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0930851
+	-----
+RK.Tsep(): 0.587462
+----------
+	slv.correctPrevIter(): 0.00256205
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000717878
+		eInner.numfluxes: 0.07129
+		rhs.compute: 0.118523
+	slv.assembleRHS(): 0.194863
+	updateRKstep: 0.00765991
+	slv.correctNonOrtho(): 0.00502396
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.092613
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000639915
+		eInner.numfluxes: 0.067343
+		rhs.compute: 0.112795
+	slv.assembleRHS(): 0.183566
+	updateRKstep: 0.0107739
+	slv.correctNonOrtho(): 0.00493813
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0965171
+	-----
+RK.Tsep(): 0.599816
+----------
+	slv.correctPrevIter(): 0.00264692
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000680923
+		eInner.numfluxes: 0.0670581
+		rhs.compute: 0.113828
+	slv.assembleRHS(): 0.184482
+	updateRKstep: 0.00583005
+	slv.correctNonOrtho(): 0.00492001
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.094105
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.0006392
+		eInner.numfluxes: 0.0668411
+		rhs.compute: 0.11304
+	slv.assembleRHS(): 0.183574
+	updateRKstep: 0.01141
+	slv.correctNonOrtho(): 0.00493193
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0939672
+	-----
+RK.Tsep(): 0.587361
+----------
+	slv.correctPrevIter(): 0.00268102
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000737906
+		eInner.numfluxes: 0.0698872
+		rhs.compute: 0.114639
+	slv.assembleRHS(): 0.189243
+	updateRKstep: 0.00749898
+	slv.correctNonOrtho(): 0.00514102
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.092247
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000648975
+		eInner.numfluxes: 0.067373
+		rhs.compute: 0.114218
+	slv.assembleRHS(): 0.185037
+	updateRKstep: 0.010746
+	slv.correctNonOrtho(): 0.00492096
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.098563
+	-----
+RK.Tsep(): 0.597253
+----------
+	slv.correctPrevIter(): 0.00267386
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.00067997
+		eInner.numfluxes: 0.0778289
+		rhs.compute: 0.11269
+	slv.assembleRHS(): 0.194028
+	updateRKstep: 0.00620008
+	slv.correctNonOrtho(): 0.00523496
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.094583
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000650167
+		eInner.numfluxes: 0.0675681
+		rhs.compute: 0.112908
+	slv.assembleRHS(): 0.184122
+	updateRKstep: 0.0112238
+	slv.correctNonOrtho(): 0.00492311
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0935431
+	-----
+RK.Tsep(): 0.598009
+----------
+	slv.correctPrevIter(): 0.00268102
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000831127
+		eInner.numfluxes: 0.07022
+		rhs.compute: 0.121015
+	slv.assembleRHS(): 0.196605
+	updateRKstep: 0.00755095
+	slv.correctNonOrtho(): 0.00493121
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.0932162
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000647068
+		eInner.numfluxes: 0.0671239
+		rhs.compute: 0.114549
+	slv.assembleRHS(): 0.185121
+	updateRKstep: 0.0108509
+	slv.correctNonOrtho(): 0.00491905
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093338
+	-----
+RK.Tsep(): 0.600387
+----------
+	slv.correctPrevIter(): 0.00256491
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000679016
+		eInner.numfluxes: 0.067241
+		rhs.compute: 0.114431
+	slv.assembleRHS(): 0.185162
+	updateRKstep: 0.00588489
+	slv.correctNonOrtho(): 0.00493097
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0933239
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.00063777
+		eInner.numfluxes: 0.0671029
+		rhs.compute: 0.112984
+	slv.assembleRHS(): 0.18358
+	updateRKstep: 0.010756
+	slv.correctNonOrtho(): 0.00492907
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.093833
+	-----
+RK.Tsep(): 0.586412
+----------
+	slv.correctPrevIter(): 0.00256896
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.00074482
+		eInner.numfluxes: 0.0717449
+		rhs.compute: 0.112821
+	slv.assembleRHS(): 0.189305
+	updateRKstep: 0.00766397
+	slv.correctNonOrtho(): 0.00503898
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0938051
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000638962
+		eInner.numfluxes: 0.0670748
+		rhs.compute: 0.112837
+	slv.assembleRHS(): 0.183355
+	updateRKstep: 0.010726
+	slv.correctNonOrtho(): 0.004915
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0947299
+	-----
+RK.Tsep(): 0.593285
+----------
+	slv.correctPrevIter(): 0.00258207
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000684023
+		eInner.numfluxes: 0.066555
+		rhs.compute: 0.113903
+	slv.assembleRHS(): 0.183959
+	updateRKstep: 0.00591087
+	slv.correctNonOrtho(): 0.00491714
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0930171
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000650167
+		eInner.numfluxes: 0.0673711
+		rhs.compute: 0.113811
+	slv.assembleRHS(): 0.184708
+	updateRKstep: 0.0106649
+	slv.correctNonOrtho(): 0.00504208
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.092824
+	-----
+RK.Tsep(): 0.585071
+----------
+	slv.correctPrevIter(): 0.00259185
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000720024
+		eInner.numfluxes: 0.0710459
+		rhs.compute: 0.114736
+	slv.assembleRHS(): 0.190497
+	updateRKstep: 0.00735998
+	slv.correctNonOrtho(): 0.00492787
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.092593
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000638962
+		eInner.numfluxes: 0.0673132
+		rhs.compute: 0.118268
+	slv.assembleRHS(): 0.189019
+	updateRKstep: 0.010885
+	slv.correctNonOrtho(): 0.00492311
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0936468
+	-----
+RK.Tsep(): 0.597599
+----------
+	slv.correctPrevIter(): 0.00255489
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000673771
+		eInner.numfluxes: 0.0669849
+		rhs.compute: 0.115871
+	slv.assembleRHS(): 0.186664
+	updateRKstep: 0.00658202
+	slv.correctNonOrtho(): 0.00503588
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.094182
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000659227
+		eInner.numfluxes: 0.0671721
+		rhs.compute: 0.11487
+	slv.assembleRHS(): 0.185561
+	updateRKstep: 0.0120368
+	slv.correctNonOrtho(): 0.00510597
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.092566
+	-----
+RK.Tsep(): 0.591767
+----------
+	slv.correctPrevIter(): 0.00254989
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000733137
+		eInner.numfluxes: 0.069833
+		rhs.compute: 0.114922
+	slv.assembleRHS(): 0.189725
+	updateRKstep: 0.00741792
+	slv.correctNonOrtho(): 0.0052948
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.09286
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000650167
+		eInner.numfluxes: 0.0668912
+		rhs.compute: 0.114029
+	slv.assembleRHS(): 0.184358
+	updateRKstep: 0.0108259
+	slv.correctNonOrtho(): 0.00493193
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.094039
+	-----
+RK.Tsep(): 0.593184
+----------
+	slv.correctPrevIter(): 0.00257111
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000669956
+		eInner.numfluxes: 0.068074
+		rhs.compute: 0.113078
+	slv.assembleRHS(): 0.184625
+	updateRKstep: 0.00603294
+	slv.correctNonOrtho(): 0.00492692
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093466
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000649929
+		eInner.numfluxes: 0.071295
+		rhs.compute: 0.112571
+	slv.assembleRHS(): 0.187372
+	updateRKstep: 0.0110719
+	slv.correctNonOrtho(): 0.00543714
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0933721
+	-----
+RK.Tsep(): 0.590344
+----------
+	slv.correctPrevIter(): 0.00271106
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000721931
+		eInner.numfluxes: 0.0710821
+		rhs.compute: 0.113091
+	slv.assembleRHS(): 0.188897
+	updateRKstep: 0.0074122
+	slv.correctNonOrtho(): 0.00504494
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0947461
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000641823
+		eInner.numfluxes: 0.0670309
+		rhs.compute: 0.121493
+	slv.assembleRHS(): 0.191982
+	updateRKstep: 0.010767
+	slv.correctNonOrtho(): 0.00503898
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0932288
+	-----
+RK.Tsep(): 0.600971
+----------
+	slv.correctPrevIter(): 0.00269508
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000677824
+		eInner.numfluxes: 0.0671701
+		rhs.compute: 0.114852
+	slv.assembleRHS(): 0.185746
+	updateRKstep: 0.00583196
+	slv.correctNonOrtho(): 0.00492811
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0926371
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000642061
+		eInner.numfluxes: 0.067894
+		rhs.compute: 0.114753
+	slv.assembleRHS(): 0.186141
+	updateRKstep: 0.010638
+	slv.correctNonOrtho(): 0.00493693
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0933802
+	-----
+RK.Tsep(): 0.588368
+----------
+	slv.correctPrevIter(): 0.0025568
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000717163
+		eInner.numfluxes: 0.0716679
+		rhs.compute: 0.113052
+	slv.assembleRHS(): 0.189436
+	updateRKstep: 0.00735998
+	slv.correctNonOrtho(): 0.00493097
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0953319
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000643015
+		eInner.numfluxes: 0.066834
+		rhs.compute: 0.113277
+	slv.assembleRHS(): 0.183763
+	updateRKstep: 0.0108709
+	slv.correctNonOrtho(): 0.004915
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.094177
+	-----
+RK.Tsep(): 0.59453
+----------
+	slv.correctPrevIter(): 0.00255179
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000681877
+		eInner.numfluxes: 0.066716
+		rhs.compute: 0.11398
+	slv.assembleRHS(): 0.184202
+	updateRKstep: 0.005898
+	slv.correctNonOrtho(): 0.00493193
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093653
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000653028
+		eInner.numfluxes: 0.0672491
+		rhs.compute: 0.113171
+	slv.assembleRHS(): 0.183943
+	updateRKstep: 0.0106549
+	slv.correctNonOrtho(): 0.00542808
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0934899
+	-----
+RK.Tsep(): 0.586221
+----------
+	slv.correctPrevIter(): 0.00255418
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000724077
+		eInner.numfluxes: 0.0713341
+		rhs.compute: 0.114156
+	slv.assembleRHS(): 0.190202
+	updateRKstep: 0.00737906
+	slv.correctNonOrtho(): 0.004915
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0950198
+	-----
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000652075
+		eInner.numfluxes: 0.0676792
+		rhs.compute: 0.112954
+	slv.assembleRHS(): 0.18408
+	updateRKstep: 0.010792
+	slv.correctNonOrtho(): 0.00493002
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0946121
+	-----
+RK.Tsep(): 0.595644
+----------
+	slv.correctPrevIter(): 0.00256014
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.00067997
+		eInner.numfluxes: 0.067225
+		rhs.compute: 0.117962
+	slv.assembleRHS(): 0.188697
+	updateRKstep: 0.00581789
+	slv.correctNonOrtho(): 0.0049181
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0932851
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000648022
+		eInner.numfluxes: 0.066952
+		rhs.compute: 0.117191
+	slv.assembleRHS(): 0.187641
+	updateRKstep: 0.0108211
+	slv.correctNonOrtho(): 0.00547004
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0935299
+	-----
+RK.Tsep(): 0.594314
+----------
+	slv.correctPrevIter(): 0.00255919
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000715017
+		eInner.numfluxes: 0.0701671
+		rhs.compute: 0.113784
+	slv.assembleRHS(): 0.188663
+	updateRKstep: 0.00748205
+	slv.correctNonOrtho(): 0.00493598
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093117
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000638962
+		eInner.numfluxes: 0.0671852
+		rhs.compute: 0.113846
+	slv.assembleRHS(): 0.184538
+	updateRKstep: 0.0110531
+	slv.correctNonOrtho(): 0.00503802
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0928819
+	-----
+RK.Tsep(): 0.591455
+----------
+	slv.correctPrevIter(): 0.00255919
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.00067091
+		eInner.numfluxes: 0.068131
+		rhs.compute: 0.112904
+	slv.assembleRHS(): 0.184512
+	updateRKstep: 0.00590205
+	slv.correctNonOrtho(): 0.00492406
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0936551
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000649929
+		eInner.numfluxes: 0.0672882
+		rhs.compute: 0.112318
+	slv.assembleRHS(): 0.183121
+	updateRKstep: 0.011023
+	slv.correctNonOrtho(): 0.00504804
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.097311
+	-----
+RK.Tsep(): 0.58964
+----------
+	slv.correctPrevIter(): 0.00255394
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000718832
+		eInner.numfluxes: 0.070756
+		rhs.compute: 0.112962
+	slv.assembleRHS(): 0.188436
+	updateRKstep: 0.00735998
+	slv.correctNonOrtho(): 0.00492811
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.0957842
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000645161
+		eInner.numfluxes: 0.0674431
+		rhs.compute: 0.113809
+	slv.assembleRHS(): 0.184691
+	updateRKstep: 0.010797
+	slv.correctNonOrtho(): 0.00492096
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0932338
+	-----
+RK.Tsep(): 0.594015
+----------
+	slv.correctPrevIter(): 0.00254416
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.00067091
+		eInner.numfluxes: 0.068433
+		rhs.compute: 0.117586
+	slv.assembleRHS(): 0.189509
+	updateRKstep: 0.0060699
+	slv.correctNonOrtho(): 0.005229
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0925181
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000650883
+		eInner.numfluxes: 0.0671849
+		rhs.compute: 0.113745
+	slv.assembleRHS(): 0.184551
+	updateRKstep: 0.0106499
+	slv.correctNonOrtho(): 0.00493598
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.0933862
+	-----
+RK.Tsep(): 0.590885
+----------
+	slv.correctPrevIter(): 0.00255609
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000735998
+		eInner.numfluxes: 0.071861
+		rhs.compute: 0.113951
+	slv.assembleRHS(): 0.190532
+	updateRKstep: 0.00763702
+	slv.correctNonOrtho(): 0.00493193
+	slv.dataExchange(): 1.19209e-06
+	slmt.limit(): 0.0941231
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000640154
+		eInner.numfluxes: 0.0669479
+		rhs.compute: 0.113292
+	slv.assembleRHS(): 0.183844
+	updateRKstep: 0.0113001
+	slv.correctNonOrtho(): 0.00491691
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0929601
+	-----
+RK.Tsep(): 0.594003
+----------
+	slv.correctPrevIter(): 0.00255203
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.00067687
+		eInner.numfluxes: 0.0671489
+		rhs.compute: 0.114896
+	slv.assembleRHS(): 0.185536
+	updateRKstep: 0.00627208
+	slv.correctNonOrtho(): 0.00565004
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0935791
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000638962
+		eInner.numfluxes: 0.0671389
+		rhs.compute: 0.114149
+	slv.assembleRHS(): 0.184793
+	updateRKstep: 0.0108171
+	slv.correctNonOrtho(): 0.00493407
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093643
+	-----
+RK.Tsep(): 0.589263
+----------
+	slv.correctPrevIter(): 0.00256801
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000718117
+		eInner.numfluxes: 0.07021
+		rhs.compute: 0.114468
+	slv.assembleRHS(): 0.189954
+	updateRKstep: 0.00791812
+	slv.correctNonOrtho(): 0.00490713
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.092535
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000644207
+		eInner.numfluxes: 0.0679359
+		rhs.compute: 0.114045
+	slv.assembleRHS(): 0.185546
+	updateRKstep: 0.0107791
+	slv.correctNonOrtho(): 0.00492096
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.09357
+	-----
+RK.Tsep(): 0.593904
+----------
+	slv.correctPrevIter(): 0.00254107
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000671148
+		eInner.numfluxes: 0.068073
+		rhs.compute: 0.114604
+	slv.assembleRHS(): 0.186295
+	updateRKstep: 0.00591993
+	slv.correctNonOrtho(): 0.00502992
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0935609
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000642061
+		eInner.numfluxes: 0.0696478
+		rhs.compute: 0.113113
+	slv.assembleRHS(): 0.186466
+	updateRKstep: 0.0111141
+	slv.correctNonOrtho(): 0.00491905
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0937631
+	-----
+RK.Tsep(): 0.591089
+----------
+	slv.correctPrevIter(): 0.00270915
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000715971
+		eInner.numfluxes: 0.0705531
+		rhs.compute: 0.116775
+	slv.assembleRHS(): 0.192037
+	updateRKstep: 0.00757098
+	slv.correctNonOrtho(): 0.00493002
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0940421
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000762939
+		eInner.numfluxes: 0.0677712
+		rhs.compute: 0.1135
+	slv.assembleRHS(): 0.184851
+	updateRKstep: 0.010721
+	slv.correctNonOrtho(): 0.00503802
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.092078
+	-----
+RK.Tsep(): 0.595408
+----------
+	slv.correctPrevIter(): 0.00268793
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000681162
+		eInner.numfluxes: 0.0682361
+		rhs.compute: 0.114631
+	slv.assembleRHS(): 0.186436
+	updateRKstep: 0.0060451
+	slv.correctNonOrtho(): 0.00493193
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0933819
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000645876
+		eInner.numfluxes: 0.067425
+		rhs.compute: 0.112631
+	slv.assembleRHS(): 0.183567
+	updateRKstep: 0.010746
+	slv.correctNonOrtho(): 0.00493002
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0956469
+	-----
+RK.Tsep(): 0.589822
+----------
+	slv.correctPrevIter(): 0.00257492
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000711918
+		eInner.numfluxes: 0.0709321
+		rhs.compute: 0.112839
+	slv.assembleRHS(): 0.188485
+	updateRKstep: 0.00737309
+	slv.correctNonOrtho(): 0.00504088
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0979099
+	-----
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000653028
+		eInner.numfluxes: 0.0681889
+		rhs.compute: 0.113707
+	slv.assembleRHS(): 0.185475
+	updateRKstep: 0.011622
+	slv.correctNonOrtho(): 0.00492907
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0937541
+	-----
+RK.Tsep(): 0.598359
+----------
+	slv.correctPrevIter(): 0.00257802
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000678062
+		eInner.numfluxes: 0.066417
+		rhs.compute: 0.113371
+	slv.assembleRHS(): 0.18329
+	updateRKstep: 0.00592208
+	slv.correctNonOrtho(): 0.00490713
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.092967
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000639915
+		eInner.numfluxes: 0.0738101
+		rhs.compute: 0.114027
+	slv.assembleRHS(): 0.191335
+	updateRKstep: 0.0106149
+	slv.correctNonOrtho(): 0.00490689
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.093349
+	-----
+RK.Tsep(): 0.591374
+----------
+	slv.correctPrevIter(): 0.00256801
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000718832
+		eInner.numfluxes: 0.0723
+		rhs.compute: 0.112999
+	slv.assembleRHS(): 0.190003
+	updateRKstep: 0.00736809
+	slv.correctNonOrtho(): 0.00493193
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0932181
+	-----
+	slv.dataExchange(): 1.19209e-06
+		eBound.numfluxes: 0.000641108
+		eInner.numfluxes: 0.067462
+		rhs.compute: 0.113084
+	slv.assembleRHS(): 0.184199
+	updateRKstep: 0.0108719
+	slv.correctNonOrtho(): 0.00547099
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0921938
+	-----
+RK.Tsep(): 0.592004
+----------
+	slv.correctPrevIter(): 0.00268006
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000682116
+		eInner.numfluxes: 0.0681632
+		rhs.compute: 0.114244
+	slv.assembleRHS(): 0.18592
+	updateRKstep: 0.00603414
+	slv.correctNonOrtho(): 0.00492716
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0964382
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000802994
+		eInner.numfluxes: 0.0694289
+		rhs.compute: 0.113786
+	slv.assembleRHS(): 0.186886
+	updateRKstep: 0.0106668
+	slv.correctNonOrtho(): 0.00493407
+	slv.dataExchange(): 2.14577e-06
+	slmt.limit(): 0.0932469
+	-----
+RK.Tsep(): 0.593198
+----------
+	slv.correctPrevIter(): 0.00255513
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000710964
+		eInner.numfluxes: 0.0702431
+		rhs.compute: 0.114359
+	slv.assembleRHS(): 0.189623
+	updateRKstep: 0.00776005
+	slv.correctNonOrtho(): 0.00505209
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0927949
+	-----
+	slv.dataExchange(): 9.53674e-07
+		eBound.numfluxes: 0.000643969
+		eInner.numfluxes: 0.067414
+		rhs.compute: 0.113252
+	slv.assembleRHS(): 0.184101
+	updateRKstep: 0.0107601
+	slv.correctNonOrtho(): 0.00492597
+	slv.dataExchange(): 1.90735e-06
+	slmt.limit(): 0.0930338
+	-----
+RK.Tsep(): 0.591779
+----------
+	slv.correctPrevIter(): 0.00306511
+	slv.dataExchange(): 2.14577e-06
+		eBound.numfluxes: 0.000802994
+		eInner.numfluxes: 0.066613
+		rhs.compute: 0.115478
+	slv.assembleRHS(): 0.185711
+	updateRKstep: 0.00597501
+	slv.correctNonOrtho(): 0.00492096
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.097796
+	-----
+	slv.dataExchange(): 1.90735e-06
+		eBound.numfluxes: 0.000645876
+		eInner.numfluxes: 0.067004
+		rhs.compute: 0.113342
+	slv.assembleRHS(): 0.183863
+	updateRKstep: 0.0107911
+	slv.correctNonOrtho(): 0.00491285
+	slv.dataExchange(): 9.53674e-07
+	slmt.limit(): 0.0961859
+	-----
+RK.Tsep(): 0.594804
+----------

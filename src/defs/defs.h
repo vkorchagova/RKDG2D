@@ -18,12 +18,6 @@ template<class T>
 inline T sqr(T x) {return x*x;}
 
 ///
-/// Redefinition of the dimensions
-///
-
-
-
-///
 /// Overloading of vector<numvector<double,dimPhys * dimShapes>> 
 ///
 

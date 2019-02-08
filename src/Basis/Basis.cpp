@@ -93,3 +93,22 @@ void Basis::initGramian()
     }
 }
 
+numvector<double, dimS> Basis::projection(const std::function<numvector<double, dimPh>(const Point& point)>& foo, int iCell) const
+{
+    numvector<double, dimS> alpha;    
+    numvector<double, dimPh> buffer;
+    for (int q = 0; q < nShapes; ++q)
+    {
+        std::function<numvector<double, dimPh>(const Point&)> f = \
+            [&](const Point& p) { return phi[q](iCell, p) * foo(p); };
+
+        buffer = integrate(*(cells[iCell]), f);
+        for (int p = 0; p < dimPh; ++p)
+        {
+            alpha[p*nShapes + q] = buffer[p];
+        }// for p
+    }// for shapes
+
+    return alpha;
+} // end projection
+

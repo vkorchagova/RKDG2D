@@ -16,8 +16,11 @@ extern int numProcsTotal;
 //- Status
 extern MPI_Status status;
 
-//- Request
-extern MPI_Request request;
+//- Debug
+extern bool debug;
+
+//- Log file to save data
+extern std::ofstream logger;
 
 
 class Writer

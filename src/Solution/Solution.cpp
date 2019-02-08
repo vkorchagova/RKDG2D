@@ -18,7 +18,7 @@ numvector<double, dimPh> Solution::reconstruct(int iCell, const Point& point ) c
     numvector<double, dimPh> sol(0.0);
     vector<double> phip(nShapes);
 
-//#pragma omp simd
+////#pragma omp simd
     for (int j = 0; j < nShapes; ++j)
         phip[j] = B.phi[j](iCell, point);
 
@@ -36,14 +36,14 @@ numvector<double, dimPh> Solution::reconstruct(int iCell, const Point& point, co
 	numvector<double, dimPh> sol(0.0);
 	vector<double> phip(nShapes);
 
-//#pragma omp simd
+////#pragma omp simd
 	for (int j = 0; j < nShapes; ++j)
 		phip[j] = B.phi[j](iCell, point);
 
 	for (int i = 0; i < dimPh; ++i)
 	{
 
-#pragma omp simd
+//#pragma omp simd
 		for (int j = 0; j < nShapes; ++j)
 			sol[i] += phip[j] * SOL[i * nShapes + j];
 	}
@@ -56,7 +56,7 @@ double Solution::reconstruct(int iCell, const Point& point, Variables var ) cons
 {
     double sol(0.0);
 
-//#pragma omp simd    
+////#pragma omp simd    
     for (int j = 0; j < nShapes; ++j)
         sol += B.phi[j](iCell, point) * SOL[iCell][var * nShapes + j];
 
@@ -66,7 +66,7 @@ double Solution::reconstruct(int iCell, const Point& point, const numvector<doub
 {
     double sol(0.0);
 
-//#pragma omp simd
+////#pragma omp simd
     for (int j = 0; j < nShapes; ++j)
         sol += B.phi[j](iCell, point) * SOL[var * nShapes + j];
 

@@ -94,13 +94,17 @@ void RungeKutta::setButcherTable()
 
 void RungeKutta::Tstep()
 {
+    double t0, t1;
 	/// Final preparations
     double t = T.getTime();
 	double tau = T.getTau();
 
-							///!!! SOL_aux must be equal SOL at this point !!!
     vector<numvector<double, dimS>> lhs    = sln.SOL;
+
+    t0 = MPI_Wtime();
     vector<numvector<double, dimS>> lhsOld = slv.correctPrevIter(sln.SOL);
+    t1 = MPI_Wtime();
+    if (debug) logger << "\tslv.correctPrevIter(): " << t1 - t0 << endl;
 
     //for(int iCell=0; iCell<sln.SOL.size(); ++iCell)\
     //    cout << "cell#" << iCell << "; SOL: " << sln.SOL[iCell] << endl;
@@ -113,18 +117,28 @@ void RungeKutta::Tstep()
         T.updateTime(t + alpha[i]*tau);   // ??? Is it necessary?
 
         // MPI exchange between neib procs
-
+        t0 = MPI_Wtime();
         slv.dataExchange();
+        t1 = MPI_Wtime();
+        if (debug) logger << "\tslv.dataExchange(): " << t1 - t0 << endl;
+
+        //cout << myRank << "__after data exchange" << endl;
         
-         //if (myRank == 0)
-         //{
+         // if (myRank == 0)
+         // {
          //   cout << "sln sol before rhs" << endl;
-         ///   for (int p = 0; p < sln.SOL.size(); ++p)
+         // /   for (int p = 0; p < sln.SOL.size(); ++p)
          //        cout << p << ' ' << sln.SOL[p] << endl;
-         //}
+         // }
 
         // assemble rhs of SODE
+        t0 = MPI_Wtime();
         k[i] = slv.assembleRHS(sln.SOL);
+        t1 = MPI_Wtime();
+        if (debug) logger << "\tslv.assembleRHS(): " << t1 - t0 << endl;
+
+        //cout << myRank << "__after assemble" << endl;
+
 
         // if (myRank == 0)
         // {
@@ -135,10 +149,13 @@ void RungeKutta::Tstep()
 
 
         // RK step
+        t0 = MPI_Wtime();
         lhs = lhsOld;
 
         for (int j = 0; j <= i; ++j)
            lhs = lhs + k[j] * beta[i][j] * tau; 
+        t1 = MPI_Wtime();
+        if (debug) logger << "\tupdateRKstep: " << t1 - t0 << endl;
 
         // if (myRank == 0)
         // {
@@ -148,7 +165,10 @@ void RungeKutta::Tstep()
         // }
 
         // remember about non-ortho basis!
+        t0 = MPI_Wtime();
         sln.SOL = slv.correctNonOrtho(lhs);
+        t1 = MPI_Wtime();
+        if (debug) logger << "\tslv.correctNonOrtho(): " << t1 - t0 << endl;
 	
 	    // if (myRank == 0)
         // {
@@ -162,8 +182,15 @@ void RungeKutta::Tstep()
         // cout << endl;
 		
 		// limit solution
+        t0 = MPI_Wtime();
         slv.dataExchange();
+        t1 = MPI_Wtime();
+        if (debug) logger << "\tslv.dataExchange(): " << t1 - t0 << endl;
+
+        t0 = MPI_Wtime();
         lmt.limit(sln.SOL);
+        t1 = MPI_Wtime();
+        if (debug) logger << "\tslmt.limit(): " << t1 - t0 << "\n\t-----" << endl;
 
     }// for stages
     
