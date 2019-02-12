@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
     MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
 
     debug = (true && myRank == 0); // if you want save log type true else type false
-    logger.open("timeStat");
+    logger.open("timeStat." + to_string(numProcsTotal));
 
     //if (myRank == 0) cout << "size = " << numProcsTotal << "; rank = " << myRank << endl;
 

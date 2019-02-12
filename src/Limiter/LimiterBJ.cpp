@@ -66,6 +66,12 @@ void LimiterBJ::limit(vector<numvector<double, dimS>>& alpha)
     for (int i = 0; i < n; ++i)
         troubledCells[i] = i;
 
+
+	omp_set_num_threads(NumThreads);
+//#pragma omp parallel default(none) \
+ shared(myRank, n, alpha, alphaNew, troubledCells) \
+ private (numSol, uMean)
+//#pragma omp for
     //for (size_t i = 0; i < troubledCells.size(); ++i)
     //for (int iCell : troubledCells)
     for (size_t i = 0; i < n; ++i) // may be in MPI we can iterate through vector without index like Python???
@@ -80,17 +86,17 @@ void LimiterBJ::limit(vector<numvector<double, dimS>>& alpha)
 
         // construct list of cells: cell + neighbours
 
-        vector<shared_ptr<Cell>> cells = { cell };
-        cells.insert(cells.end(), cell->neibCells.begin(), cell->neibCells.end());
+        vector<shared_ptr<Cell>> stenc = { cell }; // the stencil of limitation
+        stenc.insert(stenc.end(), cell->neibCells.begin(), cell->neibCells.end());
 
-        int nCells = cells.size(); // nCells in stencil
+        int nCells = stenc.size(); // nCells in stencil
 
         // get mean values of linear functions
 
         uMean.resize(nCells);
 
         for (size_t k = 0; k < nCells; ++k)
-            uMean[k] = solution.reconstruct(cells[k]->number, cells[k]->getCellCenter());
+            uMean[k] = solution.reconstruct(stenc[k]->number, stenc[k]->getCellCenter());
             // here tooooo strange to reconstruct solution through number... may be optimal way exists?..
 
         // get minimum from cell averages

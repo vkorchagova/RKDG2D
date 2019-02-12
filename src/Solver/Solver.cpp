@@ -195,7 +195,14 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
     //     {
     //         bc[ind]->applyBoundary(sln.SOL);
     //     }
+
+//---------------------------------------------------------------------------------
     t0 = MPI_Wtime();
+	omp_set_num_threads(NumThreads);
+//#pragma omp parallel default(none) \
+ shared(myRank, nGP, numFluxes) \
+ private (gPoint, eNormal, solLeft, solRight, gpFluxes)
+//#pragma omp for
     for (const shared_ptr<Boundary>& bcond : prb.bc)
     {
         for (const shared_ptr<Edge>& e : bcond->patch.edgeGroup)
@@ -231,9 +238,16 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
     } // for bconds 
     t1 = MPI_Wtime();
     if (debug) logger << "\t\teBound.numfluxes: " << t1 - t0 << endl;
-
     ////if (myRank == 1) cout << "end bound edges" << endl;
+
+
+//---------------------------------------------------------------------------------
     t0 = MPI_Wtime();
+	omp_set_num_threads(NumThreads);
+#pragma omp parallel default(none) \
+ shared(myRank, nGP, numFluxes) \
+ firstprivate (e, gPoint, eNormal, solLeft, solRight, gpFluxes)
+#pragma omp for
     for (size_t iEdge = M.nEdgesBound; iEdge < M.nRealEdges; ++iEdge)
     {
         ////if (myRank == 1)  cout << "iEdge = " << iEdge <<endl;
@@ -269,19 +283,27 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
         //////if (myRank == 1) cout << "edge #" << iEdge << "; numFlux: " << gpFluxes[0] << ' ' << gpFluxes[1] << endl;
 
     }// for real edges   
-
     t1 = MPI_Wtime();
     if (debug) logger << "\t\teInner.numfluxes: " << t1 - t0 << endl;
    
+//---------------------------------------------------------------------------------
     // 2nd step: compute RHS;
 
+	t0 = MPI_Wtime();
+
+
+#pragma omp parallel default(none) \
+ shared(myRank, nCells, numFluxes, rhs) \
+ private (cell, gPoint, nGP)
+{
     numvector<double, dimPh> sol;
     numvector<double, dimPh> resV;
     numvector<double, dimS>  res(0.0);
     double gW = 0.0;
     Point nablaPhi;
     //nGP=M.cells[0]->nGP;
-    t0 = MPI_Wtime();
+
+#pragma omp for
     for (int iCell = 0; iCell < nCells; ++iCell) // for real (!) cells
     {
         cell = M.cells[iCell];
@@ -323,7 +345,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
         //for (int iEnt = 0; iEnt < cell->nEntities; ++iEnt)
         for (const shared_ptr<Edge>& e : cell->edges)
         {
-            res*=0.0;   // ????????????????????
+            res*=0.0;   // ZEROFICATION!
 
             //iEdge=cell->edges[iEnt]->number;  
             //shared_ptr<Edge> e = M.edges[iEdge];          
@@ -340,7 +362,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
                 for (int q = 0; q < nShapes; ++q)
                     for (int p = 0; p < dimPh; ++p)
                         res[p*nShapes + q] += numFluxes[iEdge][i][p] * ( gW * B.phi[q](iCell, gPoint) );
-
+            
             }// for GP
 
             rhs[iCell] -= res * e->J * sign;
@@ -349,6 +371,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
         //cout << "cell #" << iCell << "; RHS[i]: " << rhs[iCell] << endl;
 
     }// for cells*/ 
+}// omp parallel
     t1 = MPI_Wtime();
     if (debug) logger << "\t\trhs.compute: " << t1 - t0 << endl;
 

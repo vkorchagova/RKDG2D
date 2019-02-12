@@ -1,6 +1,7 @@
 #pragma once
 
 #include <mpi.h>
+#include <omp.h>
 
 //- Number of conservative variables
 static const int PhysDim = 5;
@@ -10,7 +11,9 @@ static const int dimPh = 5;
 static const int nShapes = 3;
 
 // Coeffs vector size
-static const int dimS = PhysDim * nShapes;
+static const int dimS = dimPh * nShapes;
+
+const int NumThreads = 4; // Number of threads for teh OpenMP
 
 //- Initialisaton of tools for computations
 //void Initialize() {}
