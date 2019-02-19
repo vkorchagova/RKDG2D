@@ -13,49 +13,49 @@ private:
 
 	/// Time itself
 	
-    //- Previous time point
+    /// Previous time point
     double tOld;
 
-    //- Current time
+    /// Current time
 	double t;
 
-    //- End time
+    /// End time
     double tEnd;
 
-    //- Output time
+    /// Output time
     double outputTime;
 
-    //- Output interval
+    /// Output interval
     double outputInterval;
 
 	/// Time steps
-    //- Old time step -- with which we're working during the time integrating
+    /// Old time step -- with which we're working during the time integrating
     double tau;
 
-    //- New time step -- for the next iteration
+    /// New time step -- for the next iteration
     double tauNew;
 	
 	/// Time step renewal
-    //- Courant number
+    /// Courant number
     double CoNum;
-	//- Max solution speed estimation
+	/// Max solution speed estimation
 	double MaxSpeed;
-    //- Max time step
+    /// Max time step
     double maxTau;
-    //- Max time growth factor
+    /// Max time growth factor
     double maxTauGrowth;
-    //- Switch static/dynamic time step
+    /// Switch static/dynamic time step
     bool isDynamic;
 
 	/// References to outer classes
-    //- Reference to mesh
+    /// Reference to mesh
     const Mesh& M;
 
     std::ofstream timeListing;
 
 public:
 
-    //- Constructor
+    /// Constructor
     TimeControl(
         const Mesh& msh, 
         const double tStart, 
@@ -65,29 +65,29 @@ public:
         const std::string listingPath = "alphaCoeffs/times"
     ); 
 
-    //- Destructor
+    /// Destructor
     ~TimeControl();
 
 
-	//- Get time
+	/// Get time
 	double getTime() const { return t; }
     
-	//- Set time
+	/// Set time
 	void updateTime(double t_new) { t = t_new; }
 
-	//- Get time step
+	/// Get time step
 	double getTau() const { return tau; }
 
-    //- Get new time step
+    /// Get new time step
     double getNewTau() const {return tauNew;}
 
-    //- Update time step
+    /// Update time step
     void updateTimeStep(double MSpeed);
 
-    //- Check if time is not finished
+    /// Check if time is not finished
     bool running() { return t < tEnd + 0.5*tau; }
 
-    //- Check time point for output
+    /// Check time point for output
     bool isOutput();
 
 };

@@ -8,11 +8,11 @@ class BoundarySlip : public Boundary
 
 public:
 
-    //- Constructor
+    /// Constructor
     BoundarySlip(const Patch& p) : Boundary(p) { type = "slip"; }
     ~BoundarySlip() {}
 
-    //- Apply boundary condition
+    /// Apply boundary condition
     //virtual void applyBoundary(std::vector<numvector<double, dimS>>& coeffs) const override;
 
     virtual numvector<double, dimPh> getSolOuter(

@@ -34,6 +34,16 @@ double Physics::getPressure(const numvector<double, dimPh>& sol) const
     return p;
 } // end getPressure
 
+
+double Physics::getPressure(double rho, double u, double v, double w, double e) const
+{
+    double V2 = sqr(u) + sqr(v) + sqr(w);
+
+    double p = (cpcv - 1.0) * (e - 0.5 * rho * V2);
+
+    return p;
+} // end getPressure
+
 double Physics::c(const numvector<double, dimPh>& sol) const
 {
     double c2 = cpcv * getPressure(sol) / sol[0];

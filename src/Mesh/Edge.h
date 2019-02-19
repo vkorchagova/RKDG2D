@@ -19,50 +19,50 @@ public:
 
     int number;
 
-    //- Number of gauss points for edge
+    /// Number of gauss points for edge
     int nGP;
 
-    //- Gauss points
+    /// Gauss points
     std::vector<Point> gPoints;
 
-    //- Weights for integration
+    /// Weights for integration
     std::vector<double> gWeights;
 
-    //- Lenght of edge
+    /// Lenght of edge
     double length;
 
-    //- Jacobian
+    /// Jacobian
     double J;
 
 
-    //- Two nodes define edge
+    /// Two nodes define edge
     //std::vector<std::shared_ptr<Point>> nodes;
     std::vector<std::shared_ptr<Point>> nodes;
 
-    //- Neighbour cells for edge
+    /// Neighbour cells for edge
     //std::vector<std::shared_ptr<Cell>> neibCells;
     std::vector<std::shared_ptr<Cell>> neibCells;
 
-    //- Normal to edge
+    /// Normal to edge
     Point n;
 
-    //- Default constructor
+    /// Default constructor
     //Edge() {}
     
-    //- Copy constructor
+    /// Copy constructor
     Edge(const Edge&) = default;
 
-    //- Construct using two nodes
+    /// Construct using two nodes
     //Edge(const Point& p1, const Point& p2);
     Edge(const std::vector<std::shared_ptr<Point>> &p);
 
-    //- Destructor
+    /// Destructor
     virtual ~Edge() = default;
 
-    //- Get length
+    /// Get length
     double getLength() const { return length; }
 
-    //- Check edge is equal to given
+    /// Check edge is equal to given
     bool isEqual(const Edge& e) const;
     bool isEqual(const std::shared_ptr<Edge>& e) const { return isEqual(*e); }
 

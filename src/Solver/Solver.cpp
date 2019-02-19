@@ -16,6 +16,14 @@ Solver::Solver( Basis& Bas, Mesh& msh, Solution& soln,
 
     sln.fullSOL.resize(M.nCellsGlob); 
     buf.forFullSOL.resize(M.nCellsGlob * dimS);
+    buf.forSolExport.resize(M.nRealCells * dimExp);
+
+	if (myRank == 0)
+	{
+		buf.forSolExportRecv.resize(M.nCellsGlob * dimExp);
+		sln.solToExport.resize(M.nCellsGlob);
+	}
+        
 
     ///
     /// preparation for sol collection on proc #0
@@ -29,16 +37,26 @@ Solver::Solver( Basis& Bas, Mesh& msh, Solution& soln,
     buf.nCoeffsPerProc.resize(numProcsTotal);
     buf.mpiDisplSOL.resize(numProcsTotal);
 
+    buf.nSolPerProcExp.resize(numProcsTotal);
+    buf.mpiDisplSolExp.resize(numProcsTotal);
+
     // preparation for gatherv for solution
     if (myRank == 0)
     {
         for (int i = 0; i < numProcsTotal; ++i)
+        {
             buf.nCoeffsPerProc[i] = buf.nCellsPerProc[i] * dimS;
+            buf.nSolPerProcExp[i] = buf.nCellsPerProc[i] * dimExp;
+        }
 
         buf.mpiDisplSOL[0] = 0;
+        buf.mpiDisplSolExp[0] = 0;
         
         for (int i = 1; i < numProcsTotal; ++i)
-            buf.mpiDisplSOL[i] = buf.mpiDisplSOL[i-1] + buf.nCoeffsPerProc[i-1]; 
+        {
+            buf.mpiDisplSOL[i] = buf.mpiDisplSOL[i-1] + buf.nCoeffsPerProc[i-1];
+            buf.mpiDisplSolExp[i] = buf.mpiDisplSolExp[i-1] + buf.nSolPerProcExp[i-1]; 
+        }
 
         // cout << "DISPL" << endl;
 
@@ -196,9 +214,9 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
     //         bc[ind]->applyBoundary(sln.SOL);
     //     }
 
-//---------------------------------------------------------------------------------
+///--------------------------------------------------------------------------------
     t0 = MPI_Wtime();
-	omp_set_num_threads(NumThreads);
+	//omp_set_num_threads(NumThreads);
 //#pragma omp parallel default(none) \
  shared(myRank, nGP, numFluxes) \
  private (gPoint, eNormal, solLeft, solRight, gpFluxes)
@@ -241,14 +259,14 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
     ////if (myRank == 1) cout << "end bound edges" << endl;
 
 
-//---------------------------------------------------------------------------------
+///--------------------------------------------------------------------------------
     t0 = MPI_Wtime();
-	omp_set_num_threads(NumThreads);
+	//omp_set_num_threads(NumThreads);
 #pragma omp parallel default(none) \
  shared(myRank, nGP, numFluxes) \
  firstprivate (e, gPoint, eNormal, solLeft, solRight, gpFluxes)
 #pragma omp for
-    for (size_t iEdge = M.nEdgesBound; iEdge < M.nRealEdges; ++iEdge)
+    for (int iEdge = M.nEdgesBound; iEdge < M.nRealEdges; ++iEdge)
     {
         ////if (myRank == 1)  cout << "iEdge = " << iEdge <<endl;
 
@@ -286,12 +304,10 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
     t1 = MPI_Wtime();
     if (debug) logger << "\t\teInner.numfluxes: " << t1 - t0 << endl;
    
-//---------------------------------------------------------------------------------
+///--------------------------------------------------------------------------------
     // 2nd step: compute RHS;
 
 	t0 = MPI_Wtime();
-
-
 #pragma omp parallel default(none) \
  shared(myRank, nCells, numFluxes, rhs) \
  private (cell, gPoint, nGP)
@@ -424,7 +440,10 @@ vector<numvector<double, dimS>> Solver::correctNonOrtho(const vector<numvector<d
 
     //cout << "size of alpha " << alpha.size() << endl;
     //cout << "size of alphaCorr " << alphaCorr.size() << endl;
-    for (size_t iCell = 0; iCell < M.nRealCells; ++iCell)
+#pragma omp parallel /*default(none)*/ \
+	shared(alpha, alphaCorr) 
+#pragma omp for
+    for (int iCell = 0; iCell < M.nRealCells; ++iCell)
     {
         //cout << "iCell in common  = " << iCell << endl;
         alphaCorr[iCell] = correctNonOrthoCell(alpha[iCell], B.gramian[iCell]);
@@ -521,6 +540,7 @@ void Solver::dataExchange()
 
     // 2nd step: scatter data for all procs
 
+	if (numProcsTotal > 1)
     MPI_Alltoallv(
         &(buf.forSendBoundSOL[0]),      /*who send*/
         &(buf.boundProcSolSizesS[0]),   /*how much*/
@@ -533,7 +553,6 @@ void Solver::dataExchange()
         MPI_COMM_WORLD
     );
 
-    //MPI_Barrier(MPI_COMM_WORLD);
 
     // 3rd step: sort data after receiving
 
@@ -617,8 +636,6 @@ void Solver::collectSolution()
         MPI_COMM_WORLD
     );
 
-    //MPI_Barrier(MPI_COMM_WORLD);
-
     // sort received solution according to global map
 
     for (int i = 0; i < M.nCellsGlob; ++i)
@@ -644,4 +661,44 @@ void Solver::collectSolution()
     //     // }
     // }
     
+}
+
+
+void Solver::collectSolutionForExport()
+{
+    Point cellCenter;
+    for (int iCell = 0; iCell < M.nRealCells; ++iCell)
+    {
+        cellCenter = M.cells[iCell]->getCellCenter();
+
+        numvector<double, dimPh> solExp = sln.reconstruct(iCell, cellCenter);
+
+        buf.forSolExport[iCell * dimExp] = solExp[0];
+        buf.forSolExport[iCell * dimExp + 1] = solExp[1] / solExp[0];
+        buf.forSolExport[iCell * dimExp + 2] = solExp[2] / solExp[0];
+        buf.forSolExport[iCell * dimExp + 3] = solExp[3] / solExp[0];
+        buf.forSolExport[iCell * dimExp + 4] = solExp[4];
+        buf.forSolExport[iCell * dimExp + 5] = phs.getPressure(solExp);
+    }
+
+	// collect full solution on proc #0
+	if (numProcsTotal > 1)
+	MPI_Gatherv(
+        &(buf.forSolExport[0]), 
+        M.nRealCells * dimExp, 
+        MPI_DOUBLE, 
+        &(buf.forSolExportRecv[0]), 
+        &(buf.nSolPerProcExp[0]), 
+        &(buf.mpiDisplSolExp[0]), 
+        MPI_DOUBLE, 
+        0, 
+        MPI_COMM_WORLD
+    );
+
+    // sort received solution according to global map
+
+    for (int i = 0; i < M.nCellsGlob; ++i)
+        for (int j = 0; j < dimExp; ++j)
+            sln.solToExport[buf.globalMap[i]][j] = buf.forSolExportRecv[i * dimExp + j];
+
 }

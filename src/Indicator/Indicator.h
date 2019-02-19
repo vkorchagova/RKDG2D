@@ -10,28 +10,28 @@ class Indicator
 {
 public:
 
-    //- Mesh
+    /// Mesh
     const Mesh& mesh;
 
-    //- Problem
+    /// Problem
     //const Problem& problem;
     
-    //- List of troubed cells
+    /// List of troubed cells
     //std::vector<int> tCells;
     
 public:
 
-    //- Constructor
+    /// Constructor
     //Indicator(const Mesh2D& msh, const Problem& prb);
     Indicator (const Mesh& msh) : mesh(msh) {}
     
-    //- Destructor
+    /// Destructor
     virtual ~Indicator() {}
     
-    //- Check discontinuities
+    /// Check discontinuities
     virtual std::vector<int> checkDiscontinuities() const = 0;
     
-    //- Write troubled cells in VTK format
+    /// Write troubled cells in VTK format
     //void writeTroubledCellsVTK();
     
 };

@@ -14,13 +14,29 @@ vector<numvector<double, dimS>> operator * (const vector<numvector<double, dimS>
 
 	vector<numvector<double, dimS>> m(a);
 
-	for (size_t cell = 0; cell < dimx; ++cell)
+#pragma omp parallel for
+	for (int cell = 0; cell < dimx; ++cell)
 //#pragma omp simd
 		for (size_t val = 0; val < dimy; ++val)
 			m[cell][val] *= b;
 
 	return m;
 };
+
+vector<numvector<double, dimS>>& operator += (vector<numvector<double, dimS>>& b, const vector<numvector<double, dimS>>& a)
+{
+	size_t dimx = a.size();
+	size_t dimy = dimS;
+
+#pragma omp parallel for
+	for (int cell = 0; cell < dimx; ++cell)
+		//#pragma omp simd
+	for (size_t val = 0; val < dimy; ++val)
+		b[cell][val] += a[cell][val];
+
+	return b;
+};
+
 vector<numvector<double, dimS>> operator + (const vector<numvector<double, dimS>>& b, const vector<numvector<double, dimS>>& a)
 {
 	size_t dimx = a.size();
@@ -28,19 +44,22 @@ vector<numvector<double, dimS>> operator + (const vector<numvector<double, dimS>
 
 	vector<numvector<double, dimS>> m(a);
 
-	for (size_t cell = 0; cell < dimx; ++cell)
+#pragma omp parallel for
+	for (int cell = 0; cell < dimx; ++cell)
 //#pragma omp simd
 		for (size_t val = 0; val < dimy; ++val)
 			m[cell][val] = a[cell][val] + b[cell][val];
 
 	return m;
 };
+
 void sum(const vector<numvector<double, dimS>>& a, const vector<numvector<double, dimS>>& b, vector<numvector<double, dimS>>& res)
 {
 	size_t dimx = a.size();
 	size_t dimy = dimS;
 
-	for (size_t cell = 0; cell < dimx; ++cell)
+#pragma omp parallel for
+	for (int cell = 0; cell < dimx; ++cell)
 //#pragma omp simd
 		for (size_t val = 0; val < dimy; ++val)
 			res[cell][val] = a[cell][val] + b[cell][val];
@@ -56,7 +75,8 @@ vector<vector<double>>& operator += (vector<vector<double>>& a, const vector<vec
 	size_t dimx = a.size();
 	size_t dimy = a[0].size();
 
-	for (size_t cell = 0; cell < dimx; ++cell)
+#pragma omp parallel for
+	for (int cell = 0; cell < dimx; ++cell)
 //#pragma omp simd
 		for (size_t val = 0; val < dimy; ++val)
 			a[cell][val] += b[cell][val];
@@ -66,8 +86,8 @@ vector<vector<double>>& operator -= (vector<vector<double>>& a, const vector<vec
 {
 	size_t dimx = a.size();
 	size_t dimy = a[0].size();
-
-	for (size_t cell = 0; cell < dimx; ++cell)
+#pragma omp parallel for
+	for (int cell = 0; cell < dimx; ++cell)
 //#pragma omp simd
 		for (size_t val = 0; val < dimy; ++val)
 			a[cell][val] -= b[cell][val];
@@ -77,8 +97,8 @@ vector<vector<double>>& operator *= (vector<vector<double>>& a, const double b)
 {
 	size_t dimx = a.size();
 	size_t dimy = a[0].size();
-
-	for (size_t cell = 0; cell < dimx; ++cell)
+#pragma omp parallel for
+	for (int cell = 0; cell < dimx; ++cell)
 //#pragma omp simd
 		for (size_t val = 0; val < dimy; ++val)
 			a[cell][val] *= b;
@@ -90,8 +110,8 @@ vector<vector<double>> operator * (const vector<vector<double>>& a, const double
 	size_t dimy = a[0].size();
 
 	vector<vector<double>> m(a);
-
-	for (size_t cell = 0; cell < dimx; ++cell)
+#pragma omp parallel for
+	for (int cell = 0; cell < dimx; ++cell)
 //#pragma omp simd
 		for (size_t val = 0; val < dimy; ++val)
 			m[cell][val] *= b;
@@ -103,8 +123,8 @@ vector<vector<double>> operator * (const double b, const vector<vector<double>>&
 	size_t dimy = a[0].size();
 
 	vector<vector<double>> m(a);
-
-	for (size_t cell = 0; cell < dimx; ++cell)
+#pragma omp parallel for
+	for (int cell = 0; cell < dimx; ++cell)
 //#pragma omp simd
 		for (size_t val = 0; val < dimy; ++val)
 			m[cell][val] *= b;

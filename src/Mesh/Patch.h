@@ -15,21 +15,21 @@ class Patch
 
 public:
 
-    //- Name of patch
+    /// Name of patch
     std::string name;
 
     std::vector<std::shared_ptr<Edge>> edgeGroup;
 
-    //- List of numbers of cells in patch
+    /// List of numbers of cells in patch
     std::vector<std::shared_ptr<Cell>> cellGroup;
 
-    //- Default constructor
+    /// Default constructor
     Patch() {}
 
-    //- Construct by name
+    /// Construct by name
     Patch(std::string pN) : name(pN) {}
 
-    //- Destructor
+    /// Destructor
     ~Patch() {}
 };
 
@@ -40,16 +40,16 @@ class ProcPatch : public Patch
 
 public:
 
-    //- Proc num
+    /// Proc num
     int procNum;
 
-    //- Inner cell group
+    /// Inner cell group
     std::vector<std::shared_ptr<Cell>> innerCellGroup;
 
-    //- Constructor
+    /// Constructor
     ProcPatch(std::string pN, int pNum) : Patch(pN), procNum(pNum) {}
 
-    //- Destructor
+    /// Destructor
     ~ProcPatch() {}
 
 };

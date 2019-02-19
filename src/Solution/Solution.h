@@ -16,32 +16,35 @@ class Solution
 
 public:   
     
-    //- The very Coeffs
+    /// The very Coeffs
     std::vector<numvector<double, dimS>> SOL;
     
-    //- Reference to the basis
+    /// Reference to the basis
     const Basis& B;
 
-    //- MPI buffers: key is the proc number, value is the pack of coeffs on proc
+    /// MPI buffers: key is the proc number, value is the pack of coeffs on proc
     // std::map<int, std::vector<double>> bufSendBound;
     // std::map<int, std::vector<double>> bufRecvBound;
 
-    //- Full pack of solution coeffs
+    /// Full pack of solution coeffs
     std::vector<numvector<double, dimS>> fullSOL;
+
+    /// Pack of solutions in cell centers to export
+    std::vector<numvector<double, dimExp>> solToExport;
 
 public:
 
-    //- Constructor
+    /// Constructor
     Solution(Basis& bas);
 
-    //- Destructor
+    /// Destructor
     ~Solution() {}
 
-    //- Reconstruct solution at the point
+    /// Reconstruct solution at the point
     numvector<double, dimPh> reconstruct(int iCell, const Point& point) const;
     double reconstruct(int iCell, const Point& point, Variables var) const;
 
-    //- Reconstruct solution using given coeffs
+    /// Reconstruct solution using given coeffs
     numvector<double, dimPh> reconstruct(int iCell, const Point& point, const numvector<double, dimS>& SOL) const;
     double reconstruct(int iCell, const Point& point, const numvector<double, dimS>& SOL, Variables var) const;
 

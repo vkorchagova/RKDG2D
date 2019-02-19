@@ -17,19 +17,19 @@
 #include "Problem.h"
 #include "Flux.h"
 
-//- Proc rank 
+/// Proc rank 
 extern int myRank;
 
-//- Size of ...
+/// Size of ...
 extern int numProcsTotal;
 
-//- Status
+/// Status
 extern MPI_Status status;
 
-//- Debug
+/// Debug
 extern bool debug;
 
-//- Log file to save data
+/// Log file to save data
 extern std::ofstream logger;
 
 
@@ -39,68 +39,69 @@ class Solver
 public:
 
 	/// References
-	//- Reference to the basis
+	/// Reference to the basis
 	const Basis& B;
 
-	//- Reference to teh mesh
+	/// Reference to teh mesh
 	const Mesh& M;
 	
-	//- Reference to teh solution
+	/// Reference to teh solution
 	Solution& sln;
 
-    //- Reference to problem
+    /// Reference to problem
     const Problem& prb;
 
-    //- Reference to physics
+    /// Reference to physics
     const Physics& phs;
 
-    //- Reference to flux
+    /// Reference to flux
     const Flux& flux;
 
-    //- Reference to MPI buffers
+    /// Reference to MPI buffers
     Buffers& buf;
 
     std::vector<Boundary> bc;
 
 	/// Variables
-	//- Max speed buffer for the Courant condition
+	/// Max speed buffer for the Courant condition
 	double MaxSpeed;
 
 public:
 
-    //- Constructor
+    /// Constructor
     Solver( Basis& B, Mesh& msh, Solution& sln,
 			Problem &prb, Physics& phs, Flux& flx, Buffers& buf);
 
-    //- Destructor
+    /// Destructor
     ~Solver() {}
 
     //// RKDG methods
 
-    //- Calculate coeffs with initial conditions
+    /// Calculate coeffs with initial conditions
     void setInitialConditions();
 
-    //- Run case from define set of coefficients
+    /// Run case from define set of coefficients
     void setDefinedCoefficients(std::string fileName);
 
-    //- Assemble right-hand side
+    /// Assemble right-hand side
     std::vector<numvector<double, dimS>> assembleRHS(const std::vector<numvector<double, dimS>>& SOL);
 
-    //- Correct alpha coeffs in case of non-orthogonal basis functions
+    /// Correct alpha coeffs in case of non-orthogonal basis functions
 	numvector<double, dimS> correctNonOrthoCell(const numvector<double, dimS>& rhs, const std::vector<std::vector<double>>& gramian) const;
 	std::vector<numvector<double, dimS>> correctNonOrtho(const std::vector<numvector<double, dimS>>& alpha) const;
 
-	//- Reconstruct SLAE RHS after limitation in case of non-orthogonal functions :TODO choose the necessary version
+	/// Reconstruct SLAE RHS after limitation in case of non-orthogonal functions :TODO choose the necessary version
 	numvector<double, dimS> correctPrevIterCell(const numvector<double, dimS>& alphaCorr, const std::vector<std::vector<double>>& gramian) const;
 	std::vector<numvector<double, dimS>> correctPrevIter(const std::vector<numvector<double, dimS>>& alpha) const;
 
     /// MPI functions
 
-    //- Exchange data
+    /// Exchange data
     void dataExchange();
 
-    //- Collect solution
+    /// Collect solution
     void collectSolution();
+    void collectSolutionForExport();
 
 
 };

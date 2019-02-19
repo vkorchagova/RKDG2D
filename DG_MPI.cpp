@@ -18,24 +18,24 @@
 #include "numvector.h"
 #include "Buffers.h"
 
-#include "defs.h"		//- Basic arithmetics
-//#include "Params.h"		//- All the manually defining parameters of the method
-#include "Mesh.h"		//- The mesh
-#include "Basis.h"		//- All about the basis functions for DG
-#include "compService.h"//- Integration
-#include "Physics.h"	//- The physical models
-#include "Problem.h"	//- Initial-boundary staff
-#include "Solution.h"   //- Solution storage
+#include "defs.h"		/// Basic arithmetics
+//#include "Params.h"		/// All the manually defining parameters of the method
+#include "Mesh.h"		/// The mesh
+#include "Basis.h"		/// All about the basis functions for DG
+#include "compService.h"/// Integration
+#include "Physics.h"	/// The physical models
+#include "Problem.h"	/// Initial-boundary staff
+#include "Solution.h"   /// Solution storage
 #include "Boundary.h"
 #include "LimiterFinDiff.h"
 #include "LimiterBJ.h"
 //#include "LimiterWENOS.h"
-#include "FluxLLF.h"		//- All about the flux evaluating
+#include "FluxLLF.h"		/// All about the flux evaluating
 #include "FluxHLL.h"
 #include "FluxHLLC.h"
 //#include "Indicator.h"
-//#include "Limiter.h"	//- All about the monotonization
-#include "Solver.h"		//- The whole spatial discretization module
+//#include "Limiter.h"	/// All about the monotonization
+#include "Solver.h"		/// The whole spatial discretization module
 #include "TimeControl.h"
 #include "Writer.h"
 #include "RungeKutta.h"
@@ -44,19 +44,19 @@
 #include <mpi.h>
 #include <omp.h>
 
-//- Proc rank 
+/// Proc rank 
 int myRank;
 
-//- Total number of procs
+/// Total number of procs
 int numProcsTotal;
 
-//- Status
+/// Status
 MPI_Status status;
 
-//- Debug
+/// Debug
 bool debug;
 
-//- Log file to save data
+/// Log file to save data
 std::ofstream logger;
 
 
@@ -67,6 +67,7 @@ int main(int argc, char* argv[])
     
     //int rank, size, ibeg, iend;
     //MPI_Status stat;
+
 
     MPI_Init(&argc, &argv);
 
@@ -85,14 +86,14 @@ int main(int argc, char* argv[])
         mkdir("alphaCoeffs", S_IRWXU | S_IRGRP | S_IROTH);
     #endif
 
-    //-----------------------
+    ///----------------------
 
     CaseInit caseName = SodX;
 
     double tStart = 0.0;
     double tEnd = 0.2;
     double initTau = 1e-3;
-    double outputInterval = 1e-1;
+    double outputInterval = 1e-2;
 
     int order = 2;
 
@@ -102,14 +103,23 @@ int main(int argc, char* argv[])
         meshFileName += "." + to_string(myRank);
 
     Buffers buf;
+
     Mesh mesh(meshFileName, buf);
+    Mesh fullMesh(buf);
+
+    if (myRank == 0)
+    {
+        meshFileName = "mesh2D";
+        fullMesh.importMesh(meshFileName);
+    }
+
     Basis basis(mesh.cells);
     Solution solution(basis);
     
     Physics physics;
     FluxHLL flux(physics);
     
-    Writer writer(mesh, solution, physics);
+    Writer writer(fullMesh, solution, physics);
     TimeControl time(mesh, tStart, tEnd, initTau, outputInterval);
 
     Problem problem(caseName, mesh, time);
@@ -118,9 +128,9 @@ int main(int argc, char* argv[])
     LimiterBJ limiter(mesh.cells, solution, physics);
     RungeKutta RK(order, basis, solver, solution, problem.bc, limiter, time);
 
-    //-----------------------
+    ///----------------------
 
-    writer.exportMeshVTK("mesh2D.vtk");
+    //writer.exportMeshVTK("mesh2D.vtk");
 
     // Set initial conditions
     if (tStart > 1e-10)
@@ -140,9 +150,13 @@ int main(int argc, char* argv[])
         limiter.limit(solution.SOL);
 
         solver.collectSolution();
+        solver.collectSolutionForExport();
             
         if (myRank == 0) 
+        {
             writer.exportNativeCoeffs("alphaCoeffs/" + to_string(tStart) + ".dat");
+            writer.exportFrameVTK("alphaCoeffs/" + to_string(tStart) + ".vtk");
+        }
     }
 
     physics.cpcv = problem.cpcv;
@@ -154,18 +168,16 @@ int main(int argc, char* argv[])
     //for (size_t i = 0; i < mesh.cells.size(); ++i)
      //   cout << "sol #" << i << ": " << solution.SOL[i] << endl;
 
-    //-----------------------
-
-    
-    //solver.assembleRHS(solution.SOL);
+    ///----------------------
     
     double t0, t1;
 
-    //for (double t = tStart; t < tEnd; t += tau)
     double meanCpuTime = 0.0;
     double totalCpuTime = 0.0;
     int nSteps = 0;
     
+
+	/// THE MAIN CYCLE THROUGH THE TIME!
     while (time.running())
     {
         if (myRank == 0) 
@@ -191,47 +203,31 @@ int main(int argc, char* argv[])
         if (time.isOutput())
         {
             solver.collectSolution();
+            solver.collectSolutionForExport();
             
             if (myRank == 0) 
-                writer.exportNativeCoeffs("alphaCoeffs/" + to_string(time.getTime()) + ".dat"); // do it only on proc rank = 0
+            {
+                writer.exportNativeCoeffs("alphaCoeffs/" + to_string(time.getTime()) + ".dat");
+                writer.exportFrameVTK("alphaCoeffs/" + to_string(time.getTime()) + ".vtk");
+            }
         }
     }
-
-    /// separate program for visualisation: 
-    /// load full mesh (prepare it in decomposer) and full pack of solution coeffs 
-    /// and convert it to VTK
-    
-
-    MPI_Finalize();
 
     if (myRank == 0)
     {
         cout << "============" << endl;
         cout << "Total CPU time: " << totalCpuTime << " s" << endl;
-        cout << "Numbr of time steps: " << nSteps << endl;
+        cout << "Number of time steps: " << nSteps << endl;
         cout << "Mean CPU timestep: " << totalCpuTime / double(nSteps) << " s" << endl;
         cout << "============" << endl;
         cout << "THE END" << endl;
     }
 
     logger.close();
-    
+
+
+    MPI_Finalize();
 	
 	return 0;
 }
 
-//ibeg = rank*n + 1;
-//iend = (rank + 1)*n;
-
-//for (int i = ibeg; i <= ((iend > MAX) ? MAX : iend); ++i)
-//{
-	//	printf("process %d, %d^2=%d\n", rank.i.i * 1);
-//}
-
-/*if (rank == 1)
-MPI_Send(&ibuf, 1, MPI_INT, 0, 5, MPI_COMM_WORLD);
-if (rank == 0)
-MPI_Recv(&ibuf, 1, MPI_INT, 1, 5, MPI_COMM_WORLD, &stat);*/
-
-//if (rank == 0)
-//	printf("process %d, TotSum =  %f\n", rank, res);

@@ -6,11 +6,11 @@
 class IndicatorEverywhere : public Indicator
 {
 public:
-    //- Constructor
+    /// Constructor
     //IndicatorEverywhere (const Mesh2D& msh, const Problem& prb): Indicator (msh, prb) {}
     IndicatorEverywhere(const Mesh& msh) : Indicator(msh) {}
 
-    //- Check discontinuities
+    /// Check discontinuities
     virtual std::vector<int> checkDiscontinuities() const override;
 };
 

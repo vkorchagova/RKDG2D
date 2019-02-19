@@ -7,47 +7,47 @@
 
 // TODO: move here mesh. ExportVtkPoly & solution.export as exportNativeCoeffs
 
-//- Proc rank 
+/// Proc rank 
 extern int myRank;
 
-//- Size of ...
+/// Size of ...
 extern int numProcsTotal;
 
-//- Status
+/// Status
 extern MPI_Status status;
 
-//- Debug
+/// Debug
 extern bool debug;
 
-//- Log file to save data
+/// Log file to save data
 extern std::ofstream logger;
 
 
 class Writer
 {
-    //- Const reference to mesh
+    /// Const reference to mesh
     const Mesh& mesh;
 
-    //- Const reference to solution
+    /// Const reference to solution
     const Solution& solution;
 
-    //- Const reference to physics
+    /// Const reference to physics
     const Physics& physics;
 
 public:
 
-    //- Constructor
+    /// Constructor
     Writer(const Mesh& msh, const Solution& sln, const Physics& phs) : mesh(msh), solution(sln), physics(phs) {}
 
-    //- Export mesh to VTK
+    /// Export mesh to VTK
     void exportMeshVTK(const std::string& fileName) const;
     void exportMeshVTK(std::ostream& wStream) const;
 
-    //- Export solution to VTK
+    /// Export solution to VTK
     void exportFrameVTK(const std::string& fileName) const;
     void exportFrameVTK(std::ostream& wStream) const;
 
-    //- Export solution coeffs 
+    /// Export solution coeffs 
     void exportNativeCoeffs(const std::string& fileName) const;
     void outputNativeCoeffs(std::ostream& wStream) const;
     void outputFullNativeCoeffs(std::ostream& wStream) const;
@@ -55,7 +55,7 @@ public:
 
     /// MPI
 
-    //- Collect full solution 
+    /// Collect full solution 
     void collectFullSolution();
 
 };

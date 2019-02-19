@@ -3,7 +3,7 @@
 
 using namespace std;
 
-numvector<double, PhysDim> inverseRotate(const numvector<double, PhysDim>& sol, const Point& n)
+numvector<double, dimPh> inverseRotate(const numvector<double, dimPh>& sol, const Point& n)
 {
     return { sol[0], n.x() * sol[1] - n.y() * sol[2],  n.y() * sol[1] + n.x() * sol[2], sol[3], sol[4] };
 }
@@ -71,15 +71,15 @@ double integrate(const Edge& edge, const vector<double>& f)
 } // end integrate 1D of scalar function
 
 
-numvector<double, PhysDim> integrate(const Cell& cell, const function<numvector<double, PhysDim>(const Point &)>& f)
+numvector<double, dimPh> integrate(const Cell& cell, const function<numvector<double, dimPh>(const Point &)>& f)
 {
-    numvector<double, PhysDim> res (0.0);
+    numvector<double, dimPh> res (0.0);
 
     for (int i = 0; i < cell.nGP; ++i)
     {
-         numvector<double,PhysDim> resF = f(cell.gPoints2D[i]);
+         numvector<double,dimPh> resF = f(cell.gPoints2D[i]);
 
-        for (int k = 0; k < PhysDim; ++k)
+        for (int k = 0; k < dimPh; ++k)
         {
            res[k] += cell.gWeights2D[i] * resF[k] * cell.J[i];
         }
@@ -89,15 +89,15 @@ numvector<double, PhysDim> integrate(const Cell& cell, const function<numvector<
 
 } // end integrate 2D of vector function
 
-numvector<double, PhysDim> integrate(const Edge& edge, const function<numvector<double, PhysDim>(const Point &)>& f)
+numvector<double, dimPh> integrate(const Edge& edge, const function<numvector<double, dimPh>(const Point &)>& f)
 {
-    numvector<double, PhysDim> res (0.0);
+    numvector<double, dimPh> res (0.0);
 
     for (int i = 0; i < edge.nGP; ++i)
     {
-         numvector<double,PhysDim> resF = f(edge.gPoints[i]);
+         numvector<double,dimPh> resF = f(edge.gPoints[i]);
 
-        for (int k = 0; k < PhysDim; ++k)
+        for (int k = 0; k < dimPh; ++k)
         {
            res[k] += edge.gWeights[i] * resF[k] * edge.J;
         }
@@ -107,13 +107,13 @@ numvector<double, PhysDim> integrate(const Edge& edge, const function<numvector<
 
 } // end integrate 1D of vector function
 
-numvector<double, PhysDim> integrate(const Edge& edge, const vector<numvector<double, PhysDim>>& f)
+numvector<double, dimPh> integrate(const Edge& edge, const vector<numvector<double, dimPh>>& f)
 {
-    numvector<double, PhysDim> res (0.0);
+    numvector<double, dimPh> res (0.0);
 
     for (int i = 0; i < edge.nGP; ++i)
     {
-        for (int k = 0; k < PhysDim; ++k)
+        for (int k = 0; k < dimPh; ++k)
         {
            res[k] += edge.gWeights[i] * f[i][k] * edge.J;
         }

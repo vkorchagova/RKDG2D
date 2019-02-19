@@ -4,17 +4,17 @@
 #include "Limiter.h"
 
 ///
-/// WENO\_S limiter applied to conservative variables component-by-component
+/// BJ limiter applied to conservative variables component-by-component
 ///
 
 class LimiterBJ : public Limiter
 {
-    //- Get AlphaL
+    /// Get AlphaL
     numvector<double, dimPh> getAlphaL(
-                                std::shared_ptr<Cell>& cell, 
-                                numvector<double, dimPh>& mI, 
-                                numvector<double, dimPh>& MI, 
-                                numvector<double, dimPh>& uMean
+                                const std::shared_ptr<Cell>& cell, 
+								const numvector<double, dimPh>& mI,
+								const numvector<double, dimPh>& MI,
+								const numvector<double, dimPh>& uMean
                             );
 
 public:

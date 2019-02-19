@@ -15,34 +15,37 @@ class Physics
 
 public:
 
-    //- Heat capacity ratio
+    /// Heat capacity ratio
     double cpcv;
 
-    //- Constructor
+    /// Constructor
 	Physics();
 
-    //- Destructor
+    /// Destructor
     ~Physics();
 
-    //- Calculate pressure using conservative variables
+    /// Calculate pressure using conservative variables
     double getPressure(const numvector<double, dimPh>& sol) const;
 
-    //- Compute sound speed inside cell
+    /// Calculate pressure using primitive variables
+    double getPressure(double rho, double u, double v, double w, double e) const;
+
+    /// Compute sound speed inside cell
     double c(const numvector<double, dimPh>& sol) const;
 
-    //- Calculate fluxes in x direction
+    /// Calculate fluxes in x direction
     numvector<double, dimPh> fluxF(const numvector<double, dimPh>& sol) const;
 
-    //- Calculate fluxes in y direction
+    /// Calculate fluxes in y direction
     numvector<double, dimPh> fluxG(const numvector<double, dimPh>& sol) const;
 
-    //- Left  eigenvectors
+    /// Left  eigenvectors
     //std::pair<numvector<numvector<double, dimPh>, dimPh>, numvector<numvector<double, dimPh>, dimPh>> getL(const numvector<double, dimPh>& sol) const;
 	numvector<numvector<double, dimPh>, dimPh> getL(const numvector<double, dimPh>& sol, const Point& n) const;
 	numvector<numvector<double, dimPh>, dimPh> getLx(const numvector<double, dimPh>& sol) const;
 	numvector<numvector<double, dimPh>, dimPh> getLy(const numvector<double, dimPh>& sol) const;
     
-	//- Right eigenvectors
+	/// Right eigenvectors
     //std::pair<numvector<numvector<double, dimPh>, dimPh>, numvector<numvector<double, dimPh>, dimPh>> getR(const numvector<double, dimPh>& sol) const;
 	numvector<numvector<double, dimPh>, dimPh> getR(const numvector<double, dimPh>& sol, const Point& n) const;
 	numvector<numvector<double, dimPh>, dimPh> getRx(const numvector<double, dimPh>& sol) const;

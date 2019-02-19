@@ -85,28 +85,27 @@ void Writer::exportFrameVTK(ostream& wStream) const
 
     //  for (const shared_ptr<Cell> cell : mesh.cells)
     for (int iCell = 0; iCell < mesh.nRealCells; ++iCell)
-        wStream << solution.reconstruct(iCell, mesh.cells[iCell]->getCellCenter(), RHO) << endl;
+        wStream << solution.solToExport[iCell][0] << endl;
 
     wStream << "SCALARS e double" << endl;
     wStream << "LOOKUP_TABLE default" << endl;
 
     for (int iCell = 0; iCell < mesh.nRealCells; ++iCell)
-        wStream << solution.reconstruct(iCell, mesh.cells[iCell]->getCellCenter(), E) << endl;
+        wStream << solution.solToExport[iCell][4] << endl;
 
     wStream << "SCALARS p double" << endl;
     wStream << "LOOKUP_TABLE default" << endl;
 
     for (int iCell = 0; iCell < mesh.nRealCells; ++iCell)
-        wStream << physics.getPressure(solution.reconstruct(iCell, mesh.cells[iCell]->getCellCenter())) << endl;
+        wStream << solution.solToExport[iCell][5] << endl;
 
 
     wStream << "VECTORS U double" << endl;
 
     for (int iCell = 0; iCell < mesh.nRealCells; ++iCell)
     {
-        double rho = solution.reconstruct(iCell, mesh.cells[iCell]->getCellCenter(), RHO);
-        wStream << solution.reconstruct(iCell, mesh.cells[iCell]->getCellCenter(), RHOU) / rho << endl;
-        wStream << solution.reconstruct(iCell, mesh.cells[iCell]->getCellCenter(), RHOV) / rho << endl;
+        wStream << solution.solToExport[iCell][1] << endl;
+        wStream << solution.solToExport[iCell][2] << endl;
         wStream << 0.0 << endl;
     }
 
@@ -121,40 +120,6 @@ void Writer::exportFrameVTK(ostream& wStream) const
 
     wStream << "POINT_DATA " << nEntitiesTotal << endl;
     
-    /*
-    wStream << "SCALARS rho double" << endl;
-    wStream << "LOOKUP_TABLE default" << endl;
-
-    for (const shared_ptr<Cell> cell : mesh.cells)
-    for (int j = 0; j < cell->nEntities; ++j)
-    wStream << cell->reconstruct(cell->nodes[j], 0) << endl;
-
-    wStream << "SCALARS e double" << endl;
-    wStream << "LOOKUP_TABLE default" << endl;
-
-    for (const shared_ptr<Cell> cell : mesh.cells)
-    for (int j = 0; j < cell->nEntities; ++j)
-    wStream << cell->reconstruct(cell->nodes[j], 4) << endl;
-
-    wStream << "SCALARS p double" << endl;
-    wStream << "LOOKUP_TABLE default" << endl;
-
-    for (const shared_ptr<Cell> cell : mesh.cells)
-    for (int j = 0; j < cell->nEntities; ++j)
-    wStream << problem.getPressure(cell->reconstruct(cell->nodes[j])) << endl;
-
-
-    wStream << "VECTORS U double" << endl;
-
-    for (const shared_ptr<Cell> cell : mesh.cells)
-    for (int j = 0; j < cell->nEntities; ++j)
-    {
-    double rho = cell->reconstruct(cell->nodes[j], 0);
-    wStream << cell->reconstruct(cell->nodes[j], 1) / rho << endl;
-    wStream << cell->reconstruct(cell->nodes[j], 2) / rho << endl;
-    wStream << 0.0 << endl;
-    }
-    */
 }
 
 

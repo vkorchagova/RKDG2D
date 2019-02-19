@@ -153,7 +153,8 @@ void RungeKutta::Tstep()
         lhs = lhsOld;
 
         for (int j = 0; j <= i; ++j)
-           lhs = lhs + k[j] * beta[i][j] * tau; 
+           lhs += k[j] * (beta[i][j] * tau); 
+
         t1 = MPI_Wtime();
         if (debug) logger << "\tupdateRKstep: " << t1 - t0 << endl;
 

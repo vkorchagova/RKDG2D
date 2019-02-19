@@ -66,7 +66,7 @@ Edge::Edge(const vector<shared_ptr<Point>> &p) : nodes(p)
 	// ...
     length = (p2 - p1).length();
 
-    //- jacobian
+    /// jacobian
     J = 0.5 * length;
 }
 

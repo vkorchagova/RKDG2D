@@ -14,13 +14,13 @@
 
 class Basis
 {
-    //- Constant reference to mesh
+    /// Constant reference to mesh
     const std::vector<std::shared_ptr<Cell>>& cells;
 
-    //- Init basis functions
+    /// Init basis functions
     void initBasisFunctions();
 
-    //- Init gramian matrices
+    /// Init gramian matrices
     void initGramian();
 
 public:
@@ -28,17 +28,17 @@ public:
 
     Basis(const std::vector<std::shared_ptr<Cell>>& cells);
     
-    //- Coefficients for form functions
+    /// Coefficients for form functions
     std::vector<numvector<double, nShapes>> phiCoeffs;
     
-    //- List of form functions as is
+    /// List of form functions as is
     std::vector<std::function<double(int iCell, const Point&)>> phi;
 	//std::vector<std::function<double(const Point&)>> phi;
 
-    //- List of form functions' gradients
+    /// List of form functions' gradients
     std::vector<std::function<Point(int iCell, const Point&)>> gradPhi;
     
-    //- Gramian matrix
+    /// Gramian matrix
     /// Typical look for my basis:
     /// 1     0         0
     /// 0 phi1*phi1 phi1*phi2
@@ -51,7 +51,7 @@ public:
     /// Gramian form for one cell in case of linear functions: {g[1][1], g[1][2], g[2][2]}
 	std::vector< std::vector<std::vector<double>> > gramian;
 
-    //- Get coefficients of projection of function foo onto cell basis
+    /// Get coefficients of projection of function foo onto cell basis
     numvector<double, dimS> projection(const std::function<numvector<double, dimPh>(const Point& point)>& init, int iCell) const;
 
 };

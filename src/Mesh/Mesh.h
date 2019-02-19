@@ -13,19 +13,19 @@
 #include <fstream>
 #include <memory>
 
-//- Proc rank 
+/// Proc rank 
 extern int myRank;
 
-//- Size of ...
+/// Size of ...
 extern int numProcsTotal;
 
-//- Status
+/// Status
 extern MPI_Status status;
 
-//- Debug
+/// Debug
 extern bool debug;
 
-//- Log file to save data
+/// Log file to save data
 extern std::ofstream logger;
 
 
@@ -34,13 +34,13 @@ class Mesh
 
 private:
 
-    //- Reference to MPI buffers
+    /// Reference to MPI buffers
     Buffers& buf;
 
-    //- Find neighbours for given cell
+    /// Find neighbours for given cell
     void findNeighbourCells(const std::shared_ptr<Cell>& cell);
 
-    //- Add cell to proc patch
+    /// Add cell to proc patch
     void addToProcPatch(const std::shared_ptr<Cell>& cell, int numProc);
 
     void createPhysicalPatch(const std::vector<std::shared_ptr<Edge>>& edgeGroup, const std::string& pName);
@@ -51,76 +51,80 @@ private:
 
 public:	
 
-    //- Nodes of the mesh
+    /// Nodes of the mesh
     std::vector<std::shared_ptr<Point>> nodes;
 
-    //- Edges
+    /// Edges
     std::vector<std::shared_ptr<Edge>> edges;
 
-    //- Mesh cells (edge1, ..., edgek) CCW
+    /// Mesh cells (edge1, ..., edgek) CCW
     std::vector<std::shared_ptr<Cell>> cells;
 
-    //- Groups of physical boundary edges
+    /// Groups of physical boundary edges
     std::vector<Patch> patches;
 
-    //- Groups of shadow cells between neib procs
+    /// Groups of shadow cells between neib procs
     std::vector<ProcPatch> procPatches;
 
-    //- Global numeration of nodes
+    /// Global numeration of nodes
     std::vector<int> globalNodeNumber;
 
-    //- Global numeration of edges
+    /// Global numeration of edges
     std::vector<int> globalEdgeNumber;
 
-    //- Global numeration of cells
+    /// Global numeration of cells
     std::vector<int> globalCellNumber;
 
-    //- Number of nodes
+	/// Test
+	std::shared_ptr<Cell> TestCell;
+
+    /// Number of nodes
 	int nNodes;
 
-    //- Numbers of edges
+    /// Numbers of edges
     int nRealEdges;
 
-    //- Total number of edges (includes edges for neib proc cells)
+    /// Total number of edges (includes edges for neib proc cells)
     int nTotalEdges;
 
-    //- Numbers of real cells
+    /// Numbers of real cells
     int nRealCells;
 
-    //- Number of ghost cells
+    /// Number of ghost cells
     int nGhostCells;
     int nEdgesBound;
 
-    //- Number of patches
+    /// Number of patches
     int nPatches; //needs to be delete? see applyBoundary function
 
-    //- Number of neighbor processors
+    /// Number of neighbor processors
     int nNeibProcs;
 
-    //- Number of cells in full mesh
+    /// Number of cells in full mesh
     int nCellsGlob;
 
-    // //- Full global numeration of cells
+    // /// Full global numeration of cells
     // std::vector<int> fullGlobalMap;
 
-    // //- Array of displacements for MPI_Gatherv
+    // /// Array of displacements for MPI_Gatherv
     // std::vector<int> mpiDispl;
 
-    // //- nRealCells on each process
+    // /// nRealCells on each process
     // std::vector<int> nCellsPerProc;
 
 public:
 
-    //- Constructor
+    /// Constructor
+    Mesh(Buffers& buf) : buf(buf) {};
     Mesh(std::string& fileName, Buffers& buf);
 
-    //- Destructor
+    /// Destructor
     ~Mesh();
 
-    //- Import mesh from file "mesh2D"
+    /// Import mesh from file "mesh2D"
     void importMesh(std::string& fileName);
 
-    //- Export VTK for vertices too
+    /// Export VTK for vertices too
     void exportMeshVTK_polyvertices(std::ostream& writer) const;
 
 };// end Mesh

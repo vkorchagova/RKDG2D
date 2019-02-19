@@ -13,7 +13,7 @@
 #include "Params.h"
 #include "Point.h"
 
-//- Square
+/// Square
 template<class T>
 inline T sqr(T x) {return x*x;}
 
@@ -21,11 +21,14 @@ inline T sqr(T x) {return x*x;}
 /// Overloading of vector<numvector<double,dimPhys * dimShapes>> 
 ///
 
-//- Multiplying of the solution onto the number
+/// Multiplying of the solution onto the number
 std::vector<numvector<double, dimS>> operator * (const std::vector<numvector<double, dimS>>& a, const double b);
 
-//- Sum of two vector<numvector>'s
+/// Sum of two vector<numvector>'s
 std::vector<numvector<double, dimS>> operator + (const std::vector<numvector<double, dimS>>& b, const std::vector<numvector<double, dimS>>& a);
+
+/// Sum of two vector<numvector>'s
+std::vector<numvector<double, dimS>>& operator += (std::vector<numvector<double, dimS>>& b, const std::vector<numvector<double, dimS>>& a);
 
 
 ///

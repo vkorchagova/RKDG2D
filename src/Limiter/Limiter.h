@@ -15,39 +15,39 @@ class Limiter
 
 protected:
 
-    //- Discontinuities checker
+    /// Discontinuities checker
     //const Indicator& indicator;
 
-    //- Constant reference to mesh
+    /// Constant reference to mesh
     const std::vector<std::shared_ptr<Cell>>& cells;
 
-    //- Reference to solution
+    /// Reference to solution
     const Solution& solution;
 
-    //- Problem
+    /// Problem
     const Physics& physics;
 
-    //- Number of limitation steps
+    /// Number of limitation steps
     static const int nIter = 2;
 
 public:
 
-    //- Construct
+    /// Construct
     Limiter(
         const std::vector<std::shared_ptr<Cell>>& cells, 
         const Solution& sln,
         const Physics& phs) : cells(cells), solution(sln), physics(phs) {}
 
-    //- Destructor
+    /// Destructor
     virtual ~Limiter() {}
     //Limiter(const Indicator& ind, Problem& prb) : indicator(ind), problem(prb) {}
 
-    //- Limit solution gradients
+    /// Limit solution gradients
     //void limit(std::vector<numvector<double, dimS>>& alpha) {}
 
     virtual void limit(std::vector<numvector<double, dimS> >& alpha) = 0;
 
-    //- Last hope limiter
+    /// Last hope limiter
     void lastHope(std::vector<numvector<double, dimS> >& alpha);
 
 };

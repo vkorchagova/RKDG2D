@@ -30,80 +30,80 @@ public:
 
     int number; 
     
-    //- Number of Gauss points
+    /// Number of Gauss points
     int nGP;
 
-    //- Gauss points
+    /// Gauss points
     std::vector<Point> gPoints2D;
     
-    //- Gauss weights
+    /// Gauss weights
     std::vector<double> gWeights2D;
     
-    //- Jacobian
+    /// Jacobian
     std::vector<double> J;
     
-    //- Area of cell
+    /// Area of cell
     double area;
     
-    //- Mass center of cell
+    /// Mass center of cell
     Point center;
 
-    //- Gramian matrix
+    /// Gramian matrix
     std::vector<std::vector<double>> gramian;
 
-    //- local [-1,1]x[-1,1] to global rectangular cell
+    /// local [-1,1]x[-1,1] to global rectangular cell
     Point localToGlobal(const Point& localPoint) const;
 
-    //- Nodes in cell
+    /// Nodes in cell
     //std::vector<std::shared_ptr<Point>> nodes;
     std::vector<std::shared_ptr<Point>> nodes;
 
-    //- Edges in cell
+    /// Edges in cell
     //std::vector<std::shared_ptr<Edge>> edges;
     std::vector<std::shared_ptr<Edge>> edges;
 
-    //- Number of entities (nodes or edges)
+    /// Number of entities (nodes or edges)
     int nEntities;
 
-    //- Neighbour cells
+    /// Neighbour cells
     //std::vector<std::shared_ptr<Cell>> neibCells;
     std::vector<std::shared_ptr<Cell>> neibCells;
 
-    //- Return area of cell
+    /// Return area of cell
     double getArea() const { return area; }
 
-    //- Return center of cell
+    /// Return center of cell
     const Point& getCellCenter() const { return center; }
 
-    //- Calculate element area
+    /// Calculate element area
     void setArea();
 
-    //- Set cell center
+    /// Set cell center
     void setCellCenter();
 
-    //- Define Jacobian function
+    /// Define Jacobian function
     void setJacobian();
 
-    //- Set Gauss points
+    /// Set Gauss points
     void setGaussPoints();
 
 
-    //- Construct cell using vectors of nodes and edges
+    /// Construct cell using vectors of nodes and edges
     //Cell(const std::vector<std::shared_ptr<Point>> &nodes, const std::vector<std::shared_ptr<Edge>> &edges);
     Cell(const std::vector<std::shared_ptr<Point>> &nodes, const std::vector<std::shared_ptr<Edge>> &edges);
     
-    //- Copy constructor
+    /// Copy constructor
     //Cell(const Cell&) = delete;
 
-    //- Destructor
+    /// Destructor
     ~Cell() {}
 
     /// geometric methods
 
-    //- Calculate coordinates of cell nodes
+    /// Calculate coordinates of cell nodes
     std::vector<Point> getCellCoordinates() const;
 
-    //- Find neighbour cells
+    /// Find neighbour cells
     void findNeighbourCells();
 };
 

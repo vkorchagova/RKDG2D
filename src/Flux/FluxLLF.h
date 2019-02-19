@@ -15,16 +15,16 @@ class FluxLLF : public Flux
 
 public:
 
-    //- Default constructor
+    /// Default constructor
     // FluxLLF() : Flux() {}
 
-    //- Construct with problem
+    /// Construct with problem
     FluxLLF(const Physics& phs) : Flux(phs) {}
 
-    //- Destructor
+    /// Destructor
     ~FluxLLF() {}
     
-    //- Evaluate numerical flux through one point
+    /// Evaluate numerical flux through one point
     virtual numvector<double, dimPh> evaluate(const numvector<double, dimPh>& solInner, 
 											  const numvector<double, dimPh>& solOuter) const override;
 };

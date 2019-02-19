@@ -10,7 +10,7 @@ class LimiterFinDiff : public Limiter
 
 public:
 
-    //- Construct 
+    /// Construct 
     //LimiterFinDiff(const Indicator& ind, Problem& prb) : Limiter(ind, prb) {}
     LimiterFinDiff(
         const std::vector<std::shared_ptr<Cell>>& cells, 
@@ -19,7 +19,7 @@ public:
 
     ~LimiterFinDiff() {}
 
-    //- Limit solution gradients
+    /// Limit solution gradients
     virtual void limit(std::vector<numvector<double, dimS> >& alpha) override;
 };
 
