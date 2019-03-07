@@ -327,12 +327,15 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
         // compute internal integral
         res *= 0.0;
         nGP = cell->nGP;
+		// aux var for optimization
+		double coef = 0.0;
 
         for (int i = 0; i < nGP; ++i)
         {
             gPoint = cell->gPoints2D[i];
             gW = cell->gWeights2D[i];
             sol = sln.reconstruct(iCell, gPoint);            
+			coef = gW * cell->J[i];
 
             for (int q = 0; q < nShapes; ++q)
             {
@@ -342,7 +345,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
                        phs.fluxG(sol) * nablaPhi[1];
 
                 for (int p = 0; p < dimPh; ++p)
-                    res[p * nShapes + q] += resV[p] * gW * cell->J[i];    
+                    res[p * nShapes + q] += resV[p] * coef;    
             }// for shapes
 
 
@@ -369,15 +372,19 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
 
             iEdge = e->number;
             sign = (iCell == e->neibCells[0]->number) ? 1.0 : -1.0;
+			coef = 0.0;
 
             for (int i = 0; i < nGP; ++i)
             {
                 gW = e->gWeights[i]; 
                 gPoint = e->gPoints[i]; 
 
-                for (int q = 0; q < nShapes; ++q)
-                    for (int p = 0; p < dimPh; ++p)
-                        res[p*nShapes + q] += numFluxes[iEdge][i][p] * ( gW * B.phi[q](iCell, gPoint) );
+				for (int q = 0; q < nShapes; ++q)
+				{
+					coef = gW * B.phi[q](iCell, gPoint);
+					for (int p = 0; p < dimPh; ++p)
+						res[p*nShapes + q] += numFluxes[iEdge][i][p] * coef;
+				}// for shapes
             
             }// for GP
 

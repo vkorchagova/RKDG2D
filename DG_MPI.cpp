@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
 
     ///----------------------
 
-    CaseInit caseName = SodX;
+    CaseInit caseName = SodCircle;
 
     double tStart = 0.0;
     double tEnd = 0.2;

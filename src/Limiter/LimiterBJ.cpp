@@ -102,35 +102,25 @@ void LimiterBJ::limit(vector<numvector<double, dimS>>& alpha)
 			 uMean[k] = solution.reconstruct(stenc[k]->number, stenc[k]->getCellCenter());
 		 // here tooooo strange to reconstruct solution through number... may be optimal way exists?..
 
-		 for (int iSol = 0; iSol < dimPh; ++iSol)
+		 /*for (int iSol = 0; iSol < dimPh; ++iSol)
 		 {
 			 auto q = std::minmax_element(uMean.begin(), uMean.end(), [&iSol](const numvector<double, dimPh>& a, const numvector<double, dimPh>& b){return a[iSol] < b[iSol]; });
 			 mI[iSol] = (*(q.first))[iSol];
 			 MI[iSol] = (*(q.second))[iSol];
-		 }
-
-		 //for (size_t k = 0; k < nCells; ++k)
-		 //for (int iSol = 1; iSol < dimPh; ++iSol)
-		 //{
-			// double A = uMean[k][iSol];
-			// if (A < mI[iSol])
-			//	 mI[iSol] = A;
-			// if (A > MI[iSol])
-			//	 MI[iSol] = A;
-		 //}
+		 }*/
 
 
-		 //// get minimum from cell averages
-		 //for (size_t k = 0; k < nCells; ++k)
-		 //for (int iSol = 0; iSol < dimPh; ++iSol)
-		 //if (uMean[k][iSol] < mI[iSol])
-			// mI[iSol] = uMean[k][iSol];
+		 // get minimum from cell averages
+		 for (size_t k = 0; k < nCells; ++k)
+		 for (int iSol = 0; iSol < dimPh; ++iSol)
+		 if (uMean[k][iSol] < mI[iSol])
+			 mI[iSol] = uMean[k][iSol];
 
-		 //// get maximum from cell averages
-		 //for (size_t k = 0; k < nCells; ++k)
-		 //for (int iSol = 0; iSol < dimPh; ++iSol)
-		 //if (uMean[k][iSol] > MI[iSol])
-			// MI[iSol] = uMean[k][iSol];
+		 // get maximum from cell averages
+		 for (size_t k = 0; k < nCells; ++k)
+		 for (int iSol = 0; iSol < dimPh; ++iSol)
+		 if (uMean[k][iSol] > MI[iSol])
+			 MI[iSol] = uMean[k][iSol];
 
 		 // compute a-coeff
 		 numvector<double, dimPh> a = getAlphaL(cell, mI, MI, uMean[0]);

@@ -1,1 +1,0 @@
-/home/fufaev/DG2D-MPI/decomposeUNV/build/CMakeFiles/decomposeUNV.dir

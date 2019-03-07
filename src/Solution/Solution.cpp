@@ -16,7 +16,7 @@ Solution::Solution(Basis& Bas) : B(Bas)
 numvector<double, dimPh> Solution::reconstruct(int iCell, const Point& point ) const
 {
     numvector<double, dimPh> sol(0.0);
-    vector<double> phip(nShapes);
+    numvector<double, nShapes> phip(0.0);
 
 ////#pragma omp simd
     for (int j = 0; j < nShapes; ++j)

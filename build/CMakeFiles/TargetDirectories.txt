@@ -1,1 +1,0 @@
-/home/fufaev/RKDG2D-MPI/build/CMakeFiles/DG2D.dir
