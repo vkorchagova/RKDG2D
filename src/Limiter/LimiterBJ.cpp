@@ -50,8 +50,6 @@ void LimiterBJ::limit(vector<numvector<double, dimS>>& alpha)
     int n = alpha.size(); // here must be only real cells!
     
     vector<numvector<double, dimS>> alphaNew(n);
-    
-    int numSol = 0;
 
     for (int i = 0; i < n; ++i)
         alphaNew[i] = alpha[i];  //no vector = vector???
@@ -71,7 +69,7 @@ void LimiterBJ::limit(vector<numvector<double, dimS>>& alpha)
 //	omp_set_num_threads(NumThreads);
 #pragma omp parallel /*default(none)*/ \
  shared(myRank, n, alpha, alphaNew, troubledCells) \
- firstprivate(numSol, uMean)
+ firstprivate(uMean)
 	{
 	 //uMean.reserve(4);
 #pragma omp for

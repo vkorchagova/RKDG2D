@@ -1,12 +1,17 @@
 #include "Limiter.h"
+#include <omp.h>
 
 using namespace std;
 
 void Limiter::lastHope(std::vector<numvector<double, dimS> >& alpha)
 {
-    for (const shared_ptr<Cell>& cell : cells)
+#pragma omp parallel for shared(alpha)
+    for (int i = 0; i < cells.size(); ++i)
+	//for (const shared_ptr<Cell>& cell : cells)
     {       
-        for (const shared_ptr<Point>& node : cell->nodes)
+		const shared_ptr<Cell> cell = cells[i];
+		
+		for (const shared_ptr<Point>& node : cell->nodes)
         {
             numvector<double, dimPh> res = solution.reconstruct(cell->number, *node);
 
