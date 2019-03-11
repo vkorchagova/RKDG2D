@@ -30,13 +30,18 @@ protected:
     /// Number of limitation steps
     static const int nIter = 2;
 
+    /// List of numbers of troubled cells
+    std::vector<int> troubledCells;
+
+    /// Limited solution
+    std::vector<numvector<double, dimS>> alphaNew;
+
 public:
 
     /// Construct
-    Limiter(
-        const std::vector<std::shared_ptr<Cell>>& cells, 
+    Limiter(const std::vector<std::shared_ptr<Cell>>& cells, 
         const Solution& sln,
-        const Physics& phs) : cells(cells), solution(sln), physics(phs) {}
+        const Physics& phs);
 
     /// Destructor
     virtual ~Limiter() {}

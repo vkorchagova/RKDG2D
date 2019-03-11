@@ -7,7 +7,7 @@ void LimiterFinDiff::limit(std::vector<numvector<double, dimS> >& alpha)
     int n = alpha.size();
 
     //use limiter for all cells
-    vector<int> troubledCells(n);//indicator.checkDiscontinuities();
+    troubledCells.resize(n);//indicator.checkDiscontinuities();
 
     for (int i = 0; i < n; ++i)
         troubledCells[i] = i;

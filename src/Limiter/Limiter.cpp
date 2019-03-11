@@ -3,6 +3,20 @@
 
 using namespace std;
 
+
+Limiter::Limiter(
+    const std::vector<std::shared_ptr<Cell>>& cells, 
+    const Solution& sln,
+    const Physics& phs) 
+: cells(cells), solution(sln), physics(phs)
+{
+    int n = cells.size();
+
+    alphaNew.resize(n);
+    troubledCells.reserve(n);
+}
+
+
 void Limiter::lastHope(std::vector<numvector<double, dimS> >& alpha)
 {
 #pragma omp parallel for shared(alpha)

@@ -35,6 +35,11 @@ extern std::ofstream logger;
 
 class Solver
 {
+    /// RHS
+    std::vector<numvector<double, dimS>> rhs; // the same length as SOL
+    
+    /// List of numerical fluxes in Gauss points
+    std::vector<std::vector<numvector<double, dimPh>>> numFluxes;
 
 public:
 

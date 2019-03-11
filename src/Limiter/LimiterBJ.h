@@ -3,6 +3,9 @@
 
 #include "Limiter.h"
 
+/// Log file to save data
+extern std::ofstream logger;
+
 ///
 /// BJ limiter applied to conservative variables component-by-component
 ///

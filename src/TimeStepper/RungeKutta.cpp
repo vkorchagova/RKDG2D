@@ -112,9 +112,9 @@ void RungeKutta::Tstep()
 
     //cout << "OK" << endl;
 	/// The very step of the RK method
-    for (int i = 0; i < nStages; ++i)
+    for (int iStage = 0; iStage < nStages; ++iStage)
     {
-        T.updateTime(t + alpha[i]*tau);   // ??? Is it necessary?
+        T.updateTime(t + alpha[iStage]*tau);   // ??? Is it necessary?
 
         // MPI exchange between neib procs
         t0 = MPI_Wtime();
@@ -133,7 +133,7 @@ void RungeKutta::Tstep()
 
         // assemble rhs of SODE
         t0 = MPI_Wtime();
-        k[i] = slv.assembleRHS(sln.SOL);
+        k[iStage] = slv.assembleRHS(sln.SOL);
         t1 = MPI_Wtime();
         if (debug) logger << "\tslv.assembleRHS(): " << t1 - t0 << endl;
 
@@ -150,10 +150,32 @@ void RungeKutta::Tstep()
 
         // RK step
         t0 = MPI_Wtime();
-        lhs = lhsOld;
 
-        for (int j = 0; j <= i; ++j)
-           lhs += k[j] * (beta[i][j] * tau); 
+
+        #pragma omp parallel for \
+            shared(lhs, lhsOld) \
+            default(none)
+        for (int iCell = 0; iCell < lhs.size(); ++iCell)
+            for (int iSol = 0; iSol < dimS; ++iSol)
+                lhs[iCell][iSol] = lhsOld[iCell][iSol];
+
+        
+        for (int jStage = 0; jStage <= iStage; ++jStage)
+        {
+            double rkCoeff = beta[iStage][jStage] * tau;
+
+            #pragma omp parallel for \
+                shared(lhs, k, rkCoeff, iStage, jStage) \
+                default(none) 
+            for (int iCell = 0; iCell < lhs.size(); ++iCell)
+                for (int iSol = 0; iSol < dimS; ++iSol)
+                    lhs[iCell][iSol] += k[jStage][iCell][iSol] * rkCoeff; 
+        }
+
+        //lhs = lhsOld;
+
+        //for (int j = 0; j <= iStage; ++j)
+        //    lhs += k[j] * (beta[iStage][j] * tau);
 
         t1 = MPI_Wtime();
         if (debug) logger << "\tupdateRKstep: " << t1 - t0 << endl;
