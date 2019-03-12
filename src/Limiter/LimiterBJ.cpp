@@ -52,6 +52,9 @@ void LimiterBJ::limit(vector<numvector<double, dimS>>& alpha)
     vector<numvector<double, dimPh>> uMean;
     uMean.reserve(4);
 
+    for (int i = 0; i < n; ++i)
+        alphaNew[i] = alpha[i];
+
     //use limiter for all cells
     troubledCells.resize(n);
 

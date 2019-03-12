@@ -13,7 +13,7 @@ Solver::Solver( Basis& Bas, Mesh& msh, Solution& soln,
     // // get total number of cells
     // int nCellGlob = 0;
     // MPI_Reduce(&(M.nRealCells), &nCellGlob, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
-    rhs.resize(M.nRealCells); // the same length as SOL
+    rhs.resize(M.cells.size()); // the same length as SOL
     numFluxes.resize(M.nRealEdges);
 
     sln.fullSOL.resize(M.nCellsGlob); 
