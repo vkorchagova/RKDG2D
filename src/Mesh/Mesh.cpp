@@ -22,7 +22,6 @@ Mesh::Mesh(std::string& fileName, Buffers& buf) : buf(buf)
     for (int i = 0; i < cells.size(); ++i)
     {
         //nEntitiesTotal += cells[i]->nEntities;
-        //cells[i]->number = i;
         cells[i]->setArea();
         cells[i]->setGaussPoints();
         cells[i]->setJacobian();
@@ -395,6 +394,7 @@ void Mesh::importMesh(string& fileName)
 
                 // add cells in list
                 cells.emplace_back( make_shared<Cell>(Cell(curNodes,curEdges)));
+                //cells.back()->number = i;
             }
 
             do
@@ -517,7 +517,7 @@ void Mesh::importMesh(string& fileName)
 
                     // add cells in list
                     cells.push_back(make_shared<Cell>(Cell(curNodes,curEdges)));
-                    cells.back()->number = cells.size() - 1;
+                    //cells.back()->number = cells.size() - 1;
 
                     procPatches[iPatch].cellGroup.push_back(cells.back());
                 } // for alien cells

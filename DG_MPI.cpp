@@ -29,7 +29,7 @@
 #include "Boundary.h"
 #include "LimiterFinDiff.h"
 #include "LimiterBJ.h"
-//#include "LimiterWENOS.h"
+#include "LimiterWENOS.h"
 #include "FluxLLF.h"		/// All about the flux evaluating
 #include "FluxHLL.h"
 #include "FluxHLLC.h"
@@ -91,9 +91,9 @@ int main(int argc, char* argv[])
     CaseInit caseName = SodCircle;
 
     double tStart = 0.0;
-    double tEnd = 0.2;
+    double tEnd = 0.001;
     double initTau = 1e-3;
-    double outputInterval = 1e-2;
+    double outputInterval = 0.2;
 
     int order = 2;
 
@@ -125,7 +125,7 @@ int main(int argc, char* argv[])
     Problem problem(caseName, mesh, time);
     Solver solver(basis, mesh, solution, problem, physics, flux, buf);
 
-    LimiterBJ limiter(mesh.cells, solution, physics);
+    LimiterWENOS limiter(mesh.cells, solution, physics);
     RungeKutta RK(order, basis, solver, solution, problem.bc, limiter, time);
 
     ///----------------------
