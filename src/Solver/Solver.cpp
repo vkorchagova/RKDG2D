@@ -152,8 +152,7 @@ void Solver::setInitialConditions()
     for (int k = 0; k < nCells; ++k)
     {
         alpha = B.projection(prb.init, k);
-        sln.SOL[k] = correctNonOrthoCell(alpha, B.gramian[k]);
-        //cout << "cell# " << k << "; cfts: " << sln.SOL[k] << endl;
+        sln.SOL[k] = alpha;//correctNonOrthoCell(alpha, B.gramian[k]);
     }
 
 } // end setInitialConditions

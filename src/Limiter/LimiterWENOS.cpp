@@ -11,19 +11,20 @@ LimiterWENOS::LimiterWENOS
     const Physics& phs
 ) : Limiter(cells, sln, phs) 
 {
-    int maxPossibleStencilSize = 4;
+    
 
-    beta.reserve(maxPossibleStencilSize);
-    w.reserve(maxPossibleStencilSize);
-    wTilde.reserve(maxPossibleStencilSize);
-    uMean.reserve(maxPossibleStencilSize);
-    p.reserve(maxPossibleStencilSize);
+    //beta.reserve(maxPossibleStencilSize);
+    //w.reserve(maxPossibleStencilSize);
+    //wTilde.reserve(maxPossibleStencilSize);
+    //uMean.reserve(maxPossibleStencilSize);
+    //p.reserve(maxPossibleStencilSize);
 }
 
 void LimiterWENOS::limit(vector<numvector<double, dimS>>& alpha)
 {
-    double ts = omp_get_wtime();
     int n = alpha.size();
+
+    int maxPossibleStencilSize = 5;
 
     double t0 = MPI_Wtime();
 
@@ -37,12 +38,38 @@ void LimiterWENOS::limit(vector<numvector<double, dimS>>& alpha)
 
     // stencil
     vector<shared_ptr<Cell>> stenc;
-    stenc.reserve(5);  
+    vector<int> stencNumber;
+    stenc.reserve(maxPossibleStencilSize);  
+    stencNumber.reserve(maxPossibleStencilSize);
 
-        // limit solution in troubled cells
+    /// Linear weights
+    std::vector<double> gamma;
+
+    /// smoothness indicators
+    std::vector<numvector<double, dimPh>> beta;
+
+    /// nonlinear weights
+    std::vector<numvector<double, dimPh>> w;
+    std::vector<numvector<double, dimPh>> wTilde;
+    numvector<double, dimPh> wSum;
+
+    /// mean values
+    std::vector<numvector<double, dimPh>> uMean;
+
+    /// p polynoms
+    std::vector<numvector<double, dimS>> p;
+
+    //beta.reserve(maxPossibleStencilSize);
+    //w.reserve(maxPossibleStencilSize);
+    //wTilde.reserve(maxPossibleStencilSize);
+    //uMean.reserve(maxPossibleStencilSize);
+    //p.reserve(maxPossibleStencilSize);
+
+
+    // limit solution in troubled cells
 #pragma omp parallel for \
-shared(alpha, alphaNew, troubledCells, cout) \
-private(uMean, beta, gamma, w, wTilde, wSum, p, stenc) \
+shared(alpha, alphaNew, troubledCells, cout, cin) \
+firstprivate(uMean, beta, gamma, w, wTilde, wSum, p, stenc, stencNumber) \
 default(none)
     for (int iTroubled = 0; iTroubled < troubledCells.size(); ++iTroubled)
     //for (int iCell : troubledCells)
@@ -57,6 +84,9 @@ default(none)
         stenc.insert(stenc.end(), cell->neibCells.begin(), cell->neibCells.end());
 
         int nCells = stenc.size();
+        stencNumber.resize(nCells);
+        for (size_t k = 0; k < nCells; ++k)
+            stencNumber[k] = stenc[k]->number;
 
         // get mean values of linear functions
 
@@ -64,38 +94,45 @@ default(none)
 
         for (size_t k = 0; k < nCells; ++k)
             //uMean[k] = sln.reconstructSolution(cells[0]->getCellCenter());
-            uMean[k] = solution.reconstruct(stenc[k]->number, stenc[0]->getCellCenter());
+            uMean[k] = solution.reconstruct(stencNumber[k], stenc[0]->getCellCenter());
 
         // get coeffs for polynoms p = a0 + a1 * (x - xc) + a2 * (y - yc)
 
         p.resize(nCells);
 
         for (size_t k = 0; k < nCells; ++k)
-            p[k] = alpha[stenc[k]->number];
-
-//cout << "after alpha" << endl;
-//        for (size_t k = 0; k < nCells; ++k)
-///                cout << "p #" << k << ": " << p[k] << endl;
-
+            p[k] = alpha[stencNumber[k]];
+/*
+cout << "after alpha" << endl;
+cout << "cell #" << cell->number << ":\n";
+        
+for (size_t k = 0; k < nCells; ++k) \
+                cout << "p #" << k << ": " << p[k] << endl;
+*/
         for (size_t k = 0; k < nCells; ++k)
             for (int i = 0; i < dimPh; ++i)
                 for (int j = 0; j < nShapes; ++j)
                     p[k][i*nShapes + j] *= solution.B.phiCoeffs[k][j];
-
-//cout << "after phiCoeffs" << endl;
-//        for (size_t k = 0; k < nCells; ++k)
-//                cout << "p #" << k << ": " << p[k] << endl;
-
+/*
+cout << "after phiCoeffs" << endl;
+cout << "cell #" << cell->number << ":\n";
+        
+for (size_t k = 0; k < nCells; ++k) \
+                cout << "p #" << k << ": " << p[k] << endl;
+*/
 
         for (size_t k = 0; k < nCells; ++k)
-            for (int i = 0; i < 5; ++i)
+            for (int i = 0; i < dimPh; ++i)
                 p[k][i*nShapes] += - uMean[k][i] + uMean[0][i];
-
-//cout << "after uMean" << endl;
-//for (size_t k = 0; k < nCells; ++k)
-//                cout << "p #" << k << ": " << p[k] << endl;
-
-
+/*
+if (iCell == 50)
+{
+cout << "after uMean" << endl;
+            cout << "cell #" << cell->number << ":\n";
+        
+for (size_t k = 0; k < nCells; ++k) \
+                cout << "p #" << k << ": " << p[k] << endl;
+}*/
 
         // get linear weights
 
@@ -113,30 +150,28 @@ default(none)
         w.resize(nCells);
 
         for (size_t k = 0; k < nCells; ++k)
-            for (int j = 0; j < 5; ++j)
+            for (int j = 0; j < dimPh; ++j)
             {
-                beta[k][j] =  stenc[0]->getArea() * stenc[k]->getArea()  * (sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
+                beta[k][j] = 
+                    (sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
                 wTilde[k][j] = gamma[k] * (1.0 / sqr(beta[k][j] + 1e-6));
             }
 
 
 
         //wSum = {0.0, 0.0, 0.0, 0.0, 0.0};
-        wSum[0] = 0.0;
-        wSum[1] = 0.0;
-        wSum[2] = 0.0;
-        wSum[3] = 0.0;
-        wSum[4] = 0.0;
+        for (size_t k = 0; k < dimPh; ++k)
+            wSum[k] = 0.0;
 
 
-        for (int j = 0; j < 5; ++j)
+        for (int j = 0; j < dimPh; ++j)
             for (size_t k = 0; k < nCells; ++k)
                 wSum[j] += wTilde[k][j];
 
 //        //cout << wSum << endl;
 
         for (size_t k = 0; k < nCells; ++k)
-            for (int j = 0; j < 5; ++j)
+            for (int j = 0; j < dimPh; ++j)
                 w[k][j] = wTilde[k][j] / wSum[j];
 
 //        cout << "----\n num tr cell = " << iCell << endl;
@@ -155,28 +190,27 @@ default(none)
 //            cout << "cell no = " << k << endl;
 //            cout << wTilde[k] << endl;
 //        }
-
-        //cout << "w:\n";
-        //for (size_t k = 0; k < nCells; ++k)
-        //{
-        //    cout << "cell stenc no = " << k << ";";
-        //    cout << "cell no = " << stenc[k]->number << ";";
-        //    cout << "w[k] = " << w[k] << endl;
-        //}
-
-        // project limited solution onto cell B
-
+/*if (iCell == 50)
+{
+        cout << "\tw:\n";
         for (size_t k = 0; k < nCells; ++k)
-                cout << "out p #" << k << ": " << p[k] << endl;
-
-        function<numvector<double, 5>(const Point& r)> foo = [&](const Point& r) \
         {
-            numvector<double, 5> sum (0.0);
+            cout << "\tcell stenc no = " << k << "; ";
+            cout << "\tcell no = " << stenc[k]->number << "; ";
+            cout << "\tw[k] = " << w[k] << endl;
+        }
+    }*/
 
-            for (size_t k = 0; k < nCells; ++k)
-                cout << "p #" << k << ": " << p[k] << endl;
 
-            for (int i = 0; i < 5; ++i)
+
+        function<numvector<double, dimPh> (const Point& r)> foo = [&](const Point& r) \
+        {
+            numvector<double, dimPh> sum (0.0);
+
+            //for (size_t k = 0; k < nCells; ++k) \
+                cout << "p #" << k << ": " << w[k] << endl;
+
+            for (int i = 0; i < dimPh; ++i)
                 for (size_t k = 0; k < nCells; ++k)
                     sum[i] += w[k][i] * (p[k][i*nShapes] + \
                                          p[k][i*nShapes + 1] * (r.x() - stenc[k]->getCellCenter().x()) + \
@@ -186,16 +220,19 @@ default(none)
             return sum;
         };
 
+        alphaNew[iCell] = solution.B.projection(foo, stencNumber[0]); //cells[0]->projection(foo);
 
-        alphaNew[iCell] = solution.B.projection(foo,stenc[0]->number); //cells[0]->projection(foo);
+        //if (iCell == 50)
+         //   cout << alphaNew[iCell] << endl;
     }
+
     double t1 = MPI_Wtime();
     if (debug) logger << "\t\tLimiterWENOS.forTroubledCells: " << t1 - t0 << endl;
 
     alpha = alphaNew;
 
     t0 = MPI_Wtime();
-    lastHope(alpha);
+    //lastHope(alpha);
     t1 = MPI_Wtime();
     if (debug) logger << "\t\tLimiterWENOS.lastHope: " << t1 - t0 << endl;
 }

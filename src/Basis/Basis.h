@@ -54,6 +54,9 @@ public:
     /// Get coefficients of projection of function foo onto cell basis
     numvector<double, dimS> projection(const std::function<numvector<double, dimPh>(const Point& point)>& init, int iCell) const;
 
+    /// Correct alpha coeffs in case of non-orthogonal basis functions
+    numvector<double, dimS> correctNonOrthoCell(const numvector<double, dimS>& rhs, const std::vector<std::vector<double>>& g) const;
+
 };
 
 #endif // BASIS_H

@@ -78,6 +78,8 @@ void Writer::exportFrameVTK(ostream& wStream) const
 {
     // get cell data
 
+    wStream.precision(16);
+
     wStream << "CELL_DATA " << mesh.nRealCells << endl;
 
     wStream << "SCALARS rho double" << endl;
@@ -125,6 +127,8 @@ void Writer::exportFrameVTK(ostream& wStream) const
 
 void Writer::outputNativeCoeffs(ostream& wStream) const
 {
+    wStream.precision(16);
+
     for (size_t k = 0; k < solution.SOL.size(); ++k)
     {
         for (int i = 0; i < dimS; ++i)

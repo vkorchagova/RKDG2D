@@ -30,6 +30,7 @@
 #include "LimiterFinDiff.h"
 #include "LimiterBJ.h"
 #include "LimiterWENOS.h"
+#include "LimiterRiemannWENOS.h"
 #include "FluxLLF.h"		/// All about the flux evaluating
 #include "FluxHLL.h"
 #include "FluxHLLC.h"
@@ -91,9 +92,9 @@ int main(int argc, char* argv[])
     CaseInit caseName = SodCircle;
 
     double tStart = 0.0;
-    double tEnd = 0.001;
-    double initTau = 1e-3;
-    double outputInterval = 0.2;
+    double tEnd = 0.2;
+    double initTau = 0.75e-3;
+    double outputInterval = 0.1;
 
     int order = 2;
 
@@ -125,10 +126,13 @@ int main(int argc, char* argv[])
     Problem problem(caseName, mesh, time);
     Solver solver(basis, mesh, solution, problem, physics, flux, buf);
 
-    LimiterWENOS limiter(mesh.cells, solution, physics);
+    LimiterRiemannWENOS limiter(mesh.cells, solution, physics);
+    //LimiterWENOS limiter(mesh.cells, solution, physics);
     RungeKutta RK(order, basis, solver, solution, problem.bc, limiter, time);
 
     ///----------------------
+
+    physics.cpcv = problem.cpcv;
 
     //writer.exportMeshVTK("mesh2D.vtk");
 
@@ -159,7 +163,6 @@ int main(int argc, char* argv[])
         }
     }
 
-    physics.cpcv = problem.cpcv;
     //cout << physics.cpcv << endl;
 
     //for (int i = 0; i < mesh.patches.size(); ++i)
@@ -193,6 +196,7 @@ int main(int argc, char* argv[])
 
         if (debug) logger << "RK.Tsep(): " << t1 - t0  << "\n----------" << endl;
 
+
         if (myRank == 0) 
         {
             cout << "CPU time = " << t1 - t0 << " s" << endl;
@@ -200,12 +204,32 @@ int main(int argc, char* argv[])
             nSteps ++;
         }
 
+        double totalEnergy = 0.0;
+
+#pragma omp parallel for reduction(+:totalEnergy)
+        //for (const shared_ptr<Cell> cell : mesh.cells)
+        for ( size_t i = 0; i < mesh.cells.size(); ++i )
+        {
+            const shared_ptr<Cell> cell = mesh.cells[i];
+            function<double(const Point&)> eTotal = [&](const Point& x)
+            {
+                return solution.reconstruct(cell->number, x, E);
+            };
+
+            totalEnergy += integrate(*(cell), eTotal);
+        }
+
+        if (myRank == 0) 
+        {
+            cout << "eTotal = " << totalEnergy << endl;
+        }
+
         if (time.isOutput())
         {
             solver.collectSolution();
             solver.collectSolutionForExport();
             
-            if (myRank == 0) 
+            if (myRank == 0)
             {
                 writer.exportNativeCoeffs("alphaCoeffs/" + to_string(time.getTime()) + ".dat");
                 writer.exportFrameVTK("alphaCoeffs/" + to_string(time.getTime()) + ".vtk");

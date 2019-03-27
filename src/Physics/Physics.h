@@ -51,6 +51,8 @@ public:
 	numvector<numvector<double, dimPh>, dimPh> getRx(const numvector<double, dimPh>& sol) const;
 	numvector<numvector<double, dimPh>, dimPh> getRy(const numvector<double, dimPh>& sol) const;
 
+    
+
 };// end Physics
 
 #endif // PHYSICS_H

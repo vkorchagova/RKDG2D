@@ -34,6 +34,7 @@ double integrate(const Cell& cell, const function<double(const Point &)>& f)
     {
         double resF = f(cell.gPoints2D[i]);
 
+        
         res += cell.gWeights2D[i] * resF * cell.J[i];
 
     }

@@ -6,8 +6,7 @@
 
 class RungeKutta : public TimeStepper
 {
-    /// rhs for RK studies
-    std::vector<std::vector<numvector<double, dimS>>> k;
+    
 
     /// Butcher coeffs for RK studies
     std::vector<double> alpha;

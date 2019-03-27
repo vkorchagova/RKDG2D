@@ -8,8 +8,7 @@ RungeKutta::RungeKutta(int o,  Basis& b, Solver& s, Solution& ss, std::vector<st
 	// Number of stages a.k.a. length of all the arrays
 	nStages = order; // OK for RK order <= 4
 
-	// The stages array sizing
-    k.resize(nStages);
+	
 	//Arr.resize(nStages);
 
 	// Cfts arrays sizing
@@ -99,6 +98,11 @@ void RungeKutta::Tstep()
     double t = T.getTime();
 	double tau = T.getTau();
 
+    /// rhs for RK studies
+    std::vector<std::vector<numvector<double, dimS>>> k;
+    // The stages array sizing
+    k.resize(nStages);
+
     vector<numvector<double, dimS>> lhs    = sln.SOL;
 
     t0 = MPI_Wtime();
@@ -131,13 +135,12 @@ void RungeKutta::Tstep()
          //        cout << p << ' ' << sln.SOL[p] << endl;
          // }
 
-        // assemble rhs of SODE
+        // assemble rhs 
         t0 = MPI_Wtime();
         k[iStage] = slv.assembleRHS(sln.SOL);
         t1 = MPI_Wtime();
-        if (debug) logger << "\tslv.assembleRHS(): " << t1 - t0 << endl;
 
-        //cout << myRank << "__after assemble" << endl;
+        if (debug) logger << "\tslv.assembleRHS(): " << t1 - t0 << endl;
 
 
         // if (myRank == 0)
@@ -214,6 +217,8 @@ void RungeKutta::Tstep()
         lmt.limit(sln.SOL);
         t1 = MPI_Wtime();
         if (debug) logger << "\tslmt.limit(): " << t1 - t0 << "\n\t-----" << endl;
+
+        //cout << "\t END RK STAGE #" << iStage << endl;
 
     }// for stages
     
