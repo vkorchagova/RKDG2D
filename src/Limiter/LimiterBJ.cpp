@@ -63,7 +63,7 @@ void LimiterBJ::limit(vector<numvector<double, dimS>>& alpha)
     stenc.reserve(5);
 
 #pragma omp parallel for \
- shared(troubledCells, n) \
+ shared( n) \
  default(none)
     for (int i = 0; i < n; ++i)
         troubledCells[i] = i;
@@ -72,7 +72,7 @@ void LimiterBJ::limit(vector<numvector<double, dimS>>& alpha)
     double t0 = MPI_Wtime();
 //    omp_set_num_threads(NumThreads);
 #pragma omp parallel for \
- shared(myRank, n, alpha, alphaNew, troubledCells) \
+ shared(myRank, n, alpha) \
  firstprivate(uMean, stenc) \
  default(none)
     for (int i = 0; i < n; ++i) // may be in MPI we can iterate through vector without index like Python???

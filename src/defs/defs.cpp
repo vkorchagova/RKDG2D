@@ -13,7 +13,7 @@ vector<numvector<double, dimS>> operator * (const vector<numvector<double, dimS>
 
 #pragma omp parallel for
     for (int cell = 0; cell < a.size(); ++cell)
-#pragma omp simd
+//#pragma omp simd
         for (size_t val = 0; val < dimS; ++val)
             m[cell][val] *= b;
 
@@ -25,7 +25,7 @@ vector<numvector<double, dimS>>& operator += (vector<numvector<double, dimS>>& b
 
 #pragma omp parallel for
     for (int cell = 0; cell < a.size(); ++cell)
-#pragma omp simd
+//#pragma omp simd
     for (size_t val = 0; val < dimS; ++val)
         b[cell][val] += a[cell][val];
 

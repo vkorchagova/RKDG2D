@@ -31,7 +31,7 @@ void LimiterWENOS::limit(vector<numvector<double, dimS>>& alpha)
     //troubledCells = indicator.checkDiscontinuities();
     troubledCells.resize(n);
 #pragma omp parallel for \
- shared(troubledCells, n) \
+ shared( n) \
  default(none)
     for (int i = 0; i < n; ++i)
         troubledCells[i] = i;  
@@ -67,10 +67,7 @@ void LimiterWENOS::limit(vector<numvector<double, dimS>>& alpha)
 
 
     // limit solution in troubled cells
-#pragma omp parallel for \
-shared(alpha, alphaNew, troubledCells, cout, cin) \
-firstprivate(uMean, beta, gamma, w, wTilde, wSum, p, stenc, stencNumber) \
-default(none)
+#pragma omp parallel for shared(alpha, cout, cin) firstprivate(uMean, beta, gamma, w, wTilde, wSum, p, stenc, stencNumber) default(none)
     for (int iTroubled = 0; iTroubled < troubledCells.size(); ++iTroubled)
     //for (int iCell : troubledCells)
     {

@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\DG_MPI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Basis\Basis.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Boundary\Boundary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Boundary\BoundaryConstant.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Boundary\BoundaryOpen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Boundary\BoundarySlip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Flux\Flux.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Flux\FluxHLL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Flux\FluxHLLC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Flux\FluxLLF.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Indicator\Indicator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Indicator\IndicatorEverywhere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Indicator\IndicatorNowhere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Limiter\Limiter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Limiter\LimiterBJ.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Limiter\LimiterFinDiff.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Limiter\LimiterRiemannWENOS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Limiter\LimiterWENOS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Mesh\Cell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Mesh\Edge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Mesh\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Physics\Physics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Problem\Problem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Solution\Solution.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Solver\Solver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\TimeControl\TimeControl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\TimeStepper\RungeKutta.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\TimeStepper\TimeStepper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Writer\Writer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\compService\compService.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\defs\defs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Buffers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\for_doxygen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\numvector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Basis\Basis.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Boundary\Boundary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Boundary\BoundaryConstant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Boundary\BoundaryOpen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Boundary\BoundarySlip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Flux\Flux.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Flux\FluxHLL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Flux\FluxHLLC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Flux\FluxLLF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Indicator\Indicator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Indicator\IndicatorEverywhere.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Indicator\IndicatorNowhere.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Limiter\Limiter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Limiter\LimiterBJ.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Limiter\LimiterFinDiff.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Limiter\LimiterRiemannWENOS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Limiter\LimiterWENOS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Mesh\Cell.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Mesh\Edge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Mesh\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Mesh\Patch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Mesh\Point.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Params\Params.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Physics\Physics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Problem\Problem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Solution\Solution.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Solver\Solver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\TimeControl\TimeControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\TimeStepper\RungeKutta.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\TimeStepper\TimeStepper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\Writer\Writer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\compService\compService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\src\defs\defs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Darksy\Documents\GitHub\RKDG2D\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{0C3215D6-C54D-3FFE-A53B-9CB6D974DCA7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{6950F2DB-8DCB-3741-B51A-5FC32F903107}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

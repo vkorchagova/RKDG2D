@@ -262,7 +262,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
     t0 = MPI_Wtime();
 	//omp_set_num_threads(NumThreads);
     #pragma omp parallel for  \
-         shared(myRank, nGP, numFluxes, M) \
+         shared(myRank, nGP) \
          firstprivate (solLeft, solRight, gpFluxes) \
          default(none)
     for (int iEdge = M.nEdgesBound; iEdge < M.nRealEdges; ++iEdge)
@@ -309,7 +309,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
 	t0 = MPI_Wtime();
 
 #pragma omp parallel default(none) \
- shared(myRank, nCells, numFluxes, rhs) \
+ shared(myRank, nCells) \
  private(nGP)
 {
     numvector<double, dimPh> sol;
@@ -493,7 +493,7 @@ vector<numvector<double, dimS>> Solver::correctPrevIter(const vector<numvector<d
 #pragma omp parallel /*default(none)*/ \
     shared(alpha, alphaCorr) 
 #pragma omp for
-    for (size_t iCell = 0; iCell < M.nRealCells; ++iCell)
+    for (int iCell = 0; iCell < M.nRealCells; ++iCell)
     {
         //cout << "iCell in common  = " << iCell << endl;
         alphaCorr[iCell] = correctPrevIterCell(alpha[iCell], B.gramian[iCell]);

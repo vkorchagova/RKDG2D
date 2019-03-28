@@ -93,8 +93,8 @@ int main(int argc, char* argv[])
 
     double tStart = 0.0;
     double tEnd = 0.2;
-    double initTau = 0.75e-3;
-    double outputInterval = 0.1;
+    double initTau = 1e-3;
+	double outputInterval = initTau*10.0;
 
     int order = 2;
 
@@ -126,8 +126,9 @@ int main(int argc, char* argv[])
     Problem problem(caseName, mesh, time);
     Solver solver(basis, mesh, solution, problem, physics, flux, buf);
 
-    LimiterRiemannWENOS limiter(mesh.cells, solution, physics);
-    //LimiterWENOS limiter(mesh.cells, solution, physics);
+	LimiterRiemannWENOS limiter(mesh.cells, solution, physics);
+	//LimiterWENOS limiter(mesh.cells, solution, physics);
+	//LimiterBJ limiter(mesh.cells, solution, physics);
     RungeKutta RK(order, basis, solver, solution, problem.bc, limiter, time);
 
     ///----------------------
@@ -208,7 +209,7 @@ int main(int argc, char* argv[])
 
 #pragma omp parallel for reduction(+:totalEnergy)
         //for (const shared_ptr<Cell> cell : mesh.cells)
-        for ( size_t i = 0; i < mesh.cells.size(); ++i )
+        for ( int i = 0; i < mesh.cells.size(); ++i )
         {
             const shared_ptr<Cell> cell = mesh.cells[i];
             function<double(const Point&)> eTotal = [&](const Point& x)
@@ -226,7 +227,7 @@ int main(int argc, char* argv[])
 
         if (time.isOutput())
         {
-            solver.collectSolution();
+			solver.collectSolution();
             solver.collectSolutionForExport();
             
             if (myRank == 0)
