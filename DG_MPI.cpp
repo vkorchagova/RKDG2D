@@ -93,9 +93,9 @@ int main(int argc, char* argv[])
 
     double tStart = 0.0;
 
-    double tEnd = 0.2;
+    double tEnd = 0.02;
     double initTau = 1e-3;
-	double outputInterval = initTau*10.0;
+    double outputInterval = 0.011;
 
 
     int order = 2;
@@ -132,7 +132,6 @@ int main(int argc, char* argv[])
 	LimiterRiemannWENOS limiter(mesh.cells, solution, physics);
 	//LimiterWENOS limiter(mesh.cells, solution, physics);
 	//LimiterBJ limiter(mesh.cells, solution, physics);
-
     RungeKutta RK(order, basis, solver, solution, problem.bc, limiter, time);
 
     ///----------------------

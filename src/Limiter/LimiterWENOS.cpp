@@ -149,8 +149,7 @@ for (size_t k = 0; k < nCells; ++k) \
         for (size_t k = 0; k < nCells; ++k)
             for (int j = 0; j < dimPh; ++j)
             {
-                beta[k][j] = 
-                    (sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
+                beta[k][j] = cell->getArea() * (sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
                 wTilde[k][j] = gamma[k] * (1.0 / sqr(beta[k][j] + 1e-6));
             }
 

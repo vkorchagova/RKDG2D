@@ -11,7 +11,7 @@ using namespace std;
 int main()
 {
 
-    DecomposerUNV converter("..//..//..//meshCollection//sod400.unv","mesh2D");
+    DecomposerUNV converter("..//..//..//meshCollection//Mesh_forwardStep_005.unv","mesh2D");
     int nDomains = 2;
     
     string metisCommand = "mpmetis meshMETIS " + to_string(nDomains);
