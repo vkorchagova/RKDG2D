@@ -89,11 +89,11 @@ int main(int argc, char* argv[])
 
     ///----------------------
 
-    CaseInit caseName = SodCircle;
+    CaseInit caseName = ForwardStep;
 
     double tStart = 0.0;
-    double tEnd = 0.2;
-    double initTau = 0.75e-3;
+    double tEnd = 1.0;
+    double initTau = 1e-4;
     double outputInterval = 0.1;
 
     int order = 2;
@@ -126,8 +126,8 @@ int main(int argc, char* argv[])
     Problem problem(caseName, mesh, time);
     Solver solver(basis, mesh, solution, problem, physics, flux, buf);
 
-    LimiterRiemannWENOS limiter(mesh.cells, solution, physics);
-    //LimiterWENOS limiter(mesh.cells, solution, physics);
+    //LimiterRiemannWENOS limiter(mesh.cells, solution, physics);
+    LimiterBJ limiter(mesh.cells, solution, physics);
     RungeKutta RK(order, basis, solver, solution, problem.bc, limiter, time);
 
     ///----------------------
@@ -218,10 +218,30 @@ int main(int argc, char* argv[])
 
             totalEnergy += integrate(*(cell), eTotal);
         }
-
-        if (myRank == 0) 
+        
+        if (numProcsTotal > 1)
         {
-            cout << "eTotal = " << totalEnergy << endl;
+            double eTotal = 0.0;
+            MPI_Reduce(
+                &totalEnergy,
+                &eTotal,
+                1,
+                MPI_INT,
+                MPI_SUM,
+                0,
+                MPI_COMM_WORLD
+            );
+            if (myRank == 0)
+            {
+                cout << "eTotal = " << eTotal << endl;
+            }
+        }
+	else
+	{
+            if (myRank == 0)
+            {
+                cout << "eTotal = " << totalEnergy << endl;
+            }
         }
 
         if (time.isOutput())
