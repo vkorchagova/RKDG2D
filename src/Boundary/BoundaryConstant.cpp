@@ -6,5 +6,5 @@ numvector<double, dimPh> BoundaryConstant::getSolOuter (
     const Point& n
 ) const
 {
-    return inverseRotate(fixedValue, n);
+    return fixedValue;//rotate(fixedValue, n);
 }

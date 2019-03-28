@@ -105,7 +105,17 @@ void Problem::setInitialConditions(CaseInit task)
         initV   = [](const Point& r) { return 0.0; };
 
         break;
-    } // forward step
+    } // SEdov
+
+    case DoubleMach:
+    {
+        cpcv = 1.4;
+
+        initRho = [](const Point& r) { return (r.x() < 0.15) ? 8.0 : 1.4; };
+        initP   = [](const Point& r) { return (r.x() < 0.15) ? 116.518 : 1.0;  };
+        initU   = [](const Point& r) { return (r.x() < 0.15) ? 8.25 : 0.0; };
+        initV   = [](const Point& r) { return 0.0; };
+    } // DMach
 
 	}// switch
 
@@ -246,12 +256,26 @@ void Problem::setBoundaryConditions(CaseInit task)
         bc.emplace_back(
             make_shared<BoundaryConstant>(
                 M.patches[0], 
-                numvector<double, dimPh>({1.0, 3.0, 0.0, 0.0, 6.286})
+                numvector<double, dimPh>({1.0, -3.0, 0.0, 0.0, 6.286})
             )
         );
         bc.emplace_back(make_shared<BoundaryOpen>(M.patches[1]));
         bc.emplace_back(make_shared<BoundarySlip>(M.patches[2]));
         bc.emplace_back(make_shared<BoundarySlip>(M.patches[3]));
+
+        break;
+    }
+
+    case DoubleMach:
+    {
+        bc.emplace_back(
+            make_shared<BoundaryConstant>(
+                M.patches[0], 
+                numvector<double, dimPh>({8.0, -8.25*8.0, 0.0, 0.0, 563.545})
+            )
+        );
+        bc.emplace_back(make_shared<BoundaryOpen>(M.patches[1]));
+        bc.emplace_back(make_shared<BoundarySlip>(M.patches[2]));
 
         break;
     }

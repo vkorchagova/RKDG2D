@@ -34,7 +34,7 @@ enum Variables
 /// list if initial cases 
 enum CaseInit 
 { 
-    SodX, SodY, SodDiag, SodCircle, Blast, Const, Acoustic, Acoustic1D, ForwardStep, Sedov
+    SodX, SodY, SodDiag, SodCircle, Blast, Const, Acoustic, Acoustic1D, ForwardStep, Sedov, DoubleMach
 }; 
 
 /// list of BC types

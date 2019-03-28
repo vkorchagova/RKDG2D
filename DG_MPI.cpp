@@ -93,9 +93,9 @@ int main(int argc, char* argv[])
 
     double tStart = 0.0;
 
-    double tEnd = 0.02;
+    double tEnd = 4;
     double initTau = 1e-3;
-    double outputInterval = 0.011;
+    double outputInterval = 0.1;
 
 
     int order = 2;
@@ -194,6 +194,13 @@ int main(int argc, char* argv[])
             cout << "Tau = " << time.getTau() << " s" << "\t\t";
         }
 
+        if (debug)
+        {
+            logger << "-------" << endl;
+            logger << "Time = " << time.getTime() << " s" << "\t\t";
+            logger << "Tau = " << time.getTau() << " s" << "\t\t";
+        }
+
         t0 = MPI_Wtime();
         RK.Tstep();
         t1 = MPI_Wtime();
@@ -207,7 +214,7 @@ int main(int argc, char* argv[])
             totalCpuTime += t1 - t0;
             nSteps ++;
         }
-
+/*
         double totalEnergy = 0.0;
 
 #pragma omp parallel for reduction(+:totalEnergy)
@@ -240,13 +247,13 @@ int main(int argc, char* argv[])
                 cout << "eTotal = " << eTotal << endl;
             }
         }
-	else
-	{
+    	else
+    	{
             if (myRank == 0)
             {
                 cout << "eTotal = " << totalEnergy << endl;
             }
-        }
+        }*/
 
         if (time.isOutput())
         {
@@ -261,6 +268,16 @@ int main(int argc, char* argv[])
         }
     }
 
+    // just for last time point
+    solver.collectSolution();
+    solver.collectSolutionForExport();
+    
+    if (myRank == 0)
+    {
+        writer.exportNativeCoeffs("alphaCoeffs/" + to_string(tEnd) + ".dat");
+        writer.exportFrameVTK("alphaCoeffs/" + to_string(tEnd) + ".vtk");
+    }
+
     if (myRank == 0)
     {
         cout << "============" << endl;
@@ -269,6 +286,16 @@ int main(int argc, char* argv[])
         cout << "Mean CPU timestep: " << totalCpuTime / double(nSteps) << " s" << endl;
         cout << "============" << endl;
         cout << "THE END" << endl;
+    }
+
+    if (debug)
+    {
+        logger << "============" << endl;
+        logger << "Total CPU time: " << totalCpuTime << " s" << endl;
+        logger << "Number of time steps: " << nSteps << endl;
+        logger << "Mean CPU timestep: " << totalCpuTime / double(nSteps) << " s" << endl;
+        logger << "============" << endl;
+        logger << "THE END" << endl;
     }
 
     logger.close();

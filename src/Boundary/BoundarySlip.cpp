@@ -6,9 +6,6 @@ numvector<double, dimPh> BoundarySlip::getSolOuter (
     const numvector<double, dimPh>& solLeft, 
     const Point& n
 ) const
-{
-    numvector<double, dimPh> res = solLeft;
-    res[1] *= -1;
-    
-    return res;
+{    
+    return { solLeft[0], -solLeft[1], solLeft[2], solLeft[3], solLeft[4]};
 }
