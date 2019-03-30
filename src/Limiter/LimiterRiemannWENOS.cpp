@@ -44,7 +44,7 @@ numvector<double, dimS> limitP
     for (size_t k = 0; k < nCells; ++k)
         for (int i = 0; i < dimPh; ++i)
             for (int j = 0; j < nShapes; ++j)
-                p[k][i*nShapes + j] *= solution.B.phiCoeffs[k][j];
+                p[k][i*nShapes + j] *= solution.B.phiCoeffs[stenc[k]->number][j];
 /*
 cout << "after phiCoeffs" << endl;
 cout << "cell #" << cell->number << ":\n";
@@ -75,7 +75,7 @@ for (size_t k = 0; k < nCells; ++k) \
     for (size_t k = 0; k < nCells; ++k)
         for (int j = 0; j < dimPh; ++j)
         {
-            beta[k][j] = stenc[0]->getArea()  *
+            beta[k][j] = stenc[0]->getArea() *
                 (sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
             wTilde[k][j] = gamma[k] * (1.0 / sqr(beta[k][j] + 1e-6));
         }
@@ -133,6 +133,7 @@ for (size_t k = 0; k < nCells; ++k) \
             res[i*nShapes + 2] += w[k][i] * p[k][i*nShapes + 2];
         }
     }
+
 
     return res;
 }
@@ -234,6 +235,13 @@ void LimiterRiemannWENOS::limit(vector<numvector<double, dimS>>& alpha)
                 L = physics.getL(solMean, n);
                 R = physics.getR(solMean, n);
 
+                /*if (iCell == 11)
+                {
+                    cout << "L = " << L << endl;
+                    cout << "R = " << R << endl;
+                }
+                */
+
                 // get Riemann invariants along this direction
                 for (size_t k = 0; k < stenc.size(); ++k)
                     pInv[k] = conservativeToRiemann(p[k], L);
@@ -241,6 +249,9 @@ void LimiterRiemannWENOS::limit(vector<numvector<double, dimS>>& alpha)
 
                 // limit Riemann invariants
                 pLim = limitP(stenc, pInv, solution, gamma, beta, w ,wTilde, wSum, uMean);
+
+                
+
 
 
                 // project limited solution to conservative variables
@@ -257,6 +268,12 @@ void LimiterRiemannWENOS::limit(vector<numvector<double, dimS>>& alpha)
         numvector<double, dimS> res (0.0);
         for (int i = 0; i < nCells-1; ++i)
             res += pNew[i] * (stenc[i+1]->getArea() / sumArea);
+
+            if (stenc[0]->number == 11196)
+                {
+                    cout << "res = " << res << endl;
+                    cout << "p[0] = " << p[0] << endl;
+                }
 
         
 
@@ -276,6 +293,14 @@ void LimiterRiemannWENOS::limit(vector<numvector<double, dimS>>& alpha)
         };
 
          alphaNew[iCell] = solution.B.projection(foo, cell->number);
+
+         /*if (iCell == 11)
+        {
+            cout << "res = " << res << endl;
+            cout << "alphaNew = " << alphaNew[cell->number] << endl;
+            cout << "cell center = " << cell->getCellCenter() << endl;
+        }*/
+
     }
 
     alpha = alphaNew;

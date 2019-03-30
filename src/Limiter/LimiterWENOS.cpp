@@ -99,38 +99,51 @@ void LimiterWENOS::limit(vector<numvector<double, dimS>>& alpha)
 
         for (size_t k = 0; k < nCells; ++k)
             p[k] = alpha[stencNumber[k]];
-/*
+        /*
+if (iCell == 11270)
+{
+    cout << "center = " << cell->getCellCenter() << endl;
+    cout << "area = " << cell->getArea() << endl;
+    cout << "J :" << endl;
+    for (int i = 0; i < cell->J.size(); ++i)
+        cout << cell->J[i] << endl;
 cout << "after alpha" << endl;
 cout << "cell #" << cell->number << ":\n";
         
 for (size_t k = 0; k < nCells; ++k) \
                 cout << "p #" << k << ": " << p[k] << endl;
-*/
+}*/
         for (size_t k = 0; k < nCells; ++k)
             for (int i = 0; i < dimPh; ++i)
                 for (int j = 0; j < nShapes; ++j)
-                    p[k][i*nShapes + j] *= solution.B.phiCoeffs[k][j];
+                    p[k][i*nShapes + j] *= solution.B.phiCoeffs[stencNumber[k]][j];
 /*
-cout << "after phiCoeffs" << endl;
+if (iCell == 11270)
+{
+cout << "after phiCoeffs:" << endl;
+for (int j = 0; j < nShapes; ++j)
+cout << solution.B.phiCoeffs[iCell][j] << endl;
+cout << "cell #" << cell->number << ":\n";
 cout << "cell #" << cell->number << ":\n";
         
 for (size_t k = 0; k < nCells; ++k) \
                 cout << "p #" << k << ": " << p[k] << endl;
+}
 */
-
         for (size_t k = 0; k < nCells; ++k)
             for (int i = 0; i < dimPh; ++i)
                 p[k][i*nShapes] += - uMean[k][i] + uMean[0][i];
+
 /*
-if (iCell == 50)
+if (iCell == 11270)
 {
 cout << "after uMean" << endl;
             cout << "cell #" << cell->number << ":\n";
         
 for (size_t k = 0; k < nCells; ++k) \
                 cout << "p #" << k << ": " << p[k] << endl;
-}*/
-
+}
+*/
         // get linear weights
 
         gamma.resize(nCells);
@@ -186,7 +199,8 @@ for (size_t k = 0; k < nCells; ++k) \
 //            cout << "cell no = " << k << endl;
 //            cout << wTilde[k] << endl;
 //        }
-/*if (iCell == 50)
+/*
+if (iCell == 11270)
 {
         cout << "\tw:\n";
         for (size_t k = 0; k < nCells; ++k)
@@ -218,8 +232,8 @@ for (size_t k = 0; k < nCells; ++k) \
 
         alphaNew[iCell] = solution.B.projection(foo, stencNumber[0]); //cells[0]->projection(foo);
 
-        //if (iCell == 50)
-         //   cout << alphaNew[iCell] << endl;
+        //if (iCell == 11270)
+        //        cout << "alphaNew = " << alphaNew[iCell] << endl;
     }
 
     double t1 = MPI_Wtime();
@@ -228,7 +242,7 @@ for (size_t k = 0; k < nCells; ++k) \
     alpha = alphaNew;
 
     t0 = MPI_Wtime();
-    //lastHope(alpha);
+    lastHope(alpha);
     t1 = MPI_Wtime();
     if (debug) logger << "\t\tLimiterWENOS.lastHope: " << t1 - t0 << endl;
 }
