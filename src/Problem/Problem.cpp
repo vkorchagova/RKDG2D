@@ -75,8 +75,8 @@ void Problem::setInitialConditions(CaseInit task)
 	{
         cpcv = 1.4;
 
-		initRho = [](const Point& r) { return (r.length() <= 0.1) ? 1.0 : 0.125; };
-		initP = [](const Point& r) { return (r.length() <= 0.1) ? 1.0 : 0.1;  };
+		initRho = [](const Point& r) { return (r.length() <= 0.2) ? 1.0 : 0.125; };
+		initP = [](const Point& r) { return (r.length() <= 0.2) ? 1.0 : 0.1;  };
 		initV = [](const Point& r) { return 0.0; };
 		initU = [](const Point& r) { return 0.0; };
 

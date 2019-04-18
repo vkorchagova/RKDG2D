@@ -28,12 +28,17 @@ void Limiter::lastHope(std::vector<numvector<double, dimS> >& alpha)
 		for (const shared_ptr<Point>& node : cell->nodes)
         {
             numvector<double, dimPh> res = solution.reconstruct(cell->number, *node);
+            double pres = physics.getPressure(res);
 
-            if (res[0] < 0 || res[4] < 0 || physics.getPressure(res) < 0)
+            if (res[0] < 0 || res[4] < 0 || pres < 0)
             {
-//                cout << "negative values after limitation in cell #" << cell->number << endl;
-//                cout << "rho | rhoU | e = " << cell->reconstructSolution(node) << endl;
-//                cout << "p = " << problem.getPressure(cell->reconstructSolution(node)) << endl;
+
+                //cout << "\tnegative values after limitation in cell #" << cell->number << endl;
+                //cout << "\t\trho = " << res[RHO] << endl;
+                //cout << "\t\trhoU = " << res[RHOU] << endl;
+                //cout << "\t\trhoV = " << res[RHOV] << endl;
+                //cout << "\t\te = " << res[E] << endl;
+                //cout << "\t\tp = " << pres << endl;
 
                 for (int j = 0; j < dimPh; ++j)
                 {

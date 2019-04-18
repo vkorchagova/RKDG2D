@@ -75,7 +75,7 @@ for (size_t k = 0; k < nCells; ++k) \
     for (size_t k = 0; k < nCells; ++k)
         for (int j = 0; j < dimPh; ++j)
         {
-            beta[k][j] = stenc[0]->getArea() *
+            beta[k][j] = stenc[0]->getArea() * stenc[0]->getArea() *
                 (sqr(p[k][j*nShapes + 1]) + sqr(p[k][j*nShapes + 2]));
             wTilde[k][j] = gamma[k] * (1.0 / sqr(beta[k][j] + 1e-6));
         }
@@ -194,11 +194,19 @@ void LimiterRiemannWENOS::limit(vector<numvector<double, dimS>>& alpha)
     numvector <double, dimS> pLim;
     numvector<double, dimPh> solMean;
 
+
 #pragma omp parallel for shared(alpha, cout) private(uMean, beta, gamma, w, wTilde, wSum, p, pInv, pNew, stenc, L, R, pLim, solMean) default(none)
     for (int iTroubled = 0; iTroubled < troubledCells.size(); ++iTroubled)
     //for (int iCell : troubledCells)
     {
         int iCell = troubledCells[iTroubled];
+
+
+        /*if (iCell == 3163)
+        {
+            cout << "alphaOld = " << alpha[iCell] << endl;
+            cout << "cell center #3163 = " <<cells[iCell]->getCellCenter() << endl;
+        }*/
 
         shared_ptr<Cell> cell = cells[iCell];
 
@@ -235,12 +243,12 @@ void LimiterRiemannWENOS::limit(vector<numvector<double, dimS>>& alpha)
                 L = physics.getL(solMean, n);
                 R = physics.getR(solMean, n);
 
-                /*if (iCell == 11)
+                /*if (iCell == 3163)
                 {
                     cout << "L = " << L << endl;
                     cout << "R = " << R << endl;
-                }
-                */
+                }*/
+                
 
                 // get Riemann invariants along this direction
                 for (size_t k = 0; k < stenc.size(); ++k)
@@ -249,7 +257,14 @@ void LimiterRiemannWENOS::limit(vector<numvector<double, dimS>>& alpha)
 
                 // limit Riemann invariants
                 pLim = limitP(stenc, pInv, solution, gamma, beta, w ,wTilde, wSum, uMean);
+                
 
+                /*if (stenc[0]->number == 3163)
+                {
+                    //cout << "pInv = " << pInv[0] << endl;
+                    cout << "pLim = " << pLim << endl;
+                    cout << "convert = " << riemannToConservative(pLim, R) << endl;
+                }*/
                 
 
 
@@ -264,16 +279,27 @@ void LimiterRiemannWENOS::limit(vector<numvector<double, dimS>>& alpha)
         for (int i = 1; i < nCells; ++i)
             sumArea += stenc[i]->getArea();
 
+       /* if (iCell == 3163)
+        {
+            cout << "sumArea = " << sumArea << endl; 
+            cout << "size pNew = " << pNew.size() << endl;  
+        }*/
+
         // construct limited solution
         numvector<double, dimS> res (0.0);
         for (int i = 0; i < nCells-1; ++i)
+        {
             res += pNew[i] * (stenc[i+1]->getArea() / sumArea);
+            //if (iCell == 3163)
+            //    cout << "resInner = " << res << endl; 
 
-            if (stenc[0]->number == 11196)
+        }
+
+          /* if (stenc[0]->number == 18336)
                 {
-                    cout << "res = " << res << endl;
                     cout << "p[0] = " << p[0] << endl;
-                }
+                    cout << "res = " << res << endl;
+                }*/
 
         
 
@@ -292,14 +318,15 @@ void LimiterRiemannWENOS::limit(vector<numvector<double, dimS>>& alpha)
             return sum;
         };
 
-         alphaNew[iCell] = solution.B.projection(foo, cell->number);
+        alphaNew[iCell] = solution.B.projection(foo, cell->number);
 
-         /*if (iCell == 11)
+        /*if (iCell == 3163)
         {
             cout << "res = " << res << endl;
             cout << "alphaNew = " << alphaNew[cell->number] << endl;
-            cout << "cell center = " << cell->getCellCenter() << endl;
         }*/
+
+        pNew.clear();
 
     }
 
@@ -308,10 +335,9 @@ void LimiterRiemannWENOS::limit(vector<numvector<double, dimS>>& alpha)
     t1 = MPI_Wtime();
     if (debug) logger << "\t\tLimiterRiemannWENOS.forTroubledCells: " << t1 - t0 << endl;
 
-    alpha = alphaNew;
 
     t0 = MPI_Wtime();
-    //lastHope(alpha);
+    lastHope(alpha);
     t1 = MPI_Wtime();
     if (debug) logger << "\t\tLimiterRiemannWENOS.lastHope: " << t1 - t0 << endl;
 }

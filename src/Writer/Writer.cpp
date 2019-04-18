@@ -13,10 +13,14 @@ void Writer::exportMeshVTK(const std::string& fileName) const
 
 void Writer::exportFrameVTK(const std::string& fileName) const
 {
+    cout << "Export frame " << fileName << "..." << endl;
+    
     ofstream wStream (fileName);
     exportMeshVTK(wStream);
     exportFrameVTK(wStream);
     wStream.close();
+    
+    cout << endl;
 }
 
 
@@ -30,10 +34,6 @@ void Writer::exportNativeCoeffs(const std::string& fileName) const
 
 void Writer::exportMeshVTK(ostream& wStream) const
 {
-    //wStream.open("Mesh.vtk");
-    cout << "Export mesh to VTK... ";
-
-
     wStream << "# vtk DataFile Version 2.0" << endl;
     wStream << "RKDG 2D data"               << endl;
     wStream << "ASCII"                      << endl;
@@ -68,8 +68,6 @@ void Writer::exportMeshVTK(ostream& wStream) const
 
         wStream << endl;
     }
-
-    cout << "OK" << endl;
 
 }
 

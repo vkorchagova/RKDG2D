@@ -15,7 +15,6 @@ static const int dimExp = 6; // conservative + pressure
 // Coeffs vector size
 static const int dimS = dimPh * nShapes;
 
-//const int NumThreads = 4; // Number of threads for teh OpenMP
 
 /// Initialisaton of tools for computations
 //void Initialize() {}
