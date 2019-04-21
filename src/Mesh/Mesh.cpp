@@ -35,7 +35,21 @@ Mesh::Mesh(std::string& fileName, Buffers& buf) : buf(buf)
     for (int i = 0; i < nRealCells; ++i)
     {
         findNeighbourCells(cells[i]);
+        findNeighbourCellsVertex(cells[i]);
     }
+
+    ofstream fileVertices("neib_vertex.txt");
+
+    for (int i = 0; i < nRealCells; ++i)
+    {
+        fileVertices << "cell #" << cells[i]->number << ": ";
+
+        for (int j = 0; j < cells[i]->neibCellsVertex.size(); ++j)
+            fileVertices << cells[i]->neibCellsVertex[j]->number << " ";
+        fileVertices << endl;
+    }
+
+    fileVertices.close();
 
     structurizeEdges();
 
@@ -164,6 +178,179 @@ void Mesh::findNeighbourCells(const std::shared_ptr<Cell>& cell)
         }
     }
 }
+
+
+bool Mesh::moveCell(const std::shared_ptr<Cell>& cell, shared_ptr<Cell>& startCell, vector<shared_ptr<Cell>>& neibCellVertexOneEdge) // searching for neib
+{
+    shared_ptr<Cell> nextCell = startCell;
+    for(auto edge : startCell->edges)
+    {
+
+        if (edge->neibCells.size() == 2)
+        {
+            nextCell = (edge->neibCells[0] == startCell) ? edge->neibCells[1] : edge->neibCells[0];
+            if ( cell->hasCommonNode(nextCell) && !(cell->inNeibVertList(nextCell, neibCellVertexOneEdge)) && !(cell->inNeibVertList(nextCell, cell->neibCellsVertex)))
+            {
+                neibCellVertexOneEdge.push_back(nextCell);
+                startCell = nextCell;
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+bool isCCW(const vector<shared_ptr<Cell>>& neibCellVertexOneEdge, const shared_ptr<Cell>& cell)
+{
+    if (neibCellVertexOneEdge.size() < 2)
+        return true;
+
+    Point v1 = neibCellVertexOneEdge[0]->getCellCenter() - cell->getCellCenter();
+    Point v2 = neibCellVertexOneEdge[1]->getCellCenter() - cell->getCellCenter();
+
+    if (v1.x() * v2.y() - v1.y() * v2.x() < 0)
+        return false;
+
+    return true;
+}
+
+
+void Mesh::filterNeibCellsVertex(const shared_ptr<Cell>& cell)
+{
+    vector<shared_ptr<Cell>> f = cell->neibCellsVertex;
+    Point centerVectorX = f[1]->getCellCenter() - f[0]->getCellCenter();
+    Point centerVectorY;
+
+    for (int iCell = 1; iCell < f.size()-1; ++iCell)
+    {
+        centerVectorY = f[iCell + 1]->getCellCenter() - f[iCell]->getCellCenter();
+        double Cross = centerVectorX.x() * centerVectorY.y() - centerVectorX.y() * centerVectorY.x() ;
+        if (Cross <= 0)
+        {
+            f.erase(f.begin() + iCell);
+            iCell -= 1;
+            centerVectorX = f[iCell + 1]->getCellCenter() - f[iCell]->getCellCenter();
+        }
+        else
+            centerVectorX = centerVectorY;
+    }
+
+    centerVectorY = f[0]->getCellCenter() - f[f.size()-1]->getCellCenter();
+    double Cross = centerVectorX.x() * centerVectorY.y() - centerVectorX.y() * centerVectorY.x() ;
+    if (Cross <= 0)
+        f.erase(f.end());
+
+    cell->neibCellsVertex = f;
+}
+
+void Mesh::findNeighbourCellsVertex(const std::shared_ptr<Cell>& cell)
+{
+    shared_ptr<Edge> startEdge;// = cell->edges[0];
+    vector<shared_ptr<Cell>> neibCellVertexOneEdge; // temporary array
+    Point centerVertexX;
+
+    for (auto e: cell->edges)
+    {
+        if (e->neibCells.size() == 2)
+        {
+            startEdge = e;
+
+            shared_ptr<Cell> startCell = (startEdge->neibCells[0]==cell) ? startEdge->neibCells[1] : startEdge->neibCells[0];
+            shared_ptr<Cell> nextCell = startCell;
+
+            shared_ptr<Cell> firstCell = startCell;
+
+            neibCellVertexOneEdge = {cell, startCell};
+
+            bool searchStart = true;
+
+            do
+            {
+                searchStart = moveCell(cell, startCell, neibCellVertexOneEdge);
+            } while (searchStart);
+
+            neibCellVertexOneEdge.erase(neibCellVertexOneEdge.begin());
+
+            bool ccw = isCCW(neibCellVertexOneEdge, cell);
+
+            if (!ccw)
+                reverse(neibCellVertexOneEdge.begin(),neibCellVertexOneEdge.end());
+
+            for (auto c: neibCellVertexOneEdge)
+            {
+                bool iswrite = false;
+                for (auto ce: cell->neibCellsVertex)
+                {
+                    if (c == ce )
+                    {
+                        iswrite = true;
+                        break;
+                    }
+                }
+                if (iswrite == false)
+                {
+                    cell->neibCellsVertex.push_back(c);
+                 //break;
+                }
+            }
+
+
+
+    //âîçâðàùàåìñÿ â ïåðâóþ ÿ÷åéêó
+
+            size_t sz =  neibCellVertexOneEdge.size() + 1;  //cell->neibCellsVertex.size();
+    
+            searchStart = true;
+            nextCell = firstCell;
+            startCell = firstCell;
+            neibCellVertexOneEdge.clear();
+            neibCellVertexOneEdge = {cell, startCell};
+
+            do
+            {
+                searchStart = moveCell(cell, startCell, neibCellVertexOneEdge);
+            } while (searchStart);
+
+            neibCellVertexOneEdge.erase(neibCellVertexOneEdge.begin());
+
+    //for (int i= 0; i< neibCellVertexOneEdge.size(); ++i)
+    //  cout << neibCellVertexOneEdge[i]->number << ' ';
+    //cout << "finish_2" << endl;
+
+    //for (int i = 0; i< cell->neibCellsVertex.size(); ++i)
+    //  cout << "! " << cell->neibCellsVertex[i]->number << ' ';
+    //cout << "finish_3" << endl;
+
+            ccw = isCCW(neibCellVertexOneEdge, cell);
+
+            if (!ccw)
+                reverse(neibCellVertexOneEdge.begin(), neibCellVertexOneEdge.end());
+
+            for (auto c: neibCellVertexOneEdge)
+            {
+                bool iswrite = false;
+                for (auto ce: cell->neibCellsVertex)
+                {
+                    if (c == ce )
+                    {
+                        iswrite = true;
+                        break;
+                    }
+                }
+                if (iswrite == false)
+                {
+                 cell->neibCellsVertex.push_back(c);
+                 //break;
+                }
+            }
+        }
+    }
+
+    filterNeibCellsVertex(cell);
+}
+
+
 
 void Mesh::addToProcPatch(const shared_ptr<Cell>& cell, int numProc)
 {

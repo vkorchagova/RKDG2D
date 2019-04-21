@@ -1,5 +1,6 @@
 #include "Solver.h"
 #include <iostream>
+#include <sstream>
 #include <omp.h>
 #include <mpi.h>
 
@@ -157,11 +158,12 @@ void Solver::setInitialConditions()
 
 } // end setInitialConditions
 
-void Solver::setDefinedCoefficients(string fileName)
+void Solver::restart(string fileName)
 {
     int nCells = M.cells.size();
     sln.SOL.resize(nCells);
 
+    // read full pack of solution
     ifstream reader;
     reader.open(fileName);
 
@@ -171,15 +173,39 @@ void Solver::setDefinedCoefficients(string fileName)
         exit(0);
     }// if open
 
-    numvector<double, dimS> rhs;
+    vector<numvector<double, dimS>> fullSOLRestart;
+    string line;
+    double value;
 
-    for (int k = 0; k < nCells; ++k)
+    while (getline(reader, line))
     {
-        for (int j = 0; j < dimS; ++j)
-            reader >> sln.SOL[k][j];
-    }// for k
+        int posLine = 0;
+        stringstream lineReader(line);
+        numvector<double, dimS> currentSOL;
+
+        while (lineReader >> value)
+        {
+            currentSOL[posLine] = value;
+            posLine++;
+        }
+
+        fullSOLRestart.push_back(currentSOL);
+    }
 
     reader.close();
+
+    // filter solution values for local MPI proc
+    if (numProcsTotal > 1)
+    {
+        sln.SOL.resize(M.globalCellNumber.size());
+        
+        for (int iLocal = 0; iLocal < sln.SOL.size(); ++iLocal)
+            sln.SOL[iLocal] = fullSOLRestart[M.globalCellNumber[iLocal]];
+    }
+    else
+    {
+        sln.SOL = fullSOLRestart;
+    }
 }
 
 

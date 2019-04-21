@@ -86,7 +86,7 @@ public:
     void setInitialConditions();
 
     /// Run case from define set of coefficients
-    void setDefinedCoefficients(std::string fileName);
+    void restart(std::string fileName);
 
     /// Assemble right-hand side
     std::vector<numvector<double, dimS>> assembleRHS(const std::vector<numvector<double, dimS>>& SOL);

@@ -40,6 +40,9 @@ private:
     /// Find neighbours for given cell
     void findNeighbourCells(const std::shared_ptr<Cell>& cell);
 
+    /// Find vertex-neighbours for given cell
+    void findNeighbourCellsVertex(const std::shared_ptr<Cell>& cell);
+
     /// Add cell to proc patch
     void addToProcPatch(const std::shared_ptr<Cell>& cell, int numProc);
 
@@ -47,7 +50,15 @@ private:
 
     std::shared_ptr<Cell> makeGhostCell(const std::shared_ptr<Edge>& e);
 
+    /// renumeration of edges: bound|inner|proc
     void structurizeEdges();
+
+    /// running for neighbor cells by vertices
+    bool moveCell(const std::shared_ptr<Cell>& cell, std::shared_ptr<Cell>& startCell, std::vector<std::shared_ptr<Cell>>& neibCellVertexOneEdge);
+   // bool moveCell(const std::shared_ptr<Cell>& cell, std::shared_ptr<Cell>& startCell, std::shared_ptr<Cell>& nextCell, bool& ccw);
+
+    /// filter neighbor cells to get convex stencil
+    void filterNeibCellsVertex(const std::shared_ptr<Cell>& cell);
 
 public:	
 

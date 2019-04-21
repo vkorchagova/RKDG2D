@@ -242,3 +242,23 @@ vector<Point> Cell::getCellCoordinates() const
 
 } // end getCellCoordinates
 
+
+
+bool Cell::inNeibVertList(const std::shared_ptr<Cell>& cell, std::vector<std::shared_ptr<Cell>>& neibVC)
+{
+    for (auto c : neibVC)
+    {
+        if (c->number == cell->number)
+            return true;
+    }
+    return false;
+}
+
+bool Cell::hasCommonNode(const std::shared_ptr<Cell>& c1)
+{
+    for (auto n1 : c1->nodes)
+        for (auto n2 : nodes)
+            if (n1 == n2)
+                return true;
+    return false;
+}

@@ -66,8 +66,10 @@ public:
     int nEntities;
 
     /// Neighbour cells
-    //std::vector<std::shared_ptr<Cell>> neibCells;
     std::vector<std::shared_ptr<Cell>> neibCells;
+
+    /// Neighbour cells vertex
+    std::vector<std::shared_ptr<Cell>> neibCellsVertex;
 
     /// Return area of cell
     double getArea() const { return area; }
@@ -105,6 +107,13 @@ public:
 
     /// Find neighbour cells
     void findNeighbourCells();
+
+    /// check for a cell among vertex neighbor
+    bool inNeibVertList(const std::shared_ptr<Cell>& cell, std::vector<std::shared_ptr<Cell>>& neibVC);
+    //bool inNeibVertList(const std::shared_ptr<Cell>& cell);
+
+    /// check for common node
+    bool hasCommonNode(const std::shared_ptr<Cell>& c1);
 };
 
 #endif // CELL_H
