@@ -42,9 +42,9 @@ Meshes: unstructured (supports triangular and quadrangle elements), converted fr
 
 Riemann solvers: Local Lax --- Fridriechs, HLL, HLLC
 
-Limiters: FinDiff, WENO_S, BJ, BJVertex (non-parallel mode)
+Limiters: FinDiff, WENO_S, Riemann WENO_S, BJ, BJVertex (non-parallel mode)
 
-Indicators: Nowhere, Everywhere, Riemann WENO_S
+Indicators: Nowhere, Everywhere
 
 Boundary conditions: Constant (fixed), Slip, Sine (sine function), Open
 
