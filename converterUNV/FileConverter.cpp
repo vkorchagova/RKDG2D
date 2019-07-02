@@ -163,7 +163,7 @@ void FileConverter::readElements()
 
                 edges.push_back(elementNodeNumbers);
                 
-                edgesNumControl.insert(unordered_map<int,int>::value_type(elementNumber,edgesNumControl.size() + 1))
+                //edgesNumControl.insert(unordered_map<int,int>::value_type(elementNumber,edgesNumControl.size() + 1))
 
                 break;
             }

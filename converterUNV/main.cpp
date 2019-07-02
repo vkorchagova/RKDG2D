@@ -10,7 +10,7 @@ using namespace std;
 int main()
 {
 
-    FileConverter converter("../../../meshCollection/ribbon1x10_01.unv","mesh2D");
+    FileConverter converter("..//..//..//meshCollection//sodRectTriag100.unv","mesh2D");
 
 
     converter.importUNV();
