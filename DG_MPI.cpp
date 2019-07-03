@@ -29,6 +29,7 @@
 #include "Boundary.h"
 #include "LimiterFinDiff.h"
 #include "LimiterBJ.h"
+#include "LimiterBJVertex.h"
 #include "LimiterWENOS.h"
 #include "LimiterRiemannWENOS.h"
 #include "FluxLLF.h"		/// All about the flux evaluating
@@ -89,13 +90,13 @@ int main(int argc, char* argv[])
 
     ///----------------------
 
-    CaseInit caseName = ForwardStep;
+    CaseInit caseName = SodX;
 
     double tStart = 0.0;
 
-    double tEnd = 4;
-    double initTau = 1e-3;
-    double outputInterval = 0.1;
+    double tEnd = 0.2;
+    double initTau = 1e-4;
+    double outputInterval = 1e-3;
 
 
     int order = 2;
@@ -143,7 +144,7 @@ int main(int argc, char* argv[])
     // Set initial conditions
     if (tStart > 1e-10)
     {
-        solver.setDefinedCoefficients("alphaCoeffs/" + to_string(tStart) + ".dat");
+        solver.restart("alphaCoeffs/" + to_string(tStart) + ".dat");
     }
     else
     {
@@ -205,7 +206,7 @@ int main(int argc, char* argv[])
         RK.Tstep();
         t1 = MPI_Wtime();
 
-        if (debug) logger << "RK.Tsep(): " << t1 - t0  << "\n----------" << endl;
+        if (debug) logger << "RK.Tstep(): " << t1 - t0  << "\n----------" << endl;
 
 
         if (myRank == 0) 
@@ -214,7 +215,7 @@ int main(int argc, char* argv[])
             totalCpuTime += t1 - t0;
             nSteps ++;
         }
-/*
+
         double totalEnergy = 0.0;
 
 #pragma omp parallel for reduction(+:totalEnergy)
@@ -237,23 +238,29 @@ int main(int argc, char* argv[])
                 &totalEnergy,
                 &eTotal,
                 1,
-                MPI_INT,
+                MPI_DOUBLE,
                 MPI_SUM,
                 0,
                 MPI_COMM_WORLD
             );
+            
+            //cout << myRank << ' ' << totalEnergy << endl;
             if (myRank == 0)
             {
+                cout.precision(16);
                 cout << "eTotal = " << eTotal << endl;
+                cout.precision(6);
             }
         }
     	else
     	{
             if (myRank == 0)
             {
+                cout.precision(16);
                 cout << "eTotal = " << totalEnergy << endl;
+                cout.precision(6);
             }
-        }*/
+        }
 
         if (time.isOutput())
         {
