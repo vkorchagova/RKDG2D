@@ -80,7 +80,7 @@ private:
 
     //- patch edge groups
     std::vector<std::vector<int>> patchEdgeGroups;
-    
+
     //- partition to subregions
     std::vector<int> partition;
 

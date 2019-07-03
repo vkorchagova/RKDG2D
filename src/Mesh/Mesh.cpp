@@ -347,7 +347,7 @@ void Mesh::findNeighbourCellsVertex(const std::shared_ptr<Cell>& cell)
         }
     }
 
-    filterNeibCellsVertex(cell);
+    //filterNeibCellsVertex(cell);
 }
 
 

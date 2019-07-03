@@ -1,0 +1,4 @@
+
+*.cmake
+*.user
+build/*

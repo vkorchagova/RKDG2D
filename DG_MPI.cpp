@@ -92,9 +92,10 @@ int main(int argc, char* argv[])
 
     CaseInit caseName = SodX;
 
-    double tStart = 0.0;
+    double tStart = 0.002;
 
     double tEnd = 0.2;
+
     double initTau = 1e-4;
     double outputInterval = 1e-3;
 
@@ -130,9 +131,9 @@ int main(int argc, char* argv[])
     Solver solver(basis, mesh, solution, problem, physics, flux, buf);
 
 
-	LimiterRiemannWENOS limiter(mesh.cells, solution, physics);
-	//LimiterWENOS limiter(mesh.cells, solution, physics);
-	//LimiterBJ limiter(mesh.cells, solution, physics);
+    LimiterRiemannWENOS limiter(mesh.cells, solution, physics);
+    //LimiterWENOS limiter(mesh.cells, solution, physics);
+    //LimiterBJ limiter(mesh.cells, solution, physics);
     RungeKutta RK(order, basis, solver, solution, problem.bc, limiter, time);
 
     ///----------------------
