@@ -5,6 +5,9 @@
 
 #include "Params.h"
 #include "Mesh.h"
+//#include "Problem.h"
+
+//class Problem;
 
 
 class TimeControl
@@ -51,6 +54,9 @@ private:
     /// Reference to mesh
     const Mesh& M;
 
+    // Reference to problem
+    //const Problem& problem;
+
     std::ofstream timeListing;
 
 public:
@@ -58,6 +64,7 @@ public:
     /// Constructor
     TimeControl(
         const Mesh& msh, 
+        //const Problem& prb,
         const double tStart, 
         const double tEnd, 
         const double initTau, 

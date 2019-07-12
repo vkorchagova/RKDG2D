@@ -138,6 +138,8 @@ void Writer::outputNativeCoeffs(ostream& wStream) const
 
 void Writer::outputFullNativeCoeffs(ostream& wStream) const
 {
+    wStream.precision(16);
+    
     for (size_t k = 0; k < solution.fullSOL.size(); ++k)
     {
         for (int i = 0; i < dimS; ++i)
@@ -149,11 +151,13 @@ void Writer::outputFullNativeCoeffs(ostream& wStream) const
 
 void Writer::outputFullNativeCoeffs(std::ostream& wStream, std::vector<numvector<double, dimS>> coeffs) const
 {
+    wStream.precision(16);
+    
     for (size_t k = 0; k < coeffs.size(); ++k)
     {
         for (int i = 0; i < dimS; ++i)
             wStream << coeffs[k][i] << ' ';
 
         wStream << endl;
-    }    
+    }
 }
