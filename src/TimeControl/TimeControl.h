@@ -5,22 +5,22 @@
 
 #include "Params.h"
 #include "Mesh.h"
-//#include "Problem.h"
 
-//class Problem;
-
+///
+/// Store of time value, time step and controller of time step modification
+///
 
 class TimeControl
 {
 private:
 
-	/// Time itself
-	
+    //------ Time itself
+    
     /// Previous time point
     double tOld;
 
     /// Current time
-	double t;
+    double t;
 
     /// End time
     double tEnd;
@@ -31,32 +31,38 @@ private:
     /// Output interval
     double outputInterval;
 
-	/// Time steps
+    //----- Time steps
+
     /// Old time step -- with which we're working during the time integrating
     double tau;
 
     /// New time step -- for the next iteration
     double tauNew;
-	
-	/// Time step renewal
+    
+    //----- Time step renewal
+
     /// Courant number
     double CoNum;
-	/// Max solution speed estimation
-	double MaxSpeed;
+
+    /// Max solution speed estimation
+    double MaxSpeed;
+
     /// Max time step
     double maxTau;
+
     /// Max time growth factor
     double maxTauGrowth;
+
     /// Switch static/dynamic time step
     bool isDynamic;
 
-	/// References to outer classes
     /// Reference to mesh
     const Mesh& M;
 
     // Reference to problem
     //const Problem& problem;
 
+    /// Stream to time listing file
     std::ofstream timeListing;
 
 public:
@@ -75,15 +81,14 @@ public:
     /// Destructor
     ~TimeControl();
 
-
-	/// Get time
-	double getTime() const { return t; }
+    /// Get time
+    double getTime() const { return t; }
     
-	/// Set time
-	void updateTime(double t_new) { t = t_new; }
+    /// Set time
+    void updateTime(double t_new) { t = t_new; }
 
-	/// Get time step
-	double getTau() const { return tau; }
+    /// Get time step
+    double getTau() const { return tau; }
 
     /// Get new time step
     double getNewTau() const {return tauNew;}

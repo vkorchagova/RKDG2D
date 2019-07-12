@@ -35,16 +35,16 @@ std::vector<numvector<double, dimS>>& operator += (std::vector<numvector<double,
 /// Overloading for vector<vector<double>> 
 ///
 
-// Overload of vvd += vvd
+/// Overload of vvd += vvd
 std::vector<std::vector<double>>& operator += (std::vector<std::vector<double>>& a, const std::vector<std::vector<double>>& b);
 
-// Overload of vvd -= vvd
+/// Overload of vvd -= vvd
 std::vector<std::vector<double>>& operator -= (std::vector<std::vector<double>>& a, const std::vector<std::vector<double>>& b);
 
-// Overload of vvd * double
+/// Overload of vvd * double
 std::vector<std::vector<double>>& operator *= (std::vector<std::vector<double>>& a, const double b);
 
-// Overload of double * vvd
+/// Overload of double * vvd
 std::vector<std::vector<double>> operator * (const std::vector<std::vector<double>>& a, const double b);
 
 
@@ -52,27 +52,28 @@ std::vector<std::vector<double>> operator * (const std::vector<std::vector<doubl
 /// Overloading for vector<double> 
 ///
 
-// Overload of vd *= double
+/// Overload of vd *= double
 std::vector<double>& operator *= (std::vector<double>& a, const double b);
 
+/// Overload of vd * double
 std::vector<double> operator * (const std::vector<double>& a, const double b);
 
-// Overload of double * vd
+/// Overload of double * vd
 std::vector<double> operator * (const double b, const std::vector<double>& a);
 
-// Overload of vd / double
+/// Overload of vd / double
 std::vector<double> operator / (const std::vector<double>& a, const double b);
 
-// Overload of vd += vd
+/// Overload of vd += vd
 std::vector<double>& operator += (std::vector<double>& a, const std::vector<double>& b);
 
-// Overload of vd + vd
+/// Overload of vd + vd
 std::vector<double> operator + (const std::vector<double>& a, const std::vector<double>& b);
 
-// Overload of vd - vd
+/// Overload of vd - vd
 std::vector<double> operator - (const std::vector<double>& a, const std::vector<double>& b);
 
-// Overload of vd -= vd
+/// Overload of vd -= vd
 std::vector<double>& operator -= (std::vector<double>& a, const std::vector<double>& b);
 
 

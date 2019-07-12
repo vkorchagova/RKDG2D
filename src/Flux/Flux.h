@@ -4,16 +4,19 @@
 #include "Physics.h"
 #include "defs.h"
 
+/// 
+/// Abstract class for numerical flux (Riemann solver)
+/// 
+
 class Flux
 {
 
 public:
+
+    /// Constant reference to physics
     const Physics& phs; // \'-'/
 
 public:
-
-    /// Default constructor
-    // Flux() {}
 
     /// Construct with problem
     Flux(const Physics& phys) : phs(phys) {};

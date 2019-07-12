@@ -16,7 +16,7 @@
 /// Proc rank 
 extern int myRank;
 
-/// Size of ...
+/// Number of procs
 extern int numProcsTotal;
 
 /// Status
@@ -28,6 +28,9 @@ extern bool debug;
 /// Log file to save data
 extern std::ofstream logger;
 
+///
+/// Mesh
+///
 
 class Mesh
 {
@@ -114,19 +117,12 @@ public:
     /// Number of cells in full mesh
     int nCellsGlob;
 
-    // /// Full global numeration of cells
-    // std::vector<int> fullGlobalMap;
-
-    // /// Array of displacements for MPI_Gatherv
-    // std::vector<int> mpiDispl;
-
-    // /// nRealCells on each process
-    // std::vector<int> nCellsPerProc;
-
 public:
 
     /// Constructor
     Mesh(Buffers& buf) : buf(buf) {};
+
+    /// Constructor
     Mesh(std::string& fileName, Buffers& buf);
 
     /// Destructor

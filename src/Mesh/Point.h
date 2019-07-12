@@ -1,12 +1,12 @@
-/// ------------------------------
-/// 2D Point class
-/// ------------------------------
-
 #ifndef POINT_H
 #define POINT_H
 
 #include "numvector.h"
 #include <memory>
+
+///
+/// 2D Point
+///
 
 class Point : public numvector<double, 2>
 {
@@ -18,9 +18,6 @@ public:
 
     /// Construct with defined values
     Point(const numvector<double, 2>& coord) : numvector(coord) {}
-
-    /// Copy constructor
-    //Point(const Point& p) = delete;
 
     /// Destructor
     ~Point() {}
@@ -39,6 +36,8 @@ public:
 
     /// check if point is equal to given
     bool isEqual(const Point& p) const { return true ? (r[0] == p.x() && r[1] == p.y()) : false; }
+
+    /// check if point is equal to given
     bool isEqual(const std::shared_ptr<Point>& p) const { return isEqual(*p); }
 
     /// save global node number just for VTK export simplification

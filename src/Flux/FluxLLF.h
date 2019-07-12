@@ -1,14 +1,12 @@
-/// -----------------------------------
-/// Local Lax-Fridriechs numerical flux
-/// -----------------------------------
-
-
 #ifndef FLUXLLF_H
 #define FLUXLLF_H
 
-
 #include <algorithm>
 #include "Flux.h"
+
+/// 
+/// Local Lax-Fridriechs numerical flux
+/// 
 
 class FluxLLF : public Flux
 {

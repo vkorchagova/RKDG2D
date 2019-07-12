@@ -10,21 +10,20 @@
 #include "Basis.h"
 #include "Params.h"
 
+///
+/// Store of solution as coeffs near basis functions
+///
 
 class Solution
 {
 
 public:   
     
-    /// The very Coeffs
+    /// The very Coeffs for one proc
     std::vector<numvector<double, dimS>> SOL;
     
     /// Reference to the basis
     const Basis& B;
-
-    /// MPI buffers: key is the proc number, value is the pack of coeffs on proc
-    // std::map<int, std::vector<double>> bufSendBound;
-    // std::map<int, std::vector<double>> bufRecvBound;
 
     /// Full pack of solution coeffs
     std::vector<numvector<double, dimS>> fullSOL;
@@ -40,12 +39,16 @@ public:
     /// Destructor
     ~Solution() {}
 
-    /// Reconstruct solution at the point
+    /// Reconstruct solution vector at the point
     numvector<double, dimPh> reconstruct(int iCell, const Point& point) const;
+
+    /// Reconstruct solution component at the point
     double reconstruct(int iCell, const Point& point, Variables var) const;
 
-    /// Reconstruct solution using given coeffs
+    /// Reconstruct solution vector using given coeffs
     numvector<double, dimPh> reconstruct(int iCell, const Point& point, const numvector<double, dimS>& SOL) const;
+
+    /// Reconstruct solution component using given coeffs
     double reconstruct(int iCell, const Point& point, const numvector<double, dimS>& SOL, Variables var) const;
 
 

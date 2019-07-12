@@ -4,7 +4,7 @@
 #include "Limiter.h"
 
 ///
-/// BJ-VERTEX limiter applied to conservative variables component-by-component
+/// BJ limiter applied to conservative variables component-by-component by gauss points of edges and cell tertices additionally
 ///
 
 class LimiterBJVertex : public Limiter

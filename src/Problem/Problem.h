@@ -14,8 +14,11 @@
 #include "BoundaryOpen.h"
 #include "BoundaryConstant.h"
 
-
 class Patch;
+
+///
+/// Store of mesh, time, initial and boundary conditions ("world") 
+///
 
 class Problem
 {
@@ -24,7 +27,6 @@ public:
 
     /// Heat capacity defined by user
     double cpcv;
-
 
     /// Function for initial conditions
     std::function<numvector<double, dimPh>(const Point& r)> init;
@@ -38,8 +40,10 @@ public:
     /// Link to coeffs
     //const std::vector<numvector<double, dimPh * nShapes>>& alpha;
 
-    /// Reference to time and space
+    /// Constant reference to time 
     const TimeControl& T;
+
+    /// Constant reference to mesh
 	const Mesh& M;
 
     /// Constructor

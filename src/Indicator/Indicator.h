@@ -5,12 +5,15 @@
 #include "Mesh.h"
 #include "numvector.h"
 
+///
+/// Abstract class for indicator of problem cells
+///
 
 class Indicator
 {
 public:
 
-    /// Mesh
+    /// Constant reference to mesh
     const Mesh& mesh;
 
     /// Problem
@@ -22,7 +25,6 @@ public:
 public:
 
     /// Constructor
-    //Indicator(const Mesh2D& msh, const Problem& prb);
     Indicator (const Mesh& msh) : mesh(msh) {}
     
     /// Destructor

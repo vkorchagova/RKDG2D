@@ -13,24 +13,29 @@ extern bool debug;
 /// Log file to save data
 extern std::ofstream logger;
 
+///
+/// Abstract class for time step numerical scheme
+///
+
 class TimeStepper
 {
 
 protected:
 
-	/// Reference to solver
-	Solver& slv;
+    /// Reference to solver
+    Solver& slv;
 
-	/// Reference to teh solution
-	Solution& sln;
+    /// Reference to teh solution
+    Solution& sln;
 
+    /// Reference to basis
     Basis& basis;
 
-	/// Reference to the Full Pack of Boundary Conditions
-	std::vector<std::shared_ptr<Boundary>>& bc;
+    /// Reference to the Full Pack of Boundary Conditions
+    std::vector<std::shared_ptr<Boundary>>& bc;
 
-	/// Reference to limiter
-	Limiter& lmt;
+    /// Reference to limiter
+    Limiter& lmt;
 
     /// Reference to time
     TimeControl& T;
@@ -41,13 +46,10 @@ protected:
     /// Number of RK/Adams steps --- TODO:  is once needed to separate from order!
     int nStages;
 
-	/// An array for the accumulative stuff: inner stages in RK and previous RHSs in Adams
-	//std::deque<std::vector<numvector<double, dimS>>> Arr;
-
 public:
 
     /// Constructor
-	TimeStepper(int o, Basis& b, Solver& s, Solution& ss, std::vector<std::shared_ptr<Boundary>>& bond, Limiter& l, TimeControl& t) : order(o), basis(b), slv(s), sln(ss), bc(bond), lmt(l), T(t) {};
+    TimeStepper(int o, Basis& b, Solver& s, Solution& ss, std::vector<std::shared_ptr<Boundary>>& bond, Limiter& l, TimeControl& t) : order(o), basis(b), slv(s), sln(ss), bc(bond), lmt(l), T(t) {};
 
     /// update time step
     virtual void Tstep() = 0;

@@ -1,7 +1,3 @@
-/// -----------------------------------
-/// Patch class of egde boundary groups
-/// -----------------------------------
-
 #ifndef PATCH_H
 #define PATCH_H
 
@@ -9,7 +5,10 @@
 #include <vector>
 #include "Edge.h"
 
-// Default patch
+///
+/// Geometrical part of boundary where one boundary condition should be apply
+///
+
 class Patch
 {
 
@@ -18,9 +17,10 @@ public:
     /// Name of patch
     std::string name;
 
+    /// List of edges the patch consists of
     std::vector<std::shared_ptr<Edge>> edgeGroup;
 
-    /// List of numbers of cells in patch
+    /// List of cells adjacent to patch
     std::vector<std::shared_ptr<Cell>> cellGroup;
 
     /// Default constructor
@@ -34,7 +34,10 @@ public:
 };
 
 
-// MPI proc patch
+///
+/// Special part of boundary which placed between two parts of mesh processed by different procs
+///
+
 class ProcPatch : public Patch
 {
 

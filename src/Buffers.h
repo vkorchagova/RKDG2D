@@ -6,29 +6,43 @@
 #include "numvector.h"
 #include "Params.h"
 
+///
+/// Buffers and maps for MPI operations
+///
+
 class Buffers
 {
 public:
 
-    /// Buffers
+    //----- Buffers
 
     /// MPI buffer for full solution
-    std::vector<double> forFullSOL; // size = nRealCellsTotal * dimS
+    /// size = nRealCellsTotal * dimS
+    std::vector<double> forFullSOL; 
 
-    /// MPI buffers for local solution packs
-    std::vector<double> forSendLocalSOL; // size = nRealCells * dimS
-    std::vector<double> forRecvLocalSOL; // size = nRealCells * dimS
+    /// MPI buffer for sending of local solution pack in internal cells
+    /// size = nRealCells * dimS
+    std::vector<double> forSendLocalSOL;
 
-    /// MPI buffers for proc bound packs
-    // std::map<int, std::vector<double>> forSendBoundSOL; // size = nProcPatches | nCellsOnBound * dimS
-    std::vector<double> forSendBoundSOL; // size = prod(len(procPatches)) * dimS
-    std::vector<double> forRecvBoundSOL; // size = nProcPatches | nCellsOnBound * dimS
+    /// MPI buffer for receiving of local solution pack in internal cells
+    /// size = nRealCells * dimS
+    std::vector<double> forRecvLocalSOL;
 
+    /// MPI buffer for sending of proc bound pack
+    /// size = prod(len(procPatches)) * dimS
+    std::vector<double> forSendBoundSOL;
+
+    /// MPI buffer for receiving of proc bound pack
+    /// size = prod(len(procPatches)) * dimS 
+    std::vector<double> forRecvBoundSOL;
+
+    /// MPI buffer for sending of local pack of solution in cell centres
     std::vector<double> forSolExport;
+
+    /// MPI buffer for receiving of local pack of solution in cell centres
 	std::vector<double> forSolExportRecv;
 
-
-    /// Maps
+    //----- Maps
 
     /// Number of "real" cells on each process
     std::vector<int> nCellsPerProc;

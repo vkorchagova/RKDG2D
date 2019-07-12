@@ -9,6 +9,9 @@
 #include "defs.h"
 #include "Params.h"
 
+///
+/// Description of mathematical miodel: EoS, how to compute natural fluxes, eigvals/eigvectors, speed of sound
+///
 
 class Physics
 {

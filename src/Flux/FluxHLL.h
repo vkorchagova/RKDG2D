@@ -3,6 +3,10 @@
 
 #include "Flux.h"
 
+/// 
+/// HLL numerical flux
+/// 
+
 class FluxHLL : public Flux
 {
 public:

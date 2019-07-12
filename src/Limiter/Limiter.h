@@ -10,6 +10,10 @@
 #include <vector>
 #include <memory>
 
+///
+/// Abstract class for limiter of solution
+///
+
 class Limiter
 {
 
@@ -45,11 +49,8 @@ public:
 
     /// Destructor
     virtual ~Limiter() {}
-    //Limiter(const Indicator& ind, Problem& prb) : indicator(ind), problem(prb) {}
 
     /// Limit solution gradients
-    //void limit(std::vector<numvector<double, dimS>>& alpha) {}
-
     virtual void limit(std::vector<numvector<double, dimS> >& alpha) = 0;
 
     /// Last hope limiter

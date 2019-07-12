@@ -3,11 +3,15 @@
 
 #include "Indicator.h"
 
+///
+/// Pure optimistic indicator of problem cells: all cells considered as good
+///
+
 class IndicatorNowhere : public Indicator
 {
 public:
+
     /// Constructor
-    //IndicatorNowhere (const Mesh2D& msh, const Problem& prb): Indicator(msh, prb) {}
     IndicatorNowhere(const Mesh& msh) : Indicator(msh) {}
 
     /// Check discontinuities

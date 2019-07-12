@@ -1,15 +1,15 @@
-/// 
-/// Explicit Runge --- Kutta methods
-/// 
-
 #include "TimeStepper.h"
+
+/// 
+/// Explicit Runge --- Kutta numerical scheme
+/// 
 
 class RungeKutta : public TimeStepper
 {
-    
-
-    /// Butcher coeffs for RK studies
+    /// Alpha Butcher coeffs for RK studies
     std::vector<double> alpha;
+
+    /// Beta Butcher coeffs for RK studies
     std::vector<std::vector<double>> beta;
 
     /// set Butcher coeffs for given order

@@ -3,24 +3,30 @@
 
 #include "Limiter.h"
 
+///
+/// WENO_S limiter applied to conservative variables component-by-component
+///
+
 /// Log file to save data
 extern std::ofstream logger;
 
 class LimiterWENOS : public Limiter
 {
+    /// Linear weight for WENO_S algorithm
     const double g = 0.001;
 
 public:
-    //- Construct by indicator and problem
-    //LimiterWENOS(const Indicator& ind, Physics& phys, Solution& sol, Mesh& mesh) : Limiter(ind, phys, sol, mesh) {}
+
+    /// Constructor
     LimiterWENOS(
         const std::vector<std::shared_ptr<Cell>>& cells, 
         const Solution& sln,
         const Physics& phs);
 
+    /// Destruct
     ~LimiterWENOS() {};
 
-    //- Limit solution gradients
+    /// Limit solution gradients
     virtual void limit(std::vector<numvector<double, dimS> >& SOL) override;
 };
 

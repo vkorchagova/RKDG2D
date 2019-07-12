@@ -32,6 +32,9 @@ extern bool debug;
 /// Log file to save data
 extern std::ofstream logger;
 
+///
+/// Computer of right-hand side of equation system
+///
 
 class Solver
 {
@@ -43,32 +46,31 @@ class Solver
 
 public:
 
-    /// References
-    /// Reference to the basis
+    /// Constant reference to the basis
     const Basis& B;
 
-    /// Reference to teh mesh
+    /// Constant reference to teh mesh
     const Mesh& M;
     
     /// Reference to teh solution
     Solution& sln;
 
-    /// Reference to problem
+    /// Constant reference to problem
     const Problem& prb;
 
-    /// Reference to physics
+    /// Constant reference to physics
     const Physics& phs;
 
-    /// Reference to flux
+    /// Constant reference to Riemann solver
     const Flux& flux;
 
     /// Reference to MPI buffers
     Buffers& buf;
 
+    /// Vector of boundary conditions
     std::vector<Boundary> bc;
 
-    /// Variables
-    /// Max speed buffer for the Courant condition
+    /// Max speed buffer for the Courant condition (???)
     double MaxSpeed;
 
 public:
@@ -80,7 +82,7 @@ public:
     /// Destructor
     ~Solver() {}
 
-    //// RKDG methods
+    //------------ RKDG functions
 
     /// Calculate coeffs with initial conditions
     void setInitialConditions();
@@ -99,7 +101,7 @@ public:
     numvector<double, dimS> correctPrevIterCell(const numvector<double, dimS>& alphaCorr, const std::vector<std::vector<double>>& gramian) const;
     std::vector<numvector<double, dimS>> correctPrevIter(const std::vector<numvector<double, dimS>>& alpha) const;
 
-    /// MPI functions
+    //------------ MPI functions
 
     /// Exchange data
     void dataExchange();

@@ -4,6 +4,9 @@
 #include "Limiter.h"
 #include <vector>
 
+///
+/// Simple limiter - just remove solution gradients and make solution piecewise-constant
+///
 
 class LimiterFinDiff : public Limiter
 {

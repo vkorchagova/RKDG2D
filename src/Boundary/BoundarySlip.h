@@ -3,6 +3,10 @@
 
 #include "Boundary.h"
 
+/// 
+/// Slip boundary condition
+/// 
+
 class BoundarySlip : public Boundary
 {
 
@@ -15,6 +19,7 @@ public:
     /// Apply boundary condition
     //virtual void applyBoundary(std::vector<numvector<double, dimS>>& coeffs) const override;
 
+    // Get solution in outer side
     virtual numvector<double, dimPh> getSolOuter(
         const numvector<double, dimPh>& solInner, 
         const Point& n = Point({0.0,0.0})

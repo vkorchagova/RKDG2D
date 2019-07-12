@@ -6,15 +6,18 @@
 #include "Params.h"
 #include <string>
 
-
+/// 
+/// Abstract class for boundary condition
+/// 
 
 class Boundary
 {
 public:
 
-    /// Type of BC
+    /// Type of boundary condition
     std::string type;
 
+    /// Constant reference to geometrical boundary
     const Patch& patch;
 
     /// Default constructor
@@ -23,7 +26,7 @@ public:
     /// Apply boundary conditions
     //virtual void applyBoundary(std::vector<numvector<double, dimS>>& coeffs) const = 0;
 
-    /// Get solution in outer side
+    /// Get solution in outer side (pure virtual)
     virtual numvector<double, dimPh> getSolOuter(
         const numvector<double, dimPh>& solInner, 
         const Point& n = Point({0.0,0.0})

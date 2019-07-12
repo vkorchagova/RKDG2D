@@ -7,7 +7,7 @@
 extern std::ofstream logger;
 
 ///
-/// BJ limiter applied to conservative variables component-by-component
+/// BJ limiter applied to conservative variables component-by-component in gauss points of edges
 ///
 
 class LimiterBJ : public Limiter

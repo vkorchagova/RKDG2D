@@ -3,6 +3,10 @@
 
 #include "Limiter.h"
 
+///
+/// WENO_S limiter applied to Riemann invariants component-by-component
+///
+
 class LimiterRiemannWENOS : public Limiter
 {
 
@@ -28,13 +32,14 @@ class LimiterRiemannWENOS : public Limiter
     //);
 
 public:
-    //- Construct by indicator and problem
+
+    /// Constructor
     LimiterRiemannWENOS(
         const std::vector<std::shared_ptr<Cell>>& cells, 
         const Solution& sln,
         const Physics& phs) : Limiter(cells, sln, phs) {}
 
-    //- Limit solution gradients
+    /// Limit solution gradients
     virtual void limit(std::vector<numvector<double, dimS> >& SOL) override;
 };
 

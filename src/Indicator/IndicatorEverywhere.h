@@ -3,6 +3,10 @@
 
 #include "Indicator.h"
 
+///
+/// Pure pessimistic indicator of problem cells: all cells considered as troubled
+///
+
 class IndicatorEverywhere : public Indicator
 {
 public:

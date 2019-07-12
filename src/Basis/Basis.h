@@ -8,9 +8,9 @@
 #include "Mesh.h"
 #include "Params.h"
 
-
-
+///
 /// Form functions for mesh cells
+///
 
 class Basis
 {
@@ -26,6 +26,7 @@ class Basis
 public:
     //Basis(int nF) { nShapes = nF;};
 
+    /// Constructor
     Basis(const std::vector<std::shared_ptr<Cell>>& cells);
     
     /// Coefficients for form functions

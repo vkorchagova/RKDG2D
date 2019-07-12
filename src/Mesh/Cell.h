@@ -1,14 +1,6 @@
 #ifndef CELL_H
 #define CELL_H
 
-/// ------------------------------
-/// Cell class
-/// ------------------------------
-/// Consists of edges
-/// Know its Gauss points
-/// ------------------------------
-
-
 #include "numvector.h"
 
 #include <functional>
@@ -21,14 +13,17 @@
 
 class Edge;
 
+///
+/// Сell 
+///
+
 class Cell
 {
 
 public:
 
-    /// geometric variables
-
-    int number; 
+    /// Cell ID
+    int number;
     
     /// Number of Gauss points
     int nGP;
@@ -54,12 +49,10 @@ public:
     /// local [-1,1]x[-1,1] to global rectangular cell
     Point localToGlobal(const Point& localPoint) const;
 
-    /// Nodes in cell
-    //std::vector<std::shared_ptr<Point>> nodes;
+    /// List of nodes in cell
     std::vector<std::shared_ptr<Point>> nodes;
 
-    /// Edges in cell
-    //std::vector<std::shared_ptr<Edge>> edges;
+    /// List of edges in cell
     std::vector<std::shared_ptr<Edge>> edges;
 
     /// Number of entities (nodes or edges)
@@ -89,18 +82,11 @@ public:
     /// Set Gauss points
     void setGaussPoints();
 
-
     /// Construct cell using vectors of nodes and edges
-    //Cell(const std::vector<std::shared_ptr<Point>> &nodes, const std::vector<std::shared_ptr<Edge>> &edges);
     Cell(const std::vector<std::shared_ptr<Point>> &nodes, const std::vector<std::shared_ptr<Edge>> &edges);
-    
-    /// Copy constructor
-    //Cell(const Cell&) = delete;
 
     /// Destructor
     ~Cell() {}
-
-    /// geometric methods
 
     /// Calculate coordinates of cell nodes
     std::vector<Point> getCellCoordinates() const;
@@ -110,7 +96,6 @@ public:
 
     /// check for a cell among vertex neighbor
     bool inNeibVertList(const std::shared_ptr<Cell>& cell, std::vector<std::shared_ptr<Cell>>& neibVC);
-    //bool inNeibVertList(const std::shared_ptr<Cell>& cell);
 
     /// check for common node
     bool hasCommonNode(const std::shared_ptr<Cell>& c1);

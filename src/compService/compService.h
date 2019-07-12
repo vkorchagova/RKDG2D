@@ -7,6 +7,9 @@
 #include "Cell.h"
 #include "Patch.h"
 
+///
+/// Special functions for computations
+///
 
 ///
 /// Rotation
@@ -49,6 +52,7 @@ numvector<double, dimPh> integrate(const Cell& cell, const std::function<numvect
 /// MPI operations
 ///
 
+/// Get local cell number on proc according to global cell number
 int localNumber(std::vector<int>& globalNumbers, int curNum);
 
 int getPatchByName(std::vector<Patch>& patches, std::string& pName);
