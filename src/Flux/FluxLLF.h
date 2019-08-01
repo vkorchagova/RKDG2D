@@ -13,10 +13,7 @@ class FluxLLF : public Flux
 
 public:
 
-    /// Default constructor
-    // FluxLLF() : Flux() {}
-
-    /// Construct with problem
+    /// Constructor
     FluxLLF(const Physics& phs) : Flux(phs) {}
 
     /// Destructor

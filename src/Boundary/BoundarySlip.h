@@ -14,10 +14,6 @@ public:
 
     /// Constructor
     BoundarySlip(const Patch& p) : Boundary(p) { type = "slip"; }
-    ~BoundarySlip() {}
-
-    /// Apply boundary condition
-    //virtual void applyBoundary(std::vector<numvector<double, dimS>>& coeffs) const override;
 
     // Get solution in outer side
     virtual numvector<double, dimPh> getSolOuter(

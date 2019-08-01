@@ -68,7 +68,7 @@ public:
     Buffers& buf;
 
     /// Vector of boundary conditions
-    std::vector<Boundary> bc;
+    //std::vector<Boundary> bc;
 
     /// Max speed buffer for the Courant condition (???)
     double MaxSpeed;

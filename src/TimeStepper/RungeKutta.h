@@ -18,7 +18,7 @@ class RungeKutta : public TimeStepper
 public:
 
     /// Constructor
-    RungeKutta(int o,  Basis& b, Solver& s, Solution& ss, std::vector<std::shared_ptr<Boundary>>& bond, Limiter& l, TimeControl& t);
+    RungeKutta(int o,  Basis& b, Solver& s, Solution& ss, Limiter& l, TimeControl& t);
     
     /// Destructor
     ~RungeKutta() {};

@@ -11,7 +11,7 @@ class FluxHLL : public Flux
 {
 public:
 
-    /// Construct with problem
+    /// Constructor
     FluxHLL(const Physics& phs) : Flux(phs) {}
 
     /// Destructor

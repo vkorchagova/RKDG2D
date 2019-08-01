@@ -23,9 +23,6 @@ public:
     /// Default constructor
     Boundary(const Patch& p) : type("not implemented"), patch(p) {};
 
-    /// Apply boundary conditions
-    //virtual void applyBoundary(std::vector<numvector<double, dimS>>& coeffs) const = 0;
-
     /// Get solution in outer side (pure virtual)
     virtual numvector<double, dimPh> getSolOuter(
         const numvector<double, dimPh>& solInner, 

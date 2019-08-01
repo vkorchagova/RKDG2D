@@ -2,7 +2,7 @@
 
 using namespace std;
 
-RungeKutta::RungeKutta(int o,  Basis& b, Solver& s, Solution& ss, std::vector<std::shared_ptr<Boundary>>& bond, Limiter& l, TimeControl& t) : TimeStepper(o, b, s, ss, bond, l, t)
+RungeKutta::RungeKutta(int o,  Basis& b, Solver& s, Solution& ss, Limiter& l, TimeControl& t) : TimeStepper(o, b, s, ss, l, t)
 {
     /// Initialization of the parameters
 	// Number of stages a.k.a. length of all the arrays

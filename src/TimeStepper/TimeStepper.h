@@ -32,7 +32,7 @@ protected:
     Basis& basis;
 
     /// Reference to the Full Pack of Boundary Conditions
-    std::vector<std::shared_ptr<Boundary>>& bc;
+    //std::vector<std::shared_ptr<Boundary>>& bc;
 
     /// Reference to limiter
     Limiter& lmt;
@@ -49,7 +49,7 @@ protected:
 public:
 
     /// Constructor
-    TimeStepper(int o, Basis& b, Solver& s, Solution& ss, std::vector<std::shared_ptr<Boundary>>& bond, Limiter& l, TimeControl& t) : order(o), basis(b), slv(s), sln(ss), bc(bond), lmt(l), T(t) {};
+    TimeStepper(int o, Basis& b, Solver& s, Solution& ss, Limiter& l, TimeControl& t) : order(o), basis(b), slv(s), sln(ss), lmt(l), T(t) {};
 
     /// update time step
     virtual void Tstep() = 0;

@@ -12,11 +12,12 @@ class FluxHLLC : public Flux
     /// Calculate Star Region velocity
     numvector<double, dimPh> getUStar (const numvector<double, dimPh>& sol, double pK, double SK, double cK, double SStar) const;
 
+    /// Calculate F* (just for test of one of methods of HLLC calculation)
     numvector<double, dimPh> getFStar(const numvector<double, dimPh>& sol, const numvector<double, dimPh>& fK, double rhoL, double pK, double SK, double cK, double SStar) const;
 
 public:
 
-    /// Construct with problem
+    /// Constructor
     FluxHLLC(const Physics& phs) : Flux(phs) {}
 
     /// Destructor

@@ -18,7 +18,7 @@ public:
 
 public:
 
-    /// Construct with problem
+    /// Constructor
     Flux(const Physics& phys) : phs(phys) {};
 
     /// Destructor
