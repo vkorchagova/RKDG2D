@@ -36,6 +36,9 @@ public:
     /// Compute sound speed inside cell
     double c(const numvector<double, dimPh>& sol) const;
 
+    /// Compute velocity magnitude
+    double magU(const numvector<double, dimPh>& sol) const;
+
     /// Calculate fluxes in x direction
     numvector<double, dimPh> fluxF(const numvector<double, dimPh>& sol) const;
 

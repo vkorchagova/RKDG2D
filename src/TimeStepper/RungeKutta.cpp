@@ -4,23 +4,19 @@ using namespace std;
 
 RungeKutta::RungeKutta(int o,  Basis& b, Solver& s, Solution& ss, Limiter& l, TimeControl& t) : TimeStepper(o, b, s, ss, l, t)
 {
-    /// Initialization of the parameters
-	// Number of stages a.k.a. length of all the arrays
-	nStages = order; // OK for RK order <= 4
+    // Initialization of the parameters
+    nStages = order; // OK for RK order <= 4
 
-	
-	//Arr.resize(nStages);
-
-	// Cfts arrays sizing
+    // Cfts arrays sizing 
     alpha.resize(nStages);
     beta.resize(nStages);
     for (int i = 0; i < nStages; ++i)
         beta[i].resize(nStages);
 
-	// Initialization of the RK-cfts
+    // Initialization of the RK-cfts
     setButcherTable();
-
 }
+
 
 void RungeKutta::setButcherTable()
 {
@@ -87,16 +83,17 @@ void RungeKutta::setButcherTable()
                  << "Please change order to 1, 2, 3 or 4." \
                  << endl;
             exit(1);
-
     }
 }
+
 
 void RungeKutta::Tstep()
 {
     double t0, t1;
-	/// Final preparations
+
+    /// Final preparations
     double t = T.getTime();
-	double tau = T.getTau();
+    double tau = T.getTau();
 
     /// rhs for RK studies
     std::vector<std::vector<numvector<double, dimS>>> k;
@@ -115,10 +112,10 @@ void RungeKutta::Tstep()
     //cout << endl;
 
     //cout << "OK" << endl;
-	/// The very step of the RK method
+    /// The very step of the RK method
     for (int iStage = 0; iStage < nStages; ++iStage)
     {
-        T.updateTime(t + alpha[iStage]*tau);   // ??? Is it necessary?
+        T.updateTimeValueRK(alpha[iStage]*tau);   // ??? Is it necessary?
 
         // MPI exchange between neib procs
         t0 = MPI_Wtime();
@@ -195,8 +192,8 @@ void RungeKutta::Tstep()
         sln.SOL = slv.correctNonOrtho(lhs);
         t1 = MPI_Wtime();
         if (debug) logger << "\tslv.correctNonOrtho(): " << t1 - t0 << endl;
-	
-	    // if (myRank == 0)
+    
+        // if (myRank == 0)
         // {
         //    cout << "sln sol after non ortho" << endl;
         //    for (int p = 0; p < sln.SOL.size(); ++p)
@@ -206,8 +203,8 @@ void RungeKutta::Tstep()
         // for(int iCell = 0; iCell < sln.SOL.size(); ++iCell)\
         //    cout << "cell#" << iCell << "; SOL: " << sln.SOL[iCell] << endl;
         // cout << endl;
-		
-		// limit solution
+        
+        // limit solution
         t0 = MPI_Wtime();
         slv.dataExchange();
         t1 = MPI_Wtime();
@@ -221,15 +218,6 @@ void RungeKutta::Tstep()
         //cout << "\t END RK STAGE #" << iStage << endl;
 
     }// for stages
-    
-	/// Updating the solution and time step
-	T.updateTimeStep(slv.MaxSpeed); // !!! IT MUST BE DEFINED ALREADY !!!
-	
-    //for(int iCell=0; iCell<16; ++iCell)\
-        cout << "cell#" << iCell << "; SOL: " << sln.SOL[iCell] << endl;
-    //cout << endl;
-
-    //time.updateTime(tOld);
 
     return;
 }

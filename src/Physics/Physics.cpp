@@ -24,6 +24,15 @@ Physics::~Physics()
 // ------------------ Public class methods --------------------
 
 
+double Physics::magU(const numvector<double, dimPh>& sol) const
+{
+    double rhoV2 = sqr(sol[1]) + sqr(sol[2]) + sqr(sol[3]);
+
+    double p = (cpcv - 1.0)*(sol[4] - 0.5*rhoV2 / sol[0]);
+
+    return sqrt(rhoV2) / sol[0];
+} // end magU
+
 
 double Physics::getPressure(const numvector<double, dimPh>& sol) const
 {

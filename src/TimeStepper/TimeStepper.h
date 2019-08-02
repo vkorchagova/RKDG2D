@@ -31,9 +31,6 @@ protected:
     /// Reference to basis
     Basis& basis;
 
-    /// Reference to the Full Pack of Boundary Conditions
-    //std::vector<std::shared_ptr<Boundary>>& bc;
-
     /// Reference to limiter
     Limiter& lmt;
 

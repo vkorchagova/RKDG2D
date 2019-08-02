@@ -90,14 +90,18 @@ int main(int argc, char* argv[])
 
     ///----------------------
 
-    CaseInit caseName = SodX;
+    CaseInit caseName = SodCircle;
 
-    double tStart = 0.002;
+    double tStart = 0.0;
+    double tEnd = 0.1;
 
-    double tEnd = 0.2;
+    double initTau = 2e-4;
+    double outputInterval = 0.05;
 
-    double initTau = 1e-4;
-    double outputInterval = 1e-3;
+    bool isDynamic = false;
+    double maxCo = 0.5;
+    double maxTau = 1e-3;
+    double maxTauGrowth = 0.1; 
 
 
     int order = 2;
@@ -125,16 +129,15 @@ int main(int argc, char* argv[])
     FluxHLL flux(physics);
     
     Writer writer(fullMesh, solution, physics);
-    TimeControl time(mesh, tStart, tEnd, initTau, outputInterval);
-
+    TimeControl time(mesh, physics, solution, tStart, tEnd, initTau, outputInterval, isDynamic, maxCo, maxTau, maxTauGrowth);
     Problem problem(caseName, mesh, time);
     Solver solver(basis, mesh, solution, problem, physics, flux, buf);
 
 
-    LimiterRiemannWENOS limiter(mesh.cells, solution, physics);
-    //LimiterWENOS limiter(mesh.cells, solution, physics);
+    //LimiterRiemannWENOS limiter(mesh.cells, solution, physics);
+    LimiterWENOS limiter(mesh.cells, solution, physics);
     //LimiterBJ limiter(mesh.cells, solution, physics);
-    RungeKutta RK(order, basis, solver, solution, problem.bc, limiter, time);
+    RungeKutta RK(order, basis, solver, solution, limiter, time);
 
     ///----------------------
 
@@ -189,6 +192,12 @@ int main(int argc, char* argv[])
 	/// THE MAIN CYCLE THROUGH THE TIME!
     while (time.running())
     {
+        // make new time step
+
+        t0 = MPI_Wtime();
+        RK.Tstep();
+        t1 = MPI_Wtime();
+
         if (myRank == 0) 
         {
             cout << "-------" << endl;
@@ -203,12 +212,7 @@ int main(int argc, char* argv[])
             logger << "Tau = " << time.getTau() << " s" << "\t\t";
         }
 
-        t0 = MPI_Wtime();
-        RK.Tstep();
-        t1 = MPI_Wtime();
-
         if (debug) logger << "RK.Tstep(): " << t1 - t0  << "\n----------" << endl;
-
 
         if (myRank == 0) 
         {
@@ -217,11 +221,13 @@ int main(int argc, char* argv[])
             nSteps ++;
         }
 
+        // check energy conservation
+
         double totalEnergy = 0.0;
 
-#pragma omp parallel for reduction(+:totalEnergy)
+//#pragma omp parallel for reduction(+:totalEnergy)
         //for (const shared_ptr<Cell> cell : mesh.cells)
-        for ( int i = 0; i < mesh.cells.size(); ++i )
+        for ( int i = 0; i < mesh.nRealCells; ++i )
         {
             const shared_ptr<Cell> cell = mesh.cells[i];
             function<double(const Point&)> eTotal = [&](const Point& x)
@@ -263,6 +269,8 @@ int main(int argc, char* argv[])
             }
         }
 
+        // write results in case of output time
+
         if (time.isOutput())
         {
 			solver.collectSolution();
@@ -274,17 +282,20 @@ int main(int argc, char* argv[])
                 writer.exportFrameVTK("alphaCoeffs/" + to_string(time.getTime()) + ".vtk");
             }
         }
+
+        // update time step
+        time.updateTimeStep();
     }
 
-    // just for last time point
-    solver.collectSolution();
-    solver.collectSolutionForExport();
+    // // just for last time point
+    // solver.collectSolution();
+    // solver.collectSolutionForExport();
     
-    if (myRank == 0)
-    {
-        writer.exportNativeCoeffs("alphaCoeffs/" + to_string(tEnd) + ".dat");
-        writer.exportFrameVTK("alphaCoeffs/" + to_string(tEnd) + ".vtk");
-    }
+    // if (myRank == 0)
+    // {
+    //     writer.exportNativeCoeffs("alphaCoeffs/" + to_string(tEnd) + ".dat");
+    //     writer.exportFrameVTK("alphaCoeffs/" + to_string(tEnd) + ".vtk");
+    // }
 
     if (myRank == 0)
     {

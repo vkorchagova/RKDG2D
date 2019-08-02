@@ -5,6 +5,8 @@
 
 #include "Params.h"
 #include "Mesh.h"
+#include "Physics.h"
+#include "Solution.h"
 
 ///
 /// Store of time value, time step and controller of time step modification
@@ -12,6 +14,7 @@
 
 class TimeControl
 {
+
 private:
 
     //------ Time itself
@@ -38,14 +41,17 @@ private:
 
     /// New time step -- for the next iteration
     double tauNew;
+
+    /// Saved time step which 
+    double tauSaved;
+
+    /// True if it is small time step for output
+    bool stepForOutput;
     
     //----- Time step renewal
 
     /// Courant number
     double CoNum;
-
-    /// Max solution speed estimation
-    double MaxSpeed;
 
     /// Max time step
     double maxTau;
@@ -59,8 +65,11 @@ private:
     /// Reference to mesh
     const Mesh& M;
 
-    // Reference to problem
-    //const Problem& problem;
+    // Reference to physics
+    const Physics& physics;
+
+    //Reference to solution
+    const Solution& sln;
 
     /// Stream to time listing file
     std::ofstream timeListing;
@@ -70,11 +79,16 @@ public:
     /// Constructor
     TimeControl(
         const Mesh& msh, 
-        //const Problem& prb,
-        const double tStart, 
-        const double tEnd, 
-        const double initTau, 
-        const double outputInterval,
+        const Physics& phs,
+        const Solution& sln,
+        double tStart, 
+        double tEnd, 
+        double initTau, 
+        double outputInterval,
+        bool   isDynamic,
+        double CoNum,
+        double maxTau,
+        double maxTauGrowth,
         const std::string listingPath = "alphaCoeffs/times"
     ); 
 
@@ -94,10 +108,13 @@ public:
     double getNewTau() const {return tauNew;}
 
     /// Update time step
-    void updateTimeStep(double MSpeed);
+    void updateTimeStep();
+
+    /// Update current time in Runge --- Kutta step
+    void updateTimeValueRK(double fracTau);
 
     /// Check if time is not finished
-    bool running() { return t < tEnd + 0.5*tau; }
+    bool running() { return t < tEnd; }
 
     /// Check time point for output
     bool isOutput();
