@@ -30,14 +30,14 @@ public:
     /// Calculate pressure using conservative variables
     double getPressure(const numvector<double, dimPh>& sol) const;
 
-    /// Calculate pressure using primitive variables
-    double getPressure(double rho, double u, double v, double w, double e) const;
-
     /// Compute sound speed inside cell
     double c(const numvector<double, dimPh>& sol) const;
 
     /// Compute velocity magnitude
     double magU(const numvector<double, dimPh>& sol) const;
+
+    /// Compute total energy
+    double e(const numvector<double, dimPh>& sol) const;
 
     /// Calculate fluxes in x direction
     numvector<double, dimPh> fluxF(const numvector<double, dimPh>& sol) const;

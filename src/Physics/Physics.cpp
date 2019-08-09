@@ -28,8 +28,6 @@ double Physics::magU(const numvector<double, dimPh>& sol) const
 {
     double rhoV2 = sqr(sol[1]) + sqr(sol[2]) + sqr(sol[3]);
 
-    double p = (cpcv - 1.0)*(sol[4] - 0.5*rhoV2 / sol[0]);
-
     return sqrt(rhoV2) / sol[0];
 } // end magU
 
@@ -37,31 +35,35 @@ double Physics::magU(const numvector<double, dimPh>& sol) const
 double Physics::getPressure(const numvector<double, dimPh>& sol) const
 {
     double rhoV2 = sqr(sol[1]) + sqr(sol[2]) + sqr(sol[3]);
+    //double rhoEps = sol[4] - 0.2 * rhoV2 / sol[0];
 
-    double p = (cpcv - 1.0)*(sol[4] - 0.5*rhoV2 / sol[0]);
-
-    return p;
-} // end getPressure
-
-
-double Physics::getPressure(double rho, double u, double v, double w, double e) const
-{
-    double V2 = sqr(u) + sqr(v) + sqr(w);
-
-    double p = (cpcv - 1.0) * (e - 0.5 * rho * V2);
+    //double p = (cpcv - 1.0)*(sol[4] - 0.5*rhoV2 / sol[0]);  // for ideal gas
+    double p = (cpcv - 1.0)*(sol[4] - 0.5*rhoV2 / sol[0]) / (1.0 - sol[0] * 0.00); //for Co-Volume 0.001, for ideal 0.0
 
     return p;
 } // end getPressure
+
 
 double Physics::c(const numvector<double, dimPh>& sol) const
 {
-    double c2 = cpcv * getPressure(sol) / sol[0];
+    //double c2 = cpcv * getPressure(sol) / sol[0];
+    double c2 = cpcv * getPressure(sol) / sol[0] / (1.0 - sol[0] * 0.00);
 
     if (c2 < 0)
         cout << "sound speed < 0 =( !!!!" << endl;
 
     return sqrt( c2 );
 } // end c for cell
+
+
+double Physics::e(const numvector<double, dimPh>& sol) const
+{
+    double rhoEps = getPressure(sol) / (cpcv - 1.0) * (1.0 - sol[0] * 0.00);
+    double rhoV2 = sqr(sol[1]) + sqr(sol[2]) + sqr(sol[3]);
+
+    return rhoEps + 0.5 * rhoV2 / sol[0];
+} // end c for cell
+
 
 numvector<double, dimPh> Physics::fluxF(const numvector<double, dimPh>& sol) const
 {
@@ -71,6 +73,7 @@ numvector<double, dimPh> Physics::fluxF(const numvector<double, dimPh>& sol) con
     return { sol[1], u*sol[1] + p, u*sol[2], u*sol[3], (sol[4] + p)*u };
 } // end fluxF
 
+
 numvector<double, dimPh> Physics::fluxG(const numvector<double, dimPh>& sol) const
 {
     double v = sol[2] / sol[0];
@@ -78,6 +81,7 @@ numvector<double, dimPh> Physics::fluxG(const numvector<double, dimPh>& sol) con
 
     return { sol[2], v*sol[1], v*sol[2] + p, v*sol[3], (sol[4] + p)*v };
 } // end fluxG
+
 
 numvector<numvector<double, dimPh>, dimPh> Physics::getLx(const numvector<double, dimPh>& sol) const
 {
@@ -101,6 +105,8 @@ numvector<numvector<double, dimPh>, dimPh> Physics::getLx(const numvector<double
 	};
 	return res;
 }
+
+
 numvector<numvector<double, dimPh>, dimPh> Physics::getLy(const numvector<double, dimPh>& sol) const
 {
 	double cS = c(sol);
@@ -124,6 +130,8 @@ numvector<numvector<double, dimPh>, dimPh> Physics::getLy(const numvector<double
 
 	return res;
 }
+
+
 numvector<numvector<double, dimPh>, dimPh> Physics::getRx(const numvector<double, dimPh>& sol) const
 {
     double cS = c(sol);
@@ -148,6 +156,8 @@ numvector<numvector<double, dimPh>, dimPh> Physics::getRx(const numvector<double
 
     return res;
 }
+
+
 numvector<numvector<double, dimPh>, dimPh> Physics::getRy(const numvector<double, dimPh>& sol) const
 {
 	double cS = c(sol);
@@ -173,6 +183,7 @@ numvector<numvector<double, dimPh>, dimPh> Physics::getRy(const numvector<double
 	return res;
 }
 
+
 numvector<numvector<double, dimPh>, dimPh> Physics::getL(const numvector<double, dimPh>& sol, const Point& n) const
 {
     double cS = c(sol);
@@ -194,9 +205,10 @@ numvector<numvector<double, dimPh>, dimPh> Physics::getL(const numvector<double,
         { 0.5 * (B2 - (u*n.x() + v*n.y())/cS), -0.5 * (B1 * u - n.x()/cS), -0.5 * (B1 * v - n.y()/cS),  0.0, 0.5 * B1}
     };
 
-
     return res;
 }
+
+
 numvector<numvector<double, dimPh>, dimPh> Physics::getR(const numvector<double, dimPh>& sol, const Point& n) const
 {
     double cS = c(sol);

@@ -90,16 +90,16 @@ int main(int argc, char* argv[])
 
     ///----------------------
 
-    CaseInit caseName = SodCircle;
+    CaseInit caseName = Ladenburg;//SodXCovol;
 
-    double tStart = 0.0;
-    double tEnd = 0.1;
+    double tStart = 0;
+    double tEnd = 5e-4;
 
-    double initTau = 2e-4;
-    double outputInterval = 0.05;
+    double initTau = 1e-9;
+    double outputInterval = 1e-5;
 
-    bool isDynamic = false;
-    double maxCo = 0.5;
+    bool isDynamic = true;
+    double maxCo = 0.3;
     double maxTau = 1e-3;
     double maxTauGrowth = 0.1; 
 
@@ -135,8 +135,8 @@ int main(int argc, char* argv[])
 
 
     //LimiterRiemannWENOS limiter(mesh.cells, solution, physics);
-    LimiterWENOS limiter(mesh.cells, solution, physics);
-    //LimiterBJ limiter(mesh.cells, solution, physics);
+    //LimiterWENOS limiter(mesh.cells, solution, physics);
+    LimiterBJ limiter(mesh.cells, solution, physics);
     RungeKutta RK(order, basis, solver, solution, limiter, time);
 
     ///----------------------
@@ -286,16 +286,16 @@ int main(int argc, char* argv[])
         // update time step
         time.updateTimeStep();
     }
-
+    // cout << "Save last time point..." << endl;
     // // just for last time point
     // solver.collectSolution();
     // solver.collectSolutionForExport();
     
-    // if (myRank == 0)
-    // {
-    //     writer.exportNativeCoeffs("alphaCoeffs/" + to_string(tEnd) + ".dat");
-    //     writer.exportFrameVTK("alphaCoeffs/" + to_string(tEnd) + ".vtk");
-    // }
+    if (myRank == 0)
+    {
+        writer.exportNativeCoeffs("alphaCoeffs/" + to_string(tEnd) + ".dat");
+        writer.exportFrameVTK("alphaCoeffs/" + to_string(tEnd) + ".vtk");
+    }
 
     if (myRank == 0)
     {

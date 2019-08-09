@@ -35,21 +35,21 @@ Mesh::Mesh(std::string& fileName, Buffers& buf) : buf(buf)
     for (int i = 0; i < nRealCells; ++i)
     {
         findNeighbourCells(cells[i]);
-        findNeighbourCellsVertex(cells[i]);
+        //findNeighbourCellsVertex(cells[i]);
     }
 
-    ofstream fileVertices("neib_vertex.txt");
+//    ofstream fileVertices("neib_vertex.txt");
 
-    for (int i = 0; i < nRealCells; ++i)
-    {
-        fileVertices << "cell #" << cells[i]->number << ": ";
+//    for (int i = 0; i < nRealCells; ++i)
+//    {
+//        fileVertices << "cell #" << cells[i]->number << ": ";
 
-        for (int j = 0; j < cells[i]->neibCellsVertex.size(); ++j)
-            fileVertices << cells[i]->neibCellsVertex[j]->number << " ";
-        fileVertices << endl;
-    }
+//        for (int j = 0; j < cells[i]->neibCellsVertex.size(); ++j)
+//            fileVertices << cells[i]->neibCellsVertex[j]->number << " ";
+//        fileVertices << endl;
+//    }
 
-    fileVertices.close();
+//    fileVertices.close();
 
     structurizeEdges();
 

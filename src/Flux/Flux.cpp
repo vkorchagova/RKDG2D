@@ -9,8 +9,11 @@ double Flux::c_av(const numvector<double, dimPh>& solOne, const numvector<double
 	double semiRho = 0.5*(solOne[0] + solTwo[0]);
 	double semiP = 0.5*(phs.getPressure(solOne) + phs.getPressure(solTwo));
 
-	return sqrt(phs.cpcv * semiP / semiRho);
+	cout << "NOT USED" << endl;
+
+	return sqrt(phs.cpcv * semiP / semiRho / (1.0 - semiRho * 0.001));
 } // end c for edge
+
 
 numvector<double, dimPh> Flux::lambdaF_Roe(const numvector<double, dimPh>& solOne, const numvector<double, dimPh>& solTwo) const
 {
@@ -27,9 +30,13 @@ numvector<double, dimPh> Flux::lambdaF_Roe(const numvector<double, dimPh>& solOn
 	//    if (getPressure(solOne) < 0 || getPressure(solTwo) < 0)
 	//        cout << "kkk";
 
-	return{ u_av - c_av, u_av, u_av, u_av, u_av + c_av };
+	double rho_av = (solOne[0] * sqrtRhoLeft + solTwo[0] * sqrtRhoRight) / sumSqrtRho;
 
+	c_av = sqrt( (phs.cpcv - 1) * phs.cpcv * (h_av - 0.5 * sqr(u_av))  / (1.0 - rho_av * 0.001) / (phs.cpcv - rho_av * 0.001) );
+
+	return{ u_av - c_av, u_av, u_av, u_av, u_av + c_av };
 }
+
 
 numvector<double, dimPh> Flux::lambdaF_Einfeldt(const numvector<double, dimPh>& solOne, const numvector<double, dimPh>& solTwo) const
 {
@@ -49,8 +56,8 @@ numvector<double, dimPh> Flux::lambdaF_Einfeldt(const numvector<double, dimPh>& 
 		eta2 * sqr(uRight - uLeft));
 
 	return{ u_av - c_av, u_av, u_av, u_av, u_av + c_av };
-
 }
+
 
 numvector<double, dimPh> Flux::lambdaF_Toro(const numvector<double, dimPh>& solOne, const numvector<double, dimPh>& solTwo) const
 {
@@ -79,6 +86,7 @@ numvector<double, dimPh> Flux::lambdaF_Toro(const numvector<double, dimPh>& solO
 	return{ uLeft - qLeft * cLeft, uLeft, uLeft, uLeft, uRight + qRight * cRight };
 }
 
+
 numvector<double, dimPh> Flux::lambdaF_semisum(const numvector<double, dimPh>& solOne, const numvector<double, dimPh>& solTwo) const
 {
 	double u = 0.5*(solOne[1] / solOne[0] + solTwo[1] / solTwo[0]);
@@ -87,8 +95,9 @@ numvector<double, dimPh> Flux::lambdaF_semisum(const numvector<double, dimPh>& s
 	return{ u - soundSpeed, u, u, u, u + soundSpeed };
 } // end lambdaF
 
+
 numvector<double, dimPh> Flux::lambdaF(const numvector<double, dimPh>& solOne, const numvector<double, dimPh>& solTwo) const
 {
-	return lambdaF_Roe(solOne, solTwo);
+	return lambdaF_Einfeldt(solOne, solTwo);
 } // end lambdaF
 

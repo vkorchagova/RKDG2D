@@ -47,6 +47,18 @@ void Problem::setInitialConditions(CaseInit task)
         break;
 	}// SodX
 
+    case SodXCovol:
+    {
+        cpcv = 1.3;
+
+        initRho = [](const Point& r) { return (r.x() < -0.1) ? 100.0 : 1.0; };
+        initP   = [](const Point& r) { return (r.x() < -0.1) ? 100.0 * 1e6 : 0.1 * 1e6;  };
+        initU   = [](const Point& r) { return (r.x() < -0.1) ? 0.0 : 0.0; };
+        initV   = [](const Point& r) { return 0.0; };
+
+        break;
+    }// SodX
+
 	case SodY:
 	{
         cpcv = 1.4;
@@ -105,7 +117,7 @@ void Problem::setInitialConditions(CaseInit task)
         initV   = [](const Point& r) { return 0.0; };
 
         break;
-    } // SEdov
+    } // Sedov
 
     case DoubleMach:
     {
@@ -115,7 +127,33 @@ void Problem::setInitialConditions(CaseInit task)
         initP   = [](const Point& r) { return (r.x() < 0.15) ? 116.518 : 1.0;  };
         initU   = [](const Point& r) { return (r.x() < 0.15) ? 8.25 : 0.0; };
         initV   = [](const Point& r) { return 0.0; };
+
+        break;
     } // DMach
+
+    case Ladenburg:
+    {
+        cpcv = 1.4;
+
+        initRho = [](const Point& r) { return 1.18437405654; };
+        initP   = [](const Point& r) { return 101325.0;  };
+        initU   = [](const Point& r) { return 0.0; };
+        initV   = [](const Point& r) { return 0.0; };
+
+        break;
+    } // DMach
+
+    case ShuOsher:
+    {
+        cpcv = 1.4;
+
+        initRho = [](const Point& r) { return (r.x() < -0.5 + 0.125) ? 3.857143 : 1.0 + 0.2 * sin(8.0 * 2.0 * 3.14159265*r.x() ); };
+        initP   = [](const Point& r) { return (r.x() < -0.5 + 0.125) ? 10.3333 : 1.0;  };
+        initU   = [](const Point& r) { return (r.x() < -0.5 + 0.125) ? 2.629369 : 0.0; };
+        initV   = [](const Point& r) { return 0.0; };
+
+        break;
+    }
 
 	}// switch
 
@@ -127,10 +165,10 @@ void Problem::setInitialConditions(CaseInit task)
                 initRho(r)*initU(r), \
                 initRho(r)*initV(r), \
                 0.0, \
-                initP(r) / (cpcv - 1.0) + \
+                initP(r) / (cpcv - 1.0) * (1.0 - initRho(r) * 0.0) + \
                 0.5 * initRho(r) * (sqr(initU(r)) + sqr(initV(r))) \
-            };
-        };
+            }; 
+        }; //for Co-Volume 0.001, for ideal 0.0
 
 };// SetInitCond
 
@@ -240,6 +278,7 @@ void Problem::setBoundaryConditions(CaseInit task)
     {
 
     case SodX:
+    case SodXCovol:
     case SodY:
     case SodDiag:
     case SodCircle:
@@ -279,6 +318,49 @@ void Problem::setBoundaryConditions(CaseInit task)
 
         break;
     }
+
+    case ShuOsher:
+    {
+        // bc.emplace_back(
+        //     make_shared<BoundaryConstant>(
+        //         M.patches[0], 
+        //         numvector<double, dimPh>({3.857143, -2.629369, 0.0, 0.0, 10.3333*(1.0-3.857143*0.0)/ 0.4 + 0.5*3.857143*2.629369*2.629369})
+        //     )
+        // );
+
+        // bc.emplace_back(
+        //     make_shared<BoundaryConstant>(
+        //         M.patches[1], 
+        //         numvector<double, dimPh>({1.0, 0.0, 0.0, 0.0, 1.0*(1.0-1.0*0.001)/ 0.4})
+        //     )
+        // );
+        bc.emplace_back(make_shared<BoundaryOpen>(M.patches[0]));
+        bc.emplace_back(make_shared<BoundaryOpen>(M.patches[1]));
+        bc.emplace_back(make_shared<BoundaryOpen>(M.patches[2]));
+        bc.emplace_back(make_shared<BoundaryOpen>(M.patches[3]));
+
+        break;
+    }
+
+    case Ladenburg:
+    {
+        bc.emplace_back(make_shared<BoundarySlip>(M.patches[0]));
+
+        bc.emplace_back(
+            make_shared<BoundaryConstant>(
+                M.patches[1], 
+                numvector<double, dimPh>({3.8303970021, -315.6, 0.0, 0.0, 271724*(1.0-3.8303970021*0.0)/ 0.4 + 0.5*3.8303970021*315.6*315.6})
+            )
+        );
+
+        
+        bc.emplace_back(make_shared<BoundaryOpen>(M.patches[2]));
+        
+
+        break;
+    }
+
+
     }
    
     
