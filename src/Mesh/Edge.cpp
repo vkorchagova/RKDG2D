@@ -34,6 +34,8 @@ Edge::Edge(const vector<shared_ptr<Point>> &p) : nodes(p)
     }
     else if (nShapes == 3 || nShapes == 1)
     {
+
+
         // pure Gauss
         nGP = 2;
 

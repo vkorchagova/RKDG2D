@@ -10,7 +10,8 @@ using namespace std;
 
 Physics::Physics()
 {
-    //cpcv = 1.4; // default value
+    cpcv = 1.4; // default value
+    beta = 0.0; // beta for Co-Volume 0.001, for ideal 0.0
 } // end constructor 
 
 Physics::~Physics()
@@ -38,7 +39,7 @@ double Physics::getPressure(const numvector<double, dimPh>& sol) const
     //double rhoEps = sol[4] - 0.2 * rhoV2 / sol[0];
 
     //double p = (cpcv - 1.0)*(sol[4] - 0.5*rhoV2 / sol[0]);  // for ideal gas
-    double p = (cpcv - 1.0)*(sol[4] - 0.5*rhoV2 / sol[0]) / (1.0 - sol[0] * 0.00); //for Co-Volume 0.001, for ideal 0.0
+    double p = (cpcv - 1.0)*(sol[4] - 0.5*rhoV2 / sol[0]) / (1.0 - sol[0] * beta);
 
     return p;
 } // end getPressure
@@ -47,7 +48,7 @@ double Physics::getPressure(const numvector<double, dimPh>& sol) const
 double Physics::c(const numvector<double, dimPh>& sol) const
 {
     //double c2 = cpcv * getPressure(sol) / sol[0];
-    double c2 = cpcv * getPressure(sol) / sol[0] / (1.0 - sol[0] * 0.00);
+    double c2 = cpcv * getPressure(sol) / sol[0] / (1.0 - sol[0] * beta);
 
     if (c2 < 0)
         cout << "sound speed < 0 =( !!!!" << endl;
@@ -56,13 +57,13 @@ double Physics::c(const numvector<double, dimPh>& sol) const
 } // end c for cell
 
 
-double Physics::e(const numvector<double, dimPh>& sol) const
+double Physics::e(double rho, double u, double v, double w, double p) const
 {
-    double rhoEps = getPressure(sol) / (cpcv - 1.0) * (1.0 - sol[0] * 0.00);
-    double rhoV2 = sqr(sol[1]) + sqr(sol[2]) + sqr(sol[3]);
+    double rhoEps = p / (cpcv - 1.0) * (1.0 - rho * beta);
+    double magU = sqr(u) + sqr(v) + sqr(w);
 
-    return rhoEps + 0.5 * rhoV2 / sol[0];
-} // end c for cell
+    return rhoEps + 0.5 * rho * magU;
+} // end e for cell
 
 
 numvector<double, dimPh> Physics::fluxF(const numvector<double, dimPh>& sol) const

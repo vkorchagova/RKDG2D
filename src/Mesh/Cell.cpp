@@ -154,6 +154,7 @@ void Cell::setGaussPoints()
     {
         if (nEntities == 4)
         {
+
             // pure Gauss
             nGP = 4;
 
@@ -161,7 +162,7 @@ void Cell::setGaussPoints()
 
             for (int i = -1; i <= 1; i += 2)
                 for (int j = -1; j <= 1; j += 2)
-                    gPoints2D.push_back(localToGlobal(Point({ i * isqrt3, j * isqrt3 })));
+                   gPoints2D.push_back(localToGlobal(Point({ i * isqrt3, j * isqrt3 })));
 
             gWeights2D = { 1.0, 1.0, 1.0, 1.0 };
 

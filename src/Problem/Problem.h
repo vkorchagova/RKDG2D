@@ -9,6 +9,7 @@
 #include "TimeControl.h"
 #include "defs.h"
 #include "Params.h"
+#include "Physics.h"
 
 #include "BoundarySlip.h"
 #include "BoundaryOpen.h"
@@ -44,10 +45,13 @@ public:
     const TimeControl& T;
 
     /// Constant reference to mesh
-	const Mesh& M;
+    const Mesh& M;
+
+    /// Reference to physics
+    Physics& phs;
 
     /// Constructor
-    Problem (CaseInit task, const Mesh& m, const TimeControl& t);
+    Problem (CaseInit task, const Mesh& m, const TimeControl& t, Physics& phs);
 
     /// Destructor
     ~Problem();
