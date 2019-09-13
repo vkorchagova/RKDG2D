@@ -33,20 +33,20 @@ public:
 
 	/// Compute semisum-averaged sound speed on edge
 	double c_av(const numvector<double, dimPh>& solOne, const numvector<double, dimPh>& solTwo) const;
-
-	/// Eigenvalues for X direction ( Roe )
+ 
+	/// Eigenvalues for X direction ( Roe ) // UPDATE FOR COVOLUME
 	numvector<double, dimPh> lambdaF_Roe(const numvector<double, dimPh>& solOne, const numvector<double, dimPh>& solTwo) const;
 
-	/// Eigenvalues for X direction ( Einfeldt )
+	/// Eigenvalues for X direction ( Einfeldt ) // UPDATE FOR COVOLUME
 	numvector<double, dimPh> lambdaF_Einfeldt(const numvector<double, dimPh>& solOne, const numvector<double, dimPh>& solTwo) const;
 
-	/// Eigenvalues for X direction ( Toro, pressure-based )
+	/// Eigenvalues for X direction ( Toro, pressure-based ) // UPDATE FOR COVOLUME
 	numvector<double, dimPh> lambdaF_Toro(const numvector<double, dimPh>& solOne, const numvector<double, dimPh>& solTwo) const;
 
-	/// Eigenvalues for X direction ( semisum )
+	/// Eigenvalues for X direction ( semisum ) // UPDATE FOR COVOLUME
 	numvector<double, dimPh> lambdaF_semisum(const numvector<double, dimPh>& solOne, const numvector<double, dimPh>& solTwo) const;
 
-	/// Eigenvalues for X direction
+	/// Eigenvalues for X direction // UPDATE FOR COVOLUME
 	numvector<double, dimPh> lambdaF(const numvector<double, dimPh>& solOne, const numvector<double, dimPh>& solTwo) const;
 
 };// end Flux

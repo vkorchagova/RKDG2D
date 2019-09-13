@@ -31,6 +31,9 @@ public:
     /// Function for initial conditions
     std::function<numvector<double, dimPh>(const Point& r)> init;
 
+    /// Function for explicit source
+    std::function<numvector<double, dimPh>(const numvector<double, dimPh> sol, const Point& r)> source;
+
     /// Vector of boundary conditions
     std::vector<std::shared_ptr<Boundary>> bc;
 
@@ -46,8 +49,11 @@ public:
     /// Constant reference to mesh
 	const Mesh& M;
 
+    /// Reference to physics
+    Physics& phs;
+
     /// Constructor
-    Problem (CaseInit task, const Mesh& m, const TimeControl& t);
+    Problem (CaseInit task, const Mesh& m, const TimeControl& t, Physics& phs);
 
     /// Destructor
     ~Problem();

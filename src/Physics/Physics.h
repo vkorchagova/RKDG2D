@@ -10,16 +10,20 @@
 #include "Params.h"
 
 ///
-/// Description of mathematical miodel: EoS, how to compute natural fluxes, eigvals/eigvectors, speed of sound
+/// Description of mathematical model: EoS, how to compute natural fluxes, eigvals/eigvectors, speed of sound
 ///
 
 class Physics
 {
+     
 
 public:
 
     /// Heat capacity ratio
     double cpcv;
+
+    /// Covolume constant; 0 for ideal gas
+    double covolume;
 
     /// Constructor
 	Physics();
@@ -37,7 +41,7 @@ public:
     double magU(const numvector<double, dimPh>& sol) const;
 
     /// Compute total energy
-    double e(const numvector<double, dimPh>& sol) const;
+    double e(double rho, double u, double v, double w, double p) const;
 
     /// Calculate fluxes in x direction
     numvector<double, dimPh> fluxF(const numvector<double, dimPh>& sol) const;

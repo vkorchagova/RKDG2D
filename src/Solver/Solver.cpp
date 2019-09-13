@@ -359,6 +359,8 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
                 resV = phs.fluxF(sol) * nablaPhi[0] + \
                        phs.fluxG(sol) * nablaPhi[1];
 
+                resV += prb.source(sol, gPoint) * B.phi[q](iCell, gPoint);
+
                 for (int p = 0; p < dimPh; ++p)
                     res[p * nShapes + q] += resV[p] * coef;    
             }// for shapes
