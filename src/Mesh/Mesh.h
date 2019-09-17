@@ -51,8 +51,6 @@ private:
 
     void createPhysicalPatch(const std::vector<std::shared_ptr<Edge>>& edgeGroup, const std::string& pName);
 
-    std::shared_ptr<Cell> makeGhostCell(const std::shared_ptr<Edge>& e);
-
     /// renumeration of edges: bound|inner|proc
     void structurizeEdges();
 
@@ -89,23 +87,19 @@ public:
     /// Global numeration of cells
     std::vector<int> globalCellNumber;
 
-	/// Test
-	std::shared_ptr<Cell> TestCell;
-
     /// Number of nodes
 	int nNodes;
 
     /// Numbers of edges
     int nRealEdges;
 
-    /// Total number of edges (includes edges for neib proc cells)
+    /// MAY BE DEPRECATED Total number of edges (includes edges for neib proc cells)
     int nTotalEdges;
 
     /// Numbers of real cells
     int nRealCells;
 
     /// Number of ghost cells
-    int nGhostCells;
     int nEdgesBound;
 
     /// Number of patches

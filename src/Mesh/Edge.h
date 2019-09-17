@@ -14,6 +14,12 @@ class Cell;
 
 class Edge
 {
+private:
+
+    /// Lenght of edge ??TODO PERIMETER IN CELL
+    double length;
+  
+
 public:
 
     /// Edge ID
@@ -28,20 +34,17 @@ public:
     /// Weights for integration
     std::vector<double> gWeights;
 
-    /// Lenght of edge
-    double length;
-
     /// Jacobian
     double J;
 
     /// Two nodes define edge
     std::vector<std::shared_ptr<Point>> nodes;
 
-    /// Neighbour cells for edge
-    std::vector<std::shared_ptr<Cell>> neibCells;
-
     /// Normal to edge
     Point n;
+
+    /// Neighbour cells for edge
+    std::vector<std::shared_ptr<Cell>> neibCells;
 
     /// Copy constructor
     Edge(const Edge&) = default;
@@ -54,12 +57,6 @@ public:
 
     /// Get length
     double getLength() const { return length; }
-
-    /// Check edge is equal to given
-    bool isEqual(const Edge& e) const;
-
-    /// Check edge is equal to given
-    bool isEqual(const std::shared_ptr<Edge>& e) const { return isEqual(*e); }
 
 }; // for Edge
 

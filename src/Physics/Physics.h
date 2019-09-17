@@ -10,19 +10,20 @@
 #include "Params.h"
 
 ///
-/// Description of mathematical miodel: EoS, how to compute natural fluxes, eigvals/eigvectors, speed of sound
+/// Description of mathematical model: EoS, how to compute natural fluxes, eigvals/eigvectors, speed of sound
 ///
 
 class Physics
 {
+     
 
 public:
 
     /// Heat capacity ratio
     double cpcv;
 
-    /// Covolume constant
-    double beta;
+    /// Covolume constant; 0 for ideal gas
+    double covolume;
 
     /// Constructor
 	Physics();

@@ -259,7 +259,6 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
                 gpFluxes[iGP] = inverseRotate(flux.evaluate(solLeft, solRight), eNormal);
 
                 ////if (myRank == 1) cout << "; flux: " << gpFluxes[iGP] << endl;
-                double nnnn = 0.0;
             }// for GP
 
             
@@ -359,6 +358,8 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
                 resV = phs.fluxF(sol) * nablaPhi[0] + \
                        phs.fluxG(sol) * nablaPhi[1];
 
+                resV += prb.source(sol, gPoint) * B.phi[q](iCell, gPoint);
+
                 for (int p = 0; p < dimPh; ++p)
                     res[p * nShapes + q] += resV[p] * coef;    
             }// for shapes
@@ -412,44 +413,6 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
     return rhs;
 }
 
-numvector<double, dimS> Solver::correctNonOrthoCell(const numvector<double, dimS>& rhs, const vector<vector<double>>& gramian) const
-{
-    numvector<double, dimS> alphaCorr;
-
-    numvector<double, nShapes> solution(0.0); //for 3 ff!!!
-
-    //cout << "cell# " << iCell << "; cfts: " << alpha << "; G: " << B.gramian[iCell] << endl;
-    for (int iSol = 0; iSol < dimPh; ++iSol)
-    {
-        // solve slae
-        solution[0] = rhs[iSol*nShapes];
-
-
-        if (nShapes == 3)
-        {
-            //cout << "\tiSol = " << iSol << endl;
-
-            solution[2] = (rhs[iSol*nShapes + 2] * gramian[0][0] - rhs[iSol*nShapes + 1] * gramian[1][0]) \
-                / (gramian[1][1] * gramian[0][0] - gramian[1][0] * gramian[1][0]);
-            solution[1] = (rhs[iSol*nShapes + 1] - solution[2] * gramian[1][0]) \
-                  / (gramian[0][0]);
-        }
-
-        //set solution to appropriate positions
-        for (int i = 0; i < nShapes; ++i)
-        {
-            //cout << "i = " << i << "; iAlpha = " << i + iSol*nShapes << endl; 
-            alphaCorr[i + iSol*nShapes] = solution[i];
-        }
-
-        //cout << "the next sol..." << endl;
-    }
-
-    //cout << "result in fun = " << alphaCorr << endl;
-    //cout << "the next cell..." << endl;
-
-    return alphaCorr;
-}
 
 
 vector<numvector<double, dimS>> Solver::correctNonOrtho(const vector<numvector<double, dimS>>& alpha) const
@@ -464,34 +427,11 @@ vector<numvector<double, dimS>> Solver::correctNonOrtho(const vector<numvector<d
     for (int iCell = 0; iCell < M.nRealCells; ++iCell)
     {
         //cout << "iCell in common  = " << iCell << endl;
-        alphaCorr[iCell] = correctNonOrthoCell(alpha[iCell], B.gramian[iCell]);
+        alphaCorr[iCell] = B.correctNonOrthoCell(alpha[iCell], iCell);
         //cout << "result = " << alphaCorr[iCell] << endl;
     }// for cells
 
     return alphaCorr;
-}
-
-
-numvector<double, dimS> Solver::correctPrevIterCell(const numvector<double, dimS>& alphaCorr, const vector<vector<double>>& gramian) const
-{
-    numvector<double, dimS> alpha(0.0);
-    for (int iSol = 0; iSol < dimPh; ++iSol)
-    {
-        alpha[iSol*nShapes] += alphaCorr[iSol*nShapes];
-
-        for (int i = 1; i < nShapes; ++i)
-        {
-    ////#pragma omp simd
-            for (int j = 1; j <=i; ++j)
-                alpha[i + iSol*nShapes] += gramian[i-1][j-1] * alphaCorr[iSol*nShapes + j];
-
-            for (int j = i + 1; j < nShapes; ++j)
-                alpha[i + iSol*nShapes] += gramian[j-1][i-1] * alphaCorr[iSol*nShapes + j];
-
-        }
-    }// for variables
-
-    return alpha;
 }
 
 
@@ -507,7 +447,7 @@ vector<numvector<double, dimS>> Solver::correctPrevIter(const vector<numvector<d
     for (int iCell = 0; iCell < M.nRealCells; ++iCell)
     {
         //cout << "iCell in common  = " << iCell << endl;
-        alphaCorr[iCell] = correctPrevIterCell(alpha[iCell], B.gramian[iCell]);
+        alphaCorr[iCell] = B.correctPrevIterCell(alpha[iCell], iCell);
         //cout << "result = " << alphaCorr[iCell] << endl;
     }// for cells
 

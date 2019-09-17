@@ -11,10 +11,7 @@
 
 class Indicator
 {
-public:
-
-    /// Constant reference to mesh
-    const Mesh& mesh;
+ 
 
     /// Problem
     //const Problem& problem;
@@ -23,6 +20,9 @@ public:
     //std::vector<int> tCells;
     
 public:
+
+    /// Constant reference to mesh
+    const Mesh& mesh;
 
     /// Constructor
     Indicator (const Mesh& msh) : mesh(msh) {}

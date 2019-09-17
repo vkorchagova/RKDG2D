@@ -18,20 +18,18 @@ class Solution
 {
 
 public:   
+
+    /// Reference to the basis PUBLIC FOR WENO_S
+    const Basis& B;
     
     /// The very Coeffs for one proc
     std::vector<numvector<double, dimS>> SOL;
-    
-    /// Reference to the basis
-    const Basis& B;
 
     /// Full pack of solution coeffs
     std::vector<numvector<double, dimS>> fullSOL;
 
     /// Pack of solutions in cell centers to export
     std::vector<numvector<double, dimExp>> solToExport;
-
-public:
 
     /// Constructor
     Solution(Basis& bas);

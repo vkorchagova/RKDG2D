@@ -1,13 +1,13 @@
 #ifndef LIMITERRIEMANNWENOS_H
 #define LIMITERRIEMANNWENOS_H
 
-#include "Limiter.h"
+#include "LimiterWENOS.h"
 
 ///
 /// WENO_S limiter applied to Riemann invariants component-by-component
 ///
 
-class LimiterRiemannWENOS : public Limiter
+class LimiterRiemannWENOS : public LimiterWENOS
 {
 
     /// Turn to conservative variables from Riemann
@@ -37,7 +37,7 @@ public:
     LimiterRiemannWENOS(
         const std::vector<std::shared_ptr<Cell>>& cells, 
         const Solution& sln,
-        const Physics& phs) : Limiter(cells, sln, phs) {}
+        const Physics& phs) : LimiterWENOS(cells, sln, phs) {}
 
     /// Limit solution gradients
     virtual void limit(std::vector<numvector<double, dimS> >& SOL) override;

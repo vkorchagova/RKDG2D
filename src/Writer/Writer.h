@@ -26,6 +26,9 @@ extern std::ofstream logger;
 
 class Writer
 {
+
+private:
+
     /// Const reference to mesh
     const Mesh& mesh;
 
@@ -34,6 +37,11 @@ class Writer
 
     /// Const reference to physics
     const Physics& physics;
+
+    //----- MPI
+
+    /// Collect full solution 
+    void collectFullSolution();
 
 public:
 
@@ -66,10 +74,7 @@ public:
     /// Export solution coeffs
     void outputFullNativeCoeffs(std::ostream& wStream, std::vector<numvector<double, dimS>> coeffs) const;
 
-    //----- MPI
-
-    /// Collect full solution 
-    void collectFullSolution();
+    
 
 };
 

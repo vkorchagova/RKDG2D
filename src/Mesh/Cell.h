@@ -20,6 +20,29 @@ class Edge;
 class Cell
 {
 
+private:
+
+    /// Area of cell
+    double area;
+    
+    /// Mass center of cell
+    Point center;
+
+    /// local [-1,1]x[-1,1] to global rectangular cell
+    Point localToGlobal(const Point& localPoint) const;
+
+    /// Calculate element area
+    void setArea();
+
+    /// Set cell center
+    void setCellCenter();
+
+    /// Define Jacobian function
+    void setJacobian();
+
+    /// Set Gauss points
+    void setGaussPoints();
+
 public:
 
     /// Cell ID
@@ -35,19 +58,7 @@ public:
     std::vector<double> gWeights2D;
     
     /// Jacobian
-    std::vector<double> J;
-    
-    /// Area of cell
-    double area;
-    
-    /// Mass center of cell
-    Point center;
-
-    /// Gramian matrix
-    std::vector<std::vector<double>> gramian;
-
-    /// local [-1,1]x[-1,1] to global rectangular cell
-    Point localToGlobal(const Point& localPoint) const;
+    std::vector<double> J;    
 
     /// List of nodes in cell
     std::vector<std::shared_ptr<Point>> nodes;
@@ -64,35 +75,20 @@ public:
     /// Neighbour cells vertex
     std::vector<std::shared_ptr<Cell>> neibCellsVertex;
 
-    /// Return area of cell
-    double getArea() const { return area; }
-
-    /// Return center of cell
-    const Point& getCellCenter() const { return center; }
-
-    /// Calculate element area
-    void setArea();
-
-    /// Set cell center
-    void setCellCenter();
-
-    /// Define Jacobian function
-    void setJacobian();
-
-    /// Set Gauss points
-    void setGaussPoints();
-
     /// Construct cell using vectors of nodes and edges
     Cell(const std::vector<std::shared_ptr<Point>> &nodes, const std::vector<std::shared_ptr<Edge>> &edges);
 
     /// Destructor
     ~Cell() {}
 
+    /// Return area of cell
+    double getArea() const { return area; }
+
+    /// Return center of cell
+    const Point& getCellCenter() const { return center; }
+
     /// Calculate coordinates of cell nodes
     std::vector<Point> getCellCoordinates() const;
-
-    /// Find neighbour cells
-    void findNeighbourCells();
 
     /// check for a cell among vertex neighbor
     bool inNeibVertList(const std::shared_ptr<Cell>& cell, std::vector<std::shared_ptr<Cell>>& neibVC);

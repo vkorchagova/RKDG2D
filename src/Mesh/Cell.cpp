@@ -13,18 +13,10 @@ Cell::Cell(const std::vector<std::shared_ptr<Point>> &defNodes, const vector<std
 : nodes(defNodes), edges(defEdges)
 {
     nEntities = defNodes.size();
-    //nodes.resize(nEntities);
-    //edges.resize(nEntities);
-    
-//    move(defNodes.begin(), defNodes.end(), back_inserter(nodes));
-    
-//    nodes.insert(nodes.end(), make_move_iterator(defNodes.begin()), make_move_iterator(defNodes.end()));
-    
-    //for (int i = 0; i < nEntities; ++i)
-    //{
-    //    nodes[i] = move(defNodes[i]);
-    //    edges[i] = move(defEdges[i]);
-//    }
+    setArea();
+    setGaussPoints();
+    setJacobian();
+    setCellCenter();
 }
 
 // ------------------ Private class methods --------------------

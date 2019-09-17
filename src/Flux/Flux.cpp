@@ -30,16 +30,16 @@ numvector<double, dimPh> Flux::lambdaF_Roe(const numvector<double, dimPh>& solOn
 	//    if (getPressure(solOne) < 0 || getPressure(solTwo) < 0)
 	//        cout << "kkk";
 
-	//double rho_av = (solOne[0] * sqrtRhoLeft + solTwo[0] * sqrtRhoRight) / sumSqrtRho;
+	double rho_av = (solOne[0] * sqrtRhoLeft + solTwo[0] * sqrtRhoRight) / sumSqrtRho;
 
-	//c_av = sqrt( (phs.cpcv - 1) * phs.cpcv * (h_av - 0.5 * sqr(u_av))  / (1.0 - rho_av * 0.001) / (phs.cpcv - rho_av * 0.001) );
+	c_av = sqrt( (phs.cpcv - 1) * phs.cpcv * (h_av - 0.5 * sqr(u_av))  / (1.0 - rho_av * phs.covolume) / (phs.cpcv - rho_av * phs.covolume) );
 
 	return{ u_av - c_av, u_av, u_av, u_av, u_av + c_av };
 }
 
 
 numvector<double, dimPh> Flux::lambdaF_Einfeldt(const numvector<double, dimPh>& solOne, const numvector<double, dimPh>& solTwo) const
-{
+{ // UPDATE FOR COVOLUME
 	double cLeft = phs.c(solOne);
 	double cRight = phs.c(solTwo);
 

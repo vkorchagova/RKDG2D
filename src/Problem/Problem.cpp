@@ -31,6 +31,18 @@ void Problem::setInitialConditions(CaseInit task)
 	function<double(const Point& r)> initU;
 	function<double(const Point& r)> initV;
 
+    source = [=](const numvector<double, dimPh> sol, const Point& r)
+        {
+            return numvector<double, 5> \
+            { \
+                0.0, \
+                0.0, \
+                0.0, \
+                0.0, \
+                0.0 \
+            }; 
+        }; 
+
 
 	switch (task)
 	{
@@ -38,7 +50,7 @@ void Problem::setInitialConditions(CaseInit task)
 	case SodX:
 	{
         phs.cpcv = 1.4;
-        phs.beta = 0.0;
+        phs.covolume = 0.0;
 
 		initRho = [](const Point& r) { return (r.x() < 0) ? 1.0 : 0.125; };
 		initP   = [](const Point& r) { return (r.x() < 0) ? 1.0 : 0.1;  };
@@ -50,8 +62,8 @@ void Problem::setInitialConditions(CaseInit task)
 
     case SodXCovol:
     {
-        phs.cpcv = 1.4;
-        phs.beta = 0.001;
+        phs.cpcv = 1.3;
+        phs.covolume = 0.001;
 
         initRho = [](const Point& r) { return (r.x() < -0.1) ? 100.0 : 1.0; };
         initP   = [](const Point& r) { return (r.x() < -0.1) ? 100.0 * 1e6 : 0.1 * 1e6;  };
@@ -64,7 +76,7 @@ void Problem::setInitialConditions(CaseInit task)
 	case SodY:
 	{
         phs.cpcv = 1.4;
-        phs.beta = 0.0;
+        phs.covolume = 0.0;
 
 		initRho = [](const Point& r) { return (r.y() < 0) ? 1.0 : 0.125; };
 		initP = [](const Point& r) { return (r.y() < 0) ? 1.0 : 0.1;  };
@@ -77,7 +89,7 @@ void Problem::setInitialConditions(CaseInit task)
 	case SodDiag:
 	{
         phs.cpcv = 1.4;
-        phs.beta = 0.0;
+        phs.covolume = 0.0;
 
 		initRho = [](const Point& r) { return ((r.x() + r.y()) < 1.0) ? 1.0 : 0.125; };
 		initP = [](const Point& r) { return ((r.x() + r.y()) < 1.0) ? 1.0 : 0.1;  };
@@ -90,7 +102,7 @@ void Problem::setInitialConditions(CaseInit task)
 	case SodCircle:
 	{
         phs.cpcv = 1.4;
-        phs.beta = 0.0;
+        phs.covolume = 0.0;
 
 		initRho = [](const Point& r) { return (r.length() <= 0.2) ? 1.0 : 0.125; };
 		initP = [](const Point& r) { return (r.length() <= 0.2) ? 1.0 : 0.1;  };
@@ -103,10 +115,10 @@ void Problem::setInitialConditions(CaseInit task)
     case ForwardStep:
     {
         phs.cpcv = 1.4;
-        phs.beta = 0.0;
+        phs.covolume = 0.0;
 
         initRho = [](const Point& r) { return 1.0; };
-        initP   = [&](const Point& r) { return 1.0 / cpcv;  };
+        initP   = [&](const Point& r) { return 1.0 / phs.cpcv;  };
         initU   = [](const Point& r) { return 3.0; };
         initV   = [](const Point& r) { return 0.0; };
 
@@ -116,10 +128,10 @@ void Problem::setInitialConditions(CaseInit task)
     case Sedov:
     {
         phs.cpcv = 1.4;
-        phs.beta = 0.0;
+        phs.covolume = 0.0;
 
         initRho = [](const Point& r) { return 1.0; };
-        initP   = [&](const Point& r) { return 1.0 / cpcv;  };
+        initP   = [&](const Point& r) { return 1.0 / phs.cpcv;  };
         initU   = [](const Point& r) { return 3.0; };
         initV   = [](const Point& r) { return 0.0; };
 
@@ -129,7 +141,7 @@ void Problem::setInitialConditions(CaseInit task)
     case DoubleMach:
     {
         phs.cpcv = 1.4;
-        phs.beta = 0.0;
+        phs.covolume = 0.0;
 
         initRho = [](const Point& r) { return (r.x() < 0.15) ? 8.0 : 1.4; };
         initP   = [](const Point& r) { return (r.x() < 0.15) ? 116.518 : 1.0;  };
@@ -142,7 +154,7 @@ void Problem::setInitialConditions(CaseInit task)
     case Ladenburg:
     {
         phs.cpcv = 1.4;
-        phs.beta = 0.0;
+        phs.covolume = 0.0;
 
         initRho = [](const Point& r) { return 1.184308158; };
         initP   = [](const Point& r) { return 101325.0;  };
@@ -155,7 +167,7 @@ void Problem::setInitialConditions(CaseInit task)
     case ShuOsher:
     {
         phs.cpcv = 1.4;
-        phs.beta = 0.0;
+        phs.covolume = 0.0;
 
         initRho = [](const Point& r) { return (r.x() < -0.5 + 0.125) ? 3.857143 : 1.0 + 0.2 * sin(8.0 * 2.0 * 3.14159265*r.x() ); };
         initP   = [](const Point& r) { return (r.x() < -0.5 + 0.125) ? 10.3333 : 1.0;  };
@@ -175,9 +187,10 @@ void Problem::setInitialConditions(CaseInit task)
                 initRho(r)*initU(r), \
                 initRho(r)*initV(r), \
                 0.0, \
-                phs.e(initRho(r), initU(r), initV(r), 0.0, initP(r))
+                phs.e(initRho(r), initU(r), initV(r), 0.0, initP(r)) \
             }; 
         }; //for Co-Volume 0.001, for ideal 0.0
+
 
 };// SetInitCond
 
@@ -185,7 +198,7 @@ void Problem::setInitialConditions(CaseInit task)
     
     else if (caseName == "Woodward")
     {
-        cpcv = 1.4;
+        phs.cpcv = 1.4;
 
         initRho = [](const Point& r) { return 1.0; };
         initP   = [](const Point& r) { return (r.x() <= -0.4) ? 1000.0 : ((r.x() >= 0.4) ? 100.0 : 0.01);  };
@@ -194,7 +207,7 @@ void Problem::setInitialConditions(CaseInit task)
     }
     else if (caseName == "BlastCircle")
     {
-	cpcv = 1.4;
+	phs.cpcv = 1.4;
     
 	initRho = [](const Point& r) { return 1.0; };
 	initP = [](const Point& r) { return (r.length() < 0.1) ? 10.0 : 0.1; };
@@ -203,7 +216,7 @@ void Problem::setInitialConditions(CaseInit task)
     }
     else if (caseName == "Noh")
     {
-        cpcv = 5.0/3.0;
+        phs.cpcv = 5.0/3.0;
 
         initRho = [](const Point& r) { return 1.0; };
         initP   = [](const Point& r) { return 1e-6;  };
@@ -212,7 +225,7 @@ void Problem::setInitialConditions(CaseInit task)
     }
     else if (caseName == "123")
     {
-        cpcv = 1.4;
+        phs.cpcv = 1.4;
 
         initRho = [](const Point& r) { return 1.0; };
         initP   = [](const Point& r) { return 0.4;  };
@@ -221,16 +234,16 @@ void Problem::setInitialConditions(CaseInit task)
     }
     else if (caseName == "forwardStep")
     {
-        cpcv = 1.4;
+        phs.cpcv = 1.4;
 
         initRho = [](const Point& r) { return 1.0; };
-        initP   = [&](const Point& r) { return 1.0 / cpcv;  };
+        initP   = [&](const Point& r) { return 1.0 / phs.cpcv;  };
         initU   = [](const Point& r) { return 3.0; };
         initV   = [](const Point& r) { return 0.0; };
     }
     else if (caseName == "doubleMach")
     {
-        cpcv = 1.4;
+        phs.cpcv = 1.4;
 
         initRho = [](const Point& r) { return (r.x() < 0.15) ? 8.0 : 1.4; };
         initP   = [](const Point& r) { return (r.x() < 0.15) ? 116.518 : 1.0;  };
@@ -239,25 +252,25 @@ void Problem::setInitialConditions(CaseInit task)
     }
     else if (caseName == "acousticPulse")
     {
-        cpcv = 1.4;
+        phs.cpcv = 1.4;
 
         initRho = [](const Point& r) { return 1.0 + 1e-6*exp( - 40.0*sqr(r.x() )- 40.0*sqr(r.y() )); };
-        initP   = [=](const Point& r) { return pow(initRho(r), cpcv);  };
+        initP   = [=](const Point& r) { return pow(initRho(r), phs.cpcv);  };
         initU   = [](const Point& r) { return 0.0; };
         initV   = [](const Point& r) { return 0.0; };
     }
     else if (caseName == "monopole" || caseName == "dipole")
     {
-        cpcv = 1.4;
+        phs.cpcv = 1.4;
 
         initRho = [](const Point& r) { return 1.0; };
-        initP   = [&](const Point& r) { return 1.0 / cpcv;  };
+        initP   = [&](const Point& r) { return 1.0 / phs.cpcv;  };
         initU   = [](const Point& r) { return 0.0; };
         initV   = [](const Point& r) { return 0.0; };
     }
     else
     {
-        cpcv = 1.4;
+        phs.cpcv = 1.4;
 
         cout << "Problem " << caseName << " not found\n";
         exit(0);
@@ -271,7 +284,7 @@ void Problem::setInitialConditions(CaseInit task)
             initRho(r)*initU(r), \
             initRho(r)*initV(r), \
             0.0, \
-            initP(r) / (cpcv - 1.0) + \
+            initP(r) / (phs.cpcv - 1.0) + \
                 0.5 * initRho(r) * (sqr(initU(r)) + sqr(initV(r))) \
         };
     };
@@ -303,12 +316,21 @@ void Problem::setBoundaryConditions(CaseInit task)
     {
         double inletRho = 1.0;
         double inletU = 3.0;
+        double inletV = 0.0;
         double inletP = 1.0 / phs.cpcv;
 
         bc.emplace_back(
             make_shared<BoundaryConstant>(
                 M.patches[0], 
-                numvector<double, dimPh>({inletRho, -inletU * inletRho, 0.0, 0.0, phs.e(inletRho, inletU, 0.0, 0.0, inletP)})
+                numvector<double, dimPh>(
+                    {
+                        inletRho, 
+                        -inletU * inletRho, 
+                         inletV * inletRho, 
+                        0.0, 
+                        phs.e(inletRho, inletU, inletV, 0.0, inletP)
+                    }
+                )
             )
         );
         bc.emplace_back(make_shared<BoundaryOpen>(M.patches[1]));
@@ -320,21 +342,26 @@ void Problem::setBoundaryConditions(CaseInit task)
 
     case DoubleMach:
     {
-        //bc.emplace_back(
-        //    make_shared<BoundaryConstant>(
-        //        M.patches[0], 
-        //        numvector<double, dimPh>({8.0, -8.25*8.0, 0.0, 0.0, 563.545})
-        //    )
-        //);
-        
+
+
         double inletRho = 8.0;
         double inletU = 8.25;
+        double inletV = 0.0;
         double inletP = 116.518;
 
         bc.emplace_back(
             make_shared<BoundaryConstant>(
                 M.patches[0], 
-                numvector<double, dimPh>({inletRho, -inletU * inletRho, 0.0, 0.0, phs.e(inletRho, inletU, 0.0, 0.0, inletP)})
+
+                numvector<double, dimPh>(
+                    {
+                        inletRho, 
+                        -inletU * inletRho, 
+                         inletV * inletRho, 
+                        0.0, 
+                        phs.e(inletRho, inletU, inletV, 0.0, inletP)
+                    }
+                )
             )
         );
 
@@ -371,35 +398,33 @@ void Problem::setBoundaryConditions(CaseInit task)
     {
         bc.emplace_back(make_shared<BoundarySlip>(M.patches[0]));
 
-        double inletRho = 3.830183898;
+        double inletRho = 3.8303970021; //3.830183898
         double inletU = 315.6;
+        double inletV = 0.0;
         double inletP = 271724;
 
         bc.emplace_back(
             make_shared<BoundaryConstant>(
-                M.patches[1], 
-                numvector<double, dimPh>({inletRho, -inletU * inletRho, 0.0, 0.0, phs.e(inletRho, inletU, 0.0, 0.0, inletP)})
+                M.patches[0], 
+                numvector<double, dimPh>(
+                    {
+                        inletRho, 
+                        -inletU * inletRho, 
+                         inletV * inletRho, 
+                        0.0, 
+                        phs.e(inletRho, inletU, inletV, 0.0, inletP)
+                    }
+                )
             )
         );
-
-        //bc.emplace_back(
-        //    make_shared<BoundaryConstant>(
-        //        M.patches[1], 
-        //        numvector<double, dimPh>({3.830183898, -3.830183898*315.6, 0.0, 0.0, 271724*(1.0-3.830183898*0.0)/ 0.4 + 0.5*3.830183898*315.6*315.6})
-        //    )
-        //);
-
         
         bc.emplace_back(make_shared<BoundaryOpen>(M.patches[2]));
         
 
         break;
     }
-
-
-    }
-   
     
+    }
 }
 
 

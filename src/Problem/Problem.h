@@ -24,22 +24,7 @@ class Patch;
 class Problem
 {
 
-public:
-
-    /// Heat capacity defined by user
-    double cpcv;
-
-    /// Function for initial conditions
-    std::function<numvector<double, dimPh>(const Point& r)> init;
-
-    /// Vector of boundary conditions
-    std::vector<std::shared_ptr<Boundary>> bc;
-
-    /// Parameters on infinity
-    numvector<double, dimPh> infty;
-
-    /// Link to coeffs
-    //const std::vector<numvector<double, dimPh * nShapes>>& alpha;
+private:
 
     /// Constant reference to time 
     const TimeControl& T;
@@ -50,17 +35,29 @@ public:
     /// Reference to physics
     Physics& phs;
 
+    /// Set initial conditions as functions
+    void setInitialConditions(CaseInit task);
+
+    /// Set boundary conditions
+    void setBoundaryConditions(CaseInit task);
+
+
+public:
+
+    /// Function for initial conditions
+    std::function<numvector<double, dimPh>(const Point& r)> init;
+
+    /// Function for explicit source
+    std::function<numvector<double, dimPh>(const numvector<double, dimPh> sol, const Point& r)> source;
+
+    /// Vector of boundary conditions
+    std::vector<std::shared_ptr<Boundary>> bc;
+
     /// Constructor
     Problem (CaseInit task, const Mesh& m, const TimeControl& t, Physics& phs);
 
     /// Destructor
     ~Problem();
-
-    /// Set initial conditions as functions
-    void setInitialConditions(CaseInit task);
-
-	/// Set boundary conditions
-    void setBoundaryConditions(CaseInit task);
 
 };// end Problem
 

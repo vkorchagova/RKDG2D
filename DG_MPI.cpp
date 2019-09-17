@@ -90,13 +90,13 @@ int main(int argc, char* argv[])
 
     ///----------------------
 
-    CaseInit caseName = Ladenburg;//SodXCovol;
+    CaseInit caseName = SodX;//SodXCovol;
 
     double tStart = 0;
-    double tEnd = 5e-4;
+    double tEnd = 0.2;
 
-    double initTau = 1e-9;
-    double outputInterval = 1e-5;
+    double initTau = 1e-5;
+    double outputInterval = 0.1;
 
     bool isDynamic = true;
     double maxCo = 0.3;
@@ -130,7 +130,7 @@ int main(int argc, char* argv[])
     
     Writer writer(fullMesh, solution, physics);
     TimeControl time(mesh, physics, solution, tStart, tEnd, initTau, outputInterval, isDynamic, maxCo, maxTau, maxTauGrowth);
-    Problem problem(caseName, mesh, time);
+    Problem problem(caseName, mesh, time, physics);
     Solver solver(basis, mesh, solution, problem, physics, flux, buf);
 
 
@@ -139,9 +139,7 @@ int main(int argc, char* argv[])
     LimiterBJ limiter(mesh.cells, solution, physics);
     RungeKutta RK(order, basis, solver, solution, limiter, time);
 
-    ///----------------------
-
-    physics.cpcv = problem.cpcv;
+    ///---------------------
 
     //writer.exportMeshVTK("mesh2D.vtk");
 

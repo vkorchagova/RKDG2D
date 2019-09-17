@@ -40,6 +40,9 @@ protected:
     /// Limited solution
     std::vector<numvector<double, dimS>> alphaNew;
 
+    /// Last hope limiter
+    void lastHope(std::vector<numvector<double, dimS> >& alpha);
+
 public:
 
     /// Construct
@@ -53,8 +56,7 @@ public:
     /// Limit solution gradients
     virtual void limit(std::vector<numvector<double, dimS> >& alpha) = 0;
 
-    /// Last hope limiter
-    void lastHope(std::vector<numvector<double, dimS> >& alpha);
+    
 
 };
 
