@@ -311,6 +311,14 @@ void Problem::setBoundaryConditions(CaseInit task)
 
         break;
     }
+    
+    case ShuOsher:
+    {
+        for (const Patch& p : M.patches)
+            bc.emplace_back(make_shared<BoundaryOpen>(p));
+
+        break;
+    }
 
     case ForwardStep:
     {
@@ -319,108 +327,143 @@ void Problem::setBoundaryConditions(CaseInit task)
         double inletV = 0.0;
         double inletP = 1.0 / phs.cpcv;
 
-        bc.emplace_back(
-            make_shared<BoundaryConstant>(
-                M.patches[0], 
-                numvector<double, dimPh>(
+        for (const Patch& patch : M.patches)
+        {
+            if (patch.name == "left" or 
+                patch.name == "inlet")
+            {
+                bc.emplace_back(
+                make_shared<BoundaryConstant>(
+                    patch, 
+                    numvector<double, dimPh>(
                     {
                         inletRho, 
                         -inletU * inletRho, 
                          inletV * inletRho, 
                         0.0, 
                         phs.e(inletRho, inletU, inletV, 0.0, inletP)
-                    }
-                )
-            )
-        );
-        bc.emplace_back(make_shared<BoundaryOpen>(M.patches[1]));
-        bc.emplace_back(make_shared<BoundarySlip>(M.patches[2]));
-        bc.emplace_back(make_shared<BoundarySlip>(M.patches[3]));
+                    })
+                ));
+            }
+            else if (patch.name == "right" or 
+                     patch.name == "outlet")
+            {
+                bc.emplace_back(make_shared<BoundaryOpen>(patch));
+            }
+            else if (patch.name == "up" or 
+                     patch.name == "top" or 
+                     patch.name == "down" or
+                     patch.name == "walls" or 
+                     patch.name == "wall" or  
+                     patch.name == "step")
+            {
+                bc.emplace_back(make_shared<BoundarySlip>(patch));
+            }
+            else
+            {
+                cout << "Boundary condition for patch " << patch.name << " is not found.\n"
+                     << "Check settings in src/Problem.cpp/setBoundaryConditions" << endl;
+                exit(1);
+            }
 
-        break;
+            break;
+        }
     }
 
     case DoubleMach:
     {
-
-
         double inletRho = 8.0;
         double inletU = 8.25;
         double inletV = 0.0;
         double inletP = 116.518;
 
-        bc.emplace_back(
-            make_shared<BoundaryConstant>(
-                M.patches[0], 
-
-                numvector<double, dimPh>(
+        for (const Patch& patch : M.patches)
+        {
+            if (patch.name == "left" or 
+                patch.name == "inlet")
+            {
+                bc.emplace_back(
+                make_shared<BoundaryConstant>(
+                    patch, 
+                    numvector<double, dimPh>(
                     {
                         inletRho, 
                         -inletU * inletRho, 
                          inletV * inletRho, 
                         0.0, 
                         phs.e(inletRho, inletU, inletV, 0.0, inletP)
-                    }
-                )
-            )
-        );
-
-        bc.emplace_back(make_shared<BoundaryOpen>(M.patches[1]));
-        bc.emplace_back(make_shared<BoundarySlip>(M.patches[2]));
-
-        break;
-    }
-
-    case ShuOsher:
-    {
-        // bc.emplace_back(
-        //     make_shared<BoundaryConstant>(
-        //         M.patches[0], 
-        //         numvector<double, dimPh>({3.857143, -2.629369, 0.0, 0.0, 10.3333*(1.0-3.857143*0.0)/ 0.4 + 0.5*3.857143*2.629369*2.629369})
-        //     )
-        // );
-
-        // bc.emplace_back(
-        //     make_shared<BoundaryConstant>(
-        //         M.patches[1], 
-        //         numvector<double, dimPh>({1.0, 0.0, 0.0, 0.0, 1.0*(1.0-1.0*0.001)/ 0.4})
-        //     )
-        // );
-        bc.emplace_back(make_shared<BoundaryOpen>(M.patches[0]));
-        bc.emplace_back(make_shared<BoundaryOpen>(M.patches[1]));
-        bc.emplace_back(make_shared<BoundaryOpen>(M.patches[2]));
-        bc.emplace_back(make_shared<BoundaryOpen>(M.patches[3]));
-
+                    })
+                ));
+            }
+            else if (patch.name == "right" or 
+                     patch.name == "outlet")
+            {
+                bc.emplace_back(make_shared<BoundaryOpen>(patch));
+            }
+            else if (patch.name == "up" or 
+                     patch.name == "top" or 
+                     patch.name == "walls" or 
+                     patch.name == "wall" or 
+                     patch.name == "down")
+            {
+                bc.emplace_back(make_shared<BoundarySlip>(patch));
+            }
+            else
+            {
+                cout << "Boundary condition for patch " << patch.name << " is not found.\n"
+                     << "Check settings in src/Problem.cpp/setBoundaryConditions" << endl;
+                exit(1);
+            }
+        }
         break;
     }
 
     case Ladenburg:
     {
-        bc.emplace_back(make_shared<BoundarySlip>(M.patches[0]));
-
         double inletRho = 3.8303970021; //3.830183898
         double inletU = 315.6;
         double inletV = 0.0;
         double inletP = 271724;
 
-        bc.emplace_back(
-            make_shared<BoundaryConstant>(
-                M.patches[0], 
-                numvector<double, dimPh>(
+        for (const Patch& patch : M.patches)
+        {
+            if (patch.name == "left" or 
+                patch.name == "inlet")
+            {
+                bc.emplace_back(
+                make_shared<BoundaryConstant>(
+                    patch, 
+                    numvector<double, dimPh>(
                     {
                         inletRho, 
                         -inletU * inletRho, 
                          inletV * inletRho, 
                         0.0, 
                         phs.e(inletRho, inletU, inletV, 0.0, inletP)
-                    }
-                )
-            )
-        );
+                    })
+                ));
+            }
+            else if (patch.name == "right" or 
+                     patch.name == "outlet")
+            {
+                bc.emplace_back(make_shared<BoundaryOpen>(patch));
+            }
+            else if (patch.name == "up" or 
+                     patch.name == "top" or 
+                     patch.name == "down" or
+                     patch.name == "walls" or 
+                     patch.name == "wall")
+            {
+                bc.emplace_back(make_shared<BoundarySlip>(patch));
+            }
+            else
+            {
+                cout << "Boundary condition for patch " << patch.name << " is not found.\n"
+                     << "Check settings in src/Problem.cpp/setBoundaryConditions" << endl;
+                exit(1);
+            }
+        }
         
-        bc.emplace_back(make_shared<BoundaryOpen>(M.patches[2]));
-        
-
         break;
     }
     

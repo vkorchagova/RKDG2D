@@ -93,10 +93,10 @@ int main(int argc, char* argv[])
     CaseInit caseName = SodX;//SodXCovol;
 
     double tStart = 0;
-    double tEnd = 0.2;
+    double tEnd = 0.1;
 
     double initTau = 1e-5;
-    double outputInterval = 0.1;
+    double outputInterval = 0.01;
 
     bool isDynamic = true;
     double maxCo = 0.3;
