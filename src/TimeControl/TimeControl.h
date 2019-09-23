@@ -110,7 +110,7 @@ public:
     /// Update time step
     void updateTimeStep();
 
-    /// Update current time between Runge --- Kutta steps
+    /// Update current time in Runge --- Kutta step
     void updateTimeValueRK(double fracTau);
 
     /// Check if time is not finished
