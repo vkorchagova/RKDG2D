@@ -50,18 +50,10 @@ public:
     numvector<double, dimPh> fluxG(const numvector<double, dimPh>& sol) const;
 
     /// Left  eigenvectors
-    //std::pair<numvector<numvector<double, dimPh>, dimPh>, numvector<numvector<double, dimPh>, dimPh>> getL(const numvector<double, dimPh>& sol) const;
-	numvector<numvector<double, dimPh>, dimPh> getL(const numvector<double, dimPh>& sol, const Point& n) const;
-	numvector<numvector<double, dimPh>, dimPh> getLx(const numvector<double, dimPh>& sol) const;
-	numvector<numvector<double, dimPh>, dimPh> getLy(const numvector<double, dimPh>& sol) const;
-    
-	/// Right eigenvectors
-    //std::pair<numvector<numvector<double, dimPh>, dimPh>, numvector<numvector<double, dimPh>, dimPh>> getR(const numvector<double, dimPh>& sol) const;
-	numvector<numvector<double, dimPh>, dimPh> getR(const numvector<double, dimPh>& sol, const Point& n) const;
-	numvector<numvector<double, dimPh>, dimPh> getRx(const numvector<double, dimPh>& sol) const;
-	numvector<numvector<double, dimPh>, dimPh> getRy(const numvector<double, dimPh>& sol) const;
+    numvector<numvector<double, dimPh>, dimPh> getL(const numvector<double, dimPh>& sol, const Point& n) const;
 
-    
+	/// Right eigenvectors
+    numvector<numvector<double, dimPh>, dimPh> getR(const numvector<double, dimPh>& sol, const Point& n) const;   
 
 };// end Physics
 
