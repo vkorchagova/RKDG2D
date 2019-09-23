@@ -24,23 +24,26 @@ class LimiterRiemannWENOS : public LimiterWENOS
         const numvector<numvector<double, dimPh>, dimPh>& L
     ) const;
 
-    // Limit Riemann variables in WENO_S manner
-    //numvector<double, dimS> limitP
-    //(
-    //    const std::vector<std::shared_ptr<Cell>>& stenc, 
-    //    const std::vector<numvector<double, dimS>>& alpha
-    //);
+protected:
+    
+    /// Limit solution gradients
+    virtual numvector<double, dimS> limitation(const std::vector<std::shared_ptr<Cell>>& stencil) override;
+
+    /// Choose stencil for defined cell
+    virtual std::vector<std::shared_ptr<Cell>> getStencilFor(const std::shared_ptr<Cell>& cell) override;
 
 public:
 
     /// Constructor
     LimiterRiemannWENOS(
-        const std::vector<std::shared_ptr<Cell>>& cells, 
-        const Solution& sln,
-        const Physics& phs) : LimiterWENOS(cells, sln, phs) {}
+        const Mesh& msh,
+        Solution& sln,
+        const Physics& phs,
+        const Indicator& ind) : LimiterWENOS(msh, sln, phs, ind) {}
 
-    /// Limit solution gradients
-    virtual void limit(std::vector<numvector<double, dimS> >& SOL) override;
+    /// Destructor
+    ~LimiterRiemannWENOS() {};
+
 };
 
 #endif // LIMITERRIEMANNWENOS_H

@@ -2,28 +2,21 @@
 
 using namespace std;
 
-void LimiterFinDiff::limit(std::vector<numvector<double, dimS> >& alpha)
+vector<shared_ptr<Cell>> LimiterFinDiff::getStencilFor(const std::shared_ptr<Cell>& cell)
 {
-    int n = alpha.size();
+    vector<shared_ptr<Cell>> stencil = { cell }; 
+    return stencil;
+}
 
-    //use limiter for all cells
-    troubledCells.resize(n);//indicator.checkDiscontinuities();
-
-    for (int i = 0; i < n; ++i)
-        troubledCells[i] = i;
-
-
-    //for (int iCell : troubledCells)
-//#pragma omp parallel for \
-    //for (vector<int>::iterator iter = troubledCells.begin(); iter != troubledCells.end(); ++iter)
-    for (size_t i = 0; i < n; ++i)
-    {        
-        int iCell = troubledCells[i];//*iter;
-        
-        for (int j = 0; j < 5; ++j)
-        {
-            alpha[iCell][j*nShapes + 1] = 0.0;
-            alpha[iCell][j*nShapes + 2] = 0.0;
-        }
+numvector<double, dimS> LimiterFinDiff::limitation(const std::vector<std::shared_ptr<Cell>>& stencil)
+{
+    numvector<double, dimS> res = solution.SOL[stencil[0]->number];
+    
+    for (int j = 0; j < dimS; ++j)
+    {
+        res[j*nShapes + 1] = 0.0;
+        res[j*nShapes + 2] = 0.0;
     }
+
+    return res;
 }

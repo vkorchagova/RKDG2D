@@ -4,7 +4,21 @@
 
 using namespace std;
 
-numvector<double, dimPh> LimiterBJVertex::getAlphaL(const shared_ptr<Cell>& cell, const numvector<double, dimPh>& mI, const numvector<double, dimPh>& MI, const numvector<double, dimPh>& uMean)
+LimiterBJVertex::LimiterBJVertex(
+        const Mesh& mesh, 
+        Solution& sln,
+        const Physics& phs,
+        const Indicator& ind) : Limiter(mesh, sln, phs, ind) 
+{
+    // uMean.reserve(maxPossibleStencilSize);
+}
+
+
+numvector<double, dimPh> LimiterBJVertex::getYMin(
+    const shared_ptr<Cell>& cell, 
+    const numvector<double, dimPh>& mI, 
+    const numvector<double, dimPh>& MI, 
+    const numvector<double, dimPh>& uMean)
 {
     numvector<double, dimPh> y = 0.0;
     numvector<double, dimPh> yMin = 1e9;
@@ -72,113 +86,48 @@ numvector<double, dimPh> LimiterBJVertex::getAlphaL(const shared_ptr<Cell>& cell
 }
 
 
-void LimiterBJVertex::limit(vector<numvector<double, dimS>>& alpha)
+vector<shared_ptr<Cell>> LimiterBJVertex::getStencilFor(const std::shared_ptr<Cell>& cell)
 {
-    double ts = omp_get_wtime();
+    vector<shared_ptr<Cell>> stencil = { cell }; // the stencil of limitation
+    stencil.insert(stencil.end(), cell->neibCellsVertex.begin(), cell->neibCellsVertex.end());
+    return stencil;
+}
 
-    int n = alpha.size(); // here must be only real cells!
+
+numvector<double, dimS> LimiterBJVertex::limitation(const std::vector<std::shared_ptr<Cell>>& stencil)
+{
+    int nCells = stencil.size();
+
+    // load memory
+    std::vector<numvector<double, dimPh>> uMean(nCells);    // mean values
+    numvector<double, dimS> alphaNew;                       // result of limitation
+
+    for (size_t k = 0; k < nCells; ++k)
+        uMean[k] = solution.reconstruct(stencil[k]->number, stencil[k]->getCellCenter());
+
+    // get minimum and maximum from cell averages
     
-    vector<numvector<double, dimS>> alphaNew(n);
-    
-    int numSol = 0;
+    numvector<double, dimPh> mI = 1e9;
+    numvector<double, dimPh> MI = -1e9;
 
-    for (int i = 0; i < n; ++i)
-        alphaNew[i] = alpha[i];  //no vector = vector???
-        
-    // mean values
-
-    vector<numvector<double, dimPh>> uMean;
-    uMean.reserve(4);
-
-    //use limiter for all cells
-    vector<int> troubledCells(n);
-
-    for (int i = 0; i < n; ++i)
-        troubledCells[i] = i;
-
-
-//    omp_set_num_threads(NumThreads);
-#pragma omp parallel /*default(none)*/ \
- shared(myRank, n, alpha, alphaNew, troubledCells) \
- firstprivate(numSol, uMean)
+    for (int iSol = 0; iSol < dimPh; ++iSol)
     {
-     //uMean.reserve(4);
-#pragma omp for
-     for (int i = 0; i < n; ++i) // may be in MPI we can iterate through vector without index like Python???
-     {
-         int iCell = troubledCells[i];
+        auto q = std::minmax_element(uMean.begin(), uMean.end(), [&iSol](const numvector<double, dimPh>& a, const numvector<double, dimPh>& b){return a[iSol] < b[iSol]; });
+        mI[iSol] = (*(q.first))[iSol];
+        MI[iSol] = (*(q.second))[iSol];
+    }
 
-         numvector<double, dimPh> mI = 1e9;
-         numvector<double, dimPh> MI = -1e9;
+    // compute a-coeff
+    numvector<double, dimPh> a = getYMin(stencil[0], mI, MI, uMean[0]);
 
+    // update solution
+    alphaNew = solution.SOL[stencil[0]->number];
 
-         const shared_ptr<Cell>& cell = cells[iCell];
+    for (int iSol = 0; iSol < dimPh; ++iSol)
+    {
+        alphaNew[iSol*nShapes + 1] *= a[iSol];
+        alphaNew[iSol*nShapes + 2] *= a[iSol];
+    }
 
-         // construct list of cells: cell + neighbours
-
-         vector<shared_ptr<Cell>> stenc;
-         stenc.reserve(5);
-         stenc = { cell }; // the stencil of limitation
-         stenc.insert(stenc.end(), cell->neibCellsVertex.begin(), cell->neibCellsVertex.end());
-
-         int nCells = stenc.size(); // nCells in stencil
-
-         // get mean values of linear functions
-
-         uMean.resize(nCells);
-
-         for (size_t k = 0; k < nCells; ++k)
-             uMean[k] = solution.reconstruct(stenc[k]->number, stenc[k]->getCellCenter());
-         // here tooooo strange to reconstruct solution through number... may be optimal way exists?..
-
-         for (int iSol = 0; iSol < dimPh; ++iSol)
-         {
-             auto q = std::minmax_element(uMean.begin(), uMean.end(), [&iSol](const numvector<double, dimPh>& a, const numvector<double, dimPh>& b){return a[iSol] < b[iSol]; });
-             mI[iSol] = (*(q.first))[iSol];
-             MI[iSol] = (*(q.second))[iSol];
-         }
-
-         //for (size_t k = 0; k < nCells; ++k)
-         //for (int iSol = 1; iSol < dimPh; ++iSol)
-         //{
-            // double A = uMean[k][iSol];
-            // if (A < mI[iSol])
-            //     mI[iSol] = A;
-            // if (A > MI[iSol])
-            //     MI[iSol] = A;
-         //}
-
-
-         //// get minimum from cell averages
-         //for (size_t k = 0; k < nCells; ++k)
-         //for (int iSol = 0; iSol < dimPh; ++iSol)
-         //if (uMean[k][iSol] < mI[iSol])
-            // mI[iSol] = uMean[k][iSol];
-
-         //// get maximum from cell averages
-         //for (size_t k = 0; k < nCells; ++k)
-         //for (int iSol = 0; iSol < dimPh; ++iSol)
-         //if (uMean[k][iSol] > MI[iSol])
-            // MI[iSol] = uMean[k][iSol];
-
-         // compute a-coeff
-         numvector<double, dimPh> a = getAlphaL(cell, mI, MI, uMean[0]);
-
-         alphaNew[iCell] = alpha[iCell];
-
-         for (int iSol = 0; iSol < dimPh; ++iSol)
-         {
-             alphaNew[iCell][iSol*nShapes + 1] *= a[iSol];
-             alphaNew[iCell][iSol*nShapes + 2] *= a[iSol];
-         }
-     }
- }
-
-    alpha = alphaNew;
-
-    
-    double te = omp_get_wtime();
-    
-    //cout << "BJ-Vertex limiter " << te - ts << endl;
-    lastHope(alpha);
+    return alphaNew;
 }

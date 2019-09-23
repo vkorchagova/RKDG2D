@@ -11,19 +11,25 @@
 class LimiterFinDiff : public Limiter
 {
 
+protected:
+    
+    /// Limit solution gradients
+    virtual numvector<double, dimS> limitation(const std::vector<std::shared_ptr<Cell>>& stencil) override;
+
+    /// Choose stencil for defined cell
+    virtual std::vector<std::shared_ptr<Cell>> getStencilFor(const std::shared_ptr<Cell>& cell) override;
+
 public:
 
     /// Construct 
     //LimiterFinDiff(const Indicator& ind, Problem& prb) : Limiter(ind, prb) {}
     LimiterFinDiff(
-        const std::vector<std::shared_ptr<Cell>>& cells, 
-        const Solution& sln,
-        const Physics& phs) : Limiter(cells, sln, phs) {}
+        const Mesh& msh,
+        Solution& sln,
+        const Physics& phs,
+        const Indicator& ind) : Limiter(msh, sln, phs, ind) {};
 
     ~LimiterFinDiff() {}
-
-    /// Limit solution gradients
-    virtual void limit(std::vector<numvector<double, dimS> >& alpha) override;
 };
 
 #endif // LIMITERFINDIFF_H

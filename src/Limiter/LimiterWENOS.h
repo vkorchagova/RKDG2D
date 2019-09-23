@@ -12,22 +12,34 @@ extern std::ofstream logger;
 
 class LimiterWENOS : public Limiter
 {
+
+protected:
+
     /// Linear weight for WENO_S algorithm
     const double g = 0.001;
+    
+    /// Limit solution gradients
+    virtual numvector<double, dimS> limitation(const std::vector<std::shared_ptr<Cell>>& stencil) override;
+
+    /// Choose stencil for defined cell
+    virtual std::vector<std::shared_ptr<Cell>> getStencilFor(const std::shared_ptr<Cell>& cell) override;
+
+    /// Limit polynoms
+    numvector<double, dimS> limitP(
+        const std::vector<std::shared_ptr<Cell>>& stencil, 
+        const std::vector<numvector<double, dimS>>& p);
 
 public:
 
     /// Constructor
     LimiterWENOS(
-        const std::vector<std::shared_ptr<Cell>>& cells, 
-        const Solution& sln,
-        const Physics& phs);
+        const Mesh& msh,
+        Solution& sln,
+        const Physics& phs,
+        const Indicator& ind);
 
-    /// Destruct
+    /// Destructor
     ~LimiterWENOS() {};
-
-    /// Limit solution gradients
-    virtual void limit(std::vector<numvector<double, dimS> >& SOL) override;
 };
 
 #endif // LIMITERWENOS_H

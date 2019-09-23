@@ -12,7 +12,10 @@ class IndicatorNowhere : public Indicator
 public:
 
     /// Constructor
-    IndicatorNowhere(const Mesh& msh) : Indicator(msh) {}
+    IndicatorNowhere(const Mesh& msh, const Solution& sln) : Indicator(msh, sln) {}
+
+    /// Destructor
+    ~IndicatorNowhere() {};
 
     /// Check discontinuities
     virtual std::vector<int> checkDiscontinuities() const override;

@@ -210,7 +210,7 @@ void RungeKutta::Tstep()
         if (debug) logger << "\tslv.dataExchange(): " << t1 - t0 << endl;
 
         t0 = MPI_Wtime();
-        lmt.limit(sln.SOL);
+        lmt.limitSolution();
         t1 = MPI_Wtime();
         if (debug) logger << "\tslmt.limit(): " << t1 - t0 << "\n\t-----" << endl;
 

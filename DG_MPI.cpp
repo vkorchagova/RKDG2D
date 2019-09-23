@@ -35,7 +35,9 @@
 #include "FluxLLF.h"		/// All about the flux evaluating
 #include "FluxHLL.h"
 #include "FluxHLLC.h"
-//#include "Indicator.h"
+#include "IndicatorEverywhere.h"
+#include "IndicatorNowhere.h"
+#include "IndicatorBJ.h"
 //#include "Limiter.h"	/// All about the monotonization
 #include "Solver.h"		/// The whole spatial discretization module
 #include "TimeControl.h"
@@ -90,15 +92,15 @@ int main(int argc, char* argv[])
 
     ///----------------------
 
-    CaseInit caseName = SodX;//SodXCovol;
+    CaseInit caseName = SodCircle;//SodXCovol;
 
     double tStart = 0;
-    double tEnd = 0.1;
+    double tEnd = 1.0;
 
-    double initTau = 1e-5;
-    double outputInterval = 0.01;
+    double initTau = 1e-4;
+    double outputInterval = 0.1;
 
-    bool isDynamic = true;
+    bool isDynamic = false;
     double maxCo = 0.3;
     double maxTau = 1e-3;
     double maxTauGrowth = 0.1; 
@@ -133,10 +135,10 @@ int main(int argc, char* argv[])
     Problem problem(caseName, mesh, time, physics);
     Solver solver(basis, mesh, solution, problem, physics, flux, buf);
 
-
-    //LimiterRiemannWENOS limiter(mesh.cells, solution, physics);
-    //LimiterWENOS limiter(mesh.cells, solution, physics);
-    LimiterBJ limiter(mesh.cells, solution, physics);
+    IndicatorBJ indicator(mesh, solution);
+    LimiterRiemannWENOS limiter(mesh, solution, physics, indicator);
+    //LimiterWENOS limiter(mesh, solution, physics, indicator);
+    //LimiterBJ limiter(mesh, solution, physics, indicator);
     RungeKutta RK(order, basis, solver, solution, limiter, time);
 
     ///---------------------
@@ -158,7 +160,7 @@ int main(int argc, char* argv[])
 
         solver.dataExchange();
 
-        limiter.limit(solution.SOL);
+        limiter.limitSolution();
 
         solver.collectSolution();
         solver.collectSolutionForExport();
