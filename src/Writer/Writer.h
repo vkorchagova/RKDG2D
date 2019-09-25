@@ -26,6 +26,9 @@ extern std::ofstream logger;
 
 class Writer
 {
+
+private:
+
     /// Const reference to mesh
     const Mesh& mesh;
 
@@ -34,6 +37,11 @@ class Writer
 
     /// Const reference to physics
     const Physics& physics;
+
+    //----- MPI
+
+    /// Collect full solution 
+    void collectFullSolution();
 
 public:
 
@@ -48,11 +56,23 @@ public:
     /// Export mesh to VTK
     void exportMeshVTK(std::ostream& wStream) const;
 
+    /// Export mesh to VTK
+    void exportMeshVTK_polyvertices(const std::string& fileName) const;
+
+    /// Export mesh to VTK
+    void exportMeshVTK_polyvertices(std::ostream& wStream) const;
+
     /// Export solution to VTK
     void exportFrameVTK(const std::string& fileName) const;
 
     /// Export solution to VTK
     void exportFrameVTK(std::ostream& wStream) const;
+
+    /// Export solution to VTK // NOT SUPPORTED IN CASE OF MPI PARALLELISATION
+    void exportFrameVTK_polyvertices(const std::string& fileName) const;
+
+    /// Export solution to VTK // NOT SUPPORTED IN CASE OF MPI PARALLELISATION
+    void exportFrameVTK_polyvertices(std::ostream& wStream) const;
 
     /// Export solution coeffs 
     void exportNativeCoeffs(const std::string& fileName) const;
@@ -66,10 +86,7 @@ public:
     /// Export solution coeffs
     void outputFullNativeCoeffs(std::ostream& wStream, std::vector<numvector<double, dimS>> coeffs) const;
 
-    //----- MPI
-
-    /// Collect full solution 
-    void collectFullSolution();
+    
 
 };
 

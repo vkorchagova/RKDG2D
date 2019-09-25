@@ -35,7 +35,9 @@
 #include "FluxLLF.h"		/// All about the flux evaluating
 #include "FluxHLL.h"
 #include "FluxHLLC.h"
-//#include "Indicator.h"
+#include "IndicatorEverywhere.h"
+#include "IndicatorNowhere.h"
+#include "IndicatorBJ.h"
 //#include "Limiter.h"	/// All about the monotonization
 #include "Solver.h"		/// The whole spatial discretization module
 #include "TimeControl.h"
@@ -90,16 +92,16 @@ int main(int argc, char* argv[])
 
     ///----------------------
 
-    CaseInit caseName = Ladenburg;//SodXCovol;
+    CaseInit caseName = SodX;
 
     double tStart = 0;
-    double tEnd = 5e-4;
+    double tEnd = 0.2;
 
-    double initTau = 1e-9;
-    double outputInterval = 1e-5;
+    double initTau = 1e-4;
+    double outputInterval = 0.2;
 
     bool isDynamic = true;
-    double maxCo = 0.3;
+    double maxCo = 0.1;
     double maxTau = 1e-3;
     double maxTauGrowth = 0.1; 
 
@@ -126,22 +128,21 @@ int main(int argc, char* argv[])
     Solution solution(basis);
     
     Physics physics;
-    FluxHLL flux(physics);
+    FluxHLLC flux(physics);
     
     Writer writer(fullMesh, solution, physics);
     TimeControl time(mesh, physics, solution, tStart, tEnd, initTau, outputInterval, isDynamic, maxCo, maxTau, maxTauGrowth);
-    Problem problem(caseName, mesh, time);
+    Problem problem(caseName, mesh, time, physics);
     Solver solver(basis, mesh, solution, problem, physics, flux, buf);
 
-
-    //LimiterRiemannWENOS limiter(mesh.cells, solution, physics);
-    //LimiterWENOS limiter(mesh.cells, solution, physics);
-    LimiterBJ limiter(mesh.cells, solution, physics);
+    //IndicatorBJ indicator(mesh, solution);
+    IndicatorEverywhere indicator(mesh, solution);
+    //LimiterRiemannWENOS limiter(mesh, solution, physics, indicator);
+    LimiterWENOS limiter(mesh, solution, physics, indicator);
+    //LimiterBJ limiter(mesh, solution, physics, indicator);
     RungeKutta RK(order, basis, solver, solution, limiter, time);
 
-    ///----------------------
-
-    physics.cpcv = problem.cpcv;
+    ///---------------------
 
     //writer.exportMeshVTK("mesh2D.vtk");
 
@@ -160,7 +161,7 @@ int main(int argc, char* argv[])
 
         solver.dataExchange();
 
-        limiter.limit(solution.SOL);
+        limiter.limitSolution();
 
         solver.collectSolution();
         solver.collectSolutionForExport();
@@ -168,7 +169,7 @@ int main(int argc, char* argv[])
         if (myRank == 0) 
         {
             writer.exportNativeCoeffs("alphaCoeffs/" + to_string(tStart) + ".dat");
-            writer.exportFrameVTK("alphaCoeffs/" + to_string(tStart) + ".vtk");
+            writer.exportFrameVTK_polyvertices("alphaCoeffs/" + to_string(tStart) + ".vtk");
         }
     }
 
@@ -279,7 +280,7 @@ int main(int argc, char* argv[])
             if (myRank == 0)
             {
                 writer.exportNativeCoeffs("alphaCoeffs/" + to_string(time.getTime()) + ".dat");
-                writer.exportFrameVTK("alphaCoeffs/" + to_string(time.getTime()) + ".vtk");
+                writer.exportFrameVTK_polyvertices("alphaCoeffs/" + to_string(time.getTime()) + ".vtk");
             }
         }
 
@@ -294,7 +295,7 @@ int main(int argc, char* argv[])
     if (myRank == 0)
     {
         writer.exportNativeCoeffs("alphaCoeffs/" + to_string(tEnd) + ".dat");
-        writer.exportFrameVTK("alphaCoeffs/" + to_string(tEnd) + ".vtk");
+        writer.exportFrameVTK_polyvertices("alphaCoeffs/" + to_string(tEnd) + ".vtk");
     }
 
     if (myRank == 0)

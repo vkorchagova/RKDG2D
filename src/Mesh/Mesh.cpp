@@ -20,14 +20,7 @@ Mesh::Mesh(std::string& fileName, Buffers& buf) : buf(buf)
     //nEntitiesTotal = 0;
 
     for (int i = 0; i < cells.size(); ++i)
-    {
-        //nEntitiesTotal += cells[i]->nEntities;
-        cells[i]->setArea();
-        cells[i]->setGaussPoints();
-        cells[i]->setJacobian();
-        cells[i]->setCellCenter();
         cells[i]->number = i;
-    }
 
     //cout << "---" << endl;
     //cout << "num of cells = " << cells.size() << endl;
@@ -380,74 +373,6 @@ void Mesh::createPhysicalPatch(const vector<shared_ptr<Edge>>& edgeGroup, const 
     // }
 
     p.edgeGroup = edgeGroup;
-}
-
-shared_ptr<Cell> Mesh::makeGhostCell(const shared_ptr<Edge>& e)
-{
-    vector<shared_ptr<Point>> cNodes;
-    vector<shared_ptr<Edge>> cEdges;
-
-    shared_ptr<Cell> realCell = e->neibCells[0];
-
-    Point nodeRef = *e->nodes[0];
-
-    // reflect nodes of real cell with respect to edge
-    for (const shared_ptr<Point> node : realCell->nodes)
-    {
-        //if (node->isEqual(nodeRef) || node->isEqual(*(e->nodes[1])))
-        //cout << node << ' ' << node.get() << ' ' << e->nodes[0] << endl;
-        //cout << node << ' ' << e->nodes[1] << endl;
-
-        if (node == e->nodes[0] || node == e->nodes[1])
-        {
-
-            cNodes.push_back(node);
-        }
-        else
-        {
-            Point v = rotate(*node - nodeRef, e->n);
-            v.x() *= -1;
-
-            nodes.emplace_back(make_shared<Point>(inverseRotate(v, e->n) + nodeRef));
-            cNodes.push_back(nodes.back());
-
-        }
-    }
-
-    // construct edges of cell
-    for (int i = 0; i < realCell->nEntities-1; ++i)
-    {
-        vector<shared_ptr<Point>> nodesInEdge = {realCell->nodes[i], realCell->nodes[i + 1]};
-
-        shared_ptr<Edge> iE = make_shared<Edge>(Edge(nodesInEdge));
-
-        if (iE->isEqual(*e))
-            cEdges.push_back(e);
-        else
-        {
-            edges.push_back(iE);
-            cEdges.push_back(edges.back());
-        }
-    }// 3/4 edges. The last is coming soon...
-
-    // construct last edge
-    vector<shared_ptr<Point>> nodesInEdge = {realCell->nodes[0], realCell->nodes[realCell->nEntities-1]};
-
-    shared_ptr<Edge> iE = make_shared<Edge>(Edge(nodesInEdge));
-
-    if (iE->isEqual(*e))
-        cEdges.push_back(e);
-    else
-    {
-        edges.push_back(iE);
-        cEdges.push_back(edges.back());
-    }
-
-    // construct cell
-    cells.push_back(make_shared<Cell>(Cell(cNodes,cEdges)));
-    e->neibCells.push_back(cells.back());
-
-    return cells.back();
 }
 
 // ------------------ Public class methods ---------------------
@@ -857,61 +782,3 @@ void Mesh::importMesh(string& fileName)
 } // end importMesh
 
 
-
-void Mesh::exportMeshVTK_polyvertices(ostream& writer) const
-{
-    //writer.open("Mesh.vtk");
-
-    writer << "# vtk DataFile Version 2.0" << endl;
-    writer << "RKDG 2D data" << endl;
-    writer << "ASCII" << endl;
-
-    writer << "DATASET POLYDATA" << endl;
-
-    writer << "POINTS " << nNodes << " float" << endl;
-
-    // write coordinates of nodes
-    for (int i = 0; i < nRealCells; ++i)
-        for (int j = 0; j < cells[i]->nEntities; ++j)
-            writer << cells[i]->nodes[j]->x() << ' ' << cells[i]->nodes[j]->y() << ' ' << "0" << endl;
-
-    //get size of polygon list
-
-    int polySize = 0;
-
-    for (int i = 0; i < nRealCells; ++i)
-        polySize += cells[i]->nEntities;
-
-    polySize += nRealCells;
-
-    writer << "POLYGONS " << nRealCells << ' ' << nRealCells +  polySize << endl;
-
-
-    // write cells using numbers of nodes
-    int numPolyVertex = 0;
-    for (int i = 0; i < nRealCells; ++i)
-    {
-        writer << cells[i]->nEntities << ' ';
-
-        for (const shared_ptr<Point> node : cells[i]->nodes)
-        {
-            writer << numPolyVertex << ' ';
-            numPolyVertex++;
-        }
-
-        writer << endl;
-    }
-
-    //cout << "num(-1) = " << cells[cells.size()-1]->edges[2]->nodes[0]->number << endl;
-    //cout << "x(-1) = " << cells[cells.size()-1]->edges[2]->nodes[0]->x() << endl;
-    //cout << "&num(-1) = " << &(cells[cells.size()-1]->edges[2]->nodes[0]->number) << endl;
-
-
-    //writer << "CELL_DATA " << nRealCells << endl;
-    //writer << "POINT_DATA " << nNodes << endl;
-
-
-    //cout << "Mesh export OK" << endl;
-
-    //writer.close();
-}

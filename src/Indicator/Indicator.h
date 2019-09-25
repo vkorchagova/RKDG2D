@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "Mesh.h"
+#include "Solution.h"
 #include "numvector.h"
 
 ///
@@ -11,21 +12,19 @@
 
 class Indicator
 {
-public:
+ 
+protected:
 
     /// Constant reference to mesh
     const Mesh& mesh;
 
-    /// Problem
-    //const Problem& problem;
-    
-    /// List of troubed cells
-    //std::vector<int> tCells;
+    /// Constant reference to solution
+    const Solution& solution;
     
 public:
 
     /// Constructor
-    Indicator (const Mesh& msh) : mesh(msh) {}
+    Indicator (const Mesh& msh, const Solution& sln) : mesh(msh), solution(sln) {}
     
     /// Destructor
     virtual ~Indicator() {}

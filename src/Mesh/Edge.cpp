@@ -34,16 +34,30 @@ Edge::Edge(const vector<shared_ptr<Point>> &p) : nodes(p)
     }
     else if (nShapes == 3 || nShapes == 1)
     {
+
+
         // pure Gauss
-        nGP = 2;
+        // nGP = 2;
 
-        const double isqrt3 = 0.57735026918962576;
+        // const double isqrt3 = 0.57735026918962576;
 
-        gPoints.push_back( c - isqrt3 * m );
-        gPoints.push_back( c + isqrt3 * m );
+        // gPoints.push_back( c - isqrt3 * m );
+        // gPoints.push_back( c + isqrt3 * m );
 
-        // weights for gauss integration
-        gWeights = { 1.0, 1.0 };
+        // // weights for gauss integration
+        // gWeights = { 1.0, 1.0 };
+        nGP = 3;
+
+        const double sqrtfrac35 = 0.7745966692414834;
+
+        gPoints.push_back( c - sqrtfrac35 * m );
+        gPoints.push_back( c );
+        gPoints.push_back( c + sqrtfrac35 * m );
+
+        const double frac59 = 0.5555555555555556;
+        const double frac89 = 0.8888888888888889;
+
+        gWeights = { frac59, frac89, frac59 };
 
         // Gauss --- Lobatto
 //        nGP = 3;
@@ -70,16 +84,16 @@ Edge::Edge(const vector<shared_ptr<Point>> &p) : nodes(p)
     J = 0.5 * length;
 }
 
-bool Edge::isEqual(const Edge& e) const
-{ 
-    return true ? ( (nodes[0] == e.nodes[0] && nodes[1] == e.nodes[1]) 
-                    ||
-                    (nodes[0] == e.nodes[1] && nodes[1] == e.nodes[0]) )
-                : false;
+// bool Edge::isEqual(const Edge& e) const
+// { 
+//     return true ? ( (nodes[0] == e.nodes[0] && nodes[1] == e.nodes[1]) 
+//                     ||
+//                     (nodes[0] == e.nodes[1] && nodes[1] == e.nodes[0]) )
+//                 : false;
 
-    /*return true ? ( (nodes[0]->isEqual(e.nodes[0]) && nodes[1]->isEqual(e.nodes[1])) 
-                    ||
-                    (nodes[0]->isEqual(e.nodes[1]) && nodes[1]->isEqual(e.nodes[0])) ) 
-                : false; */
-}
+//     /*return true ? ( (nodes[0]->isEqual(e.nodes[0]) && nodes[1]->isEqual(e.nodes[1])) 
+//                     ||
+//                     (nodes[0]->isEqual(e.nodes[1]) && nodes[1]->isEqual(e.nodes[0])) ) 
+//                 : false; */
+// }
 

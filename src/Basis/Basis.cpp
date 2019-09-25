@@ -35,8 +35,8 @@ void Basis::initBasisFunctions()
     gradPhi.reserve(nShapes);
 
     phi.emplace_back([&](int iCell, const Point& r){ return phiCoeffs[iCell][0]; });
-    phi.emplace_back([&](int iCell, const Point& r){ return (r.x() - cells[iCell]->center.x()) * phiCoeffs[iCell][1]; });
-    phi.emplace_back([&](int iCell, const Point& r){ return (r.y() - cells[iCell]->center.y()) * phiCoeffs[iCell][2]; });
+    phi.emplace_back([&](int iCell, const Point& r){ return (r.x() - cells[iCell]->getCellCenter().x()) * phiCoeffs[iCell][1]; });
+    phi.emplace_back([&](int iCell, const Point& r){ return (r.y() - cells[iCell]->getCellCenter().y()) * phiCoeffs[iCell][2]; });
 
     gradPhi.emplace_back([&](int iCell, const Point& r)->Point { return Point({ 0.0                , 0.0 }); });
     gradPhi.emplace_back([&](int iCell, const Point& r)->Point { return Point({ phiCoeffs[iCell][1], 0.0 }); });
@@ -115,47 +115,63 @@ numvector<double, dimS> Basis::projection(const std::function<numvector<double, 
         }// for p
     }// for shapes
 
-    return correctNonOrthoCell(alpha,gramian[iCell]);
+    return correctNonOrthoCell(alpha, iCell);
 } // end projection
 
 
-numvector<double, dimS> Basis::correctNonOrthoCell(const numvector<double, dimS>& rhs, const vector<vector<double>>& g) const
+
+numvector<double, dimS> Basis::correctNonOrthoCell(const numvector<double, dimS>& rhs, int iCell) const
 {
     numvector<double, dimS> alphaCorr;
+    const vector<vector<double>>& cellGramian = gramian[iCell];
 
     numvector<double, nShapes> solution(0.0); //for 3 ff!!!
 
-    //cout << "cell# " << iCell << "; cfts: " << alpha << "; G: " << B.gramian[iCell] << endl;
     for (int iSol = 0; iSol < dimPh; ++iSol)
     {
         // solve slae
         solution[0] = rhs[iSol*nShapes];
 
-
         if (nShapes == 3)
         {
-            //cout << "\tiSol = " << iSol << endl;
-
-            solution[2] = (rhs[iSol*nShapes + 2] * g[0][0] - rhs[iSol*nShapes + 1] * g[1][0]) \
-                / (g[1][1] * g[0][0] - g[1][0] * g[1][0]);
-            solution[1] = (rhs[iSol*nShapes + 1] - solution[2] * g[1][0]) \
-                  / (g[0][0]);
+            solution[2] = (rhs[iSol*nShapes + 2] * cellGramian[0][0] - rhs[iSol*nShapes + 1] * cellGramian[1][0]) \
+                / (cellGramian[1][1] * cellGramian[0][0] - cellGramian[1][0] * cellGramian[1][0]);
+            solution[1] = (rhs[iSol*nShapes + 1] - solution[2] * cellGramian[1][0]) \
+                  / (cellGramian[0][0]);
         }
 
-        //set solution to appropriate positions
+        //set solution to appropriate positions 
         for (int i = 0; i < nShapes; ++i)
         {
-            //cout << "i = " << i << "; iAlpha = " << i + iSol*nShapes << endl; 
             alphaCorr[i + iSol*nShapes] = solution[i];
         }
-
-        //cout << "the next sol..." << endl;
     }
 
-    //cout << "result in fun = " << alphaCorr << endl;
-    //cout << "the next cell..." << endl;
-
     return alphaCorr;
+}
+
+numvector<double, dimS> Basis::correctPrevIterCell(const numvector<double, dimS>& alphaCorr, int iCell) const
+{
+    numvector<double, dimS> alpha(0.0);
+    const vector<vector<double>>& cellGramian = gramian[iCell];
+
+    for (int iSol = 0; iSol < dimPh; ++iSol)
+    {
+        alpha[iSol*nShapes] += alphaCorr[iSol*nShapes];
+
+        for (int i = 1; i < nShapes; ++i)
+        {
+    ////#pragma omp simd
+            for (int j = 1; j <=i; ++j)
+                alpha[i + iSol*nShapes] += cellGramian[i-1][j-1] * alphaCorr[iSol*nShapes + j];
+
+            for (int j = i + 1; j < nShapes; ++j)
+                alpha[i + iSol*nShapes] += cellGramian[j-1][i-1] * alphaCorr[iSol*nShapes + j];
+
+        }
+    }// for variables
+
+    return alpha;
 }
 
 

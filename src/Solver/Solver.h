@@ -38,13 +38,14 @@ extern std::ofstream logger;
 
 class Solver
 {
+
+private: 
+    
     /// RHS
     std::vector<numvector<double, dimS>> rhs; // the same length as SOL
     
     /// List of numerical fluxes in Gauss points
     std::vector<std::vector<numvector<double, dimPh>>> numFluxes;
-
-public:
 
     /// Constant reference to the basis
     const Basis& B;
@@ -67,12 +68,6 @@ public:
     /// Reference to MPI buffers
     Buffers& buf;
 
-    /// Vector of boundary conditions
-    //std::vector<Boundary> bc;
-
-    /// Max speed buffer for the Courant condition (???)
-    double MaxSpeed;
-
 public:
 
     /// Constructor
@@ -94,11 +89,9 @@ public:
     std::vector<numvector<double, dimS>> assembleRHS(const std::vector<numvector<double, dimS>>& SOL);
 
     /// Correct alpha coeffs in case of non-orthogonal basis functions
-    numvector<double, dimS> correctNonOrthoCell(const numvector<double, dimS>& rhs, const std::vector<std::vector<double>>& gramian) const;
     std::vector<numvector<double, dimS>> correctNonOrtho(const std::vector<numvector<double, dimS>>& alpha) const;
 
     /// Reconstruct SLAE RHS after limitation in case of non-orthogonal functions :TODO choose the necessary version
-    numvector<double, dimS> correctPrevIterCell(const numvector<double, dimS>& alphaCorr, const std::vector<std::vector<double>>& gramian) const;
     std::vector<numvector<double, dimS>> correctPrevIter(const std::vector<numvector<double, dimS>>& alpha) const;
 
     //------------ MPI functions

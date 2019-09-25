@@ -10,16 +10,20 @@
 #include "Params.h"
 
 ///
-/// Description of mathematical miodel: EoS, how to compute natural fluxes, eigvals/eigvectors, speed of sound
+/// Description of mathematical model: EoS, how to compute natural fluxes, eigvals/eigvectors, speed of sound
 ///
 
 class Physics
 {
+     
 
 public:
 
     /// Heat capacity ratio
     double cpcv;
+
+    /// Covolume constant; 0 for ideal gas
+    double covolume;
 
     /// Constructor
 	Physics();
@@ -36,8 +40,8 @@ public:
     /// Compute velocity magnitude
     double magU(const numvector<double, dimPh>& sol) const;
 
-    /// Compute total energy
-    double e(const numvector<double, dimPh>& sol) const;
+    /// Compute total energy using primitive variables
+    double e(double rho, double u, double v, double w, double p) const;
 
     /// Calculate fluxes in x direction
     numvector<double, dimPh> fluxF(const numvector<double, dimPh>& sol) const;
@@ -46,18 +50,10 @@ public:
     numvector<double, dimPh> fluxG(const numvector<double, dimPh>& sol) const;
 
     /// Left  eigenvectors
-    //std::pair<numvector<numvector<double, dimPh>, dimPh>, numvector<numvector<double, dimPh>, dimPh>> getL(const numvector<double, dimPh>& sol) const;
-	numvector<numvector<double, dimPh>, dimPh> getL(const numvector<double, dimPh>& sol, const Point& n) const;
-	numvector<numvector<double, dimPh>, dimPh> getLx(const numvector<double, dimPh>& sol) const;
-	numvector<numvector<double, dimPh>, dimPh> getLy(const numvector<double, dimPh>& sol) const;
-    
-	/// Right eigenvectors
-    //std::pair<numvector<numvector<double, dimPh>, dimPh>, numvector<numvector<double, dimPh>, dimPh>> getR(const numvector<double, dimPh>& sol) const;
-	numvector<numvector<double, dimPh>, dimPh> getR(const numvector<double, dimPh>& sol, const Point& n) const;
-	numvector<numvector<double, dimPh>, dimPh> getRx(const numvector<double, dimPh>& sol) const;
-	numvector<numvector<double, dimPh>, dimPh> getRy(const numvector<double, dimPh>& sol) const;
+    numvector<numvector<double, dimPh>, dimPh> getL(const numvector<double, dimPh>& sol, const Point& n) const;
 
-    
+	/// Right eigenvectors
+    numvector<numvector<double, dimPh>, dimPh> getR(const numvector<double, dimPh>& sol, const Point& n) const;   
 
 };// end Physics
 

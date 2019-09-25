@@ -13,18 +13,10 @@ Cell::Cell(const std::vector<std::shared_ptr<Point>> &defNodes, const vector<std
 : nodes(defNodes), edges(defEdges)
 {
     nEntities = defNodes.size();
-    //nodes.resize(nEntities);
-    //edges.resize(nEntities);
-    
-//    move(defNodes.begin(), defNodes.end(), back_inserter(nodes));
-    
-//    nodes.insert(nodes.end(), make_move_iterator(defNodes.begin()), make_move_iterator(defNodes.end()));
-    
-    //for (int i = 0; i < nEntities; ++i)
-    //{
-    //    nodes[i] = move(defNodes[i]);
-    //    edges[i] = move(defEdges[i]);
-//    }
+    setArea();
+    setGaussPoints();
+    setJacobian();
+    setCellCenter();
 }
 
 // ------------------ Private class methods --------------------
@@ -154,16 +146,34 @@ void Cell::setGaussPoints()
     {
         if (nEntities == 4)
         {
+
             // pure Gauss
-            nGP = 4;
+            // nGP = 4;
 
-            double isqrt3 = 0.57735026918962576;
+            // double isqrt3 = 0.57735026918962576;
 
-            for (int i = -1; i <= 1; i += 2)
-                for (int j = -1; j <= 1; j += 2)
-                    gPoints2D.push_back(localToGlobal(Point({ i * isqrt3, j * isqrt3 })));
+            // for (int i = -1; i <= 1; i += 2)
+            //     for (int j = -1; j <= 1; j += 2)
+            //        gPoints2D.push_back(localToGlobal(Point({ i * isqrt3, j * isqrt3 })));
 
-            gWeights2D = { 1.0, 1.0, 1.0, 1.0 };
+            // gWeights2D = { 1.0, 1.0, 1.0, 1.0 };
+
+            nGP = 9;
+
+            const double sqrtfrac35 = 0.7745966692414834;
+
+            for (int i = -1; i <= 1; i++)
+                for (int j = -1; j <= 1; j++)
+                    gPoints2D.push_back(localToGlobal(Point({ i * sqrtfrac35, j * sqrtfrac35 })));
+
+            const double frac59 = 0.5555555555555556;
+            const double frac89 = 0.8888888888888889;
+
+            vector <double> gWeights1D = { frac59, frac89, frac59 };
+
+            for (int i = 0; i <= 2; ++i)
+                for (int j = 0; j <= 2; ++j)
+                    gWeights2D.push_back(gWeights1D[i] * gWeights1D[j]);
 
             // Gauss --- Lobatto
 

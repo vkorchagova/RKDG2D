@@ -7,6 +7,7 @@
 #include "Cell.h"
 #include "Solution.h"
 #include "Physics.h"
+#include "Indicator.h"
 #include <vector>
 #include <memory>
 
@@ -16,46 +17,54 @@
 
 class Limiter
 {
-
-protected:
-
-    /// Discontinuities checker
-    //const Indicator& indicator;
-
-    /// Constant reference to mesh
-    const std::vector<std::shared_ptr<Cell>>& cells;
-
-    /// Reference to solution
-    const Solution& solution;
-
-    /// Problem
-    const Physics& physics;
-
-    /// Number of limitation steps
-    static const int nIter = 2;
+private:
 
     /// List of numbers of troubled cells
     std::vector<int> troubledCells;
 
     /// Limited solution
-    std::vector<numvector<double, dimS>> alphaNew;
-
-public:
-
-    /// Construct
-    Limiter(const std::vector<std::shared_ptr<Cell>>& cells, 
-        const Solution& sln,
-        const Physics& phs);
-
-    /// Destructor
-    virtual ~Limiter() {}
-
-    /// Limit solution gradients
-    virtual void limit(std::vector<numvector<double, dimS> >& alpha) = 0;
+    std::vector<numvector<double, dimS>> newSOL;
 
     /// Last hope limiter
     void lastHope(std::vector<numvector<double, dimS> >& alpha);
 
+protected:
+
+    /// Discontinuities checker
+    const Indicator& indicator;
+
+    /// Problem
+    const Physics& physics;
+
+    /// Constant reference to mesh
+    const Mesh& mesh;
+
+    /// Reference to solution
+    Solution& solution;
+
+    /// Max possible stencil size
+    static const int maxPossibleStencilSize = 10;
+
+    /// Limitation algorithm for solution in defined cell
+    virtual numvector<double, dimS> limitation(const std::vector<std::shared_ptr<Cell>>& stencil ) = 0;
+
+    /// Update stencil
+    virtual std::vector<std::shared_ptr<Cell>> getStencilFor(const std::shared_ptr<Cell>& cell) = 0;
+
+public:
+
+    /// Construct
+    Limiter(const Mesh& mesh, 
+        Solution& sln,
+        const Physics& phs,
+        const Indicator& ind);
+
+    /// Destructor
+    virtual ~Limiter() {}
+
+    /// Limitation procedure for solution in the entire flow domain
+    //void limit(std::vector<numvector<double, dimS> >& alpha);
+    void limitSolution();
 };
 
 #endif // LIMITER_H

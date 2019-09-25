@@ -9,9 +9,7 @@ double Flux::c_av(const numvector<double, dimPh>& solOne, const numvector<double
 	double semiRho = 0.5*(solOne[0] + solTwo[0]);
 	double semiP = 0.5*(phs.getPressure(solOne) + phs.getPressure(solTwo));
 
-	cout << "NOT USED" << endl;
-
-	return sqrt(phs.cpcv * semiP / semiRho / (1.0 - semiRho * 0.001));
+	return sqrt(phs.cpcv * semiP / semiRho / (1.0 - semiRho * phs.covolume));
 } // end c for edge
 
 
@@ -25,21 +23,21 @@ numvector<double, dimPh> Flux::lambdaF_Roe(const numvector<double, dimPh>& solOn
 	double u_av = (solOne[1] / sqrtRhoLeft + solTwo[1] / sqrtRhoRight) / sumSqrtRho;
 	double h_av = ((solOne[4] + phs.getPressure(solOne)) / sqrtRhoLeft + (solTwo[4] + phs.getPressure(solTwo)) / sqrtRhoRight) / sumSqrtRho;
 
-	double c_av = sqrt((phs.cpcv - 1) * (h_av - 0.5 * sqr(u_av)));
+	//double c_av = sqrt((phs.cpcv - 1) * (h_av - 0.5 * sqr(u_av)));
 
 	//    if (getPressure(solOne) < 0 || getPressure(solTwo) < 0)
 	//        cout << "kkk";
 
 	double rho_av = (solOne[0] * sqrtRhoLeft + solTwo[0] * sqrtRhoRight) / sumSqrtRho;
 
-	c_av = sqrt( (phs.cpcv - 1) * phs.cpcv * (h_av - 0.5 * sqr(u_av))  / (1.0 - rho_av * 0.001) / (phs.cpcv - rho_av * 0.001) );
+	double c_av  = sqrt( (phs.cpcv - 1) * phs.cpcv * (h_av - 0.5 * sqr(u_av))  / (1.0 - rho_av * phs.covolume) / (phs.cpcv - rho_av * phs.covolume) );
 
-	return{ u_av - c_av, u_av, u_av, u_av, u_av + c_av };
+	return{ u_av - c_av * sqr(u_av), u_av, u_av, u_av, u_av + c_av };
 }
 
 
 numvector<double, dimPh> Flux::lambdaF_Einfeldt(const numvector<double, dimPh>& solOne, const numvector<double, dimPh>& solTwo) const
-{
+{ // UPDATE FOR COVOLUME
 	double cLeft = phs.c(solOne);
 	double cRight = phs.c(solTwo);
 
@@ -50,7 +48,7 @@ numvector<double, dimPh> Flux::lambdaF_Einfeldt(const numvector<double, dimPh>& 
 	double sqrtRhoRight = sqrt(solTwo[0]);
 	double sumSqrtRho = sqrtRhoLeft + sqrtRhoRight;
 
-	double eta2 = 0.5 * sqrtRhoLeft * sqrtRhoRight / sqr(sqrtRhoLeft + sqrtRhoRight);
+	double eta2 = 0.5 * sqrtRhoLeft * sqrtRhoRight / sqr(sumSqrtRho);
 	double u_av = (solOne[1] / sqrtRhoLeft + solTwo[1] / sqrtRhoRight) / sumSqrtRho;
 	double c_av = sqrt((sqrtRhoLeft * sqr(cLeft) + sqrtRhoRight * sqr(cRight)) / sumSqrtRho + \
 		eta2 * sqr(uRight - uLeft));
@@ -98,6 +96,6 @@ numvector<double, dimPh> Flux::lambdaF_semisum(const numvector<double, dimPh>& s
 
 numvector<double, dimPh> Flux::lambdaF(const numvector<double, dimPh>& solOne, const numvector<double, dimPh>& solTwo) const
 {
-	return lambdaF_Einfeldt(solOne, solTwo);
+	return lambdaF_Toro(solOne, solTwo);
 } // end lambdaF
 

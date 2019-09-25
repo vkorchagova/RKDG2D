@@ -33,7 +33,7 @@ TimeControl::TimeControl(
     outputInterval (outputInterval)
 {
     tauNew = tau;
-    tauSaved = 0.0;
+    tauSaved = initTau;//0.0;
     tOld = tStart;
 
     outputTime = tStart + outputInterval;
@@ -91,7 +91,7 @@ void TimeControl::updateTimeStep()
             double perimeter = 0.0;
 
             for (const shared_ptr<Edge> edge : cell->edges)
-                perimeter += edge->length;
+                perimeter += edge->getLength();
 
             factCo = tau * perimeter * uMax / cell->getArea();
             relTau = CoNum / (factCo + 1e-6); //1e-6 is technical small number
