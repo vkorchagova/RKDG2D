@@ -251,7 +251,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
                 ////if (myRank == 1) cout << "gp = " << gPoint << endl;
 
                 solLeft  = rotate(sln.reconstruct(iCellLeft,  gPoint), eNormal);
-                solRight = bcond->getSolOuter(solLeft);
+                solRight = bcond->getSolOuter(solLeft, eNormal);
 
                 ////if (myRank == 1) cout << "slL = " << solLeft << endl;
                 ////if (myRank == 1) cout << "slR = " << solRight << endl;

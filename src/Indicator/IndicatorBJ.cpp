@@ -119,6 +119,7 @@ vector<int> IndicatorBJ::checkDiscontinuities() const
         for (size_t k = 0; k < dimPh; ++k)
             if (a[k] < 1.0 && a[k]>1e-6)
             {
+#pragma omp critical
                 troubledCells.push_back(iCell);
                 break;
             }

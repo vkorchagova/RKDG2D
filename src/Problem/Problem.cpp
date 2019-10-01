@@ -177,6 +177,40 @@ void Problem::setInitialConditions(CaseInit task)
         break;
     }
 
+    case AstroTest:
+    {
+        phs.cpcv = 5.0/3.0;
+        phs.covolume = 0.0;
+
+        double u = 1.02; // radial velocity
+        double kTilde = 5.5e6;
+        double M0 = 1e30;
+        double G0 = 6.67e-11;
+        double Ror = 696e6;
+
+        double k = kTilde * pow(M0, phs.cpcv - 2.0) / G0 / pow(Ror, 3.0*phs.cpcv - 4.0);
+        double frackgamma = (phs.cpcv - 1.0) / k / phs.cpcv;
+
+        source = [=](const numvector<double, dimPh> sol, const Point& r)
+        {
+            return numvector<double, 5> \
+            { \
+                0.0, \
+                - r.x() / pow(r.length(),3), \
+                - r.y() / pow(r.length(),3), \
+                0.0, \
+                0.0 \
+            }; 
+        };
+
+        initRho = [=](const Point& r) { return     pow( frackgamma * (u*u - 1.0) * (r.length() - 1.0) / r.length(), 1.0 / (phs.cpcv - 1.0)); };
+        initP   = [=](const Point& r) { return k * pow( frackgamma * (u*u - 1.0) * (r.length() - 1.0) / r.length(), phs.cpcv / (phs.cpcv - 1.0));  };
+        initU   = [=](const Point& r) { return - u * r.y() / pow( r.length2(), 0.75); };
+        initV   = [=](const Point& r) { return   u * r.x() / pow( r.length2(), 0.75); };
+
+        break;
+    }
+
 	}// switch
 
     init = [=](const Point& r)
@@ -316,6 +350,76 @@ void Problem::setBoundaryConditions(CaseInit task)
     {
         for (const Patch& p : M.patches)
             bc.emplace_back(make_shared<BoundaryOpen>(p));
+
+        break;
+    }
+
+    case AstroTest:
+    {
+        for (const Patch& p : M.patches)
+            bc.emplace_back(make_shared<BoundarySlip>(p));
+        /*
+        double u = 1.02; // radial velocity
+        double kTilde = 5.5e6;
+        double M0 = 1e30;
+        double G0 = 6.67e-11;
+        double Ror = 696e6;
+
+        double k = kTilde * pow(M0, phs.cpcv - 2.0) / G0 / pow(Ror, 3.0*phs.cpcv - 4.0);
+        double frackgamma = (phs.cpcv - 1.0) / k / phs.cpcv;
+
+        
+
+        for (const Patch& patch : M.patches)
+        {
+            if (patch.name == "inner")
+            {
+                double inletRho = pow( frackgamma * (u*u - 1.0) * 0.1 / 1.1, 1.0 / (phs.cpcv - 1.0));
+                double inletU = 0.0;
+                double inletV = u / sqrt(1.1);
+                double inletP = k * pow( frackgamma * (u*u - 1.0) * 0.1 / 1.1, phs.cpcv / (phs.cpcv - 1.0));
+
+                bc.emplace_back(
+                make_shared<BoundaryConstant>(
+                    patch, 
+                    numvector<double, dimPh>(
+                    {
+                        inletRho, 
+                        -inletU * inletRho, 
+                         inletV * inletRho, 
+                        0.0, 
+                        phs.e(inletRho, inletU, inletV, 0.0, inletP)
+                    })
+                ));
+            }
+            else if (patch.name == "outer")
+            {
+                double inletRho = pow( frackgamma * (u*u - 1.0) * 2.1 / 3.1, 1.0 / (phs.cpcv - 1.0));
+                double inletU = 0.0;
+                double inletV = u / sqrt(3.1);
+                double inletP = k * pow( frackgamma * (u*u - 1.0) * 2.1 / 3.1, phs.cpcv / (phs.cpcv - 1.0));
+
+                bc.emplace_back(
+                make_shared<BoundaryConstant>(
+                    patch, 
+                    numvector<double, dimPh>(
+                    {
+                        inletRho, 
+                        -inletU * inletRho, 
+                         inletV * inletRho, 
+                        0.0, 
+                        phs.e(inletRho, inletU, inletV, 0.0, inletP)
+                    })
+                ));
+            }
+            else
+            {
+                cout << "Boundary condition for patch " << patch.name << " is not found.\n"
+                     << "Check settings in src/Problem.cpp/setBoundaryConditions" << endl;
+                exit(1);
+            }
+        }
+        */
 
         break;
     }
