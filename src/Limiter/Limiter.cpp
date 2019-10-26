@@ -64,7 +64,8 @@ void Limiter::limitSolution()
     double t0 = MPI_Wtime();
 //    omp_set_num_threads(NumThreads);
 #pragma omp parallel for \
-shared(newSOL, mesh, troubledCells) \
+    firstprivate(stencil)
+//shared(newSOL, mesh, troubledCells) \
 firstprivate(stencil) \
 default(none)
     for (int i = 0; i < troubledCells.size(); ++i) // here should be range-based cycle but omp doesn't like it :( 

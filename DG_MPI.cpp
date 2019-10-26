@@ -38,6 +38,7 @@
 #include "IndicatorEverywhere.h"
 #include "IndicatorNowhere.h"
 #include "IndicatorBJ.h"
+#include "IndicatorShu.h"
 //#include "Limiter.h"	/// All about the monotonization
 #include "Solver.h"		/// The whole spatial discretization module
 #include "TimeControl.h"
@@ -68,7 +69,7 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    
+
     //int rank, size, ibeg, iend;
     //MPI_Status stat;
 
@@ -92,13 +93,13 @@ int main(int argc, char* argv[])
 
     ///----------------------
 
-    CaseInit caseName = AstroTest;//SodXCovol;
+    CaseInit caseName = DoubleMach;
 
     double tStart = 0.0;
-    double tEnd = 1e-2;//5e-6;
+    double tEnd = 0.2;//5e-6;
 
-    double initTau = 1e-6;
-    double outputInterval = 1e-3;//1e-6;
+    double initTau = 1e-4;
+    double outputInterval = 0.1;//1e-6;
 
     bool isDynamic = false;
     double maxCo = 0.1;
@@ -135,7 +136,7 @@ int main(int argc, char* argv[])
     Problem problem(caseName, mesh, time, physics);
     Solver solver(basis, mesh, solution, problem, physics, flux, buf);
 
-    IndicatorEverywhere indicator(mesh, solution);
+    IndicatorBJ indicator(mesh, solution);
     //LimiterRiemannWENOS limiter(mesh, solution, physics, indicator);
     LimiterWENOS limiter(mesh, solution, physics, indicator);
     //LimiterBJ limiter(mesh, solution, physics, indicator);
