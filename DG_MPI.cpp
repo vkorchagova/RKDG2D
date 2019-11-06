@@ -93,10 +93,10 @@ int main(int argc, char* argv[])
 
     ///----------------------
 
-    CaseInit caseName = DoubleMach;
+    CaseInit caseName = SodCircle;
 
     double tStart = 0.0;
-    double tEnd = 0.2;//5e-6;
+    double tEnd = 1e-3;//5e-6;
 
     double initTau = 1e-4;
     double outputInterval = 0.1;//1e-6;
@@ -136,7 +136,7 @@ int main(int argc, char* argv[])
     Problem problem(caseName, mesh, time, physics);
     Solver solver(basis, mesh, solution, problem, physics, flux, buf);
 
-    IndicatorBJ indicator(mesh, solution);
+    IndicatorEverywhere indicator(mesh, solution);
     //LimiterRiemannWENOS limiter(mesh, solution, physics, indicator);
     LimiterWENOS limiter(mesh, solution, physics, indicator);
     //LimiterBJ limiter(mesh, solution, physics, indicator);

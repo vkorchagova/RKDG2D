@@ -230,12 +230,13 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
 
     for (const shared_ptr<Boundary>& bcond : prb.bc)
     {
-        //#pragma omp parallel for \
-            shared(myRank, nGP, numFluxes, bcond) \
-            private (solLeft, solRight, gpFluxes) \
+        int nEdgesPatch = bcond->patch.edgeGroup.size();
+        #pragma omp parallel for \
+            shared(nGP, numFluxes, bcond, nEdgesPatch) \
+            firstprivate (solLeft, solRight, gpFluxes) \
             default(none)
         //for (const shared_ptr<Edge>& e : bcond->patch.edgeGroup)
-        for (int iEdge = 0; iEdge < bcond->patch.edgeGroup.size(); ++iEdge)
+        for (int iEdge = 0; iEdge < nEdgesPatch; ++iEdge)
         {
             const shared_ptr<Edge>& e = bcond->patch.edgeGroup[iEdge];
             ////if (myRank == 1) cout << e->number << endl;
@@ -275,7 +276,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
     ///--------------------------------------------------------------------------------
     t0 = MPI_Wtime();
 	//omp_set_num_threads(NumThreads);
-    #pragma omp parallel for  \
+    #pragma omp parallel for schedule (guided)  \
          shared(myRank, nGP) \
          firstprivate (solLeft, solRight, gpFluxes) \
          default(none)
@@ -421,10 +422,11 @@ vector<numvector<double, dimS>> Solver::correctNonOrtho(const vector<numvector<d
 
     //cout << "size of alpha " << alpha.size() << endl;
     //cout << "size of alphaCorr " << alphaCorr.size() << endl;
-#pragma omp parallel /*default(none)*/ \
-    shared(alpha, alphaCorr) 
-#pragma omp for
-    for (int iCell = 0; iCell < M.nRealCells; ++iCell)
+    int nCells = M.nRealCells;
+#pragma omp parallel for schedule (guided) \
+    shared(alpha, alphaCorr, nCells) \
+    default(none)
+    for (int iCell = 0; iCell < nCells; ++iCell)
     {
         //cout << "iCell in common  = " << iCell << endl;
         alphaCorr[iCell] = B.correctNonOrthoCell(alpha[iCell], iCell);
@@ -441,10 +443,11 @@ vector<numvector<double, dimS>> Solver::correctPrevIter(const vector<numvector<d
 
     //cout << "size of alpha " << alpha.size() << endl;
     //cout << "size of alphaCorr " << alphaCorr.size() << endl;
-#pragma omp parallel /*default(none)*/ \
-    shared(alpha, alphaCorr) 
-#pragma omp for
-    for (int iCell = 0; iCell < M.nRealCells; ++iCell)
+    int nCells = M.nRealCells;
+#pragma omp parallel for schedule (guided) \
+    shared(alpha, alphaCorr, nCells) \
+    default(none)
+    for (int iCell = 0; iCell < nCells; ++iCell)
     {
         //cout << "iCell in common  = " << iCell << endl;
         alphaCorr[iCell] = B.correctPrevIterCell(alpha[iCell], iCell);
