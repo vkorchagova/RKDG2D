@@ -433,7 +433,7 @@ void Problem::setBoundaryConditions(CaseInit task)
 
         for (const Patch& patch : M.patches)
         {
-            if (patch.name == "left" or 
+            if (patch.name == "left" || 
                 patch.name == "inlet")
             {
                 bc.emplace_back(
@@ -449,16 +449,16 @@ void Problem::setBoundaryConditions(CaseInit task)
                     })
                 ));
             }
-            else if (patch.name == "right" or 
+            else if (patch.name == "right" || 
                      patch.name == "outlet")
             {
                 bc.emplace_back(make_shared<BoundaryOpen>(patch));
             }
-            else if (patch.name == "up" or 
-                     patch.name == "top" or 
-                     patch.name == "down" or
-                     patch.name == "walls" or 
-                     patch.name == "wall" or  
+            else if (patch.name == "up" || 
+                     patch.name == "top" || 
+                     patch.name == "down" ||
+                     patch.name == "walls" || 
+                     patch.name == "wall" ||  
                      patch.name == "step")
             {
                 bc.emplace_back(make_shared<BoundarySlip>(patch));
@@ -469,9 +469,8 @@ void Problem::setBoundaryConditions(CaseInit task)
                      << "Check settings in src/Problem.cpp/setBoundaryConditions" << endl;
                 exit(1);
             }
-
-            break;
         }
+        break;
     }
 
     case DoubleMach:
@@ -483,7 +482,7 @@ void Problem::setBoundaryConditions(CaseInit task)
 
         for (const Patch& patch : M.patches)
         {
-            if (patch.name == "left" or 
+            if (patch.name == "left" || 
                 patch.name == "inlet")
             {
                 bc.emplace_back(
@@ -499,15 +498,15 @@ void Problem::setBoundaryConditions(CaseInit task)
                     })
                 ));
             }
-            else if (patch.name == "right" or 
+            else if (patch.name == "right" || 
                      patch.name == "outlet")
             {
                 bc.emplace_back(make_shared<BoundaryOpen>(patch));
             }
-            else if (patch.name == "up" or 
-                     patch.name == "top" or 
-                     patch.name == "walls" or 
-                     patch.name == "wall" or 
+            else if (patch.name == "up" || 
+                     patch.name == "top" || 
+                     patch.name == "walls" || 
+                     patch.name == "wall" || 
                      patch.name == "down")
             {
                 bc.emplace_back(make_shared<BoundarySlip>(patch));
@@ -531,7 +530,7 @@ void Problem::setBoundaryConditions(CaseInit task)
 
         for (const Patch& patch : M.patches)
         {
-            if (patch.name == "left" or 
+            if (patch.name == "left" || 
                 patch.name == "inlet")
             {
                 bc.emplace_back(
@@ -547,15 +546,15 @@ void Problem::setBoundaryConditions(CaseInit task)
                     })
                 ));
             }
-            else if (patch.name == "right" or 
+            else if (patch.name == "right" || 
                      patch.name == "outlet")
             {
                 bc.emplace_back(make_shared<BoundaryOpen>(patch));
             }
-            else if (patch.name == "up" or 
-                     patch.name == "top" or 
-                     patch.name == "down" or
-                     patch.name == "walls" or 
+            else if (patch.name == "up" || 
+                     patch.name == "top" || 
+                     patch.name == "down" ||
+                     patch.name == "walls" || 
                      patch.name == "wall")
             {
                 bc.emplace_back(make_shared<BoundarySlip>(patch));

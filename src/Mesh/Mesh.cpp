@@ -759,6 +759,7 @@ void Mesh::importMesh(string& fileName)
                 cout << edges[i].neibCells.size() << endl;
 
             if (myRank == 0)
+            {
                 for (const Patch& p : patches)
                 {
                     cout << "Patch name: " << p.name << "; number of edges = " << p.edgeGroup.size() << endl;
@@ -767,6 +768,14 @@ void Mesh::importMesh(string& fileName)
                     //    for (const shared_ptr<Point> n : c->nodes)
                     //        cout << n->x() << ' ' << n->y() << endl;
                 }
+
+                if (patches.size() == 0)
+                {
+                    cout << "The mesh doesn't contain any boundaries!" << endl;
+                    cout << "Please check your mesh file!" << endl;
+                    exit(1);
+                }
+            }
             
 
             do

@@ -37,22 +37,22 @@ TimeControl::TimeControl(
     tOld = tStart;
 
     outputTime = tStart + outputInterval;
-    timeListing.open(listingPath.c_str());
+    //timeListing.open(listingPath.c_str());
 
-    if (!timeListing.is_open())
-    {
-        cout << "File " << listingPath << " could not be opened\n";
-        exit(0);
-    }
+    //if (!timeListing.is_open())
+    //{
+    //    cout << "File " << listingPath << " could not be opened\n";
+    //    exit(0);
+    //}
 
-    timeListing << setprecision(6);
-    timeListing << 0.000000 << endl;
+    //timeListing << setprecision(6);
+    //timeListing << 0.000000 << endl;
     //write the construction with initialization from Params.h or some other data source;
 }
 
 TimeControl::~TimeControl()
 {
-    timeListing.close();
+    //timeListing.close();
 }
 
 void TimeControl::updateTimeValueRK(double fracTau)
@@ -146,7 +146,7 @@ bool TimeControl::isOutput()
 {
     if (fabs(outputTime - t) < 1e-12)
     {
-        timeListing << t << endl;
+        //timeListing << t << endl;
         outputTime += outputInterval;
 
         if (stepForOutput)
