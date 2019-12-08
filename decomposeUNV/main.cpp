@@ -10,23 +10,17 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
+    if (argc < 3)
+    {
+        cout << "There should be 2 arguments: file_name (string) and number_of_domains (int)" << endl;
+        return -1;
+    }
 
-    DecomposerUNV converter("..//Mesh_1.unv","mesh2D");
+    DecomposerUNV converter(argv[1],"mesh2D");
     //DecomposerUNV converter("..//..//..//mCol//fs64triag.unv","mesh2D");
     //DecomposerUNV converter("..//..//..//..//tests//unv//dmAngle0p0025triag.unv","mesh2D");
-    int nDomains = 0;
-
-    if (argc > 1)
-    {
-        nDomains = atoi(argv[1]);
-    }
-    else
-    {
-        cout << "Number of subdomains is not found." << endl;
-        cout << "Please set them as an argument, for example: ./decomposeUNV 2" << endl;
-        exit(1);
-    }
-
+    int nDomains = stoi(argv[2]);
+    
     if (nDomains < 2)
     {
         cout << "Number of subdomains should be more than 1." << endl;
