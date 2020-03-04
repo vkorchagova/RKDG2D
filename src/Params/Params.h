@@ -15,6 +15,12 @@ static const int dimExp = 6; // conservative + pressure
 // Coeffs vector size
 static const int dimS = dimPh * nShapes;
 
+/// Number of grad-components
+static const int dimGrad = 8;
+static const int dimGradFull = 15;
+
+/// Coeffs vector size for grad
+static const int dimGradCoeff = dimGrad * nShapes;
 
 /// Initialisaton of tools for computations
 //void Initialize() {}

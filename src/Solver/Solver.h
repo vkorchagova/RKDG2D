@@ -44,8 +44,14 @@ private:
     /// RHS
     std::vector<numvector<double, dimS>> rhs; // the same length as SOL
     
+    /// GradU
+    std::vector<numvector<double, dimS>> gradU;
+    
     /// List of numerical fluxes in Gauss points
     std::vector<std::vector<numvector<double, dimPh>>> numFluxes;
+
+    /// List of numerical fluxes in Gauss points for Grad U
+    std::vector<std::vector<numvector<double, dimGrad>>> HnumFluxes;
 
     /// Constant reference to the basis
     const Basis& B;
@@ -93,6 +99,9 @@ public:
 
     /// Reconstruct SLAE RHS after limitation in case of non-orthogonal functions :TODO choose the necessary version
     std::vector<numvector<double, dimS>> correctPrevIter(const std::vector<numvector<double, dimS>>& alpha) const;
+
+    /// Function to compute grad of conservative variables
+    std::vector<numvector<double, dimGrad>> computeGradU(const std::vector<numvector<double, dimS>>& SOL);
 
     //------------ MPI functions
 

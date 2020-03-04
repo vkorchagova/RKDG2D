@@ -31,6 +31,9 @@ public:
     /// Pack of solutions in cell centers to export
     std::vector<numvector<double, dimExp>> solToExport;
 
+    /// vector of grad of conservative variables
+    std::vector<numvector<double, dimGradCoeff>> S;
+
     /// Constructor
     Solution(Basis& bas);
 
