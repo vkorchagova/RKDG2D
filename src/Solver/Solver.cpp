@@ -246,6 +246,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
             ////if (myRank == 1) cout << "-------------" << endl;
 
             ////if (myRank == 1) cout << iCellLeft << ' '  << endl;
+            cout << "Hnumflux in edge #" << e->number << ":\n";
             for (size_t iGP = 0; iGP < nGP; ++iGP)
             {
                ////if (myRank == 1) cout << "iGP = " << iGP;// << endl;
@@ -265,6 +266,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
                 /// TODO outerProductArtificial FUNCTION (8 from 15 filtering)
                 
                 HgpFluxes[iGP] = outerProductArtificial(0.5 * inverseRotate(solLeft + solRight, eNormal), eNormal);
+                cout << "\tgp #" << iGP << " = " << HgpFluxes[iGP] << endl;
 
                 ////if (myRank == 1) cout << "; flux: " << gpFluxes[iGP] << endl;
             }// for GP
@@ -272,6 +274,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
             
             numFluxes[e->number] = gpFluxes;
             HnumFluxes[e->number] = HgpFluxes;
+
         }// for bound edges
     } // for bconds 
     t1 = MPI_Wtime();
@@ -283,8 +286,8 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
     t0 = MPI_Wtime();
 	//omp_set_num_threads(NumThreads);
     #pragma omp parallel for schedule (guided)  \
-         shared(myRank, nGP) \
-         firstprivate (solLeft, solRight, gpFluxes) \
+         shared(myRank, nGP, cout) \
+         firstprivate (solLeft, solRight, gpFluxes, HgpFluxes) \
          default(none)
     for (int iEdge = M.nEdgesBound; iEdge < M.nRealEdges; ++iEdge)
     {
@@ -296,7 +299,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
         int iCellRight = e->neibCells[1]->number;
 
         ////if (myRank == 1)  cout << iCellLeft << ' ' << iCellRight << endl;
-
+        cout << "Hnumflux in edge #" << iEdge << ":\n";
 
         for (int iGP = 0; iGP < nGP; ++iGP)
         {
@@ -317,6 +320,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
             /// TODO outerProductArtificial FUNCTION (8 from 15 filtering)
                 
             HgpFluxes[iGP] = outerProductArtificial(0.5 * inverseRotate(solLeft + solRight, eNormal), eNormal);
+            cout << "\tgp #" << iGP << " = " << HgpFluxes[iGP] << endl;
 
                 ////if (myRank == 1) cout << "; flux: " << gpFluxes[iGP] << endl;
         }// for GP
@@ -556,7 +560,7 @@ vector<numvector<double, dimGradCoeff>> Solver::computeGradU(const std::vector<n
             res *= 0.0;   // ZEROFICATION!
 
             iEdge = e->number;
-            //sign = (iCell == e->neibCells[0]->number) ? 1.0 : -1.0; //????
+            sign = (iCell == e->neibCells[0]->number) ? 1.0 : -1.0; //????
 			coef = 0.0;
 
             for (int i = 0; i < nGP; ++i)
@@ -572,7 +576,7 @@ vector<numvector<double, dimGradCoeff>> Solver::computeGradU(const std::vector<n
 				}// for shapes
             }// for GP
 
-            gradU[iCell] += res * e->J;// * sign;
+            gradU[iCell] += res * e->J * sign;
 
         }// for edges
         
@@ -606,6 +610,8 @@ vector<numvector<double, dimGradCoeff>> Solver::computeGradU(const std::vector<n
         }
 
         S[iCell] = alphaCorr;
+
+        cout << "S in cell #" << iCell << " = " << S[iCell] << endl;
 
     }// for cells*/ 
     //}// omp parallel
