@@ -59,4 +59,11 @@ int getPatchByName(std::vector<Patch>& patches, std::string& pName);
 int getPatchByName(std::vector<ProcPatch>& patches, std::string& pName);
 
 
+///
+/// Viscosity
+///
+
+numvector<double, dimGrad> outerProductArtificial(const numvector<double, dimPh>& sol, const Point& n);
+
+
 #endif

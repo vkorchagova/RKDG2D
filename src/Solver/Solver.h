@@ -45,7 +45,7 @@ private:
     std::vector<numvector<double, dimS>> rhs; // the same length as SOL
     
     /// GradU
-    std::vector<numvector<double, dimS>> gradU;
+    std::vector<numvector<double, dimGradCoeff>> gradU;
     
     /// List of numerical fluxes in Gauss points
     std::vector<std::vector<numvector<double, dimPh>>> numFluxes;
@@ -101,7 +101,7 @@ public:
     std::vector<numvector<double, dimS>> correctPrevIter(const std::vector<numvector<double, dimS>>& alpha) const;
 
     /// Function to compute grad of conservative variables
-    std::vector<numvector<double, dimGrad>> computeGradU(const std::vector<numvector<double, dimS>>& SOL);
+    std::vector<numvector<double, dimGradCoeff>> computeGradU(const std::vector<numvector<double, dimS>>& SOL);
 
     //------------ MPI functions
 

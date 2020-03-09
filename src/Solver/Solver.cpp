@@ -475,8 +475,11 @@ vector<numvector<double, dimS>> Solver::correctPrevIter(const vector<numvector<d
 vector<numvector<double, dimGradCoeff>> Solver::computeGradU(const std::vector<numvector<double, dimS>>& SOL)
 {
     int nCells = M.nRealCells;
+    vector<numvector<double, dimGradCoeff>> S(SOL.size());
 
     double t0, t1;
+    int nGP = M.edges[0]->nGP;
+
     
     // 1st step: compute fluxes in gauss points on edges - made in assembleRHS
 
@@ -494,7 +497,7 @@ vector<numvector<double, dimGradCoeff>> Solver::computeGradU(const std::vector<n
 
     numvector<double, dimGradCoeff>  res(0.0);
     double gW = 0.0;
-    Point nablaPhi;
+    Point nablaPhiJ;
 
     //#pragma omp for
     for (int iCell = 0; iCell < nCells; ++iCell) // for real (!) cells
@@ -515,14 +518,23 @@ vector<numvector<double, dimGradCoeff>> Solver::computeGradU(const std::vector<n
             sol = sln.reconstruct(iCell, gPoint);            
 			coef = gW * cell->J[i];
 
-            for (int q = 0; q < nShapes; ++q)
+            for (int j = 0; j < nShapes; ++j)
             {
-                nablaPhi = B.gradPhi[q](iCell, gPoint);
+                nablaPhiJ = B.gradPhi[j](iCell, gPoint);
 
                 //resV += prb.source(sol, gPoint) * B.phi[q](iCell, gPoint);
 
-                for (int p = 0; p < dimGrad; ++p)
-                    res[p * nShapes + q] -= sol * nablaPhi[q] * coef; //?????    
+                //for (int p = 0; p < dimGrad; ++p)
+                //    res[p * nShapes + q] -= sol * nablaPhiJ[q] * coef; //?????   
+
+                res[0 * nShapes + j] -= sol[0] * nablaPhiJ[0] * coef;
+                res[1 * nShapes + j] -= sol[0] * nablaPhiJ[1] * coef;
+                res[2 * nShapes + j] -= sol[1] * nablaPhiJ[0] * coef;
+                res[3 * nShapes + j] -= sol[1] * nablaPhiJ[1] * coef;
+                res[4 * nShapes + j] -= sol[2] * nablaPhiJ[0] * coef;
+                res[5 * nShapes + j] -= sol[2] * nablaPhiJ[1] * coef;
+                res[6 * nShapes + j] -= sol[4] * nablaPhiJ[0] * coef;
+                res[7 * nShapes + j] -= sol[4] * nablaPhiJ[1] * coef; 
             }// for shapes
 
     	}// for GP
@@ -566,12 +578,41 @@ vector<numvector<double, dimGradCoeff>> Solver::computeGradU(const std::vector<n
         
         //cout << "cell #" << iCell << "; gradU[i]: " << gradU[iCell] << endl;
 
+        // compute LHS due to non-orthogonal basis\
+        // !!! TODO: how to make it more optimal???
+        numvector<double, dimGradCoeff> alphaCorr;
+        const vector<vector<double>>& cellGramian = B.gramian[iCell];
+
+        numvector<double, nShapes> solution(0.0); //for 3 ff!!!
+
+        for (int iSol = 0; iSol < dimGrad; ++iSol)
+        {
+            // solve slae
+            solution[0] = gradU[iCell][iSol*nShapes];
+
+            if (nShapes == 3)
+            {
+                solution[2] = (gradU[iCell][iSol*nShapes + 2] * cellGramian[0][0] - gradU[iCell][iSol*nShapes + 1] * cellGramian[1][0]) \
+                    / (cellGramian[1][1] * cellGramian[0][0] - cellGramian[1][0] * cellGramian[1][0]);
+                solution[1] = (gradU[iCell][iSol*nShapes + 1] - solution[2] * cellGramian[1][0]) \
+                      / (cellGramian[0][0]);
+            }
+
+            //set solution to appropriate positions 
+            for (int i = 0; i < nShapes; ++i)
+            {
+                alphaCorr[i + iSol*nShapes] = solution[i];
+            }
+        }
+
+        S[iCell] = alphaCorr;
+
     }// for cells*/ 
     //}// omp parallel
     t1 = MPI_Wtime();
-    if (debug) logger << "\t\trhs.compute: " << t1 - t0 << endl;
+    if (debug) logger << "\t\trhsGrad.compute: " << t1 - t0 << endl;
 
-    return gradU;
+    return S;
  
 }
 

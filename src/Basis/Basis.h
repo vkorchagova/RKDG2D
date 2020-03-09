@@ -30,8 +30,7 @@ private:
     /// NOTE: in case of constant functions will be empty.
     /// NOTE: gramians for each cells are not similar in unstructured mesh!
     ///
-    /// Gramian form for one cell in case of linear functions: {g[1][1], g[1][2], g[2][2]}
-    std::vector< std::vector<std::vector<double>> > gramian;
+    
 
     /// Init basis functions
     void initBasisFunctions();
@@ -40,6 +39,9 @@ private:
     void initGramian();
 
 public:
+
+    /// Gramian form for one cell in case of linear functions: {g[1][1], g[1][2], g[2][2]}
+    std::vector< std::vector<std::vector<double>> > gramian;
 
     /// Coefficients of form functions (pure coeffs are useful for WENO_S)
     std::vector<numvector<double, nShapes>> phiCoeffs;
