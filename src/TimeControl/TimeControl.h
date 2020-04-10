@@ -72,7 +72,7 @@ private:
     const Solution& sln;
 
     /// Stream to time listing file
-    std::ofstream timeListing;
+    //std::ofstream timeListing;
 
 public:
 

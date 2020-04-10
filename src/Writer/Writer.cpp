@@ -13,12 +13,18 @@ void Writer::exportMeshVTK(const std::string& fileName) const
 
 void Writer::exportFrameVTK(const std::string& fileName) const
 {
-    cout << "Export frame " << fileName << "..." << endl;
+    cout << "Exporting VTK frame " << fileName << "..." << endl;
     
     ofstream wStream (fileName);
+
+    cout << "\tWriting VTK mesh... ";
     exportMeshVTK(wStream);
+    cout << "OK" << endl;
+
     exportFrameVTK(wStream);
     wStream.close();
+
+    cout << "Exporting VTK frame OK" << endl;
     
     cout << endl;
 }
@@ -27,7 +33,9 @@ void Writer::exportFrameVTK(const std::string& fileName) const
 void Writer::exportNativeCoeffs(const std::string& fileName) const
 {
     ofstream wStream (fileName);
+    cout << "Export native coeffs... ";
     outputFullNativeCoeffs(wStream);
+    cout << "OK" << endl;
     wStream.close();
 }
 
@@ -84,30 +92,38 @@ void Writer::exportFrameVTK(ostream& wStream) const
     wStream << "LOOKUP_TABLE default" << endl;
 
     //  for (const shared_ptr<Cell> cell : mesh.cells)
+    cout << "\tWriting rho field... ";
     for (int iCell = 0; iCell < mesh.nRealCells; ++iCell)
         wStream << solution.solToExport[iCell][0] << endl;
+    cout << "OK" << endl;
 
     wStream << "SCALARS e double" << endl;
     wStream << "LOOKUP_TABLE default" << endl;
 
+    cout << "\tWriting e field... ";
     for (int iCell = 0; iCell < mesh.nRealCells; ++iCell)
         wStream << solution.solToExport[iCell][4] << endl;
+    cout << "OK" << endl;
 
     wStream << "SCALARS p double" << endl;
     wStream << "LOOKUP_TABLE default" << endl;
 
+    cout << "\tWriting p field... ";
     for (int iCell = 0; iCell < mesh.nRealCells; ++iCell)
         wStream << solution.solToExport[iCell][5] << endl;
+    cout << "OK" << endl;
 
 
     wStream << "VECTORS U double" << endl;
 
+    cout << "\tWriting U field... ";
     for (int iCell = 0; iCell < mesh.nRealCells; ++iCell)
     {
         wStream << solution.solToExport[iCell][1] << endl;
         wStream << solution.solToExport[iCell][2] << endl;
         wStream << 0.0 << endl;
     }
+    cout << "OK" << endl;
 
     //indicator.writeTroubledCellsVTK();
 

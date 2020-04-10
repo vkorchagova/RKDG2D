@@ -52,9 +52,9 @@ void Problem::setInitialConditions(CaseInit task)
 		phs.cpcv = 1.4;
 		phs.covolume = 0.0;
 
-		initRho = [](const Point& r) { return (r.x() < 0) ? 1.0 : 0.125; };
-		initP = [](const Point& r) { return (r.x() < 0) ? 1.0 : 0.1;  };
-		initU = [](const Point& r) { return (r.x() < 0) ? 0.0 : 0.0; };
+		initRho = [](const Point& r) { return (r.x() < 10) ? 1.0 * r.x() : 0.125; };
+		initP = [](const Point& r) { return (r.x() < 10) ? 1.0 : 0.1;  };
+		initU = [](const Point& r) { return (r.x() < 10) ? 0.0 : 0.0; };
 		initV = [](const Point& r) { return 0.0; };
 
 		break;

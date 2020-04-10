@@ -393,6 +393,10 @@ void Mesh::importMesh(string& fileName)
 
     cout << "Processing mesh file " << fileName << endl;
 
+    map<int,int> nodeGlobalToLocal;
+    map<int,int> edgeGlobalToLocal;
+    map<int,int> cellGlobalToLocal;
+
     while (reader.peek() != EOF)
     {
         getline(reader, tag);
@@ -410,6 +414,7 @@ void Mesh::importMesh(string& fileName)
             {
                 reader >> globalNum >> x >> y;
                 globalNodeNumber.push_back(globalNum - 1);
+                nodeGlobalToLocal[globalNum - 1] = i;
                 nodes.emplace_back(make_shared<Point>(Point({x,y})));
                 nodes.back()->gNumber = globalNum - 1;
             }
@@ -439,9 +444,10 @@ void Mesh::importMesh(string& fileName)
                 reader >> globalNum;
                 reader >> node1 >> node2;
                 globalEdgeNumber.push_back(globalNum-1);
+                edgeGlobalToLocal[globalNum-1] = i;
                 std::vector<shared_ptr<Point>> nodesInEdge;
-                nodesInEdge.push_back( nodes[localNumber(globalNodeNumber, node1 - 1)]);
-                nodesInEdge.push_back( nodes[localNumber(globalNodeNumber, node2 - 1)]);
+                nodesInEdge.push_back( nodes[nodeGlobalToLocal[node1 - 1]]);
+                nodesInEdge.push_back( nodes[nodeGlobalToLocal[node2 - 1]]);
                 edges.emplace_back( make_shared<Edge>(Edge(nodesInEdge) ));
 
                 edges.back()->number = i;
@@ -483,6 +489,7 @@ void Mesh::importMesh(string& fileName)
                 reader >> nEdgesInCell;
 
                 globalCellNumber.push_back(globalNum - 1);
+                cellGlobalToLocal[globalNum - 1] = i;
 
                 //cout << nEdgesInCell << endl;
                 vector<shared_ptr<Point>> curNodes;
@@ -495,13 +502,13 @@ void Mesh::importMesh(string& fileName)
                 {
                     reader >> entity;
                     //cout << entity - 1 << ' ' << localNumber(globalNodeNumber, entity - 1) << endl;
-                    curNodes.push_back(nodes[localNumber(globalNodeNumber, entity - 1)]);
+                    curNodes.push_back(nodes[nodeGlobalToLocal[entity - 1]]);
                 }
 
                 for (int j = 0; j < nEdgesInCell; ++j)
                 {
                     reader >> entity;
-                    curEdges.push_back(edges[localNumber(globalEdgeNumber, entity - 1)] );
+                    curEdges.push_back(edges[edgeGlobalToLocal[entity - 1]] );
                 }
 
                 // add cells in list
@@ -606,6 +613,7 @@ void Mesh::importMesh(string& fileName)
                     reader >> nEdgesInCell;
 
                     globalCellNumber.push_back(globalNum - 1);
+                    cellGlobalToLocal[globalNum-1] = globalCellNumber.size() - 1;
 
                     //cout << nEdgesInCell << endl;
                     vector<shared_ptr<Point>> curNodes;
@@ -618,13 +626,13 @@ void Mesh::importMesh(string& fileName)
                     {
                         reader >> entity;
                         //cout << entity - 1 << ' ' << localNumber(globalNodeNumber, entity - 1) << endl;
-                        curNodes.push_back(nodes[localNumber(globalNodeNumber, entity - 1)] );
+                        curNodes.push_back(nodes[nodeGlobalToLocal[entity - 1]] );
                     }
 
                     for (int j = 0; j < nEdgesInCell; ++j)
                     {
                         reader >> entity;
-                        curEdges.push_back(edges[localNumber(globalEdgeNumber, entity - 1)] );
+                        curEdges.push_back(edges[edgeGlobalToLocal[entity - 1]] );
                     }
 
                     // add cells in list
@@ -641,7 +649,7 @@ void Mesh::importMesh(string& fileName)
                 for (int i = 0; i < nInnerProcCells; ++i)
                 {
                     reader >> iCellGlobal;
-                    procPatches[iPatch].innerCellGroup.push_back(cells[localNumber(globalCellNumber, iCellGlobal - 1)]);
+                    procPatches[iPatch].innerCellGroup.push_back(cells[cellGlobalToLocal[iCellGlobal - 1]]);
                 } // for inner cells
             } // for iPatch
 
@@ -674,7 +682,7 @@ void Mesh::importMesh(string& fileName)
                {
                     reader >> adjCell;
                     //cout << adjCell - 1 << ' ' << localNumber(globalCellNumber, adjCell - 1) << endl;
-                    edges[i]->neibCells.push_back(cells[localNumber(globalCellNumber, adjCell - 1)] );
+                    edges[i]->neibCells.push_back(cells[cellGlobalToLocal[adjCell - 1]] );
                }
             }
 
@@ -742,7 +750,7 @@ void Mesh::importMesh(string& fileName)
                     reader >> iEdge;
                     //cout << iEdge << ' ';
                     //cout << localNumber(globalEdgeNumber, iEdge - 1) << endl;
-                    edgeGroup.push_back(edges[localNumber(globalEdgeNumber, iEdge - 1)]);
+                    edgeGroup.push_back(edges[edgeGlobalToLocal[iEdge - 1]]);
                 }
 
                 createPhysicalPatch(edgeGroup, name);
@@ -751,6 +759,7 @@ void Mesh::importMesh(string& fileName)
                 cout << edges[i].neibCells.size() << endl;
 
             if (myRank == 0)
+            {
                 for (const Patch& p : patches)
                 {
                     cout << "Patch name: " << p.name << "; number of edges = " << p.edgeGroup.size() << endl;
@@ -759,6 +768,14 @@ void Mesh::importMesh(string& fileName)
                     //    for (const shared_ptr<Point> n : c->nodes)
                     //        cout << n->x() << ' ' << n->y() << endl;
                 }
+
+                if (patches.size() == 0)
+                {
+                    cout << "The mesh doesn't contain any boundaries!" << endl;
+                    cout << "Please check your mesh file!" << endl;
+                    exit(1);
+                }
+            }
             
 
             do
