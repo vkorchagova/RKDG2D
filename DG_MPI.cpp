@@ -93,10 +93,10 @@ int main(int argc, char* argv[])
 
     ///----------------------
 
-    CaseInit caseName = DoubleMach;
+    CaseInit caseName = SodX;
 
     double tStart = 0.0;
-    double tEnd = 0.2;//5e-6;
+    double tEnd = 1e-4;//5e-6;
 
     double initTau = 1e-4;
     double outputInterval = 0.1;//1e-6;
