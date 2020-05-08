@@ -19,8 +19,8 @@ public:
 
     /// Evaluate numerical flux through one point
     virtual numvector<double, dimPh> evaluate(
-        const numvector<double, dimPh>& solInner, 
-        const numvector<double, dimPh>& solOuter
+        const numvector<double, dimPh>& solInner, const numvector<double, dimPh>& solOuter,
+        const numvector<double, dimGrad>& gradSolInner, const numvector<double, dimGrad>& gradSolOuter
     ) const override;
 
 };

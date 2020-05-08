@@ -52,6 +52,8 @@ public:
     /// Reconstruct solution component using given coeffs
     double reconstruct(int iCell, const Point& point, const numvector<double, dimS>& SOL, Variables var) const;
 
+    numvector<double, dimGrad> reconstructV(int iCell, const Point& point ) const;
+
 
 
 

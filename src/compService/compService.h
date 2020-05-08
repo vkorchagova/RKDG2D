@@ -17,6 +17,7 @@
 
 /// rotate coordinate system clockwise
 numvector<double, dimPh> rotate(const numvector<double, dimPh>& sol, const Point& n);
+numvector<double, dimGrad> rotate(const numvector<double, dimGrad>& gradSol, const Point& n);
 Point rotate(const Point& v, const Point& n);
 
 /// rotate coordinate system counter-clockwise

@@ -8,3 +8,11 @@ numvector<double, dimPh> BoundaryConstant::getSolOuter (
 {
     return fixedValue;
 }
+
+numvector<double, dimGrad> BoundaryConstant::getGradSolOuter(
+    const numvector<double, dimGrad>& gradSol,
+    const Point& n
+) const
+{
+    return 0.0; // !!!! grad fixedValue
+}
