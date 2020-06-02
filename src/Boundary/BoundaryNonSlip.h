@@ -1,18 +1,19 @@
-#ifndef BOUNDARYOPEN_H
-#define BOUNDARYOPEN_H
+#ifndef BOUNDARYNONSLIP_H
+#define BOUNDARYNONSLIP_H
 
 #include "Boundary.h"
 
 /// 
-/// Open boundary condition
+/// Non-Slip boundary condition
 /// 
 
-class BoundaryOpen : public Boundary
+class BoundaryNonSlip : public Boundary
 {
+
 public:
 
-    /// Default constructor
-    BoundaryOpen(const Patch& p) : Boundary(p) { type = "open";}
+    /// Constructor
+    BoundaryNonSlip(const Patch& p) : Boundary(p) { type = "non-slip"; }
 
     // Get solution in outer side
     virtual numvector<double, dimPh> getSolOuter(
@@ -26,4 +27,5 @@ public:
     ) const override;
 };
 
-#endif // BOUNDARYOPEN_H
+#endif // BOUNDARYNONSLIP_H
+

@@ -7,3 +7,11 @@ numvector<double, dimPh> BoundaryOpen::getSolOuter (
 {
     return solLeft;
 }
+
+numvector<double, dimGrad> BoundaryOpen::getGradSolOuter (
+    const numvector<double, dimGrad>& gradSolLeft,
+    const Point& n
+) const
+{
+    return gradSolLeft;
+}

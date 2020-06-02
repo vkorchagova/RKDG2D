@@ -51,10 +51,12 @@ void Problem::setInitialConditions(CaseInit task)
 	{
 		phs.cpcv = 1.4;
 		phs.covolume = 0.0;
+        phs.mu = 1e-3;
+        phs.Pr = 1.0;
 
-		initRho = [](const Point& r) { return (r.x() < 10) ? 1.0 * r.x() : 0.125; };
-		initP = [](const Point& r) { return (r.x() < 10) ? 1.0 : 0.1;  };
-		initU = [](const Point& r) { return (r.x() < 10) ? 0.0 : 0.0; };
+        initRho = [](const Point& r) { return (r.x() < 0) ? 1.0: 0.125; };
+        initP = [](const Point& r) { return (r.x() < 0) ? 1.0 : 0.1;  };
+        initU = [](const Point& r) { return (r.x() < 0) ? 0.0 : 0.0; };
 		initV = [](const Point& r) { return 0.0; };
 
 		break;
@@ -101,11 +103,12 @@ void Problem::setInitialConditions(CaseInit task)
 
 	case SodCircle:
 	{
-		phs.cpcv = 1.4;
+        phs.cpcv = 1.4;
 		phs.covolume = 0.0;
+        phs.mu = 0.0;
 
-		initRho = [](const Point& r) { return (r.length() <= 0.2) ? 1.0 : 0.125; };
-		initP = [](const Point& r) { return (r.length() <= 0.2) ? 1.0 : 0.1;  };
+        initRho = [](const Point& r) { return (r.length() <= 0.4) ? 1.0 : 0.125; };
+        initP = [](const Point& r) { return (r.length() <= 0.4) ? 1.0 : 0.1;  };
 		initV = [](const Point& r) { return 0.0; };
 		initU = [](const Point& r) { return 0.0; };
 
@@ -176,6 +179,22 @@ void Problem::setInitialConditions(CaseInit task)
 
 		break;
 	}
+
+    case Blasius:
+    {
+        phs.cpcv = 1.4;
+        phs.covolume = 0.0;
+        phs.Pr = 100;//0.135;
+        phs.mu = 1.25e-1;
+
+
+        initRho = [](const Point& r) { return 1.4; };
+        initP = [&](const Point& r) { return 1.0;  };
+        initU = [](const Point& r) { return 0.1; };
+        initV = [](const Point& r) { return 0.0; };
+
+        break;
+    } // Blasius problem
 
 	case AstroTest:
 	{
@@ -569,6 +588,58 @@ void Problem::setBoundaryConditions(CaseInit task)
 
 		break;
 	}
+
+    case Blasius:
+    {
+        double inletRho = phs.cpcv;
+        double inletU = 0.1;
+		double inletV = 0.0;
+		double inletP = 1.0;
+
+		for (const Patch& patch : M.patches)
+		{
+			if (patch.name == "left" ||
+				patch.name == "inlet")
+			{
+				bc.emplace_back(
+					make_shared<BoundaryConstant>(
+						patch,
+						numvector<double, dimPh>(
+							{
+								inletRho,
+								-inletU * inletRho,
+								 inletV * inletRho,
+								0.0,
+								phs.e(inletRho, inletU, inletV, 0.0, inletP)
+							})
+						));
+			}
+			else if (patch.name == "right" ||
+				patch.name == "outlet")
+			{
+				bc.emplace_back(make_shared<BoundaryOpen>(patch));
+			}
+			else if (patch.name == "up" ||
+				patch.name == "top" ||
+                patch.name == "top_bottom" ||
+                patch.name == "bottom")
+			{
+                bc.emplace_back(make_shared<BoundarySlip>(patch));
+			}
+            else if (patch.name == "wall") 
+            {
+                bc.emplace_back(make_shared<BoundaryNonSlip>(patch));
+            }
+			else
+			{
+				cout << "Boundary condition for patch " << patch.name << " is not found.\n"
+					<< "Check settings in src/Problem.cpp/setBoundaryConditions" << endl;
+				exit(1);
+			}
+		}
+        
+        break;
+    }
 
 	}
 }

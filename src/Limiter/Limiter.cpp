@@ -76,6 +76,7 @@ void Limiter::limitSolution()
     for (int i = 0; i < nTroubledCells; ++i) // here should be range-based cycle but omp doesn't like it :( 
     {
         iCell = troubledCells[i];
+		//cout << "iTrCell = " << iCell << endl;
         const shared_ptr<Cell>& cell = mesh.cells[iCell];
 
         // construct list of cells: cell + neighbours
