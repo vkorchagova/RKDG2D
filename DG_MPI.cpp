@@ -35,6 +35,7 @@
 #include "FluxLLF.h"		/// All about the flux evaluating
 #include "FluxHLL.h"
 #include "FluxHLLC.h"
+#include "FluxViscous.h"
 #include "IndicatorEverywhere.h"
 #include "IndicatorNowhere.h"
 #include "IndicatorBJ.h"
@@ -73,6 +74,8 @@ int main(int argc, char* argv[])
     //int rank, size, ibeg, iend;
     //MPI_Status stat;
 
+	//omp_set_num_threads(1);
+
 
     MPI_Init(&argc, &argv);
 
@@ -96,10 +99,10 @@ int main(int argc, char* argv[])
     CaseInit caseName = SodX;
 
     double tStart = 0.0;
-    double tEnd = 1e-4;//5e-6;
+    double tEnd = 1e-1;//5e-6;
 
     double initTau = 1e-4;
-    double outputInterval = 0.1;//1e-6;
+    double outputInterval = 0.01;//1e-6;
 
     bool isDynamic = false;
     double maxCo = 0.1;
@@ -129,12 +132,13 @@ int main(int argc, char* argv[])
     Solution solution(basis);
     
     Physics physics;
-    FluxHLL flux(physics);
+    FluxLLF flux(physics);
+    FluxViscous vflux(physics);
     
     Writer writer(fullMesh, solution, physics);
     TimeControl time(mesh, physics, solution, tStart, tEnd, initTau, outputInterval, isDynamic, maxCo, maxTau, maxTauGrowth);
     Problem problem(caseName, mesh, time, physics);
-    Solver solver(basis, mesh, solution, problem, physics, flux, buf);
+    Solver solver(basis, mesh, solution, problem, physics, flux, vflux, buf);
 
     IndicatorBJ indicator(mesh, solution);
     //LimiterRiemannWENOS limiter(mesh, solution, physics, indicator);

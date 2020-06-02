@@ -29,6 +29,11 @@ public:
         const Point& n = Point({0.0,0.0})
     ) const = 0;
 
+    virtual numvector<double, dimGrad> getGradSolOuter(
+        const numvector<double, dimGrad>& gradSolInner,
+        const Point& n = Point({0.0,0.0})
+    ) const = 0;
+
 };
 
 #endif // BOUNDARY_H

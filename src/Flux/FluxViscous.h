@@ -1,23 +1,23 @@
-#ifndef FLUXLLF_H
-#define FLUXLLF_H
+#ifndef FLUXVISCOUS_H
+#define FLUXVISCOUS_H
 
 #include <algorithm>
 #include "Flux.h"
 
 /// 
-/// Local Lax-Fridriechs numerical flux
+/// 
 /// 
 
-class FluxLLF : public Flux
+class FluxViscous : public Flux
 {
 
 public:
 
     /// Constructor
-    FluxLLF(const Physics& phs) : Flux(phs) {}
+    FluxViscous(const Physics& phs) : Flux(phs) {}
 
     /// Destructor
-    ~FluxLLF() {}
+    ~FluxViscous() {}
     
     /// Evaluate numerical flux through one point
     virtual numvector<double, dimPh> evaluate(
@@ -27,4 +27,4 @@ public:
 };
 
 
-#endif // FLUXLLF_H
+#endif // FLUXVISCOUS_H

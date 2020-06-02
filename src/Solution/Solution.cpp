@@ -72,3 +72,22 @@ double Solution::reconstruct(int iCell, const Point& point, const numvector<doub
 
     return sol;
 } // end reconstruct
+
+numvector<double, dimGrad> Solution::reconstructV(int iCell, const Point& point ) const
+{
+    numvector<double, dimGrad> gradSol(0.0);
+    numvector<double, nShapes> phip(0.0);
+
+////#pragma omp simd
+    for (int j = 0; j < nShapes; ++j)
+        phip[j] = B.phi[j](iCell, point);
+
+    for (int i = 0; i < dimGrad; ++i)
+    {
+        for (int j = 0; j < nShapes; ++j)
+            gradSol[i] += phip[j] * S[iCell][i * nShapes + j];
+    }
+
+    return gradSol;
+
+} // end reconstruct
