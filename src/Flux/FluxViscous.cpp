@@ -22,7 +22,7 @@ numvector<double, dimPh> FluxViscous::evaluate(
 
 	//cout << "solLeftRot = " << solLeftRot << "; solRightRot = " << solRightRot << endl;
     //cout << "gradSolLeft = " << gradSolLeft << "; gradSolRight = " << gradSolRight << endl;
-	//cout << "fOw = " << fluxOutward << "; fIw = " << fluxInward << endl;
+    //cout << "fOw = " << fluxOutward << "; fIw = " << fluxInward << endl;
 
     return 0.5 * (fluxInward + fluxOutward);
 }

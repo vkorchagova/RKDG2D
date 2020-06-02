@@ -14,5 +14,5 @@ numvector<double, dimGrad> BoundaryConstant::getGradSolOuter(
     const Point& n
 ) const
 {
-    return 0.0; // !!!! grad fixedValue
+    return gradSol; // !!!! grad fixedValue
 }

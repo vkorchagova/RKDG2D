@@ -212,11 +212,11 @@ void Solver::restart(string fileName)
 }
 
 vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<double, dimS>>& SOL)
-{   
+{
     int nCells = M.nRealCells;
 
     double t0, t1;
-    
+
     // 1st step: compute fluxes in gauss points on edges
 
     int nGP = M.edges[0]->nGP;
@@ -262,15 +262,15 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
 
                 ////if (myRank == 1) cout << "slL = " << solLeft << endl;
                 ////if (myRank == 1) cout << "slR = " << solRight << endl;
-                
+
                 gpFluxes[iGP] = inverseRotate(flux.evaluate(solLeft, solRight), eNormal);
 
-                /// VISCOUS FLUXES 
+                /// VISCOUS FLUXES
                 /// TODO outerProductArtificial FUNCTION (8 from 15 filtering)
 
                 HgpFluxes[iGP] = outerProductArtificial(0.5 * inverseRotate(solLeft + solRight, eNormal), eNormal);
                 //cout << "\tgp #" << iGP << " = " << gpFluxes[iGP] << endl;
-                
+
                 ////if (myRank == 1) cout << "; flux: " << gpFluxes[iGP] << endl;
             }// for GP
 
@@ -278,7 +278,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
             HnumFluxes[e->number] = HgpFluxes;
 
         }// for bound edges
-    } // for bconds 
+    } // for bconds
     t1 = MPI_Wtime();
     if (debug) logger << "\t\teBound.numfluxes: " << t1 - t0 << endl;
     ////if (myRank == 1) cout << "end bound edges" << endl;
@@ -286,7 +286,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
 
     ///--------------------------------------------------------------------------------
     t0 = MPI_Wtime();
-	//omp_set_num_threads(NumThreads);
+    //omp_set_num_threads(NumThreads);
     #pragma omp parallel for schedule (guided)  \
          shared(myRank, nGP, cout) \
          firstprivate (solLeft, solRight, gradSolLeft, gradSolRight, gpFluxes, HgpFluxes) \
@@ -315,12 +315,12 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
 
             ////if (myRank == 1) cout << "slL = " << solLeft << endl;
             ////if (myRank == 1) cout << "slR = " << solRight << endl;
-            
+
             gpFluxes[iGP] = inverseRotate(flux.evaluate(solLeft, solRight, gradSolLeft, gradSolRight), eNormal);
 
-            /// VISCOUS FLUXES 
+            /// VISCOUS FLUXES
             /// TODO outerProductArtificial FUNCTION (8 from 15 filtering)
-                
+
             HgpFluxes[iGP] = outerProductArtificial(0.5 * inverseRotate(solLeft + solRight, eNormal), eNormal);
             //cout << "\tgp #" << iGP << " = " << HgpFluxes[iGP] << endl;
 
@@ -330,10 +330,10 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
         //cout << "-------------" << endl;
         numFluxes[iEdge] = gpFluxes;
         HnumFluxes[iEdge] = HgpFluxes;
-    }// for real edges   
+    }// for real edges
     t1 = MPI_Wtime();
     if (debug) logger << "\t\teInner.numfluxes: " << t1 - t0 << endl;
-   
+
     ///--------------------------------------------------------------------------------
     // 2nd step: compute RHS;
 
@@ -343,7 +343,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
     /// viscous fluxes VnumFluxes
     computeVnumFluxes();
 
-	t0 = MPI_Wtime();
+    t0 = MPI_Wtime();
 
     #pragma omp parallel default(none) \
      shared(myRank, nCells) \
@@ -374,27 +374,27 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
             const Point& gPoint = cell->gPoints2D[i];
             gW = cell->gWeights2D[i];
             sol = sln.reconstruct(iCell, gPoint);
-			gradSol = sln.reconstructV(iCell, gPoint);
+            gradSol = sln.reconstructV(iCell, gPoint);
 
-			coef = gW * cell->J[i];
+            coef = gW * cell->J[i];
 
 
             for (int q = 0; q < nShapes; ++q)
             {
                 nablaPhi = B.gradPhi[q](iCell, gPoint);
-                
+
                 resV = phs.fluxF(sol) * nablaPhi[0] + \
                        phs.fluxG(sol) * nablaPhi[1];
 
                 //resV += prb.source(sol, gPoint) * B.phi[q](iCell, gPoint);
 
-				gradresV = phs.fluxFv(sol, gradSol) * nablaPhi[0] + \
-						   phs.fluxGv(sol, gradSol) * nablaPhi[1];
+                gradresV = phs.fluxFv(sol, gradSol) * nablaPhi[0] + \
+                           phs.fluxGv(sol, gradSol) * nablaPhi[1];
 
-				resV += gradresV;
+                resV -= gradresV;
 
                 for (int p = 0; p < dimPh; ++p)
-                    res[p * nShapes + q] += resV[p] * coef;    
+                    res[p * nShapes + q] += resV[p] * coef;
             }// for shapes
 
 
@@ -417,31 +417,31 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
 
             iEdge = e->number;
             sign = (iCell == e->neibCells[0]->number) ? 1.0 : -1.0;
-			coef = 0.0;
+            coef = 0.0;
 
             for (int i = 0; i < nGP; ++i)
             {
-                gW = e->gWeights[i]; 
-                const Point& gPoint = e->gPoints[i]; 
+                gW = e->gWeights[i];
+                const Point& gPoint = e->gPoints[i];
 
-				for (int q = 0; q < nShapes; ++q)
-				{
-					coef = gW * B.phi[q](iCell, gPoint);
-					for (int p = 0; p < dimPh; ++p)
-					{
-						res[p*nShapes + q] += numFluxes[iEdge][i][p] * coef;
-						res[p*nShapes + q] -= VnumFluxes[iEdge][i][p] * coef;
-					}
-				}// for shapes
+                for (int q = 0; q < nShapes; ++q)
+                {
+                    coef = gW * B.phi[q](iCell, gPoint);
+                    for (int p = 0; p < dimPh; ++p)
+                    {
+                        res[p*nShapes + q] += numFluxes[iEdge][i][p] * coef;
+                        res[p*nShapes + q] += VnumFluxes[iEdge][i][p] * coef;
+                    }
+                }// for shapes
             }// for GP
 
             rhs[iCell] -= res * e->J * sign;
 
         }// for edges
-        
+
         //cout << "cell #" << iCell << "; RHS[i]: " << rhs[iCell] << endl;
 
-    }// for cells*/ 
+    }// for cells*/
     }// omp parallel
     t1 = MPI_Wtime();
     if (debug) logger << "\t\trhs.compute: " << t1 - t0 << endl;
@@ -501,12 +501,12 @@ void Solver::computeGradU(const std::vector<numvector<double, dimS>>& SOL, std::
     double t0, t1;
     int nGP = M.edges[0]->nGP;
 
-    
+
     // 1st step: compute fluxes in gauss points on edges - made in assembleRHS
 
     ///--------------------------------------------------------------------------------
     // 2nd step: compute GradU;
-    
+
     t0 = MPI_Wtime();
 
     //#pragma omp parallel default(none) \
@@ -531,13 +531,13 @@ void Solver::computeGradU(const std::vector<numvector<double, dimS>>& SOL, std::
 
         nGP = cell->nGP;
         double coef = 0.0; // aux var for optimization
-	
-    	for (int i = 0; i < nGP; ++i)
+
+        for (int i = 0; i < nGP; ++i)
         {
-    	    const Point& gPoint = cell->gPoints2D[i];
+            const Point& gPoint = cell->gPoints2D[i];
             gW = cell->gWeights2D[i];
-            sol = sln.reconstruct(iCell, gPoint);            
-			coef = gW * cell->J[i];
+            sol = sln.reconstruct(iCell, gPoint);
+            coef = gW * cell->J[i];
 
             for (int j = 0; j < nShapes; ++j)
             {
@@ -546,7 +546,7 @@ void Solver::computeGradU(const std::vector<numvector<double, dimS>>& SOL, std::
                 //resV += prb.source(sol, gPoint) * B.phi[q](iCell, gPoint);
 
                 //for (int p = 0; p < dimGrad; ++p)
-                //    res[p * nShapes + q] -= sol * nablaPhiJ[q] * coef; //?????   
+                //    res[p * nShapes + q] -= sol * nablaPhiJ[q] * coef; //?????
 
                 res[0 * nShapes + j] -= sol[0] * nablaPhiJ[0] * coef;
                 res[1 * nShapes + j] -= sol[0] * nablaPhiJ[1] * coef;
@@ -555,13 +555,13 @@ void Solver::computeGradU(const std::vector<numvector<double, dimS>>& SOL, std::
                 res[4 * nShapes + j] -= sol[2] * nablaPhiJ[0] * coef;
                 res[5 * nShapes + j] -= sol[2] * nablaPhiJ[1] * coef;
                 res[6 * nShapes + j] -= sol[4] * nablaPhiJ[0] * coef;
-                res[7 * nShapes + j] -= sol[4] * nablaPhiJ[1] * coef; 
+                res[7 * nShapes + j] -= sol[4] * nablaPhiJ[1] * coef;
             }// for shapes
 
-    	}// for GP
-        
+        }// for GP
+
         gradU[iCell] = res;
-	
+
         //cout << "cell #" << iCell << "; cellIntegral: " << res << endl;
 
 
@@ -578,25 +578,25 @@ void Solver::computeGradU(const std::vector<numvector<double, dimS>>& SOL, std::
 
             iEdge = e->number;
             sign = (iCell == e->neibCells[0]->number) ? 1.0 : -1.0; //????
-			coef = 0.0;
+            coef = 0.0;
 
             for (int i = 0; i < nGP; ++i)
             {
-                gW = e->gWeights[i]; 
-                const Point& gPoint = e->gPoints[i]; 
+                gW = e->gWeights[i];
+                const Point& gPoint = e->gPoints[i];
 
-				for (int q = 0; q < nShapes; ++q)
-				{
-					coef = gW * B.phi[q](iCell, gPoint);
-					for (int p = 0; p < dimGrad; ++p)
-						res[p*nShapes + q] += HnumFluxes[iEdge][i][p] * coef;
-				}// for shapes
+                for (int q = 0; q < nShapes; ++q)
+                {
+                    coef = gW * B.phi[q](iCell, gPoint);
+                    for (int p = 0; p < dimGrad; ++p)
+                        res[p*nShapes + q] += HnumFluxes[iEdge][i][p] * coef;
+                }// for shapes
             }// for GP
 
             gradU[iCell] += res * e->J * sign;
 
         }// for edges
-        
+
         //cout << "cell #" << iCell << "; gradU[i]: " << gradU[iCell] << endl;
 
         // compute LHS due to non-orthogonal basis\
@@ -619,7 +619,7 @@ void Solver::computeGradU(const std::vector<numvector<double, dimS>>& SOL, std::
                       / (cellGramian[0][0]);
             }
 
-            //set solution to appropriate positions 
+            //set solution to appropriate positions
             for (int i = 0; i < nShapes; ++i)
             {
                 alphaCorr[i + iSol*nShapes] = solution[i];
@@ -629,132 +629,131 @@ void Solver::computeGradU(const std::vector<numvector<double, dimS>>& SOL, std::
         S[iCell] = alphaCorr;
         //cout << "S in cell #" << iCell << " = " << S[iCell] << endl;
 
-    }// for cells*/ 
+    }// for cells*/
     //}// omp parallel
     t1 = MPI_Wtime();
     if (debug) logger << "\t\trhsGrad.compute: " << t1 - t0 << endl;
- 
 }
 
 void Solver::computeVnumFluxes()
 {
     int nCells = M.nRealCells;
 
-    double t0, t1;
+        double t0, t1;
 
-    // 1st step: compute fluxes in gauss points on edges
+        // 1st step: compute fluxes in gauss points on edges
 
-    int nGP = M.edges[0]->nGP;
-    vector<numvector<double, dimPh>> VgpFluxes(nGP);
-    numvector<double, dimPh> solLeft;
-    numvector<double, dimPh> solRight;
-    numvector<double, dimGrad> gradSolLeft;        // grad solution
-    numvector<double, dimGrad> gradSolRight;
+        int nGP = M.edges[0]->nGP;
+        vector<numvector<double, dimPh>> VgpFluxes(nGP);
+        numvector<double, dimPh> solLeft;
+        numvector<double, dimPh> solRight;
+        numvector<double, dimGrad> gradSolLeft;        // grad solution
+        numvector<double, dimGrad> gradSolRight;
 
-    // cout << phs.c(sln.reconstruct(M.cells[0]->number, M.cells[0]->getCellCenter()));
-    // exit(1);
+        // cout << phs.c(sln.reconstruct(M.cells[0]->number, M.cells[0]->getCellCenter()));
+        // exit(1);
 
-    ///--------------------------------------------------------------------------------
-    t0 = MPI_Wtime();
+        ///--------------------------------------------------------------------------------
+        t0 = MPI_Wtime();
 
-    for (const shared_ptr<Boundary>& bcond : prb.bc)
-    {
-        int nEdgesPatch = bcond->patch.edgeGroup.size();
-        //#pragma omp parallel for \
-            shared(nGP, numFluxes, bcond, nEdgesPatch) \
-            firstprivate (solLeft, solRight, gpFluxes) \
-            default(none)
-        //for (const shared_ptr<Edge>& e : bcond->patch.edgeGroup)
-        for (int iEdge = 0; iEdge < nEdgesPatch; ++iEdge)
+        for (const shared_ptr<Boundary>& bcond : prb.bc)
         {
-            const shared_ptr<Edge>& e = bcond->patch.edgeGroup[iEdge];
-            ////if (myRank == 1) cout << e->number << endl;
-            int iCellLeft  = e->neibCells[0]->number;
-            ////if (myRank == 1) cout << "-------------" << endl;
-
-            ////if (myRank == 1) cout << iCellLeft << ' '  << endl;
-            //cout << "Vnumflux in edge #" << e->number << ":\n";
-            for (size_t iGP = 0; iGP < nGP; ++iGP)
+            int nEdgesPatch = bcond->patch.edgeGroup.size();
+            //#pragma omp parallel for \
+                shared(nGP, numFluxes, bcond, nEdgesPatch) \
+                firstprivate (solLeft, solRight, gpFluxes) \
+                default(none)
+            //for (const shared_ptr<Edge>& e : bcond->patch.edgeGroup)
+            for (int iEdge = 0; iEdge < nEdgesPatch; ++iEdge)
             {
-               ////if (myRank == 1) cout << "iGP = " << iGP;// << endl;
-                Point& gPoint = e->gPoints[iGP];
-                Point& eNormal = e->n;
-                ////if (myRank == 1) cout << "gp = " << gPoint << endl;
+                const shared_ptr<Edge>& e = bcond->patch.edgeGroup[iEdge];
+                ////if (myRank == 1) cout << e->number << endl;
+                int iCellLeft  = e->neibCells[0]->number;
+                ////if (myRank == 1) cout << "-------------" << endl;
+
+                ////if (myRank == 1) cout << iCellLeft << ' '  << endl;
+                //cout << "Vnumflux in edge #" << e->number << ":\n";
+                for (size_t iGP = 0; iGP < nGP; ++iGP)
+                {
+                   ////if (myRank == 1) cout << "iGP = " << iGP;// << endl;
+                    Point& gPoint = e->gPoints[iGP];
+                    Point& eNormal = e->n;
+                    ////if (myRank == 1) cout << "gp = " << gPoint << endl;
+
+                    solLeft  = rotate(sln.reconstruct(iCellLeft,  gPoint), eNormal);
+                    solRight = bcond->getSolOuter(solLeft, eNormal);
+
+                    gradSolLeft  = rotate(sln.reconstructV(iCellLeft,  gPoint), eNormal);
+                    gradSolRight = bcond->getGradSolOuter(gradSolLeft, eNormal);
+
+                    ////if (myRank == 1) cout << "slL = " << solLeft << endl;
+                    ////if (myRank == 1) cout << "slR = " << solRight << endl;
+
+                    /// VISCOUS FLUXES
+                    /// TODO outerProductArtificial FUNCTION (8 from 15 filtering)
+
+                    VgpFluxes[iGP] = inverseRotate(vflux.evaluate(solLeft, solRight, gradSolLeft, gradSolRight), eNormal);
+                    //cout << "\tgp #" << iGP << " = " << VgpFluxes[iGP] << endl;
+
+                    ////if (myRank == 1) cout << "; flux: " << gpFluxes[iGP] << endl;
+                }// for GP
+
+                // problem
+                VnumFluxes[e->number] = VgpFluxes;
+
+           }// for bound edges
+        } // for bconds
+        t1 = MPI_Wtime();
+        if (debug) logger << "\t\teBound.numfluxes: " << t1 - t0 << endl;
+        ////if (myRank == 1) cout << "end bound edges" << endl;
+
+
+        ///--------------------------------------------------------------------------------
+        t0 = MPI_Wtime();
+        //omp_set_num_threads(NumThreads);
+        #pragma omp parallel for schedule (guided)  \
+             shared(myRank, nGP, cout) \
+             firstprivate (solLeft, solRight,  gradSolLeft, gradSolRight, VgpFluxes) \
+             default(none)
+        for (int iEdge = M.nEdgesBound; iEdge < M.nRealEdges; ++iEdge)
+        {
+            ////if (myRank == 1)  cout << "iEdge = " << iEdge <<endl;
+
+            const shared_ptr<Edge>& e = M.edges[iEdge];
+
+            int iCellLeft  = e->neibCells[0]->number;
+            int iCellRight = e->neibCells[1]->number;
+
+            ////if (myRank == 1)  cout << iCellLeft << ' ' << iCellRight << endl;
+            //cout << "Vnumflux in edge #" << iEdge << ":\n";
+
+            for (int iGP = 0; iGP < nGP; ++iGP)
+            {
+                ////if (myRank == 1)  cout << "iGP = " << iGP;// << endl;
+                const Point& gPoint = e->gPoints[iGP];
+                const Point& eNormal = e->n;
+                ////if (myRank == 1)  cout << "gp = " << gPoint << endl;
 
                 solLeft  = rotate(sln.reconstruct(iCellLeft,  gPoint), eNormal);
-                solRight = bcond->getSolOuter(solLeft, eNormal);
-
-                gradSolLeft  = rotate(sln.reconstructV(iCellLeft,  gPoint), eNormal);
-                gradSolRight = bcond->getGradSolOuter(gradSolLeft, eNormal);
+                solRight = rotate(sln.reconstruct(iCellRight, gPoint), eNormal);
 
                 ////if (myRank == 1) cout << "slL = " << solLeft << endl;
                 ////if (myRank == 1) cout << "slR = " << solRight << endl;
 
-                /// VISCOUS FLUXES
-                /// TODO outerProductArtificial FUNCTION (8 from 15 filtering)
+                gradSolLeft  = rotate(sln.reconstructV(iCellLeft,  gPoint), eNormal);
+                gradSolRight = rotate(sln.reconstructV(iCellRight, gPoint), eNormal);
 
                 VgpFluxes[iGP] = inverseRotate(vflux.evaluate(solLeft, solRight, gradSolLeft, gradSolRight), eNormal);
                 //cout << "\tgp #" << iGP << " = " << VgpFluxes[iGP] << endl;
-
-                ////if (myRank == 1) cout << "; flux: " << gpFluxes[iGP] << endl;
+                    ////if (myRank == 1) cout << "; flux: " << gpFluxes[iGP] << endl;
             }// for GP
 
-            // problem
-            VnumFluxes[e->number] = VgpFluxes;
+            //cout << "-------------" << endl;
+            VnumFluxes[iEdge] = VgpFluxes;
 
-       }// for bound edges
-    } // for bconds
-    t1 = MPI_Wtime();
-    if (debug) logger << "\t\teBound.numfluxes: " << t1 - t0 << endl;
-    ////if (myRank == 1) cout << "end bound edges" << endl;
-
-
-    ///--------------------------------------------------------------------------------
-    t0 = MPI_Wtime();
-    //omp_set_num_threads(NumThreads);
-    #pragma omp parallel for schedule (guided)  \
-         shared(myRank, nGP, cout) \
-         firstprivate (solLeft, solRight,  gradSolLeft, gradSolRight, VgpFluxes) \
-         default(none)
-    for (int iEdge = M.nEdgesBound; iEdge < M.nRealEdges; ++iEdge)
-    {
-        ////if (myRank == 1)  cout << "iEdge = " << iEdge <<endl;
-
-        const shared_ptr<Edge>& e = M.edges[iEdge];
-
-        int iCellLeft  = e->neibCells[0]->number;
-        int iCellRight = e->neibCells[1]->number;
-
-        ////if (myRank == 1)  cout << iCellLeft << ' ' << iCellRight << endl;
-        //cout << "Vnumflux in edge #" << iEdge << ":\n";
-
-        for (int iGP = 0; iGP < nGP; ++iGP)
-        {
-            ////if (myRank == 1)  cout << "iGP = " << iGP;// << endl;
-            const Point& gPoint = e->gPoints[iGP];
-            const Point& eNormal = e->n;
-            ////if (myRank == 1)  cout << "gp = " << gPoint << endl;
-
-            solLeft  = rotate(sln.reconstruct(iCellLeft,  gPoint), eNormal);
-            solRight = rotate(sln.reconstruct(iCellRight, gPoint), eNormal);
-
-            ////if (myRank == 1) cout << "slL = " << solLeft << endl;
-            ////if (myRank == 1) cout << "slR = " << solRight << endl;
-
-            gradSolLeft  = rotate(sln.reconstructV(iCellLeft,  gPoint), eNormal);
-            gradSolRight = rotate(sln.reconstructV(iCellRight, gPoint), eNormal);
-
-            VgpFluxes[iGP] = inverseRotate(vflux.evaluate(solLeft, solRight, gradSolLeft, gradSolRight), eNormal);
-            //cout << "\tgp #" << iGP << " = " << VgpFluxes[iGP] << endl;
-                ////if (myRank == 1) cout << "; flux: " << gpFluxes[iGP] << endl;
-        }// for GP
-
-        //cout << "-------------" << endl;
-        VnumFluxes[iEdge] = VgpFluxes;
-
-    }// for real edges
-    t1 = MPI_Wtime();
-    if (debug) logger << "\t\teInner.numfluxes: " << t1 - t0 << endl;
+        }// for real edges
+        t1 = MPI_Wtime();
+        if (debug) logger << "\t\teInner.numfluxes: " << t1 - t0 << endl;
 }
 
 void Solver::dataExchange()

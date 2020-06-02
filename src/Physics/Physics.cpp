@@ -13,8 +13,8 @@ Physics::Physics()
     cpcv = 1.4; // default value
     covolume = 0.0; // default value
     lam = - 2.0 / 3.0; // default value
-    Pr = 1; // default value
-    mu = 0; // default value
+    Pr = 1.0; // default value
+    mu = 0.0; // default value
 } // end constructor 
 
 Physics::~Physics()
