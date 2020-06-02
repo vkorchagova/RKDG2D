@@ -8,15 +8,11 @@ numvector<double, dimPh> inverseRotate(const numvector<double, dimPh>& sol, cons
     return { sol[0], n.x() * sol[1] - n.y() * sol[2],  n.y() * sol[1] + n.x() * sol[2], sol[3], sol[4] };
 }
 
-numvector<double, dimPh> rotate(const numvector<double, dimPh> &sol, const Point& n)
+numvector<double, 5> rotate(const numvector<double,5> &sol, const Point& n)
 {
     return { sol[0], n.x() * sol[1] + n.y() * sol[2], - n.y() * sol[1] + n.x() * sol[2], sol[3], sol[4] };
 }
 
-numvector<double, dimGrad> rotate(const numvector<double, dimGrad> &gradSol, const Point& n)
-{
-    return { n.x() * gradSol[0] + n.y() * gradSol[1], -n.y() * gradSol[0] + n.x() * gradSol[1], n.x() * gradSol[2] + n.y() * gradSol[3], - n.y() * gradSol[2] + n.x() * gradSol[3], n.x() * gradSol[4] + n.y() * gradSol[5], - n.y() * gradSol[4] + n.x() * gradSol[5], n.x() * gradSol[6] + n.y() * gradSol[7], -n.y() * gradSol[6] + n.x() * gradSol[7] };
-}
 
 Point inverseRotate(const Point& v, const Point& n)
 {

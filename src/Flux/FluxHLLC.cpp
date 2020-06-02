@@ -39,9 +39,9 @@ numvector<double, dimPh> FluxHLLC::getFStar(
     return ( SStar * (sol*SK - fK) + D * SK * (pK + rhoL * cK * (SStar - sol[1] / sol[0])) ) * (1.0 / (SK - SStar));
 }
 
-numvector<double, dimPh> FluxHLLC::evaluate(
-        const numvector<double, dimPh>& solLeft, const numvector<double, dimPh>& solRight,
-        const numvector<double, dimGrad>& gradSolLeft, const numvector<double, dimGrad>& gradSolRight
+numvector<double,dimPh> FluxHLLC::evaluate( 
+    const numvector<double, dimPh>& solLeft, 
+    const numvector<double, dimPh>& solRight 
 ) const
 {
     numvector<double, dimPh> fluxL = phs.fluxF(solLeft);

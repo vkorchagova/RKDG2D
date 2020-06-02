@@ -35,7 +35,6 @@
 #include "FluxLLF.h"		/// All about the flux evaluating
 #include "FluxHLL.h"
 #include "FluxHLLC.h"
-#include "FluxViscous.h"
 #include "IndicatorEverywhere.h"
 #include "IndicatorNowhere.h"
 #include "IndicatorBJ.h"
@@ -74,8 +73,6 @@ int main(int argc, char* argv[])
     //int rank, size, ibeg, iend;
     //MPI_Status stat;
 
-	//omp_set_num_threads(1);
-
 
     MPI_Init(&argc, &argv);
 
@@ -96,17 +93,17 @@ int main(int argc, char* argv[])
 
     ///----------------------
 
-    CaseInit caseName = Blasius;
+    CaseInit caseName = SodX;
 
     double tStart = 0.0;
-    double tEnd = 5.0;
+    double tEnd = 1e-4;//5e-6;
 
-    double initTau = 1e-3;
-    double outputInterval = 0.2;//1e-6;
+    double initTau = 1e-4;
+    double outputInterval = 0.1;//1e-6;
 
     bool isDynamic = false;
     double maxCo = 0.1;
-    double maxTau = 5e-6;
+    double maxTau = 1e-3;
     double maxTauGrowth = 0.1; 
 
 
@@ -133,12 +130,11 @@ int main(int argc, char* argv[])
     
     Physics physics;
     FluxHLL flux(physics);
-    FluxViscous vflux(physics);
     
     Writer writer(fullMesh, solution, physics);
     TimeControl time(mesh, physics, solution, tStart, tEnd, initTau, outputInterval, isDynamic, maxCo, maxTau, maxTauGrowth);
     Problem problem(caseName, mesh, time, physics);
-    Solver solver(basis, mesh, solution, problem, physics, flux, vflux, buf);
+    Solver solver(basis, mesh, solution, problem, physics, flux, buf);
 
     IndicatorBJ indicator(mesh, solution);
     //LimiterRiemannWENOS limiter(mesh, solution, physics, indicator);
@@ -153,7 +149,7 @@ int main(int argc, char* argv[])
     // Set initial conditions
     if (tStart > 1e-10)
     {
-        solver.restart("alphaCoeffs/0." + to_string(tStart) + ".dat");
+        solver.restart("alphaCoeffs/" + to_string(tStart) + ".dat");
     }
     else
     {

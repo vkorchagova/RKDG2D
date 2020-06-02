@@ -53,9 +53,6 @@ private:
     /// List of numerical fluxes in Gauss points for Grad U
     std::vector<std::vector<numvector<double, dimGrad>>> HnumFluxes;
 
-    /// List of viscous fluxes in Gauss points
-    std::vector<std::vector<numvector<double, dimPh>>> VnumFluxes;
-
     /// Constant reference to the basis
     const Basis& B;
 
@@ -74,9 +71,6 @@ private:
     /// Constant reference to Riemann solver
     const Flux& flux;
 
-    /// Constant reference to Riemann solver
-    const Flux& vflux;
-
     /// Reference to MPI buffers
     Buffers& buf;
 
@@ -84,7 +78,7 @@ public:
 
     /// Constructor
     Solver( Basis& B, Mesh& msh, Solution& sln,
-            Problem &prb, Physics& phs, Flux& flx, Flux& vflx, Buffers& buf);
+            Problem &prb, Physics& phs, Flux& flx, Buffers& buf);
 
     /// Destructor
     ~Solver() {}
@@ -107,10 +101,8 @@ public:
     std::vector<numvector<double, dimS>> correctPrevIter(const std::vector<numvector<double, dimS>>& alpha) const;
 
     /// Function to compute grad of conservative variables
-    void computeGradU(const std::vector<numvector<double, dimS>>& SOL, std::vector<numvector<double, dimGradCoeff>>& S);
+    std::vector<numvector<double, dimGradCoeff>> computeGradU(const std::vector<numvector<double, dimS>>& SOL);
 
-    /// Functon to compute viscous fluxes in Gauss points for RHS
-    void computeVnumFluxes();
     //------------ MPI functions
 
     /// Exchange data

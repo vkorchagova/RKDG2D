@@ -22,11 +22,6 @@ public:
         const Point& n = Point({0.0,0.0})
     ) const override;
 
-    virtual numvector<double, dimGrad> getGradSolOuter(
-        const numvector<double, dimGrad>& gardSol,
-        const Point& n = Point({0.0,0.0})
-    ) const override;
-
 };
 
 #endif // BOUNDARYCONSTANT_H

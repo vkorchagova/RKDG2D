@@ -12,9 +12,9 @@ using namespace std;
 
 
 
-numvector<double, dimPh> FluxLLF::evaluate(
-        const numvector<double, dimPh>& solLeftRot, const numvector<double, dimPh>& solRightRot,
-        const numvector<double, dimGrad>& gradSolLeft, const numvector<double, dimGrad>& gradSolRight
+numvector<double,dimPh> FluxLLF::evaluate( 
+    const numvector<double, dimPh>& solLeftRot, 
+    const numvector<double, dimPh>& solRightRot
 ) const
 {    
     numvector<double, dimPh> fluxOutward = phs.fluxF(solLeftRot);
@@ -24,7 +24,6 @@ numvector<double, dimPh> FluxLLF::evaluate(
     
     double lambda = max(fabs(lV[0]), fabs(lV[dimPh-1]));
 
-    numvector<double, dimPh> f = 0.5 * (fluxInward + fluxOutward) + 0.5 * lambda * (solLeftRot - solRightRot);
-    return f;
+    return 0.5 * (fluxInward + fluxOutward) + 0.5 * lambda * (solLeftRot - solRightRot);
 }
 

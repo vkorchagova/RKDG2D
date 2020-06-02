@@ -25,13 +25,6 @@ public:
     /// Covolume constant; 0 for ideal gas
     double covolume;
 
-    /// constant ???
-    double lam;
-
-    double Pr;
-
-    double mu;
-
     /// Constructor
 	Physics();
 
@@ -55,12 +48,6 @@ public:
 
     /// Calculate fluxes in y direction
     numvector<double, dimPh> fluxG(const numvector<double, dimPh>& sol) const;
-
-    /// Calculate viscous fluxes in x direction
-    numvector<double, dimPh> fluxFv(const numvector<double, dimPh>& sol, const numvector<double, dimGrad>& gradSol) const;
-
-    /// Calculate viscous fluxes in y direction
-    numvector<double, dimPh> fluxGv(const numvector<double, dimPh>& sol, const numvector<double, dimGrad>& gradSol) const;
 
     /// Left  eigenvectors
     numvector<numvector<double, dimPh>, dimPh> getL(const numvector<double, dimPh>& sol, const Point& n) const;

@@ -10,9 +10,6 @@
 
 class Flux
 {
-private:
-
-
 
 protected:
 
@@ -41,21 +38,17 @@ protected:
     /// Eigenvalues for X direction // UPDATE FOR COVOLUME
     numvector<double, dimPh> lambdaF(const numvector<double, dimPh>& solOne, const numvector<double, dimPh>& solTwo) const;
 
+
 public:
 
     /// Constructor
-    //Flux(const Physics& phys) : phs(phys) {};
-    Flux(const Physics& phys);
+    Flux(const Physics& phys) : phs(phys) {};
 
     /// Destructor
     virtual ~Flux() {}
 
     /// Evaluate numerical flux through one point
-    //virtual numvector<double, dimPh> evaluate(const numvector<double, dimPh>& solInner, const numvector<double, dimPh>& solOuter) const = 0;
-
-    virtual numvector<double, dimPh> evaluate(const numvector<double, dimPh>& solInner, const numvector<double, dimPh>& solOuter,
-                                              const numvector<double, dimGrad>& gradSolInner = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
-                                              const numvector<double, dimGrad>& gradSolOuter = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}) const = 0;
+    virtual numvector<double, dimPh> evaluate(const numvector<double, dimPh>& solInner, const numvector<double, dimPh>& solOuter) const = 0;
 
 };// end Flux
 

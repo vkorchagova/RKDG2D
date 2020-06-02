@@ -4,11 +4,6 @@
 
 using namespace std;
 
-Flux::Flux(const Physics& phys)
-:phs(phys)
-{
-}
-
 double Flux::c_av(const numvector<double, dimPh>& solOne, const numvector<double, dimPh>& solTwo) const
 {
 	double semiRho = 0.5*(solOne[0] + solTwo[0]);
