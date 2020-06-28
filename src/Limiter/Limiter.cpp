@@ -18,6 +18,8 @@ Limiter::Limiter(
 
 void Limiter::lastHope(std::vector<numvector<double, dimS> >& alpha)
 {
+/*
+
     int nCells =  mesh.cells.size();
 #pragma omp parallel for schedule (guided) shared(alpha, nCells)
     for (int i = 0; i < nCells; ++i)
@@ -48,6 +50,8 @@ void Limiter::lastHope(std::vector<numvector<double, dimS> >& alpha)
             }
         }
     }
+
+*/
 }
 
 

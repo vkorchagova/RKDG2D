@@ -32,6 +32,7 @@ public:
 
     double mu;
 
+    double g;
     /// Constructor
 	Physics();
 

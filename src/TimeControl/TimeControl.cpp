@@ -144,7 +144,7 @@ void TimeControl::updateTimeStep()
 
 bool TimeControl::isOutput()
 {
-    if (fabs(outputTime - t) < 1e-12)
+    if (fabs(outputTime - t) < 1e-7)
     {
         //timeListing << t << endl;
         outputTime += outputInterval;

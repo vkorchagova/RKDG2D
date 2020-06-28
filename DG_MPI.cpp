@@ -96,13 +96,13 @@ int main(int argc, char* argv[])
 
     ///----------------------
 
-    CaseInit caseName = Blasius;
+    CaseInit caseName = Vortex; //Blasius;
 
     double tStart = 0.0;
-    double tEnd = 5.0;
+    double tEnd = 81.0;
 
-    double initTau = 1e-3;
-    double outputInterval = 0.2;//1e-6;
+    double initTau = 2.e-6;
+    double outputInterval = 1.e-1;//1e-6;
 
     bool isDynamic = false;
     double maxCo = 0.1;
@@ -132,7 +132,7 @@ int main(int argc, char* argv[])
     Solution solution(basis);
     
     Physics physics;
-    FluxHLL flux(physics);
+    FluxHLLC flux(physics);
     FluxViscous vflux(physics);
     
     Writer writer(fullMesh, solution, physics);
@@ -140,7 +140,9 @@ int main(int argc, char* argv[])
     Problem problem(caseName, mesh, time, physics);
     Solver solver(basis, mesh, solution, problem, physics, flux, vflux, buf);
 
-    IndicatorBJ indicator(mesh, solution);
+    //IndicatorBJ indicator(mesh, solution);
+    IndicatorNowhere indicator(mesh, solution);
+
     //LimiterRiemannWENOS limiter(mesh, solution, physics, indicator);
     LimiterWENOS limiter(mesh, solution, physics, indicator);
     //LimiterBJ limiter(mesh, solution, physics, indicator);

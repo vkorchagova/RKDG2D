@@ -15,6 +15,7 @@ Physics::Physics()
     lam = - 2.0 / 3.0; // default value
     Pr = 1.0; // default value
     mu = 0.0; // default value
+    g = 0.0;
 } // end constructor 
 
 Physics::~Physics()

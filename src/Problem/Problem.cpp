@@ -2,6 +2,7 @@
 #include <iostream>
 #include <omp.h>
 
+#include <cmath>
 using namespace std;
 
 // ------------------ Constructors & Destructors ----------------
@@ -195,6 +196,61 @@ void Problem::setInitialConditions(CaseInit task)
 
         break;
     } // Blasius problem
+
+case Vortex:
+	{
+		phs.cpcv = 1.4;
+		phs.covolume = 0.0;
+		phs.Pr = 100;//0.135;
+		phs.mu = 1.00e-2;
+		phs.g = 1.0;
+
+
+
+
+		initRho = [](const Point& r) { return 1.0; };
+		initP = [=](const Point& r) {
+			double mn, exp2, exp4, cft, ei2, ei4, res;
+
+			const double myrho = 1.0;
+			const double t0 = 0.2 * myrho / phs.mu;
+			
+			double qqq = r.length();
+
+			mn = phs.g * phs.g * myrho / (8.0 * M_PI * M_PI * qqq * qqq);
+			exp2 = std::exp(-qqq * qqq / (2.0 * phs.mu / myrho * t0));
+			exp4 = std::exp(-qqq * qqq / (4.0 * phs.mu / myrho * t0));
+			
+			cft = phs.g * phs.g * myrho / (16.0 * M_PI * M_PI * phs.mu / myrho * t0);
+			ei2 = std::expint(-qqq * qqq / (2.0 * phs.mu / myrho * t0));
+			ei4 = std::expint(-qqq * qqq / (4.0 * phs.mu / myrho * t0));
+
+			res = -mn - mn * exp2 + 2.0 * mn * exp4 - cft * ei2 + cft * ei4;
+			
+			return 1.0e+5 + res; };
+						
+		initU = [=](const Point& r) { 
+			const double myrho = 1.0;
+			const double t0 = 0.2 * myrho / phs.mu;
+			double beta = std::atan2(r.y(), r.x());	
+
+			double Vphi = 0.5 * phs.g / (M_PI * r.length()) * (1.0 - std::exp(-r.length()*r.length() / (4.0 * phs.mu / myrho * t0)));
+
+			return (-Vphi * sin(beta)); };
+		
+		initV = [=](const Point& r) {
+			const double myrho = 1.0;
+			const double t0 = 0.2 * myrho / phs.mu;
+			double beta = std::atan2(r.y(), r.x());
+
+			double Vphi = 0.5 * phs.g / (M_PI * r.length()) * (1.0 - std::exp(-r.length()* r.length() / (4.0 * phs.mu / myrho * t0)));
+
+			return (Vphi * cos(beta)); };
+
+		break;
+	} // vortex problem
+	
+
 
 	case AstroTest:
 	{
@@ -492,6 +548,14 @@ void Problem::setBoundaryConditions(CaseInit task)
 		break;
 	}
 
+	case Vortex:
+	{
+		for (const Patch& patch : M.patches)
+		{
+			bc.emplace_back(make_shared<BoundarySlip>(patch));
+		}
+		break;
+	}
 	case DoubleMach:
 	{
 		double inletRho = 8.0;
