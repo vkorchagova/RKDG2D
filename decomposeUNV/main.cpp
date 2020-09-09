@@ -8,13 +8,24 @@ using namespace std;
 // ----------------------------------------------------------------------------
 
 
-int main()
+int main(int argc, char** argv)
 {
+    if (argc < 3)
+    {
+        cout << "There should be 2 arguments: file_name (string) and number_of_domains (int)" << endl;
+        return -1;
+    }
 
-    DecomposerUNV converter("..//square1_192.unv","mesh2D");
-    //DecomposerUNV converter("..//..//..//mCol//dmAngle001triag.unv","mesh2D");
+    DecomposerUNV converter(argv[1],"mesh2D");
+    //DecomposerUNV converter("..//..//..//mCol//fs64triag.unv","mesh2D");
     //DecomposerUNV converter("..//..//..//..//tests//unv//dmAngle0p0025triag.unv","mesh2D");
-    int nDomains = 2;
+    int nDomains = stoi(argv[2]);
+    
+    if (nDomains < 1)
+    {
+        cout << "Number of subdomains should be more than 1." << endl;
+        exit(1);
+    }
     
     string metisCommand = "mpmetis meshMETIS " + to_string(nDomains);
     string partCellsFile = "meshMETIS.epart." + to_string(nDomains);

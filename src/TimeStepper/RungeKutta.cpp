@@ -132,12 +132,13 @@ void RungeKutta::Tstep()
          //        cout << p << ' ' << sln.SOL[p] << endl;
          // }
 
-        // assemble rhs 
+        // assemble rhs
         t0 = MPI_Wtime();
         k[iStage] = slv.assembleRHS(sln.SOL);
         t1 = MPI_Wtime();
         if (debug) logger << "\tslv.assembleRHS(): " << t1 - t0 << endl;
 
+        //cout << "RHS OK" << endl;
 
         // if (myRank == 0)
         // {

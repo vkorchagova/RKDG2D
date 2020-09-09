@@ -96,13 +96,13 @@ int main(int argc, char* argv[])
 
     ///----------------------
 
-    CaseInit caseName = Vortex; //Blasius;
+    CaseInit caseName = CylinderFlow;
 
     double tStart = 0.0;
-    double tEnd = 81.0;
+    double tEnd = 0.45;
 
-    double initTau = 2.e-6;
-    double outputInterval = 1.e-1;//1e-6;
+    double initTau = 1.e-4;
+    double outputInterval = 1.e-4;//1e-6;
 
     bool isDynamic = false;
     double maxCo = 0.1;
@@ -132,7 +132,7 @@ int main(int argc, char* argv[])
     Solution solution(basis);
     
     Physics physics;
-    FluxHLLC flux(physics);
+    FluxLLF flux(physics);
     FluxViscous vflux(physics);
     
     Writer writer(fullMesh, solution, physics);
@@ -195,7 +195,6 @@ int main(int argc, char* argv[])
     double totalCpuTime = 0.0;
     int nSteps = 0;
     
-
 	/// THE MAIN CYCLE THROUGH THE TIME!
     while (time.running())
     {

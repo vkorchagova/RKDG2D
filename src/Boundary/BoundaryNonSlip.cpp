@@ -15,5 +15,5 @@ numvector<double, dimGrad> BoundaryNonSlip::getGradSolOuter (
     const Point& n
 ) const
 {
-    return  gradSol;
+    return  gradSol;//{0.0, 0.0, 0.0, 0.0, 0.0};
 }

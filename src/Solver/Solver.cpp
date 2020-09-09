@@ -243,7 +243,9 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
         //for (const shared_ptr<Edge>& e : bcond->patch.edgeGroup)
         for (int iEdge = 0; iEdge < nEdgesPatch; ++iEdge)
         {
+
             const shared_ptr<Edge>& e = bcond->patch.edgeGroup[iEdge];
+            //cout << "iEdge = " << *e->nodes[0] << ";"<< *e->nodes[1] << "; iCellLeft = " << e->neibCells[0]->number << endl;
             ////if (myRank == 1) cout << e->number << endl;
             int iCellLeft  = e->neibCells[0]->number;
             ////if (myRank == 1) cout << "-------------" << endl;
@@ -283,7 +285,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
     if (debug) logger << "\t\teBound.numfluxes: " << t1 - t0 << endl;
     ////if (myRank == 1) cout << "end bound edges" << endl;
 
-
+    //cout << "rhs bounder OK" << endl;
     ///--------------------------------------------------------------------------------
     t0 = MPI_Wtime();
     //omp_set_num_threads(NumThreads);
@@ -294,14 +296,18 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
     for (int iEdge = M.nEdgesBound; iEdge < M.nRealEdges; ++iEdge)
     {
         ////if (myRank == 1)  cout << "iEdge = " << iEdge <<endl;
-
         const shared_ptr<Edge>& e = M.edges[iEdge];
 
         int iCellLeft  = e->neibCells[0]->number;
         int iCellRight = e->neibCells[1]->number;
 
         ////if (myRank == 1)  cout << iCellLeft << ' ' << iCellRight << endl;
+        //if (iCellLeft == 4503 || iCellRight == 4503)
+        //{
         //cout << "Hnumflux in edge #" << iEdge << ":\n";
+        //cout << "iCellLeft = " << iCellLeft << endl;
+        //cout << "iCellRight = " << iCellRight << endl;
+        //}
 
         for (int iGP = 0; iGP < nGP; ++iGP)
         {
