@@ -84,7 +84,7 @@ numvector<double,dimPh> FluxHLLC::evaluate(
     if (sStar > 0.0)
         return getFStar(solLeft,fluxL,solLeft[0],pLeft,SL,cLeft,sStar);
 
-    return getFStar(solRight,fluxR,solLeft[0],pRight,SR,cRight,sStar);
+    return getFStar(solRight,fluxR,solRight[0],pRight,SR,cRight,sStar);
 
     // var 2
 
@@ -94,7 +94,7 @@ numvector<double,dimPh> FluxHLLC::evaluate(
     if (sStar >= 0.0)
         return getFStar(solLeft,fluxL,solLeft[0],pLR,SL,cLeft,sStar);
 
-    return getFStar(solRight,fluxR,solLeft[0],pLR,SR,cRight,sStar);
+    return getFStar(solRight,fluxR,solRight[0],pLR,SR,cRight,sStar);
 
 
 }
