@@ -241,6 +241,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
             firstprivate (solLeft, solRight, gpFluxes) \
             default(none)
         //for (const shared_ptr<Edge>& e : bcond->patch.edgeGroup)
+        //cout << "edge =" <<
         for (int iEdge = 0; iEdge < nEdgesPatch; ++iEdge)
         {
 
@@ -252,6 +253,8 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
 
             ////if (myRank == 1) cout << iCellLeft << ' '  << endl;
             //cout << "Hnumflux in edge #" << e->number << ":\n";
+
+            //if (iCellLeft == 519) cout << iEdge << endl;
             for (size_t iGP = 0; iGP < nGP; ++iGP)
             {
                ////if (myRank == 1) cout << "iGP = " << iGP;// << endl;
@@ -262,11 +265,16 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
                 solLeft  = rotate(sln.reconstruct(iCellLeft,  gPoint), eNormal);
                 solRight = bcond->getSolOuter(solLeft, eNormal);
 
+                //if (iEdge == 12) cout << solLeft << ";" << solRight << endl;
+
                 ////if (myRank == 1) cout << "slL = " << solLeft << endl;
                 ////if (myRank == 1) cout << "slR = " << solRight << endl;
 
                 gpFluxes[iGP] = inverseRotate(flux.evaluate(solLeft, solRight), eNormal);
 
+                //if (iEdge == 12) cout << "gpFluxes =" << iGP  <<";" << gpFluxes[iGP]  << endl << endl;
+                //if (iEdge == 12) cout << "rho = " << solLeft[0]<< ";" << solRight[0] << "; u = " << solLeft[1] / solLeft[0] << ";" << solRight[1]/solRight[0] << endl;
+                //if (iEdge == 12) cout << "p = " << phs.getPressure(solLeft) << ";" << phs.getPressure(solRight) << endl;
                 /// VISCOUS FLUXES
                 /// TODO outerProductArtificial FUNCTION (8 from 15 filtering)
 

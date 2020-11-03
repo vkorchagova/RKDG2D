@@ -13,5 +13,5 @@ numvector<double, dimGrad> BoundaryOpen::getGradSolOuter (
     const Point& n
 ) const
 {
-    return gradSolLeft;
+    return {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};//gradSolLeft;
 }
