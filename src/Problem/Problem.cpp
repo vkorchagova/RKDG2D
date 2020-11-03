@@ -149,7 +149,7 @@ void Problem::setInitialConditions(CaseInit task)
 
 		initRho = [](const Point& r) { return (r.x() < 0.15) ? 8.0 : 1.4; };
 		initP = [](const Point& r) { return (r.x() < 0.15) ? 116.518 : 1.0;  };
-		initU = [](const Point& r) { return (r.x() < 0.15) ? 8.25 : 0.0; };
+    		initU = [](const Point& r) { return (r.x() < 0.15) ? 8.25 : 0.0; };
 		initV = [](const Point& r) { return 0.0; };
 
 		break;
@@ -255,17 +255,16 @@ case CylinderFlow:
         phs.cpcv = 1.4;
         phs.covolume = 0.0;
         phs.Pr = 100;//0.135;
-        phs.mu = 1.25e-1;
+        phs.mu = 0.0;//1.25e-1;
 
 
         initRho = [](const Point& r) { return 1.4; };
         initP = [&](const Point& r) { return 1.0;  };
-        initU = [](const Point& r) { return 0.1; };
+        initU = [](const Point& r) { return 0.0; };
         initV = [](const Point& r) { return 0.0; };
 
         break;
     } // CylinderFlow problem
-
 
 case AstroTest:
 	{
@@ -574,7 +573,7 @@ void Problem::setBoundaryConditions(CaseInit task)
 	case DoubleMach:
 	{
 		double inletRho = 8.0;
-		double inletU = 8.25;
+    		double inletU = 8.25;
 		double inletV = 0.0;
 		double inletP = 116.518;
 
@@ -584,7 +583,7 @@ void Problem::setBoundaryConditions(CaseInit task)
 				patch.name == "inlet")
 			{
 				bc.emplace_back(
-					make_shared<BoundaryConstant>(
+                			make_shared<BoundaryConstant>(
 						patch,
 						numvector<double, dimPh>(
 							{
@@ -605,7 +604,8 @@ void Problem::setBoundaryConditions(CaseInit task)
 				patch.name == "top" ||
 				patch.name == "walls" ||
 				patch.name == "wall" ||
-				patch.name == "down")
+                patch.name == "down" ||
+                patch.name == "bottom")
 			{
 				bc.emplace_back(make_shared<BoundarySlip>(patch));
 			}
@@ -731,7 +731,7 @@ case CylinderFlow:
         for (const Patch& patch : M.patches)
         {
             if (patch.name == "left" ||
-                patch.name == "inlet")
+                patch.name == "inlet" )
             {
                 bc.emplace_back(
                     make_shared<BoundaryConstant>(
@@ -754,9 +754,11 @@ case CylinderFlow:
             else if (patch.name == "up" ||
                 patch.name == "top" ||
                 patch.name == "top_bottom" ||
-                patch.name == "bottom")
+                patch.name == "bottom" ||
+                patch.name == "side1" ||
+                patch.name == "side2")
             {
-                bc.emplace_back(make_shared<BoundarySlip>(patch));
+                bc.emplace_back(make_shared<BoundaryOpen>(patch));
             }
             else if (patch.name == "wall")
             {
