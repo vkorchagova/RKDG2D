@@ -147,9 +147,9 @@ void Problem::setInitialConditions(CaseInit task)
 		phs.cpcv = 1.4;
 		phs.covolume = 0.0;
 
-		initRho = [](const Point& r) { return (r.x() < 0.15) ? 8.0 : 1.4; };
-		initP = [](const Point& r) { return (r.x() < 0.15) ? 116.518 : 1.0;  };
-    		initU = [](const Point& r) { return (r.x() < 0.15) ? 8.25 : 0.0; };
+        initRho = [](const Point& r) { return (r.x() < 0.15) ? 1.4 : 1.4; };
+        initP = [](const Point& r) { return (r.x() < 0.15) ? 1.0 : 1.0;  };
+        initU = [](const Point& r) { return (r.x() < 1.0) ? 0.25 : 0.0; };
 		initV = [](const Point& r) { return 0.0; };
 
 		break;
@@ -258,9 +258,9 @@ case CylinderFlow:
         phs.mu = 0.0;//1.25e-1;
 
 
-        initRho = [](const Point& r) { return 1.4; };
-        initP = [&](const Point& r) { return 1.0;  };
-        initU = [](const Point& r) { return 0.0; };
+        initRho = [](const Point& r) { return 0.014; };
+        initP = [&](const Point& r) { return 10.0;  };
+        initU = [](const Point& r) { return ((r[0] < -2.0) && (r[0] > -8.0)) ? 10. : 0.0; };
         initV = [](const Point& r) { return 0.0; };
 
         break;
@@ -572,10 +572,10 @@ void Problem::setBoundaryConditions(CaseInit task)
 	}
 	case DoubleMach:
 	{
-		double inletRho = 8.0;
-    		double inletU = 8.25;
+        double inletRho = 1.4;
+            double inletU = 0.25;
 		double inletV = 0.0;
-		double inletP = 116.518;
+        double inletP = 1.0;
 
 		for (const Patch& patch : M.patches)
 		{
@@ -605,9 +605,11 @@ void Problem::setBoundaryConditions(CaseInit task)
 				patch.name == "walls" ||
 				patch.name == "wall" ||
                 patch.name == "down" ||
-                patch.name == "bottom")
+                patch.name == "bottom" ||
+                patch.name == "top_bottom" ||
+                patch.name == "side" )
 			{
-				bc.emplace_back(make_shared<BoundarySlip>(patch));
+                bc.emplace_back(make_shared<BoundaryOpen>(patch));
 			}
 			else
 			{
@@ -723,14 +725,14 @@ case Blasius:
 
 case CylinderFlow:
     {
-        double inletRho = phs.cpcv;
-        double inletU = 0.1;
+        double inletRho = 0.014;//phs.cpcv;
+        double inletU = 0.0;
         double inletV = 0.0;
-        double inletP = 1.0;
+        double inletP = 10.0;
 
         for (const Patch& patch : M.patches)
         {
-            if (patch.name == "left" ||
+            /*if (patch.name == "left" ||
                 patch.name == "inlet" )
             {
                 bc.emplace_back(
@@ -746,7 +748,7 @@ case CylinderFlow:
                             })
                         ));
             }
-            else if (patch.name == "right" ||
+            else*/ if (patch.name == "right" ||
                 patch.name == "outlet")
             {
                 bc.emplace_back(make_shared<BoundaryOpen>(patch));
@@ -761,6 +763,10 @@ case CylinderFlow:
                 bc.emplace_back(make_shared<BoundaryOpen>(patch));
             }
             else if (patch.name == "wall")
+            {
+                bc.emplace_back(make_shared<BoundarySlip>(patch)); //NonSlip
+            }
+            else if (patch.name == "inlet")
             {
                 bc.emplace_back(make_shared<BoundaryNonSlip>(patch));
             }
