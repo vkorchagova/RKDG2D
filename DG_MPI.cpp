@@ -35,6 +35,7 @@
 #include "FluxLLF.h"		/// All about the flux evaluating
 #include "FluxHLL.h"
 #include "FluxHLLC.h"
+#include "FluxPh.h"
 #include "FluxViscous.h"
 #include "IndicatorEverywhere.h"
 #include "IndicatorNowhere.h"
@@ -99,10 +100,10 @@ int main(int argc, char* argv[])
     CaseInit caseName = CylinderFlow;
 
     double tStart = 0.0;
-    double tEnd = 0.45;
+    double tEnd = 10.0;
 
-    double initTau = 1.e-4;
-    double outputInterval = 1.e-4;//1e-6;
+    double initTau = 1.e-3;
+    double outputInterval = 1.e-2;//1.e-2;//1e-6;
 
     bool isDynamic = false;
     double maxCo = 0.1;
@@ -141,11 +142,11 @@ int main(int argc, char* argv[])
     Solver solver(basis, mesh, solution, problem, physics, flux, vflux, buf);
 
     //IndicatorBJ indicator(mesh, solution);
-    IndicatorNowhere indicator(mesh, solution);
+    IndicatorEverywhere indicator(mesh, solution);
 
     //LimiterRiemannWENOS limiter(mesh, solution, physics, indicator);
-    LimiterWENOS limiter(mesh, solution, physics, indicator);
-    //LimiterBJ limiter(mesh, solution, physics, indicator);
+    //LimiterWENOS limiter(mesh, solution, physics, indicator);
+    LimiterFinDiff limiter(mesh, solution, physics, indicator);
     RungeKutta RK(order, basis, solver, solution, limiter, time);
 
     ///---------------------

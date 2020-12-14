@@ -14,7 +14,7 @@ double Flux::c_av(const numvector<double, dimPh>& solOne, const numvector<double
 	double semiRho = 0.5*(solOne[0] + solTwo[0]);
 	double semiP = 0.5*(phs.getPressure(solOne) + phs.getPressure(solTwo));
 
-	cout << "NOT USED" << endl;
+    //cout << "NOT USED" << endl;
 
 	return sqrt(phs.cpcv * semiP / semiRho / (1.0 - semiRho * 0.0));
 } // end c for edge

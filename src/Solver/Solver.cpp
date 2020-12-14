@@ -236,6 +236,7 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
     for (const shared_ptr<Boundary>& bcond : prb.bc)
     {
         int nEdgesPatch = bcond->patch.edgeGroup.size();
+
         //#pragma omp parallel for \
             shared(nGP, numFluxes, bcond, nEdgesPatch) \
             firstprivate (solLeft, solRight, gpFluxes) \
@@ -265,12 +266,18 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
                 solLeft  = rotate(sln.reconstruct(iCellLeft,  gPoint), eNormal);
                 solRight = bcond->getSolOuter(solLeft, eNormal);
 
+
                 //if (iEdge == 12) cout << solLeft << ";" << solRight << endl;
 
                 ////if (myRank == 1) cout << "slL = " << solLeft << endl;
                 ////if (myRank == 1) cout << "slR = " << solRight << endl;
 
                 gpFluxes[iGP] = inverseRotate(flux.evaluate(solLeft, solRight), eNormal);
+
+                /*if (bcond->patch.name == "inlet")
+                {
+                    gpFluxes[iGP] = inverseRotate(flux.evaluate(solRight, solRight), eNormal);
+                }*/
 
                 //if (iEdge == 12) cout << "gpFluxes =" << iGP  <<";" << gpFluxes[iGP]  << endl << endl;
                 //if (iEdge == 12) cout << "rho = " << solLeft[0]<< ";" << solRight[0] << "; u = " << solLeft[1] / solLeft[0] << ";" << solRight[1]/solRight[0] << endl;
@@ -283,6 +290,8 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
 
                 ////if (myRank == 1) cout << "; flux: " << gpFluxes[iGP] << endl;
             }// for GP
+
+
 
             numFluxes[e->number] = gpFluxes;
             HnumFluxes[e->number] = HgpFluxes;

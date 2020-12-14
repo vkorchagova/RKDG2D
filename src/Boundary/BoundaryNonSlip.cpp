@@ -7,7 +7,8 @@ numvector<double, dimPh> BoundaryNonSlip::getSolOuter (
     const Point& n
 ) const
 {    
-    return { solLeft[0], -solLeft[1], 0.0, 0.0, solLeft[4] - 0.5 * solLeft[2] * solLeft[2] / solLeft[0] - 0.5 * solLeft[3] * solLeft[3] / solLeft[0] };
+    //return { solLeft[0], -solLeft[1], 0.0, 0.0, solLeft[4] - 0.5 * solLeft[2] * solLeft[2] / solLeft[0] - 0.5 * solLeft[3] * solLeft[3] / solLeft[0] };
+    return { -solLeft[0] + 0.028, -solLeft[1] - 0.28, 0.0, 0.0, solLeft[4] + 0.7};
 }
 
 numvector<double, dimGrad> BoundaryNonSlip::getGradSolOuter (
