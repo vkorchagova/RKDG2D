@@ -103,6 +103,6 @@ numvector<double, dimPh> Flux::lambdaF_semisum(const numvector<double, dimPh>& s
 
 numvector<double, dimPh> Flux::lambdaF(const numvector<double, dimPh>& solOne, const numvector<double, dimPh>& solTwo) const
 {
-	return lambdaF_Roe(solOne, solTwo);
+    return lambdaF_Einfeldt(solOne, solTwo);
 } // end lambdaF
 

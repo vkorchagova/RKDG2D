@@ -255,12 +255,12 @@ case CylinderFlow:
         phs.cpcv = 1.4;
         phs.covolume = 0.0;
         phs.Pr = 100;//0.135;
-        phs.mu = 0.0;//1.25e-1;
+        phs.mu = 0.4;//5.e-6;
 
 
-        initRho = [](const Point& r) { return 0.014; };
-        initP = [&](const Point& r) { return 10.0;  };
-        initU = [](const Point& r) { return ((r[0] < -2.0) && (r[0] > -8.0)) ? 10. : 0.0; };
+        initRho = [](const Point& r) { return 1.0; };
+        initP = [&](const Point& r) { return 10000.0 / phs.cpcv;  };
+        initU = [](const Point& r) { return 10.0; };//((r[0] < -2.0) && (r[0] > -8.0)) ? 10. : 0.0; };
         initV = [](const Point& r) { return 0.0; };
 
         break;
@@ -725,18 +725,18 @@ case Blasius:
 
 case CylinderFlow:
     {
-        double inletRho = 0.014;//phs.cpcv;
-        double inletU = 0.0;
+        double inletRho = 1.0;//phs.cpcv;
+        double inletU = 10.0;
         double inletV = 0.0;
-        double inletP = 10.0;
+        double inletP = 10000.0 / phs.cpcv;
 
         for (const Patch& patch : M.patches)
         {
-            /*if (patch.name == "left" ||
+            if (patch.name == "left" ||
                 patch.name == "inlet" )
             {
                 bc.emplace_back(
-                    make_shared<BoundaryConstant>(
+                    make_shared<BoundaryInlet>(
                         patch,
                         numvector<double, dimPh>(
                             {
@@ -748,7 +748,7 @@ case CylinderFlow:
                             })
                         ));
             }
-            else*/ if (patch.name == "right" ||
+            else if (patch.name == "right" ||
                 patch.name == "outlet")
             {
                 bc.emplace_back(make_shared<BoundaryOpen>(patch));
@@ -757,19 +757,19 @@ case CylinderFlow:
                 patch.name == "top" ||
                 patch.name == "top_bottom" ||
                 patch.name == "bottom" ||
-                patch.name == "side1" ||
+                patch.name == "sides" ||
                 patch.name == "side2")
             {
-                bc.emplace_back(make_shared<BoundaryOpen>(patch));
+                bc.emplace_back(make_shared<BoundarySlip>(patch));
             }
             else if (patch.name == "wall")
             {
-                bc.emplace_back(make_shared<BoundarySlip>(patch)); //NonSlip
+                bc.emplace_back(make_shared<BoundaryNonSlip>(patch)); //NonSlip
             }
-            else if (patch.name == "inlet")
+            /*else if (patch.name == "inlet")
             {
                 bc.emplace_back(make_shared<BoundaryNonSlip>(patch));
-            }
+            }*/
             else
             {
                 cout << "Boundary condition for patch " << patch.name << " is not found.\n"
