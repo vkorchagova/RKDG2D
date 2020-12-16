@@ -100,14 +100,14 @@ int main(int argc, char* argv[])
     CaseInit caseName = CylinderFlow;
 
     double tStart = 0.0;
-    double tEnd = 10.0;
+    double tEnd = 1.0;
 
-    double initTau = 1.e-3;
+    double initTau = 1.e-4;
     double outputInterval = 1.e-2;//1.e-2;//1e-6;
 
-    bool isDynamic = false;
+    bool isDynamic = true;
     double maxCo = 0.1;
-    double maxTau = 5e-6;
+    double maxTau = 1.e-3;
     double maxTauGrowth = 0.1; 
 
 
@@ -133,7 +133,7 @@ int main(int argc, char* argv[])
     Solution solution(basis);
     
     Physics physics;
-    FluxLLF flux(physics);
+    FluxHLL flux(physics);
     FluxViscous vflux(physics);
     
     Writer writer(fullMesh, solution, physics);
@@ -141,12 +141,12 @@ int main(int argc, char* argv[])
     Problem problem(caseName, mesh, time, physics);
     Solver solver(basis, mesh, solution, problem, physics, flux, vflux, buf);
 
-    //IndicatorBJ indicator(mesh, solution);
-    IndicatorEverywhere indicator(mesh, solution);
+    IndicatorBJ indicator(mesh, solution);
+    //IndicatorNowhere indicator(mesh, solution);
 
     //LimiterRiemannWENOS limiter(mesh, solution, physics, indicator);
-    //LimiterWENOS limiter(mesh, solution, physics, indicator);
-    LimiterFinDiff limiter(mesh, solution, physics, indicator);
+    LimiterWENOS limiter(mesh, solution, physics, indicator);
+    //LimiterFinDiff limiter(mesh, solution, physics, indicator);
     RungeKutta RK(order, basis, solver, solution, limiter, time);
 
     ///---------------------

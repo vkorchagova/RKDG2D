@@ -15,6 +15,7 @@
 #include "BoundaryOpen.h"
 #include "BoundaryConstant.h"
 #include "BoundaryNonSlip.h"
+#include "BoundaryInlet.h"
 
 class Patch;
 
