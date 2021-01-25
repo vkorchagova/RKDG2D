@@ -21,11 +21,11 @@ int main(int argc, char** argv)
     //DecomposerUNV converter("..//..//..//..//tests//unv//dmAngle0p0025triag.unv","mesh2D");
     int nDomains = stoi(argv[2]);
     
-    if (nDomains < 2)
-    {
-        cout << "Number of subdomains should be more than 1." << endl;
-        exit(1);
-    }
+   // if (nDomains < 2)
+   // {
+   //     cout << "Number of subdomains should be more than 1." << endl;
+  //      exit(1);
+   // }
     
     string metisCommand = "mpmetis meshMETIS " + to_string(nDomains);
     string partCellsFile = "meshMETIS.epart." + to_string(nDomains);
