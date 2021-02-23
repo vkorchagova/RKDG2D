@@ -191,7 +191,7 @@ void Problem::setInitialConditions(CaseInit task)
 
         initRho = [](const Point& r) { return 1.4; };
         initP = [&](const Point& r) { return 1.0;  };
-        initU = [](const Point& r) { return 0.1; };
+        initU = [](const Point& r) { return -(r.y()-0.5)*(r.y()+0.5); };
         initV = [](const Point& r) { return 0.0; };
 
         break;
@@ -704,7 +704,8 @@ case Blasius:
             else if (patch.name == "up" ||
                 patch.name == "top" ||
                 patch.name == "top_bottom" ||
-                patch.name == "bottom")
+                patch.name == "bottom" ||
+                patch.name == "sides")
             {
                 bc.emplace_back(make_shared<BoundarySlip>(patch));
             }

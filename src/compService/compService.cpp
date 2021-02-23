@@ -180,3 +180,13 @@ numvector<double, dimGrad> outerProductArtificial(const numvector<double, dimPh>
 		sol[4] * n[1]
 	};
 }
+
+numvector<double, dimGrad> inverseRotate(const numvector<double, dimGrad> &gradSol, const Point& n)
+{
+    return { n.x() * gradSol[0] - n.y() * gradSol[1], n.y() * gradSol[0] + n.x() * gradSol[1], \
+                n.x() * ( gradSol[2] * n.x() - gradSol[4] * n.y()) - n.y() * ( gradSol[3] * n.x() - gradSol[5] * n.y() ), \
+                n.y() * ( gradSol[2] * n.x() - gradSol[4] * n.y()) + n.x() * ( gradSol[3] * n.x() - gradSol[5] * n.y()),\
+                n.x() * ( gradSol[4] * n.x() + gradSol[2] * n.y()) - n.y() * ( gradSol[5] * n.x() + gradSol[3] * n.y() ), \
+                n.y() * ( gradSol[4] * n.x() + gradSol[2] * n.y()) + n.x() * ( gradSol[5] * n.x() + gradSol[3] * n.y()),\
+                n.x() * gradSol[6] - n.y() * gradSol[7], n.y() * gradSol[6] + n.x() * gradSol[7] };
+}

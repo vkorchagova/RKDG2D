@@ -291,8 +291,6 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
                 ////if (myRank == 1) cout << "; flux: " << gpFluxes[iGP] << endl;
             }// for GP
 
-
-
             numFluxes[e->number] = gpFluxes;
             HnumFluxes[e->number] = HgpFluxes;
 
