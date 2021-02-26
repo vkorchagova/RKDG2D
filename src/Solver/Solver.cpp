@@ -15,21 +15,21 @@ Solver::Solver( Basis& Bas, Mesh& msh, Solution& soln,
     // int nCellGlob = 0;
     // MPI_Reduce(&(M.nRealCells), &nCellGlob, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
     rhs.resize(M.cells.size()); // the same length as SOL
-    gradU.resize(M.cells.size()); 
+    gradU.resize(M.cells.size());
     numFluxes.resize(M.nRealEdges);
     HnumFluxes.resize(M.nRealEdges);
     VnumFluxes.resize(M.nRealEdges);
 
-    sln.fullSOL.resize(M.nCellsGlob); 
+    sln.fullSOL.resize(M.nCellsGlob);
     buf.forFullSOL.resize(M.nCellsGlob * dimS);
     buf.forSolExport.resize(M.nRealCells * dimExp);
 
-	if (myRank == 0)
-	{
-		buf.forSolExportRecv.resize(M.nCellsGlob * dimExp);
-		sln.solToExport.resize(M.nCellsGlob);
-	}
-        
+    if (myRank == 0)
+    {
+        buf.forSolExportRecv.resize(M.nCellsGlob * dimExp);
+        sln.solToExport.resize(M.nCellsGlob);
+    }
+
 
     ///
     /// preparation for sol collection on proc #0
@@ -57,11 +57,11 @@ Solver::Solver( Basis& Bas, Mesh& msh, Solution& soln,
 
         buf.mpiDisplSOL[0] = 0;
         buf.mpiDisplSolExp[0] = 0;
-        
+
         for (int i = 1; i < numProcsTotal; ++i)
         {
             buf.mpiDisplSOL[i] = buf.mpiDisplSOL[i-1] + buf.nCoeffsPerProc[i-1];
-            buf.mpiDisplSolExp[i] = buf.mpiDisplSolExp[i-1] + buf.nSolPerProcExp[i-1]; 
+            buf.mpiDisplSolExp[i] = buf.mpiDisplSolExp[i-1] + buf.nSolPerProcExp[i-1];
         }
 
         // cout << "DISPL" << endl;
@@ -80,14 +80,14 @@ Solver::Solver( Basis& Bas, Mesh& msh, Solution& soln,
     int nProcCellsTotalInner = 0;
     for (const ProcPatch& p : M.procPatches)
         nProcCellsTotalInner += p.innerCellGroup.size();
-    
+
     buf.forSendBoundSOL.resize(nProcCellsTotalInner * dimS);
 
     // resize buffer-receiver for proc boundaries
     int nProcCellsTotalOuter = 0;
     for (const ProcPatch& p : M.procPatches)
         nProcCellsTotalOuter += p.cellGroup.size();
-    
+
     buf.forRecvBoundSOL.resize(nProcCellsTotalOuter * dimS);
 
     // resize len/displs for data exchange
@@ -99,7 +99,7 @@ Solver::Solver( Basis& Bas, Mesh& msh, Solution& soln,
 
     // prepare len/displs for data send
     for (const ProcPatch& p : M.procPatches)
-        for (int i = 0; i < numProcsTotal; ++i) 
+        for (int i = 0; i < numProcsTotal; ++i)
             if (i == p.procNum)
             {
                 buf.boundProcSolSizesS[i] = p.innerCellGroup.size() * dimS;
@@ -108,7 +108,7 @@ Solver::Solver( Basis& Bas, Mesh& msh, Solution& soln,
 
     buf.boundProcSolDisplS[0] = 0;
     buf.boundProcSolDisplR[0] = 0;
-    
+
     for (int i = 1; i < numProcsTotal; ++i)
     {
         buf.boundProcSolDisplS[i] = buf.boundProcSolDisplS[i-1] + buf.boundProcSolSizesS[i-1];
@@ -201,7 +201,7 @@ void Solver::restart(string fileName)
     if (numProcsTotal > 1)
     {
         sln.SOL.resize(M.globalCellNumber.size());
-        
+
         for (int iLocal = 0; iLocal < sln.SOL.size(); ++iLocal)
             sln.SOL[iLocal] = fullSOLRestart[M.globalCellNumber[iLocal]];
     }
@@ -793,7 +793,7 @@ void Solver::dataExchange()
 
             for (int j = 0; j < dimS; ++j)
                 buf.forSendBoundSOL[curDispl + i*dimS + j] = sln.SOL[iCell][j];
-            
+
             // if (myRank == 2)
             // {
             //     cout << "\nbufferize sol on cell #" << M.globalCellNumber[iCell] << endl;
@@ -809,7 +809,7 @@ void Solver::dataExchange()
     //     cout << "buf.forSendBoundSOL" << endl;
     //     int stopper = 0;
     //     for (int i = 0; i < buf.forSendBoundSOL.size(); ++i)
-    //     {    
+    //     {
     //         cout << buf.forSendBoundSOL[i] << ' ';
     //         if (stopper == dimS -1)
     //         {
@@ -823,7 +823,7 @@ void Solver::dataExchange()
 
     // 2nd step: scatter data for all procs
 
-	if (numProcsTotal > 1)
+    if (numProcsTotal > 1)
     MPI_Alltoallv(
         &(buf.forSendBoundSOL[0]),      /*who send*/
         &(buf.boundProcSolSizesS[0]),   /*how much*/
@@ -849,7 +849,7 @@ void Solver::dataExchange()
         for (int i = 0; i < p.cellGroup.size(); ++i)
         {
             int iCell = p.cellGroup[i]->number;
-            
+
             for (int j = 0; j < dimS; ++j)
                 sln.SOL[iCell][j] = buf.forRecvBoundSOL[curDispl + i*dimS + j];
         }
@@ -862,7 +862,7 @@ void Solver::dataExchange()
     //     cout << "buf.forRecvBoundSOL" << endl;
     //     int stopper = 0;
     //     for (int i = 0; i < buf.forRecvBoundSOL.size(); ++i)
-    //     {    
+    //     {
     //         cout << buf.forRecvBoundSOL[i] << ' ';
     //         if (stopper == dimS - 1)
     //         {
@@ -897,7 +897,7 @@ void Solver::collectSolution()
     // {
     //     cout << "sendBuf for local sol on proc 0" << endl;
     //     for (int i = 0; i < M.nRealCells; ++i)
-    //     {   
+    //     {
     //         for (int j = 0; j < dimS; ++j)
     //             cout << buf.forSendLocalSOL[i*dimS + j] << ' ';
     //         cout << endl;
@@ -910,14 +910,14 @@ void Solver::collectSolution()
     if (numProcsTotal > 1)
     {
         MPI_Gatherv(
-            &(buf.forSendLocalSOL[0]), 
-            M.nRealCells*dimS, 
-            MPI_DOUBLE, 
-            &(buf.forFullSOL[0]), 
-            &(buf.nCoeffsPerProc[0]), 
-            &(buf.mpiDisplSOL[0]), 
-            MPI_DOUBLE, 
-            0, 
+            &(buf.forSendLocalSOL[0]),
+            M.nRealCells*dimS,
+            MPI_DOUBLE,
+            &(buf.forFullSOL[0]),
+            &(buf.nCoeffsPerProc[0]),
+            &(buf.mpiDisplSOL[0]),
+            MPI_DOUBLE,
+            0,
             MPI_COMM_WORLD
         );
     }
@@ -936,7 +936,7 @@ void Solver::collectSolution()
     // {
     //     cout << "buf.forFullSOL for local sol on proc 0" << endl;
     //     for (int i = 0; i < M.nCellsGlob; ++i)
-    //     {   
+    //     {
     //         for (int j = 0; j < dimS; ++j)
     //             cout << buf.forFullSOL[i*dimS + j] << ' ';
     //         cout << endl;
@@ -944,13 +944,13 @@ void Solver::collectSolution()
 
     //     // cout << "\nfullSOL for local sol on proc 0" << endl;
     //     // for (int i = 0; i < M.nCellsGlob; ++i)
-    //     // {   
+    //     // {
     //     //     for (int j = 0; j < dimS; ++j)
     //     //         cout << sln.fullSOL[i][j] << ' ';
     //     //     cout << endl;
     //     // }
     // }
-    
+
 }
 
 
@@ -971,23 +971,23 @@ void Solver::collectSolutionForExport()
         buf.forSolExport[iCell * dimExp + 5] = phs.getPressure(solExp);
     }
 
-	// collect full solution on proc #0
-	if (numProcsTotal > 1)
+    // collect full solution on proc #0
+    if (numProcsTotal > 1)
     {
-    	MPI_Gatherv(
-            &(buf.forSolExport[0]), 
-            M.nRealCells * dimExp, 
-            MPI_DOUBLE, 
-            &(buf.forSolExportRecv[0]), 
-            &(buf.nSolPerProcExp[0]), 
-            &(buf.mpiDisplSolExp[0]), 
-            MPI_DOUBLE, 
-            0, 
+        MPI_Gatherv(
+            &(buf.forSolExport[0]),
+            M.nRealCells * dimExp,
+            MPI_DOUBLE,
+            &(buf.forSolExportRecv[0]),
+            &(buf.nSolPerProcExp[0]),
+            &(buf.mpiDisplSolExp[0]),
+            MPI_DOUBLE,
+            0,
             MPI_COMM_WORLD
         );
         // sort received solution according to global map
 
-        
+
     }
     else
     {

@@ -97,12 +97,12 @@ int main(int argc, char* argv[])
 
     ///----------------------
 
-    CaseInit caseName = Blasius;
+    CaseInit caseName = CylinderFlow;
 
-    double tStart = 0.0;
-    double tEnd = 1.0;
+    double tStart = 5.45;
+    double tEnd = 10.0;
 
-    double initTau = 0.01;
+    double initTau = 0.0001;
     double outputInterval = 0.01;//1.e-2;//1e-6;
 
     bool isDynamic = false;
@@ -142,12 +142,12 @@ int main(int argc, char* argv[])
     Problem problem(caseName, mesh, time, physics);
     Solver solver(basis, mesh, solution, problem, physics, flux, vflux, buf);
 
-    //IndicatorBJ indicator(mesh, solution);
-    IndicatorNowhere indicator(mesh, solution);
+    IndicatorBJ indicator(mesh, solution);
+    //IndicatorNowhere indicator(mesh, solution);
 
     //LimiterRiemannWENOS limiter(mesh, solution, physics, indicator);
-    //LimiterWENOS limiter(mesh, solution, physics, indicator);
-    LimiterBJVertex limiter(mesh, solution, physics, indicator);
+    LimiterWENOS limiter(mesh, solution, physics, indicator);
+    //LimiterBJ limiter(mesh, solution, physics, indicator);
     RungeKutta RK(order, basis, solver, solution, limiter, time);
 
     ///---------------------
@@ -280,40 +280,40 @@ int main(int argc, char* argv[])
 
         if(computeForces && caseName == CaseInit::CylinderFlow)
         {
-        Patch patch_wall;
-        for (Patch& patch : mesh.patches)
-        {
-        if (patch.name == "wall")
-        {
-        patch_wall = patch;
-        }
-        }
+            Patch patch_wall;
+            for (Patch& patch : mesh.patches)
+            {
+                if (patch.name == "wall")
+                {
+                    patch_wall = patch;
+                }
+            }
 
-        int nEdgesPatch = patch_wall.edgeGroup.size();
-        int nGP = mesh.edges[0]->nGP;
-        numvector<double, dimPh> sol_local;
-        Point force ({0.0, 0.0, 0.0});
-        //numvector<double, dimPh> solRight;
+            int nEdgesPatch = patch_wall.edgeGroup.size();
+            int nGP = mesh.edges[0]->nGP;
+            numvector<double, dimPh> sol_local;
+            Point force ({0.0, 0.0, 0.0});
+            //numvector<double, dimPh> solRight;
 
-        for (int iEdge = 0; iEdge < nEdgesPatch; ++iEdge)
-        {
-        const shared_ptr<Edge>& e = patch_wall.edgeGroup[iEdge];
-        Point& res = e->n; //eNormal
-        double pressure = 0.0;
+            for (int iEdge = 0; iEdge < nEdgesPatch; ++iEdge)
+            {
+                const shared_ptr<Edge>& e = patch_wall.edgeGroup[iEdge];
+                Point& res = e->n; //eNormal
+                double pressure = 0.0;
 
-        for (size_t iGP = 0; iGP < nGP; ++iGP)
-        {
-        Point& gPoint = e->gPoints[iGP];
+                for (size_t iGP = 0; iGP < nGP; ++iGP)
+                {
+                    Point& gPoint = e->gPoints[iGP];
 
-        sol_local = solution.reconstruct(e->neibCells[0]->number, gPoint);
-        pressure += e->gWeights[iGP];//physics.getPressure(sol_local) * e->gWeights[iGP];
-        }// for GP
+                    sol_local = solution.reconstruct(e->neibCells[0]->number, gPoint);
+                    pressure += e->gWeights[iGP];//physics.getPressure(sol_local) * e->gWeights[iGP];
+                }// for GP
 
-        res *= pressure;
-        force += res;
-        }// for edge
+                res *= pressure;
+                force += res;
+              }// for edge
 
-        cout << "force = " << force << endl;
+              cout << "force = " << force << endl;
         }
 
 
