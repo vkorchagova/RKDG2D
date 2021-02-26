@@ -130,7 +130,7 @@ numvector<double, dimPh> Physics::fluxGv(const numvector<double, dimPh>& sol, co
     double vx = (1.0 / rho) * (rhoVx - rhox * v);
     double vy = (1.0 / rho) * (rhoVy - rhoy * v);
 
-    return { 0.0, mu * (uy + vx), mu * (2.0 * vx + lam * (ux + vy)), 0.0, \
+    return { 0.0, mu * (uy + vx), mu * (2.0 * vy + lam * (ux + vy)), 0.0, \
                 mu * (u * (vx + uy) + v * (2.0 * vy + lam * (ux + vy)) + cpcv / Pr * gradSol[7])};
 } // end fluxGV
 

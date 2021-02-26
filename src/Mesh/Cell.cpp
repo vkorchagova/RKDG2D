@@ -147,6 +147,7 @@ void Cell::setGaussPoints()
         if (nEntities == 4)
         {
 
+			
             // pure Gauss
             nGP = 4;
 
@@ -157,6 +158,13 @@ void Cell::setGaussPoints()
                    gPoints2D.push_back(localToGlobal(Point({ i * isqrt3, j * isqrt3 })));
 
             gWeights2D = { 1.0, 1.0, 1.0, 1.0 };
+			
+
+			/*nGP = 1;
+			gPoints2D.push_back(localToGlobal(Point({ 0.0, 0.0 })));
+
+			gWeights2D = { 4.0 };*/
+
 
             // Gauss --- Lobatto
 

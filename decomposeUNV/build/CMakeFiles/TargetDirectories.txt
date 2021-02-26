@@ -1,0 +1,3 @@
+/home/dell/RKDG2D/decomposeUNV/build/CMakeFiles/rebuild_cache.dir
+/home/dell/RKDG2D/decomposeUNV/build/CMakeFiles/decomposeUNV.dir
+/home/dell/RKDG2D/decomposeUNV/build/CMakeFiles/edit_cache.dir

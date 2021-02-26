@@ -65,6 +65,7 @@ int getPatchByName(std::vector<ProcPatch>& patches, std::string& pName);
 ///
 
 numvector<double, dimGrad> outerProductArtificial(const numvector<double, dimPh>& sol, const Point& n);
+numvector<double, dimGrad> inverseRotate(const numvector<double, dimGrad> &gradSol, const Point& n);
 
 
 #endif

@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/dell/RKDG2D/decomposeUNV/DecomposerUNV.cpp
+DecomposerUNV.h
+/home/dell/RKDG2D/decomposeUNV/DecomposerUNV.h
+functional
+-
+math.h
+-
+ctime
+-
+
+/home/dell/RKDG2D/decomposeUNV/DecomposerUNV.h
+iostream
+-
+fstream
+-
+sstream
+-
+vector
+-
+map
+-
+string
+-
+algorithm
+-
+
+/home/dell/RKDG2D/decomposeUNV/main.cpp
+iostream
+-
+DecomposerUNV.h
+/home/dell/RKDG2D/decomposeUNV/DecomposerUNV.h
+cstdlib
+-
+

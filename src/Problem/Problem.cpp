@@ -1,8 +1,11 @@
+#define _USE_MATH_DEFINES
+
 #include "Problem.h"
 #include <iostream>
 #include <omp.h>
 
 #include <cmath>
+
 using namespace std;
 
 // ------------------ Constructors & Destructors ----------------
@@ -186,12 +189,12 @@ void Problem::setInitialConditions(CaseInit task)
         phs.cpcv = 1.4;
         phs.covolume = 0.0;
         phs.Pr = 100;//0.135;
-        phs.mu = 1.25e-1;
+		phs.mu = 1.25e-1;
 
 
         initRho = [](const Point& r) { return 1.4; };
         initP = [&](const Point& r) { return 1.0;  };
-        initU = [](const Point& r) { return 0.1; };
+        initU = [](const Point& r) { return -(r.y()-0.5)*(r.y()+0.5); };
         initV = [](const Point& r) { return 0.0; };
 
         break;
@@ -684,7 +687,7 @@ case Blasius:
                 patch.name == "inlet")
             {
                 bc.emplace_back(
-                    make_shared<BoundaryConstant>(
+                    make_shared<BoundaryInlet>(
                         patch,
                         numvector<double, dimPh>(
                             {
@@ -704,7 +707,8 @@ case Blasius:
             else if (patch.name == "up" ||
                 patch.name == "top" ||
                 patch.name == "top_bottom" ||
-                patch.name == "bottom")
+                patch.name == "bottom" ||
+                patch.name == "sides")
             {
                 bc.emplace_back(make_shared<BoundarySlip>(patch));
             }
