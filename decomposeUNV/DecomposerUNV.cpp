@@ -161,6 +161,7 @@ void DecomposerUNV::readElements()
         switch (elementType)
         {
             case 11:    // rod
+            case 21:    // linear beam
             {
                 getline(reader, str);
                 beamElementProperties = parseStringInt(str);
@@ -169,12 +170,15 @@ void DecomposerUNV::readElements()
 
                 edges.push_back(elementNodeNumbers[0]);
                 edges.push_back(elementNodeNumbers[1]);
+                boundaryMarkers[elementProperties[0]] = 0.5 * edges.size();
+                //cout << beamElementProperties[0] << ' ' <<  0.5 * edges.size() << ' ' << boundaryMarkers[beamElementProperties[0]] << endl;
                 nEdges++;
 
                 break;
             }
             case 41:    // plane triangular
             case 44:    // plane quadrilateral
+            case 94:    // plane quadrilateral
             {
                 getline(reader, str);
                 elementNodeNumbers = parseStringInt(str);
@@ -238,7 +242,7 @@ void DecomposerUNV::readPatches()
         };
 
         for (int i = 0; i < nEdgesInGroup; ++i)
-            edgeGroup.push_back(getEdgeNumber());
+            edgeGroup.push_back(boundaryMarkers[getEdgeNumber()]);
 
         patchEdgeGroups.push_back(edgeGroup);
 
@@ -499,6 +503,7 @@ void DecomposerUNV::importUNV ()
                 break;
             }
             case 2467:  //patches
+            case 2477:
             {
                 cout << "Processing patches ... ";
                 readPatches();
