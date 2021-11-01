@@ -65,7 +65,10 @@ private:
     //- cells = numbers of edges
     std::vector<std::vector<int>> cellsAsEdges;
     std::vector<std::vector<int>> cellsAsNodes;
-
+    
+    //- boundary markers
+    std::map<int, int> boundaryMarkers;
+    
     //- cell centers
     std::vector<std::vector<double>> cellCenters;
 
