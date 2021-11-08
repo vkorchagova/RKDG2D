@@ -12,7 +12,7 @@ numvector<double, dimS> LimiterFinDiff::limitation(const std::vector<std::shared
 {
     numvector<double, dimS> res = solution.SOL[stencil[0]->number];
     
-    for (int j = 0; j < dimS; ++j)
+    for (int j = 0; j < dimPh; ++j)
     {
         res[j*nShapes + 1] = 0.0;
         res[j*nShapes + 2] = 0.0;
