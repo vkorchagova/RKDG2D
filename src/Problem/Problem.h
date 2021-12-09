@@ -14,6 +14,10 @@
 #include "BoundarySlip.h"
 #include "BoundaryOpen.h"
 #include "BoundaryConstant.h"
+#include "BoundarySubsonicInletTotalPressure.h"
+#include "BoundarySubsonicInletFixedPressure.h"
+#include "BoundaryOpenTotalPressure.h"
+#include "BoundaryOpenFixedPressure.h"
 
 class Patch;
 

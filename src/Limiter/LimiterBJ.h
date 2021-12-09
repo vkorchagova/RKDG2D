@@ -13,17 +13,16 @@ extern std::ofstream logger;
 class LimiterBJ : public Limiter
 {
 
-private:
+protected:
 
     /// Get AlphaL
     numvector<double, dimPh> getYMin(
                                 const std::shared_ptr<Cell>& cell, 
 								const numvector<double, dimPh>& mI,
 								const numvector<double, dimPh>& MI,
-								const numvector<double, dimPh>& uMean
+								const numvector<double, dimPh>& uMean,
+                                const numvector<double, dimS>& p
                             );
-
-protected:
 
     /// Limit solution gradients
     ///
@@ -40,7 +39,8 @@ public:
         const Mesh& mesh, 
         Solution& sln,
         const Physics& phs,
-        const Indicator& ind); 
+        const Indicator& ind,
+        Buffers& buf); 
 
     /// Destructor
     ~LimiterBJ() {};   

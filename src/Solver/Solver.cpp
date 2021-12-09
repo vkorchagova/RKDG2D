@@ -25,6 +25,7 @@ Solver::Solver( Basis& Bas, Mesh& msh, Solution& soln,
 	{
 		buf.forSolExportRecv.resize(M.nCellsGlob * dimExp);
 		sln.solToExport.resize(M.nCellsGlob);
+        sln.solToMeanExport.resize(M.nCellsGlob);
 	}
         
 
@@ -148,12 +149,14 @@ void Solver::setInitialConditions()
     numvector<double, dimS> alpha;
 
     sln.SOL.resize(nCells);
+    sln.solToMean.resize(nCells);
 
     //#pragma omp parallel for
     for (int k = 0; k < nCells; ++k)
     {
         alpha = B.projection(prb.init, k);
         sln.SOL[k] = alpha;//correctNonOrthoCell(alpha, B.gramian[k]);
+        sln.solToMean[k] = numvector<double, dimS>(0.0);
     }
 
 } // end setInitialConditions
@@ -275,9 +278,10 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
 
     ///--------------------------------------------------------------------------------
     t0 = MPI_Wtime();
+
 	//omp_set_num_threads(NumThreads);
     #pragma omp parallel for schedule (guided)  \
-         shared(myRank, nGP) \
+         shared(myRank, nGP, cout) \
          firstprivate (solLeft, solRight, gpFluxes) \
          default(none)
     for (int iEdge = M.nEdgesBound; iEdge < M.nRealEdges; ++iEdge)
@@ -286,10 +290,17 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
 
         const shared_ptr<Edge>& e = M.edges[iEdge];
 
+
+
         int iCellLeft  = e->neibCells[0]->number;
+        // cout << iCellLeft << endl;
+        // cout << e->nodes[0]->x() << ' ' 
+        //      << e->nodes[0]->y() << ' '
+        //      << e->nodes[1]->x() << ' '
+        //      << e->nodes[1]->y() << endl;
         int iCellRight = e->neibCells[1]->number;
 
-        ////if (myRank == 1)  cout << iCellLeft << ' ' << iCellRight << endl;
+        
 
 
         for (int iGP = 0; iGP < nGP; ++iGP)
@@ -308,12 +319,21 @@ vector<numvector<double, dimS>> Solver::assembleRHS(const std::vector<numvector<
             gpFluxes[iGP] = inverseRotate(flux.evaluate(solLeft, solRight), eNormal);
 
             ////if (myRank == 1) cout << "; flux: " << gpFluxes[iGP] << endl;
+            //if ( (iCellLeft == 50) || (iCellRight == 50) || (iCellLeft == 1562) || (iCellRight == 1562))
+            //{
+            //    cout << "-------" << endl;
+            //    cout << "iCellLeft = " << iCellLeft << "; iCellRight = " << iCellRight << endl;
+            //    cout << "solLeft = " << solLeft << endl;
+            //    cout << "solRight = " << solRight << endl;
+            //    cout << "numFlux: " << gpFluxes[iGP] << endl;
+            //}
         }// for GP
 
         //cout << "-------------" << endl;
         numFluxes[iEdge] = gpFluxes;
-        //////if (myRank == 1) cout << "edge #" << iEdge << "; numFlux: " << gpFluxes[0] << ' ' << gpFluxes[1] << endl;
+        //////if (myRank == 1) 
 
+        
     }// for real edges   
     t1 = MPI_Wtime();
     if (debug) logger << "\t\teInner.numfluxes: " << t1 - t0 << endl;
@@ -650,6 +670,9 @@ void Solver::collectSolutionForExport()
         buf.forSolExport[iCell * dimExp + 3] = solExp[3] / solExp[0];
         buf.forSolExport[iCell * dimExp + 4] = solExp[4];
         buf.forSolExport[iCell * dimExp + 5] = phs.getPressure(solExp);
+        // buf.forSolExport[iCell * dimExp + 6] += 
+        // buf.forSolExport[iCell * dimExp + 7] +=
+        // buf.forSolExport[iCell * dimExp + 8] +=
     }
 
 	// collect full solution on proc #0
@@ -679,3 +702,60 @@ void Solver::collectSolutionForExport()
         for (int j = 0; j < dimExp; ++j)
             sln.solToExport[buf.globalMap[i]][j] = buf.forSolExportRecv[i * dimExp + j];
 }
+
+void Solver::computeTimeAvgSolution(double dt)
+{
+    for (int iCell = 0; iCell < M.nRealCells; ++iCell)
+        for (int j = 0; j < dimS; ++j)
+            sln.solToMean[iCell][j] += sln.SOL[iCell][j] * dt;
+}
+
+
+void Solver::collectMeanSolutionForExport()
+{
+    Point cellCenter;
+    for (int iCell = 0; iCell < M.nRealCells; ++iCell)
+    {
+        cellCenter = M.cells[iCell]->getCellCenter();
+
+        numvector<double, dimPh> solExp = sln.reconstruct(iCell, cellCenter, sln.solToMean[iCell]);
+
+        buf.forSolExport[iCell * dimExp] = solExp[0];
+        buf.forSolExport[iCell * dimExp + 1] = solExp[1] / solExp[0];
+        buf.forSolExport[iCell * dimExp + 2] = solExp[2] / solExp[0];
+        buf.forSolExport[iCell * dimExp + 3] = solExp[3] / solExp[0];
+        buf.forSolExport[iCell * dimExp + 4] = solExp[4];
+        buf.forSolExport[iCell * dimExp + 5] = phs.getPressure(solExp);
+        // buf.forSolExport[iCell * dimExp + 6] += 
+        // buf.forSolExport[iCell * dimExp + 7] +=
+        // buf.forSolExport[iCell * dimExp + 8] +=
+    }
+
+    // collect full solution on proc #0
+    if (numProcsTotal > 1)
+    {
+        MPI_Gatherv(
+            &(buf.forSolExport[0]), 
+            M.nRealCells * dimExp, 
+            MPI_DOUBLE, 
+            &(buf.forSolExportRecv[0]), 
+            &(buf.nSolPerProcExp[0]), 
+            &(buf.mpiDisplSolExp[0]), 
+            MPI_DOUBLE, 
+            0, 
+            MPI_COMM_WORLD
+        );
+        // sort received solution according to global map
+
+        
+    }
+    else
+    {
+        buf.forSolExportRecv = buf.forSolExport;
+    }
+
+    for (int i = 0; i < M.nCellsGlob; ++i)
+        for (int j = 0; j < dimExp; ++j)
+            sln.solToMeanExport[buf.globalMap[i]][j] = buf.forSolExportRecv[i * dimExp + j];
+}
+

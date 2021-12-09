@@ -38,9 +38,16 @@ public:
 
     /// MPI buffer for sending of local pack of solution in cell centres
     std::vector<double> forSolExport;
+    std::vector<double> forSolMeanExport;
 
     /// MPI buffer for receiving of local pack of solution in cell centres
 	std::vector<double> forSolExportRecv;
+
+    /// MPI buffer for sending of local pack of indicator in cell centres
+    std::vector<double> forIndExport;
+
+    /// MPI buffer for receiving of local pack of indicator in cell centres
+    std::vector<double> forIndExportRecv;
 
     //----- Maps
 
@@ -49,14 +56,16 @@ public:
 
     /// Number of solution coeffs on each proc
     std::vector<int> nCoeffsPerProc;
-    std::vector<int> nSolPerProcExp; 
+    std::vector<int> nSolPerProcExp;
+    std::vector<int> nIndPerProcExp; 
     std::vector<int> boundProcSolSizesS;
     std::vector<int> boundProcSolSizesR;
 
     /// Array of displacements for MPI_Gatherv
     std::vector<int> mpiDisplMesh; 
     std::vector<int> mpiDisplSOL;    
-    std::vector<int> mpiDisplSolExp; 
+    std::vector<int> mpiDisplSolExp;
+    std::vector<int> mpiDisplInd; 
     std::vector<int> boundProcSolDisplS;
     std::vector<int> boundProcSolDisplR;
 

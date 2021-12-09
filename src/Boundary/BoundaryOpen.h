@@ -9,10 +9,11 @@
 
 class BoundaryOpen : public Boundary
 {
+
 public:
 
     /// Default constructor
-    BoundaryOpen(const Patch& p) : Boundary(p) { type = "open";}
+    BoundaryOpen(const Patch& p, const Physics& _phs) : Boundary(p, _phs) { type = "open";}
 
     // Get solution in outer side
     virtual numvector<double, dimPh> getSolOuter(

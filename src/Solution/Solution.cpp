@@ -31,7 +31,7 @@ numvector<double, dimPh> Solution::reconstruct(int iCell, const Point& point ) c
     return sol;
 
 } // end reconstruct
-numvector<double, dimPh> Solution::reconstruct(int iCell, const Point& point, const numvector<double, dimS>& SOL) const
+numvector<double, dimPh> Solution::reconstruct(int iCell, const Point& point, const numvector<double, dimS>& definedSOL) const
 {
 	numvector<double, dimPh> sol(0.0);
 	vector<double> phip(nShapes);
@@ -45,7 +45,7 @@ numvector<double, dimPh> Solution::reconstruct(int iCell, const Point& point, co
 
 //#pragma omp simd
 		for (int j = 0; j < nShapes; ++j)
-			sol[i] += phip[j] * SOL[i * nShapes + j];
+			sol[i] += phip[j] * definedSOL[i * nShapes + j];
 	}
 
 	return sol;
@@ -62,13 +62,13 @@ double Solution::reconstruct(int iCell, const Point& point, Variables var ) cons
 
     return sol;
 } // end reconstruct
-double Solution::reconstruct(int iCell, const Point& point, const numvector<double, dimS>& SOL, Variables var ) const
+double Solution::reconstruct(int iCell, const Point& point, const numvector<double, dimS>& definedSOL, Variables var ) const
 {
     double sol(0.0);
 
 ////#pragma omp simd
     for (int j = 0; j < nShapes; ++j)
-        sol += B.phi[j](iCell, point) * SOL[var * nShapes + j];
+        sol += B.phi[j](iCell, point) * definedSOL[var * nShapes + j];
 
     return sol;
 } // end reconstruct

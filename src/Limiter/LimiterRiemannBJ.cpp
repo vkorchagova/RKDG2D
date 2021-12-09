@@ -1,8 +1,10 @@
-#include "LimiterRiemannWENOS.h"
+#include "LimiterRiemannBJ.h"
+#include <omp.h>
+
 
 using namespace std;
 
-numvector<double, dimS> LimiterRiemannWENOS::limitation(const std::vector<std::shared_ptr<Cell>>& stencil)
+numvector<double, dimS> LimiterRiemannBJ::limitation(const std::vector<std::shared_ptr<Cell>>& stencil)
 { 
     
     numvector<double, dimS> alphaNew;                       // result of limitation
@@ -45,7 +47,7 @@ numvector<double, dimS> LimiterRiemannWENOS::limitation(const std::vector<std::s
                 pInv[k] = conservativeToRiemann(solution.SOL[stencil[k]->number]);
 
             // limit Riemann invariants
-            numvector <double, dimS> pLim = limitP(stencil, pInv);
+            numvector <double, dimS> pLim = limitChar(stencil, pInv);
 
             // numvector <double, dimS> res(0.0);
 
@@ -110,7 +112,7 @@ numvector<double, dimS> LimiterRiemannWENOS::limitation(const std::vector<std::s
 
 
 
-numvector<double, dimS> LimiterRiemannWENOS::conservativeToRiemann
+numvector<double, dimS> LimiterRiemannBJ::conservativeToRiemann
 (
     const numvector<double, dimS>& alpha
 ) const
@@ -125,7 +127,7 @@ numvector<double, dimS> LimiterRiemannWENOS::conservativeToRiemann
     return res;
 }
 
-numvector<double, dimS> LimiterRiemannWENOS::riemannToConservative
+numvector<double, dimS> LimiterRiemannBJ::riemannToConservative
 (
     const numvector<double, dimS>& alpha
 ) const
@@ -141,12 +143,69 @@ numvector<double, dimS> LimiterRiemannWENOS::riemannToConservative
 
 }
 
-vector<shared_ptr<Cell>> LimiterRiemannWENOS::getStencilFor(const std::shared_ptr<Cell>& cell)
+numvector<double, dimS> LimiterRiemannBJ::limitChar(const std::vector<std::shared_ptr<Cell>>& stencil, const vector<numvector<double, dimS>>& p)
 {
-    vector<shared_ptr<Cell>> stencil = { cell }; 
-    stencil.insert(stencil.end(), cell->neibCells.begin(), cell->neibCells.end());
-    return stencil;
+    int nCells = stencil.size();
+
+    // load memory
+    std::vector<numvector<double, dimPh>> uMean(nCells);    // mean values
+    numvector<double, dimS> alphaNew;                       // result of limitation
+    
+    // get mean values of linear functions
+    uMean.resize(stencil.size());
+    for (size_t k = 0; k < nCells; ++k)
+        uMean[k] = solution.reconstruct(stencil[k]->number, stencil[k]->getCellCenter(), p[k]);
+
+    // get minimum from cell averages
+    numvector<double, dimPh> mI = 1e9;      // min
+    numvector<double, dimPh> MI = -1e9;     // max
+    for (size_t k = 0; k < nCells; ++k)
+        for (int iSol = 0; iSol < dimPh; ++iSol)
+            if (uMean[k][iSol] < mI[iSol])
+             mI[iSol] = uMean[k][iSol];
+
+    // get maximum from cell averages
+    for (size_t k = 0; k < nCells; ++k)
+        for (int iSol = 0; iSol < dimPh; ++iSol)
+            if (uMean[k][iSol] > MI[iSol])
+                MI[iSol] = uMean[k][iSol];
+
+    // compute a-coeff
+    numvector<double, dimPh> a = getYMin(stencil[0], mI, MI, uMean[0], p[0]);
+
+    // // double aMin = 1e+9;
+
+    // // for (int iSol = 0; iSol < dimPh; ++iSol)
+    // //     aMin = a[iSol] < aMin ? a[iSol] : aMin;
+
+    // // update solution
+    // alphaNew = solution.SOL[stencil[0]->number];
+
+    // alphaNew[1] *= a[0];
+    // alphaNew[2] *= a[0];
+
+    // for (int iSol = 1; iSol < dimPh; ++iSol)
+    // {
+    //     alphaNew[iSol*nShapes + 1] = alphaNew[1] * uMean[0][iSol] / uMean[0][0]; //a[0];
+    //     alphaNew[iSol*nShapes + 2] = alphaNew[2] * uMean[0][iSol] / uMean[0][0]; //a[0];
+    // }
+
+    double aMin = 1e+9;
+
+    for (int iSol = 1; iSol < dimPh-2; ++iSol)
+        aMin = a[iSol] < aMin ? a[iSol] : aMin;
+
+    // update solution
+    alphaNew = p[0];
+
+    for (int iSol = 0; iSol < dimPh-1; ++iSol)
+    {
+        alphaNew[iSol*nShapes + 1] *= aMin;
+        alphaNew[iSol*nShapes + 2] *= aMin;
+    }
+
+    alphaNew[(dimPh-1)*nShapes + 1] *= a[0];
+    alphaNew[(dimPh-1)*nShapes + 2] *= a[0];
+
+    return alphaNew;
 }
-
-
-

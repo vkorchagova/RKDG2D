@@ -84,6 +84,10 @@ private:
     //- patch edge groups
     std::vector<std::vector<int>> patchEdgeGroups;
 
+    //- finDiff cell group for additional limitation
+    std::vector<int> finDiffGroup;
+    std::map<int, int> cellMarkers;
+
     //- partition to subregions
     std::vector<int> partition;
 
@@ -102,8 +106,11 @@ private:
     //- Read elements (edges + cells)
     void readElements();
 
-    //- Read patches
-    void readPatches();
+    //- Read element groups (patches + special cell groups)
+    void readElementGroups();
+
+    void readPatch(int nElemsInGroup, const std::string groupName);
+    void readFinDiffGroup(int nElemsInGroup, const std::string groupName);
 
     //- Find edges for cells defined by nodes
     void getEdges();

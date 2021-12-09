@@ -30,6 +30,7 @@ vector<int> IndicatorShu::checkDiscontinuities() const
 //    for (int i = 0; i < n; ++i)
 //        troubledCells[i] = i;
 
+
 #pragma omp parallel for \
             shared(cout, myRank, n, troubledCells) \
             firstprivate(uMean, uMeanOwn, stenc) \
@@ -104,7 +105,8 @@ vector<int> IndicatorShu::checkDiscontinuities() const
                 */
 #pragma omp critical
                 {
-                troubledCells.push_back(iCell);
+                    values[k + iCell*dimPh] = Ck / (sumFabs[k] / (maxFabsPj[k] + eps));
+                    troubledCells.push_back(iCell);
                 //cout << " ind = " << sumFabs[k] / maxFabsPj[k] << ' ';
                 //cout << endl;
                 }

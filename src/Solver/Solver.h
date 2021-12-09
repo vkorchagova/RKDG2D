@@ -39,7 +39,7 @@ extern std::ofstream logger;
 class Solver
 {
 
-private: 
+protected: 
     
     /// RHS
     std::vector<numvector<double, dimS>> rhs; // the same length as SOL
@@ -86,7 +86,7 @@ public:
     void restart(std::string fileName);
 
     /// Assemble right-hand side
-    std::vector<numvector<double, dimS>> assembleRHS(const std::vector<numvector<double, dimS>>& SOL);
+    virtual std::vector<numvector<double, dimS>> assembleRHS(const std::vector<numvector<double, dimS>>& SOL);
 
     /// Correct alpha coeffs in case of non-orthogonal basis functions
     std::vector<numvector<double, dimS>> correctNonOrtho(const std::vector<numvector<double, dimS>>& alpha) const;
@@ -102,6 +102,9 @@ public:
     /// Collect solution
     void collectSolution();
     void collectSolutionForExport();
+
+    void computeTimeAvgSolution(double dt);
+    void collectMeanSolutionForExport();
 
 
 };

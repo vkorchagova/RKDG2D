@@ -9,8 +9,9 @@ LimiterWENOS::LimiterWENOS
     const Mesh& msh,
     Solution& sln,
     const Physics& phs,
-    const Indicator& ind
-) : Limiter(msh, sln, phs, ind) 
+    const Indicator& ind,
+        Buffers& _buf
+) : Limiter(msh, sln, phs, ind, _buf) 
 {
     // beta.reserve(maxPossibleStencilSize);
     // w.reserve(maxPossibleStencilSize);

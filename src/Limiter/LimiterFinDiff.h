@@ -27,7 +27,8 @@ public:
         const Mesh& msh,
         Solution& sln,
         const Physics& phs,
-        const Indicator& ind) : Limiter(msh, sln, phs, ind) {};
+        const Indicator& ind,
+        Buffers& buf) : Limiter(msh, sln, phs, ind, buf) {};
 
     ~LimiterFinDiff() {}
 };

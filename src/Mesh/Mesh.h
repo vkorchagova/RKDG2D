@@ -87,6 +87,9 @@ public:
     /// Global numeration of cells
     std::vector<int> globalCellNumber;
 
+    /// Group of cells special for finDiff additional limitation
+    std::vector<int> finDiffGroup;
+
     /// Number of nodes
 	int nNodes;
 

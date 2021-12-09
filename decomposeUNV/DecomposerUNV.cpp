@@ -178,11 +178,13 @@ void DecomposerUNV::readElements()
             }
             case 41:    // plane triangular
             case 44:    // plane quadrilateral
+            case 91:    // thin shell triangular
             case 94:    // plane quadrilateral
             {
                 getline(reader, str);
                 elementNodeNumbers = parseStringInt(str);
                 cellsAsNodes.push_back(elementNodeNumbers);
+                cellMarkers[elementProperties[0]] = cellsAsNodes.size()-1;
 
                 getCellCenter(elementNodeNumbers);
 
@@ -203,13 +205,12 @@ void DecomposerUNV::readElements()
 }  // End readElements
 
 
-void DecomposerUNV::readPatches()
+void DecomposerUNV::readElementGroups()
 {
     string str;
 
     do
     {
-        vector<int> edgeGroup;
         vector<int> patchProperties;
 
         getline(reader, str);
@@ -218,41 +219,77 @@ void DecomposerUNV::readPatches()
         if (patchProperties[0] == -1)
             break;
 
-        int nEdgesInGroup = patchProperties.back();
+        int nElemsInGroup = patchProperties.back();
 
         getline(reader, str);
 
-        patchNames.push_back(str);
-
-        //getline(reader, str);
-
-        function<int()> getEdgeNumber = [&]()
-        {
-            int number;
-
-            for (int j = 0; j < 2; ++j)
-                reader >> number;
-
-            int edgeNumber = number;
-
-            for (int j = 0; j < 2; ++j)
-                reader >> number;
-
-            return edgeNumber;
-        };
-
-        for (int i = 0; i < nEdgesInGroup; ++i)
-            edgeGroup.push_back(boundaryMarkers[getEdgeNumber()]);
-
-        patchEdgeGroups.push_back(edgeGroup);
+        if (str == "finDiffGroup")
+            readFinDiffGroup(nElemsInGroup, str);
+        else
+            readPatch(nElemsInGroup, str);
 
         getline(reader, str);
-
 
     } while (str != SEPARATOR);
 
     cout << "OK\n";
-}  // End readPatches
+}  // End readElementGroups
+
+
+void DecomposerUNV::readPatch(int nElemsInGroup, const std::string groupName)
+{
+    vector<int> edgeGroup;
+
+    patchNames.push_back(groupName);
+
+    //getline(reader, str);
+
+    function<int()> getEdgeNumber = [&]()
+    {
+        int number;
+
+        for (int j = 0; j < 2; ++j)
+            reader >> number;
+
+        int edgeNumber = number;
+
+        for (int j = 0; j < 2; ++j)
+            reader >> number;
+
+        return edgeNumber;
+    };
+
+    for (int i = 0; i < nElemsInGroup; ++i)
+        edgeGroup.push_back(boundaryMarkers[getEdgeNumber()]);
+
+    patchEdgeGroups.push_back(edgeGroup);
+
+}  // End readPatch
+
+
+void DecomposerUNV::readFinDiffGroup(int nElemsInGroup, const std::string groupName)
+{
+    //getline(reader, str);
+
+    function<int()> getCellNumber = [&]()
+    {
+        int number;
+
+        for (int j = 0; j < 2; ++j)
+            reader >> number;
+
+        int cellNumber = number;
+
+        for (int j = 0; j < 2; ++j)
+            reader >> number;
+
+        return cellNumber;
+    };
+
+    for (int i = 0; i < nElemsInGroup; ++i)
+        finDiffGroup.push_back(cellMarkers[getCellNumber()]);
+
+}  // End readPatch
 
 
 int DecomposerUNV::checkForExistingEdges (int iNode1, int iNode2) const
@@ -506,11 +543,13 @@ void DecomposerUNV::importUNV ()
             case 2477:
             {
                 cout << "Processing patches ... ";
-                readPatches();
+                readElementGroups();
 
                 cout << "patch names\n";
                 for (size_t i = 0; i < patchNames.size(); ++i)
                     cout << i+1 << '|' << patchNames[i] << ", " << patchEdgeGroups[i].size() << " edges" << endl;
+
+                cout << "finDiffGroup: " << finDiffGroup.size() << " cells" << endl;
 
                 break;
             }
@@ -622,6 +661,18 @@ void DecomposerUNV::exportRKDG()
 
     writer << "$EndPatches\n";
 
+    // --------------------------------------
+
+    writer << "$FinDiffGroup\n";
+    writer << finDiffGroup.size() << endl;
+
+    for (size_t i = 0; i < finDiffGroup.size(); ++i)
+    {
+        writer << finDiffGroup[i]+1 << endl;
+    }
+
+    writer << "$EndFinDiffGroup\n";
+
     cout << "Export OK\n";
 
 }
@@ -683,6 +734,9 @@ void DecomposerUNV::exportPartMeshRKDG(int nDom) const
     map<int, vector<int>> alienCells;
     map<int, vector<int>> innerBoundCells;
 
+    map<int,int> globalToLocalCells;
+    vector<int> localFinDiffGroup;
+
     
     clock_t ts, te;
     
@@ -694,7 +748,20 @@ void DecomposerUNV::exportPartMeshRKDG(int nDom) const
     for (int i = 0; i < partition.size(); ++i)
     {
         if (partition[i] == nDom)
+        {
             cellsInDom.push_back(i);
+            globalToLocalCells[i] = cellsInDom.size()-1;
+        }
+        else
+        {
+            globalToLocalCells[i] = -1;
+        }
+    }
+
+    for (int i = 0; i < finDiffGroup.size(); ++i)
+    {
+        if (globalToLocalCells[finDiffGroup[i]] > -1)
+            localFinDiffGroup.push_back(globalToLocalCells[finDiffGroup[i]]);
     }
     
     
@@ -960,6 +1027,19 @@ void DecomposerUNV::exportPartMeshRKDG(int nDom) const
 
     writerPart << "$EndPatches\n";
 
+    // --------------------------------------
+
+    writerPart << "$FinDiffGroup\n";
+    writerPart << localFinDiffGroup.size() << endl;
+
+    for (size_t i = 0; i < localFinDiffGroup.size(); ++i)
+    {
+        writerPart << localFinDiffGroup[i]+1;
+        writerPart << endl;
+    }
+
+    writerPart << "$EndFinDiffGroup\n";
+
     cout << "OK\n";
 }
 
@@ -1021,6 +1101,19 @@ void DecomposerUNV::exportVTK() const
 
     for (int i = 0; i < nCells; ++i)
         writerVTK << i << endl;
+
+    writerVTK << "SCALARS fin_diff_group int" << endl;
+    writerVTK << "LOOKUP_TABLE default" << endl;
+
+    vector<int> visuGroup(nCells);
+    for (int i = 0; i < nCells; ++i)
+        visuGroup[i] = 0;
+
+    for (int i = 0; i < finDiffGroup.size(); ++i)
+        visuGroup[finDiffGroup[i]] = 1;
+
+    for (int i = 0; i < nCells; ++i)
+        writerVTK << visuGroup[i] << endl;
 
 
     cout << "Mesh export OK" << endl;

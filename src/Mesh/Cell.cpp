@@ -255,3 +255,37 @@ bool Cell::hasCommonNode(const std::shared_ptr<Cell>& c1)
                 return true;
     return false;
 }
+
+bool Cell::insideCell(const Point& point) const
+{
+    double epsilon = 1e-16;
+
+    // TODO through angles
+
+    double minX = 1e+6;
+    double maxX = -1e+6;
+
+    double minY = 1e+6;
+    double maxY = -1e+6;
+
+    for (const std::shared_ptr<Point> p : nodes)
+    {
+        if (p->x() < minX) minX = p->x();
+        if (p->y() < minY) minY = p->y();
+        if (p->x() > maxX) maxX = p->x();
+        if (p->y() > maxY) maxY = p->y();
+    }
+
+//    bool xCond = (center.x() - 0.5*step.x() - epsilon) < point.x()  && (center.x() + 0.5*step.x() + epsilon) > point.x();
+//    bool yCond = (center.y() - 0.5*step.y() - epsilon) < point.y()  && (center.y() + 0.5*step.y() + epsilon) > point.y();
+
+
+    bool xCond = minX < point.x() && maxX > point.x();
+    bool yCond = minY < point.y() && maxY > point.y();
+
+
+    if (xCond && yCond)
+        return true;
+
+    return false;
+}

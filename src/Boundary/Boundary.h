@@ -4,6 +4,7 @@
 #include "numvector.h"
 #include "Patch.h"
 #include "Params.h"
+#include "Physics.h"
 #include <string>
 
 /// 
@@ -12,6 +13,11 @@
 
 class Boundary
 {
+
+protected:
+
+    const Physics& phs;
+
 public:
 
     /// Type of boundary condition
@@ -20,8 +26,12 @@ public:
     /// Constant reference to geometrical boundary
     const Patch& patch;
 
+    
+
     /// Default constructor
-    Boundary(const Patch& p) : type("not implemented"), patch(p) {};
+    Boundary(const Patch& p, const Physics& _phs) : type("not implemented"), patch(p), phs(_phs) 
+    {
+    };
 
     /// Get solution in outer side (pure virtual)
     virtual numvector<double, dimPh> getSolOuter(

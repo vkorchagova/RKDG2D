@@ -31,6 +31,16 @@ public:
     /// Pack of solutions in cell centers to export
     std::vector<numvector<double, dimExp>> solToExport;
 
+    /// Pack of time-averaged solution coeffs
+    std::vector<numvector<double, dimS>> solToMean;
+
+    /// Pack of time-averaged solutions in cell centers to export
+    std::vector<numvector<double, dimExp>> solToMeanExport;
+
+
+    /// List of indicator values
+    mutable std::vector<double> indicatorValuesToExport;
+
     /// Constructor
     Solution(Basis& bas);
 

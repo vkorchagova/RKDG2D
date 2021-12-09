@@ -1,4 +1,5 @@
 #include "Limiter.h"
+#include "LimiterFinDiff.h"
 #include <omp.h>
 
 using namespace std;
@@ -8,11 +9,44 @@ Limiter::Limiter(
     const Mesh& msh, 
     Solution& sln,
     const Physics& phs,
-    const Indicator& ind) 
-: mesh(msh), solution(sln), physics(phs), indicator(ind)
+    const Indicator& ind,
+    Buffers& _buf) 
+: mesh(msh), solution(sln), physics(phs), indicator(ind), buf(_buf)
 {
+    // cout << "in limiter construct " << endl;
     newSOL.resize(mesh.nRealCells);
     troubledCells.reserve(mesh.nRealCells);
+
+    buf.forIndExport.resize(mesh.nRealCells * dimPh);
+    solution.indicatorValuesToExport.resize(mesh.nCellsGlob * dimPh);
+
+    // cout << "before buf.forIndExportRecv.resize " << endl;
+
+    if (myRank == 0)
+    {
+        buf.forIndExportRecv.resize(mesh.nCellsGlob * dimPh);
+    }
+
+    // cout << "before.nIndPerProcExp[i] " << endl;
+
+    buf.nIndPerProcExp.resize(numProcsTotal);
+    buf.mpiDisplInd.resize(numProcsTotal);
+
+    // preparation for gatherv for indicator values
+    if (myRank == 0)
+    {
+        for (int i = 0; i < numProcsTotal; ++i)
+        {
+            buf.nIndPerProcExp[i] = buf.nCellsPerProc[i] * dimPh;
+        }
+
+        buf.mpiDisplInd[0] = 0;
+        
+        for (int i = 1; i < numProcsTotal; ++i)
+        {
+            buf.mpiDisplInd[i] = buf.mpiDisplInd[i-1] + buf.nIndPerProcExp[i-1]; 
+        }
+    } // if myRank
 }
 
 
@@ -85,6 +119,16 @@ void Limiter::limitSolution()
         newSOL[iCell] = limitation(stencil);
     }
 
+    //additional limitation in special group
+    for (int iCell : mesh.finDiffGroup)
+    {
+        for (int j = 0; j < dimPh; ++j)
+        {
+            newSOL[iCell][j*nShapes + 1] = 0.0;
+            newSOL[iCell][j*nShapes + 2] = 0.0;
+        }
+    }
+
     t1 = MPI_Wtime();
     if (debug) logger << "\t\tLimitSolution.forTroubledCells: " << t1 - t0 << endl;
 
@@ -94,4 +138,34 @@ void Limiter::limitSolution()
     lastHope(solution.SOL);
     t1 = MPI_Wtime();
     if (debug) logger << "\t\tLimitSolution.lastHope: " << t1 - t0 << endl;
+
+
+    if (numProcsTotal > 1)
+    {
+        collectIndForExport();
+    }
+    else
+    {
+        solution.indicatorValuesToExport = indicator.values;
+    }
+}
+
+void Limiter::collectIndForExport()
+{
+    // collect full solution on proc #0
+    MPI_Gatherv(
+            &(indicator.values[0]), 
+            mesh.nRealCells * dimPh, 
+            MPI_DOUBLE, 
+            &(buf.forIndExportRecv[0]), 
+            &(buf.nIndPerProcExp[0]), 
+            &(buf.mpiDisplInd[0]), 
+            MPI_DOUBLE, 
+            0, 
+            MPI_COMM_WORLD
+        );
+
+    for (int i = 0; i < mesh.nCellsGlob; ++i)
+        for (int j = 0; j < dimPh; ++j)
+            solution.indicatorValuesToExport[buf.globalMap[i] + j*mesh.nCellsGlob] = buf.forIndExportRecv[i * dimPh + j];
 }

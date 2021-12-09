@@ -19,19 +19,21 @@ protected:
     const Mesh& mesh;
 
     /// Constant reference to solution
-    const Solution& solution;
+    const Solution& solution; 
     
 public:
 
-    /// Constructor
-    Indicator (const Mesh& msh, const Solution& sln) : mesh(msh), solution(sln) {}
+    /// Trouble cells values
+    mutable std::vector<double> values;
     
+    // Constructor
+    Indicator (const Mesh& msh, const Solution& sln);
     /// Destructor
     virtual ~Indicator() {}
     
     /// Check discontinuities
     virtual std::vector<int> checkDiscontinuities() const = 0;
-    
+
     /// Write troubled cells in VTK format
     //void writeTroubledCellsVTK();
     

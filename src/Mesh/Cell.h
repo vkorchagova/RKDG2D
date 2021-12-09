@@ -95,6 +95,9 @@ public:
 
     /// check for common node
     bool hasCommonNode(const std::shared_ptr<Cell>& c1);
+
+    /// Check if point belongs cell
+    bool insideCell(const Point& point) const;
 };
 
 #endif // CELL_H

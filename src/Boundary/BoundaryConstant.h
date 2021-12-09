@@ -14,7 +14,7 @@ class BoundaryConstant : public Boundary
 public:
 
     /// Constructor
-    BoundaryConstant(const Patch& p, const numvector<double, dimPh>& defValue) : Boundary(p), fixedValue(defValue) { type = "constant"; }
+    BoundaryConstant(const Patch& p, const numvector<double, dimPh>& defValue, const Physics& _phs) : Boundary(p, _phs), fixedValue(defValue) { type = "constant"; }
 
     // Get solution in outer side
     virtual numvector<double, dimPh> getSolOuter(

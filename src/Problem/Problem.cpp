@@ -125,6 +125,46 @@ void Problem::setInitialConditions(CaseInit task)
         break;
     } // forward step
 
+    case BigPulse:
+    {
+        phs.cpcv = 1.4;
+
+        initRho = [=](const Point& r) { return pow( ( 1.0 - (phs.cpcv-1)*1.0*1.0*exp(1.0-r.x()*r.x()-r.y()*r.y()) / 8.0 / phs.cpcv / 3.14159265 / 3.14159265 ), 1.0 / (phs.cpcv - 1.0)); };
+        initP   = [](const Point& r) { return 1.0;  };
+        initU   = [](const Point& r) { return 1.0; };
+        initV   = [](const Point& r) { return 0.0; };
+        
+        break;
+    }
+
+    case Munday:
+    {
+        phs.cpcv = 1.4;
+        phs.covolume = 0.0;
+        phs.R = 287;
+
+        initRho = [=](const Point& r) { return 1.204; };
+        initP   = [](const Point& r) { return 101325.0;  };
+        initU   = [](const Point& r) { return 0.0; };
+        initV   = [](const Point& r) { return 0.0; };
+        
+        break;
+    }
+
+    case ConvDivNozzle:
+    {
+        phs.cpcv = 1.4;
+        phs.covolume = 0.0;
+        phs.R = 287.0;
+
+        initRho = [=](const Point& r) { return 1.75e+5/496.132/phs.R; };
+        initP   = [](const Point& r) { return 1.75e+5;  };
+        initU   = [](const Point& r) { return 0.0; };
+        initV   = [](const Point& r) { return 0.0; };
+        
+        break;
+    }
+
     case Sedov:
     {
         phs.cpcv = 1.4;
@@ -341,7 +381,7 @@ void Problem::setBoundaryConditions(CaseInit task)
     case Sedov:
     {
         for (const Patch& p : M.patches)
-            bc.emplace_back(make_shared<BoundarySlip>(p));
+            bc.emplace_back(make_shared<BoundarySlip>(p, phs));
 
         break;
     }
@@ -349,7 +389,7 @@ void Problem::setBoundaryConditions(CaseInit task)
     case ShuOsher:
     {
         for (const Patch& p : M.patches)
-            bc.emplace_back(make_shared<BoundaryOpen>(p));
+            bc.emplace_back(make_shared<BoundaryOpen>(p, phs));
 
         break;
     }
@@ -357,7 +397,7 @@ void Problem::setBoundaryConditions(CaseInit task)
     case AstroTest:
     {
         for (const Patch& p : M.patches)
-            bc.emplace_back(make_shared<BoundarySlip>(p));
+            bc.emplace_back(make_shared<BoundarySlip>(p, phs));
         /*
         double u = 1.02; // radial velocity
         double kTilde = 5.5e6;
@@ -446,13 +486,13 @@ void Problem::setBoundaryConditions(CaseInit task)
                          inletV * inletRho, 
                         0.0, 
                         phs.e(inletRho, inletU, inletV, 0.0, inletP)
-                    })
+                    }), phs
                 ));
             }
             else if (patch.name == "right" || 
                      patch.name == "outlet")
             {
-                bc.emplace_back(make_shared<BoundaryOpen>(patch));
+                bc.emplace_back(make_shared<BoundaryOpen>(patch, phs));
             }
             else if (patch.name == "up" || 
                      patch.name == "top" || 
@@ -461,7 +501,159 @@ void Problem::setBoundaryConditions(CaseInit task)
                      patch.name == "wall" ||  
                      patch.name == "step")
             {
-                bc.emplace_back(make_shared<BoundarySlip>(patch));
+                bc.emplace_back(make_shared<BoundarySlip>(patch, phs));
+            }
+            else
+            {
+                cout << "Boundary condition for patch " << patch.name << " is not found.\n"
+                     << "Check settings in src/Problem.cpp/setBoundaryConditions" << endl;
+                exit(1);
+            }
+        }
+        break;
+    }
+
+
+    case Munday:
+    {
+        double inletP = 354637.5;
+        double inletT = 293.15;
+
+        for (const Patch& patch : M.patches)
+        {
+            if (patch.name == "left" || 
+                patch.name == "inlet" || 
+                patch.name == "inlet_mirrored")
+            {
+                bc.emplace_back(
+                make_shared<BoundarySubsonicInletTotalPressure>(
+                    patch, 
+                    phs,
+                    inletP,
+                    inletT
+                ));
+            }
+            else if (patch.name == "right" || 
+                     patch.name == "outlet"|| 
+                     patch.name == "outlet_mirrored" ||
+                     patch.name == "wallVertical" || 
+                     patch.name == "wallVertical_mirrored" || 
+                     patch.name == "wallHorizontal" ||
+                     patch.name == "wallHorizontal_mirrored" ||
+                     patch.name == "wall" || 
+                     patch.name == "wall_mirrored" ||
+                     patch.name == "walls" ||
+                     patch.name == "walls_added"  )
+            {
+                bc.emplace_back(make_shared<BoundaryOpenTotalPressure>(patch, phs));
+            }
+            else if (patch.name == "top" || 
+                     patch.name == "topBottom" ||
+                     patch.name == "top_mirrored" )
+            {
+                bc.emplace_back(make_shared<BoundaryOpenTotalPressure>(patch, phs));
+            }
+            else if (patch.name == "nozzle" ||
+                     patch.name == "nozzles" || 
+                     patch.name == "nozzle_mirrored")
+            {
+                bc.emplace_back(make_shared<BoundarySlip>(patch, phs));
+            }
+            else
+            {
+                cout << "Boundary condition for patch " << patch.name << " is not found.\n"
+                     << "Check settings in src/Problem.cpp/setBoundaryConditions" << endl;
+                exit(1);
+            }
+        }
+        break;
+    }
+
+    case ConvDivNozzle:
+    {
+        double inletP1 = 3e+5;
+        double inletP2 = 1.75e+5;
+        double inletTTot = 500;
+
+        for (const Patch& patch : M.patches)
+        {
+            if ( patch.name == "inlet" )
+            {
+                bc.emplace_back(
+                make_shared<BoundarySubsonicInletFixedPressure>(
+                    patch, 
+                    phs,
+                    inletP1,
+                    inletTTot
+                ));
+            }
+            else if ( patch.name == "walls" )
+            {
+                bc.emplace_back(make_shared<BoundarySlip>(patch, phs));
+            }
+            else if (patch.name == "outlet")
+            {
+                bc.emplace_back(make_shared<BoundaryOpenFixedPressure>(patch, phs, inletP2));
+            }
+            else
+            {
+                cout << "Boundary condition for patch " << patch.name << " is not found.\n"
+                     << "Check settings in src/Problem.cpp/setBoundaryConditions" << endl;
+                exit(1);
+            }
+        }
+        break;
+    }
+
+    
+    case BigPulse:
+    {
+        double inletRho = 1.0;
+        double inletU = 1.0;
+        double inletV = 0.0;
+        double inletP = 1.0;
+
+        for (const Patch& patch : M.patches)
+        {
+            if (patch.name == "left")
+            {
+                bc.emplace_back(
+                make_shared<BoundaryConstant>(
+                    patch,
+                    numvector<double, dimPh>(
+                    {
+                        inletRho,
+                        -inletU * inletRho,
+                         inletV * inletRho,
+                        0.0,
+                        phs.e(inletRho, inletU, inletV, 0.0, inletP)
+                    }), phs
+                ));
+            }
+            else if (patch.name == "right")
+            {
+                bc.emplace_back(
+                make_shared<BoundaryConstant>(
+                    patch,
+                    numvector<double, dimPh>(
+                    {
+                        inletRho,
+                        inletU * inletRho,
+                        inletV * inletRho,
+                        0.0,
+                        phs.e(inletRho, inletU, inletV, 0.0, inletP)
+                    }), phs
+                ));
+            }
+            else if (patch.name == "up" || 
+                     patch.name == "top" || 
+                     patch.name == "down" ||
+                     patch.name == "walls" || 
+                     patch.name == "bottom" ||  
+                     patch.name == "wall" ||  
+                     patch.name == "step")
+            {
+                bc.emplace_back(make_shared<BoundaryOpen>(patch, phs));
             }
             else
             {
@@ -495,13 +687,13 @@ void Problem::setBoundaryConditions(CaseInit task)
                          inletV * inletRho, 
                         0.0, 
                         phs.e(inletRho, inletU, inletV, 0.0, inletP)
-                    })
+                    }), phs
                 ));
             }
             else if (patch.name == "right" || 
                      patch.name == "outlet")
             {
-                bc.emplace_back(make_shared<BoundaryOpen>(patch));
+                bc.emplace_back(make_shared<BoundaryOpen>(patch, phs));
             }
             else if (patch.name == "up" || 
                      patch.name == "top" || 
@@ -509,7 +701,7 @@ void Problem::setBoundaryConditions(CaseInit task)
                      patch.name == "wall" || 
                      patch.name == "down")
             {
-                bc.emplace_back(make_shared<BoundarySlip>(patch));
+                bc.emplace_back(make_shared<BoundarySlip>(patch, phs));
             }
             else
             {
@@ -543,13 +735,13 @@ void Problem::setBoundaryConditions(CaseInit task)
                          inletV * inletRho, 
                         0.0, 
                         phs.e(inletRho, inletU, inletV, 0.0, inletP)
-                    })
+                    }), phs
                 ));
             }
             else if (patch.name == "right" || 
                      patch.name == "outlet")
             {
-                bc.emplace_back(make_shared<BoundaryOpen>(patch));
+                bc.emplace_back(make_shared<BoundaryOpen>(patch, phs));
             }
             else if (patch.name == "up" || 
                      patch.name == "top" || 
@@ -557,7 +749,7 @@ void Problem::setBoundaryConditions(CaseInit task)
                      patch.name == "walls" || 
                      patch.name == "wall")
             {
-                bc.emplace_back(make_shared<BoundarySlip>(patch));
+                bc.emplace_back(make_shared<BoundarySlip>(patch, phs));
             }
             else
             {

@@ -13,16 +13,17 @@ class LimiterRiemannWENOS : public LimiterWENOS
     /// Turn to conservative variables from Riemann
     numvector<double, dimS> riemannToConservative
     (
-        const numvector<double, dimS>& alpha, 
-        const numvector<numvector<double, dimPh>, dimPh>& R
+        const numvector<double, dimS>& alpha
     ) const;
 
     /// Turn to Riemann variables from conservative
     numvector<double, dimS> conservativeToRiemann
     (
-        const numvector<double, dimS>& alpha, 
-        const numvector<numvector<double, dimPh>, dimPh>& L
+        const numvector<double, dimS>& alpha
     ) const;
+
+    numvector<numvector<double, dimPh>, dimPh>  L;
+    numvector<numvector<double, dimPh>, dimPh>  R;
 
 protected:
     
@@ -39,7 +40,8 @@ public:
         const Mesh& msh,
         Solution& sln,
         const Physics& phs,
-        const Indicator& ind) : LimiterWENOS(msh, sln, phs, ind) {}
+        const Indicator& ind,
+        Buffers& buf) : LimiterWENOS(msh, sln, phs, ind, buf) {}
 
     /// Destructor
     ~LimiterRiemannWENOS() {};

@@ -8,7 +8,8 @@ LimiterBJVertex::LimiterBJVertex(
         const Mesh& mesh, 
         Solution& sln,
         const Physics& phs,
-        const Indicator& ind) : Limiter(mesh, sln, phs, ind) 
+        const Indicator& ind,
+        Buffers& _buf) : Limiter(mesh, sln, phs, ind, _buf) 
 {
     // uMean.reserve(maxPossibleStencilSize);
 }

@@ -13,7 +13,7 @@ class BoundarySlip : public Boundary
 public:
 
     /// Constructor
-    BoundarySlip(const Patch& p) : Boundary(p) { type = "slip"; }
+    BoundarySlip(const Patch& p, const Physics& _phs) : Boundary(p, _phs) { type = "slip"; }
 
     // Get solution in outer side
     virtual numvector<double, dimPh> getSolOuter(

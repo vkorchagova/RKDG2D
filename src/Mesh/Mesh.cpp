@@ -13,6 +13,7 @@ using namespace std;
 
 Mesh::Mesh(std::string& fileName, Buffers& buf) : buf(buf)
 {
+    finDiffGroup.clear();
     importMesh(fileName);
     
     //cout << "num of cells = " << cells.size() << endl;
@@ -748,8 +749,6 @@ void Mesh::importMesh(string& fileName)
                 for (int i = 0; i < nEdgesInPatch; ++i)
                 {
                     reader >> iEdge;
-                    //cout << iEdge << ' ';
-                    //cout << localNumber(globalEdgeNumber, iEdge - 1) << endl;
                     edgeGroup.push_back(edges[edgeGlobalToLocal[iEdge - 1]]);
                 }
 
@@ -783,6 +782,39 @@ void Mesh::importMesh(string& fileName)
                 getline(reader, tag);
 
             } while (tag != "$EndPatches");
+
+           // cout << "Patches are proceeded" << endl;
+        }
+
+        else if (tag == "$FinDiffGroup")
+        {
+            int nElemsInGroup;
+
+            reader >> nElemsInGroup;
+
+            finDiffGroup.reserve(nElemsInGroup);
+
+            int iCellGroup;
+
+            for (int iP = 0; iP < nElemsInGroup; ++iP)
+            {
+                reader >> iCellGroup;
+                finDiffGroup.push_back(iCellGroup-1);
+            }
+            //for(int i=0;i<edges.size();++i)\
+                cout << edges[i].neibCells.size() << endl;
+
+            if (myRank == 0)
+            {
+                cout << "Size of FinDiffGroup: "  << finDiffGroup.size() << endl;
+            }
+            
+
+            do
+            {
+                getline(reader, tag);
+
+            } while (tag != "$EndFinDiffGroup");
 
            // cout << "Patches are proceeded" << endl;
         }

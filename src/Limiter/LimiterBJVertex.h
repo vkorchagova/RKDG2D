@@ -33,7 +33,8 @@ public:
         const Mesh& msh,
         Solution& sln,
         const Physics& phs,
-        const Indicator& ind);
+        const Indicator& ind,
+        Buffers& _buf);
 
     /// Destructor
     ~LimiterBJVertex() {};

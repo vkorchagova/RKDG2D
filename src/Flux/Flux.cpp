@@ -70,12 +70,22 @@ numvector<double, dimPh> Flux::lambdaF_Toro(const numvector<double, dimPh>& solO
 	double pLeft = phs.getPressure(solOne);
 	double pRight = phs.getPressure(solTwo);
 
-	double pvrs = 0.5 * (pLeft + pRight) + \
-		0.125 * (uLeft - uRight) * (solOne[0] + solTwo[0]) * (cLeft + cRight);
+	double rhouLeft = solOne[1];
+    double rhouRight = solTwo[1];
 
-	double pStar = max(0.0, pvrs);
+	// double pvrs = 0.5 * (pLeft + pRight) + \
+	// 	0.125 * (uLeft - uRight) * (solOne[0] + solTwo[0]) * (cLeft + cRight);
 
-	double qLeft = pStar > pLeft ? \
+	// double pStar = max(0.0, pvrs);
+
+	double z = 0.5 * (phs.cpcv - 1.0) / phs.cpcv;
+
+    double pStar = pow( 
+      (cLeft + cRight - 0.5 * (phs.cpcv - 1.0) * (uRight - uLeft)) / \
+      (cLeft / pow(pLeft, z) + cRight / pow(pRight, z)),
+      1.0 / z);
+
+    double qLeft = pStar > pLeft ? \
 		sqrt(1.0 + 0.5 * (phs.cpcv + 1.0) * (pStar / pLeft - 1.0) / phs.cpcv) : \
 		1.0;
 
@@ -98,6 +108,6 @@ numvector<double, dimPh> Flux::lambdaF_semisum(const numvector<double, dimPh>& s
 
 numvector<double, dimPh> Flux::lambdaF(const numvector<double, dimPh>& solOne, const numvector<double, dimPh>& solTwo) const
 {
-	return lambdaF_Roe(solOne, solTwo);
+	return lambdaF_Toro(solOne, solTwo);
 } // end lambdaF
 

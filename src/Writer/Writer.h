@@ -57,10 +57,10 @@ public:
     void exportMeshVTK(std::ostream& wStream) const;
 
     /// Export solution to VTK
-    void exportFrameVTK(const std::string& fileName) const;
+    void exportFrameVTK(const std::string& fileName, double tOutput = 1) const;
 
     /// Export solution to VTK
-    void exportFrameVTK(std::ostream& wStream) const;
+    void exportFrameVTK(std::ostream& wStream, double tOutput = 1) const;
 
     /// Export solution coeffs 
     void exportNativeCoeffs(const std::string& fileName) const;

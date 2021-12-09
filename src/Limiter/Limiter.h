@@ -42,6 +42,9 @@ protected:
     /// Reference to solution
     Solution& solution;
 
+    /// Reference to MPI buffers
+    Buffers& buf;
+
     /// Max possible stencil size
     static const int maxPossibleStencilSize = 10;
 
@@ -51,13 +54,16 @@ protected:
     /// Update stencil
     virtual std::vector<std::shared_ptr<Cell>> getStencilFor(const std::shared_ptr<Cell>& cell) = 0;
 
+    void collectIndForExport();
+
 public:
 
     /// Construct
     Limiter(const Mesh& mesh, 
         Solution& sln,
         const Physics& phs,
-        const Indicator& ind);
+        const Indicator& ind,
+        Buffers& buf);
 
     /// Destructor
     virtual ~Limiter() {}

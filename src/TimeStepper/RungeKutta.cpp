@@ -30,6 +30,7 @@ void RungeKutta::setButcherTable()
     {
         case 1:
 
+            alpha[0] = 1.0;
             beta[0][0] = 1.0;
             break;
 

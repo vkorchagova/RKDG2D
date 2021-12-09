@@ -6,5 +6,5 @@ numvector<double, dimPh> BoundaryConstant::getSolOuter (
     const Point& n
 ) const
 {
-    return fixedValue;
+    return 2.0*fixedValue - solLeft;
 }

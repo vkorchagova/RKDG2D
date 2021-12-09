@@ -32,6 +32,7 @@
 #include "LimiterBJVertex.h"
 #include "LimiterWENOS.h"
 #include "LimiterRiemannWENOS.h"
+#include "LimiterRiemannBJ.h"
 #include "FluxLLF.h"		/// All about the flux evaluating
 #include "FluxHLL.h"
 #include "FluxHLLC.h"
@@ -41,9 +42,12 @@
 #include "IndicatorShu.h"
 //#include "Limiter.h"	/// All about the monotonization
 #include "Solver.h"		/// The whole spatial discretization module
+#include "SolverHybrid.h"
 #include "TimeControl.h"
 #include "Writer.h"
 #include "RungeKutta.h"
+
+#include "probes.h"
 
 //#include "intel64\include\mpi.h"
 #include <mpi.h>
@@ -64,7 +68,6 @@ bool debug;
 /// Log file to save data
 std::ofstream logger;
 
-
 using namespace std;
 
 int main(int argc, char* argv[])
@@ -79,7 +82,7 @@ int main(int argc, char* argv[])
     MPI_Comm_size(MPI_COMM_WORLD, &numProcsTotal);
     MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
 
-    debug = (true && myRank == 0); // if you want save log type true else type false
+    debug = false;//(true && myRank == 0); // if you want save log type true else type false
     logger.open("timeStat." + to_string(numProcsTotal));
 
     //if (myRank == 0) cout << "size = " << numProcsTotal << "; rank = " << myRank << endl;
@@ -90,25 +93,23 @@ int main(int argc, char* argv[])
     #else
         mkdir("alphaCoeffs", S_IRWXU | S_IRGRP | S_IROTH);
     #endif
-
+	
     ///----------------------
 
-    CaseInit caseName = SodCircle;
+    CaseInit caseName = Munday;//ForwardStep;//DoubleMach;//Munday;//ConvDivNozzle;
 
     double tStart = 0.0;
-    double tEnd = 1e-3;//5e-6;
+    double tEnd = 0.1;
 
-    double initTau = 1e-4;
-    double outputInterval = 0.1;//1e-6;
+    double initTau = 2e-7;
+    double outputInterval = 1e-3;//0.5;//5e-2;
 
-    bool isDynamic = false;
-    double maxCo = 0.1;
-    double maxTau = 1e-3;
+    bool isDynamic = true;
+    double maxCo = 0.25;
+    double maxTau = 1.0;
     double maxTauGrowth = 0.1; 
 
-
     int order = 2;
-
 
     string meshFileName = "mesh2D"; 
     if (numProcsTotal > 1)
@@ -129,17 +130,23 @@ int main(int argc, char* argv[])
     Solution solution(basis);
     
     Physics physics;
-    FluxHLL flux(physics);
+    // FluxHLLC flux(physics);
+
+    FluxHLL flux1(physics);
+    FluxHLLC flux2(physics);
     
     Writer writer(fullMesh, solution, physics);
     TimeControl time(mesh, physics, solution, tStart, tEnd, initTau, outputInterval, isDynamic, maxCo, maxTau, maxTauGrowth);
     Problem problem(caseName, mesh, time, physics);
-    Solver solver(basis, mesh, solution, problem, physics, flux, buf);
+    // Solver solver(basis, mesh, solution, problem, physics, flux, buf);
+    SolverHybrid solver(basis, mesh, solution, problem, physics, flux1, flux2, buf);
 
-    IndicatorEverywhere indicator(mesh, solution);
-    //LimiterRiemannWENOS limiter(mesh, solution, physics, indicator);
-    LimiterWENOS limiter(mesh, solution, physics, indicator);
-    //LimiterBJ limiter(mesh, solution, physics, indicator);
+    // IndicatorEverywhere indicator(mesh, solution);
+    IndicatorBJ indicator(mesh, solution);
+    LimiterRiemannWENOS limiter(mesh, solution, physics, indicator, buf);
+    // LimiterWENOS limiter(mesh, solution, physics, indicator, buf);
+    // LimiterBJ limiter(mesh, solution, physics, indicator, buf);
+    // LimiterRiemannBJ limiter(mesh, solution, physics, indicator, buf);
     RungeKutta RK(order, basis, solver, solution, limiter, time);
 
     ///---------------------
@@ -163,8 +170,11 @@ int main(int argc, char* argv[])
 
         limiter.limitSolution();
 
+        if (myRank == 0) std::cout << "Initial conditions OK" << std::endl;
+
         solver.collectSolution();
         solver.collectSolutionForExport();
+        solver.collectMeanSolutionForExport();
             
         if (myRank == 0) 
         {
@@ -172,7 +182,7 @@ int main(int argc, char* argv[])
             writer.exportFrameVTK("alphaCoeffs/" + to_string(tStart) + ".vtk");
         }
     }
-
+    
     //cout << physics.cpcv << endl;
 
     //for (int i = 0; i < mesh.patches.size(); ++i)
@@ -188,6 +198,20 @@ int main(int argc, char* argv[])
     double meanCpuTime = 0.0;
     double totalCpuTime = 0.0;
     int nSteps = 0;
+
+    vector<Point> microphones = 
+    {
+        Point({-0.08,0.1}),
+        Point({-0.01,0.1}),
+        Point({ 0.01,0.1}),
+        Point({ 0.08,0.1}),
+        Point({-0.08,0.2}),
+        Point({-0.01,0.2}),
+        Point({ 0.01,0.2}),
+        Point({ 0.08,0.2})
+    };
+
+    Probes probeManager(mesh, solution, physics, microphones);
     
 
 	/// THE MAIN CYCLE THROUGH THE TIME!
@@ -197,6 +221,7 @@ int main(int argc, char* argv[])
 
         t0 = MPI_Wtime();
         RK.Tstep();
+        solver.computeTimeAvgSolution(time.getTau());
         t1 = MPI_Wtime();
 
         if (myRank == 0) 
@@ -217,8 +242,9 @@ int main(int argc, char* argv[])
 
         if (myRank == 0) 
         {
-            cout << "CPU time = " << t1 - t0 << " s" << endl;
+            cout << "CPU dt time = " << t1 - t0 << " s" << "\t\t";
             totalCpuTime += t1 - t0;
+            cout << "Execution time = " << totalCpuTime << " s" << endl;
             nSteps ++;
         }
 
@@ -270,26 +296,34 @@ int main(int argc, char* argv[])
             }
         }
 
+        
+
         // write results in case of output time
 
         if (time.isOutput())
         {
 			solver.collectSolution();
             solver.collectSolutionForExport();
+            solver.collectMeanSolutionForExport();
             
             if (myRank == 0)
             {
                 writer.exportNativeCoeffs("alphaCoeffs/" + to_string(time.getTime()) + ".dat");
-                writer.exportFrameVTK("alphaCoeffs/" + to_string(time.getTime()) + ".vtk");
+                writer.exportFrameVTK("alphaCoeffs/" + to_string(time.getTime()) + ".vtk", time.getTime());
             }
         }
 
+        if (totalEnergy != totalEnergy) //nan 
+            exit(1);
+
         // update time step
         time.updateTimeStep();
+
+        probeManager.writeProbes(time.getTime());
     }
     // cout << "Save last time point..." << endl;
     // // just for last time point
-    // solver.collectSolution();
+    // solver.collectSolution(); 
     // solver.collectSolutionForExport();
     
     if (myRank == 0)

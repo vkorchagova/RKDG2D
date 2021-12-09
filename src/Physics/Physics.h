@@ -25,6 +25,9 @@ public:
     /// Covolume constant; 0 for ideal gas
     double covolume;
 
+    /// Individual gas constant
+    double R;
+
     /// Constructor
 	Physics();
 
@@ -33,6 +36,9 @@ public:
 
     /// Calculate pressure using conservative variables
     double getPressure(const numvector<double, dimPh>& sol) const;
+
+    /// Calculate Mach number using conservative variables
+    double getMachNumber(const numvector<double, dimPh>& sol) const;
 
     /// Compute sound speed inside cell
     double c(const numvector<double, dimPh>& sol) const;
@@ -53,7 +59,14 @@ public:
     numvector<numvector<double, dimPh>, dimPh> getL(const numvector<double, dimPh>& sol, const Point& n) const;
 
 	/// Right eigenvectors
-    numvector<numvector<double, dimPh>, dimPh> getR(const numvector<double, dimPh>& sol, const Point& n) const;   
+    numvector<numvector<double, dimPh>, dimPh> getR(const numvector<double, dimPh>& sol, const Point& n) const;
+
+    void computeLR(
+        const numvector<double, dimPh>& sol, 
+        const Point& n, 
+        numvector<numvector<double, dimPh>, dimPh>& L,
+        numvector<numvector<double, dimPh>, dimPh>& R
+    ) const;   
 
 };// end Physics
 

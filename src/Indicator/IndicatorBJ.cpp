@@ -14,17 +14,25 @@ numvector<double, dimPh> IndicatorBJ::getYMin(const shared_ptr<Cell>& cell, cons
             numvector<double, dimPh> pU   = solution.reconstruct(cell->number, e->gPoints[i]);
             numvector<double, dimPh> diff = pU - uMean;
 
+            // numvector<double, dimPh> physQuite = {1.204, 1.0, 1.0, 1.0, 253312};
+
             for (int i = 0; i < dimPh; ++i)
             {
-                if (diff[i] > 1e-6)
+                if (diff[i] > 1e-3 * max(1.0, fabs(uMean[i])))
                     y[i] = (MI[i] - uMean[i]) / diff[i];
-                else if (diff[i] < -1e-6)
+                else if (diff[i] < -1e-3 * max(1.0, fabs(uMean[i])))
                     y[i] = (mI[i] - uMean[i]) / diff[i];
                 else
                     y[i] = 1.0;
 
-                yMin[i] = y[i] < yMin[i] ? y[i] : yMin[i];
-                yMin[i] = yMin[i] > 1.0 ? 1.0 : yMin[i];
+                // yMin[i] = y[i] < yMin[i] ? y[i] : yMin[i];
+                // yMin[i] = yMin[i] > 1.0 ? 1.0 : yMin[i];
+
+                // michalak
+                double yStar = 1.5;
+                double yRel = y[i] / yStar;
+                double yCur = y[i] < 1.0 ? y[i] + (3.0 - 2.0 * yStar) * yRel * yRel + (yStar - 2.0) * yRel * yRel * yRel : 1.0;
+                yMin[i] = yCur < yMin[i] ? yCur : yMin[i];
 
                 if (yMin[i] < 0)
                     cout << "yMin < 0 --- so strange!" << endl;
@@ -42,6 +50,9 @@ vector<int> IndicatorBJ::checkDiscontinuities() const
 
     vector<int> troubledCells;
     troubledCells.reserve(mesh.nRealCells);
+
+    for (int i = 0; i < values.size(); ++i)
+        values[i] = 1.0;
 
    // cout << "BEG troubledCell.size = " << troubledCells.size() << endl;
     int n = mesh.nRealCells;
@@ -62,7 +73,7 @@ vector<int> IndicatorBJ::checkDiscontinuities() const
 //        troubledCells[i] = i;
 
 #pragma omp parallel for \
-            shared(myRank, n, troubledCells) \
+            shared(myRank, n, troubledCells, cout) \
             firstprivate(uMean, stenc) \
             default(none)
     for (int i = 0; i < n; ++i)
@@ -117,21 +128,21 @@ vector<int> IndicatorBJ::checkDiscontinuities() const
         numvector<double, dimPh> a = getYMin(cell, mI, MI, uMean[0]);
 
         for (size_t k = 0; k < dimPh; ++k)
-            if (a[k] < 1.0 && a[k]>1e-6)
+            if (a[k] < 1.0)
             {
 #pragma omp critical
                 troubledCells.push_back(iCell);
+                // cout << a << " \n\t" << mI << ' ' << MI << ' ' << uMean[0] << endl;
+                // for (auto c : stenc)
+                //     cout << "\t" << c->number;
+                // cout << endl;
+                // for (size_t kk = 0; kk < nCells; ++kk)
+                //     cout << "\tuMean = " << uMean[k] << endl;
+                // cout << endl;
+                values[k + iCell*dimPh] = a[k];
                 break;
             }
-
-    //if (check == true) troubledCells.push_back(iCell);
-
     }
-
-//#pragma omp parallel for shared (n, troubledCells)
-
- //  for (size_t i = 0; i < itroubledCells.size(); ++i)
- //     troubledCells.push_back(i);
 
     return troubledCells;
 }

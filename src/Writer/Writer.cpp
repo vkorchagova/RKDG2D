@@ -11,7 +11,7 @@ void Writer::exportMeshVTK(const std::string& fileName) const
 }
 
 
-void Writer::exportFrameVTK(const std::string& fileName) const
+void Writer::exportFrameVTK(const std::string& fileName, double tOutput) const
 {
     cout << "Exporting VTK frame " << fileName << "..." << endl;
     
@@ -21,7 +21,7 @@ void Writer::exportFrameVTK(const std::string& fileName) const
     exportMeshVTK(wStream);
     cout << "OK" << endl;
 
-    exportFrameVTK(wStream);
+    exportFrameVTK(wStream, tOutput);
     wStream.close();
 
     cout << "Exporting VTK frame OK" << endl;
@@ -80,7 +80,7 @@ void Writer::exportMeshVTK(ostream& wStream) const
 }
 
 
-void Writer::exportFrameVTK(ostream& wStream) const
+void Writer::exportFrameVTK(ostream& wStream, double tOutput) const
 {
     // get cell data
 
@@ -125,7 +125,54 @@ void Writer::exportFrameVTK(ostream& wStream) const
     }
     cout << "OK" << endl;
 
-    //indicator.writeTroubledCellsVTK();
+    wStream << "SCALARS rho_ind double" << endl;
+    wStream << "LOOKUP_TABLE default" << endl;
+
+    cout << "\tWriting rho_ind field... ";
+    for (int iCell = 0; iCell < mesh.nRealCells; ++iCell)
+        wStream << solution.indicatorValuesToExport[iCell] << endl;
+    cout << "OK" << endl;
+
+    wStream << "SCALARS rho_u_ind double" << endl;
+    wStream << "LOOKUP_TABLE default" << endl;
+
+    cout << "\tWriting rho_u_ind field... ";
+    for (int iCell = 0; iCell < mesh.nRealCells; ++iCell)
+        wStream << solution.indicatorValuesToExport[mesh.nRealCells + iCell] << endl;
+    cout << "OK" << endl;
+
+    wStream << "SCALARS rho_v_ind double" << endl;
+    wStream << "LOOKUP_TABLE default" << endl;
+
+    cout << "\tWriting rho_v_ind field... ";
+    for (int iCell = 0; iCell < mesh.nRealCells; ++iCell)
+        wStream << solution.indicatorValuesToExport[2*mesh.nRealCells + iCell] << endl;
+    cout << "OK" << endl;
+
+    wStream << "SCALARS rho_e_ind double" << endl;
+    wStream << "LOOKUP_TABLE default" << endl;
+
+    cout << "\tWriting rho_e_ind field... ";
+    for (int iCell = 0; iCell < mesh.nRealCells; ++iCell)
+        wStream << solution.indicatorValuesToExport[(dimPh-1)*mesh.nRealCells + iCell] << endl;
+    cout << "OK" << endl;
+
+    // time-avg fields
+    wStream << "SCALARS rho_avg double" << endl;
+    wStream << "LOOKUP_TABLE default" << endl;
+
+    cout << "\tWriting rho_avg field... ";
+    for (int iCell = 0; iCell < mesh.nRealCells; ++iCell)
+        wStream << solution.solToMeanExport[iCell][0] / tOutput << endl;
+    cout << "OK" << endl;
+
+    wStream << "SCALARS p_avg double" << endl;
+    wStream << "LOOKUP_TABLE default" << endl;
+
+    cout << "\tWriting p_avg field... ";
+    for (int iCell = 0; iCell < mesh.nRealCells; ++iCell)
+        wStream << solution.solToMeanExport[iCell][5] / tOutput << endl;
+    cout << "OK" << endl;
 
     // get point data
 

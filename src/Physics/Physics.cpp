@@ -12,6 +12,7 @@ Physics::Physics()
 {
     cpcv = 1.4; // default value
     covolume = 0.0; // default value
+    R = 1.0/cpcv;
 } // end constructor 
 
 Physics::~Physics()
@@ -46,6 +47,14 @@ double Physics::getPressure(const numvector<double, dimPh>& sol) const
 } // end getPressure
 
 
+double Physics::getMachNumber(const numvector<double, dimPh>& sol) const
+{
+    double rhoV2 = sqr(sol[1]) + sqr(sol[2]) + sqr(sol[3]);
+
+    return sqrt(rhoV2) / sol[0] / this->c(sol);
+} // end getPressure
+
+
 double Physics::c(const numvector<double, dimPh>& sol) const
 {
     //double c2 = cpcv * getPressure(sol) / sol[0];
@@ -53,7 +62,10 @@ double Physics::c(const numvector<double, dimPh>& sol) const
     double c2 = cpcv * getPressure(sol) / sol[0] / (1.0 - sol[0] * covolume);
 
     if (c2 < 0)
-        cout << "sound speed < 0 =( !!!!" << endl;
+    {
+        cout << "sound speed < 0 =( !!!! State = " << sol << endl;
+        exit(1);
+    }
 
     return sqrt( c2 );
 } // end c for cell
@@ -130,6 +142,57 @@ numvector<numvector<double, dimPh>, dimPh> Physics::getR(const numvector<double,
     };
 
     return res;
+}
+
+
+void Physics::computeLR(
+        const numvector<double, dimPh>& sol, 
+        const Point& n, 
+        numvector<numvector<double, dimPh>, dimPh>& L,
+        numvector<numvector<double, dimPh>, dimPh>& R
+    ) const
+{
+    double cS = c(sol);
+    double rho = sol[0];
+    double u = sol[1] / rho;
+    double v = sol[2] / rho;
+    double magU2 = 0.5 * (sqr(u) + sqr(v));
+
+    double B1 = (cpcv - 1.0) / sqr(cS);
+    double B2 = B1 * magU2;
+
+    double p = getPressure(sol);
+
+    double H = (sol[4] + p) / rho;
+
+    double Un = u*n.x() + v*n.y();
+    double Unort = u*n.y() - v*n.x();
+    double UndcS = Un/cS;
+    double nxdcS = n.x()/cS;
+    double nydcS = n.y()/cS;
+    double B1u = B1 * u;
+    double B1v = B1 * v;
+    double cSnx = cS * n.x();
+    double cSny = cS * n.y();
+    double cSUn = cS * Un;
+
+    L =
+    {
+        { 0.5 * (B2 + UndcS), -0.5 * (B1u + nxdcS), -0.5 * (B1v + nydcS),  0.0, 0.5 * B1},
+        {              Unort,               -n.y(),                n.x(),  0.0,      0.0},
+        {           1.0 - B2,                  B1u,                  B1v,  0.0,      -B1},
+        {                0.0,                  0.0,                  0.0,  1.0,      0.0},
+        { 0.5 * (B2 - UndcS), -0.5 * (B1u - nxdcS), -0.5 * (B1v - nydcS),  0.0, 0.5 * B1}
+    };
+
+    R =
+    {
+        {      1.0,    0.0,   1.0,  0.0,      1.0 },
+        { u - cSnx, -n.y(),     u,  0.0, u + cSnx },
+        { v - cSny,  n.x(),     v,  0.0, v + cSny },
+        {      0.0,    0.0,   0.0,  1.0,      0.0 },
+        { H - cSUn, -Unort, magU2,  0.0, H + cSUn }
+    };
 }
 
 
